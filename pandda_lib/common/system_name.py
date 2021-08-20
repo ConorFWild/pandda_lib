@@ -23,6 +23,7 @@ class SystemName:
 
         paths = processed_datasets_dir.glob("*")
         first_path = next(paths)
+        print(first_path)
 
         dtag = Dtag(first_path.name)
 
