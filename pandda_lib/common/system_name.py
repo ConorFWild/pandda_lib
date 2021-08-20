@@ -22,9 +22,12 @@ class SystemName:
         processed_datasets_dir = path / constants.PANDDA_PROCESSED_DATASETS_DIR
 
         paths = processed_datasets_dir.glob("*")
-        first_path = next(paths)
-        print(first_path)
-
-        dtag = Dtag(first_path.name)
+        for dtag_path in paths:
+            try:
+                print(dtag_path)
+                dtag = Dtag(dtag_path.name)
+                break
+            except:
+                continue
 
         return SystemName.from_dtag(dtag)
