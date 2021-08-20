@@ -34,8 +34,8 @@ class XChemDiamondFS:
         finished_pandda_dirs = []
         for path in finished_pandda_mark_paths:
             try:
-                system_name = SystemName.from_pandda_dir(path)
-                finished_pandda_dirs.append(path)
+                system_name = SystemName.from_pandda_dir(path.parent)
+                finished_pandda_dirs.append(path.parent)
                 system_names.append(system_name)
             except Exception as e:
                 print(e)
