@@ -15,6 +15,7 @@ class SystemName:
     def from_dtag(dtag: Dtag) -> SystemName:
         match = re.match(f"(([^-]+)-.*)", dtag.dtag)
         system_string = match.groups()[1]
+        print(system_string)
         return SystemName(system_string)
 
     @staticmethod
