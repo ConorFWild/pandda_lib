@@ -15,8 +15,8 @@ def main(diamond_dir: str, output_dir: str):
 
     print(diamond_fs.model_building_dirs)
 
-    print(",".join(str(diamond_fs.model_building_dirs)))
-    print(",".join(diamond_fs.pandda_dirs))
+    print(",".join([str(x) for x in diamond_fs.model_building_dirs]))
+    print(",".join([str(x) for x in diamond_fs.pandda_dirs]))
 
 
 if __name__ == "__main__":
