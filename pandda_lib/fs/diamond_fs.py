@@ -30,11 +30,20 @@ class XChemDiamondFS:
             finished_pandda_mark_paths.append(Path(path))
         print(finished_pandda_mark_paths)
 
+        system_names = []
+        finished_pandda_dirs = []
+        for path in finished_pandda_mark_paths:
+            try:
+                system_name = SystemName.from_pandda_dir(path)
+                finished_pandda_dirs.append(path)
+                system_names.append(system_name)
+            except:
+                continue
+
+
         # FInished
-        finished_pandda_dirs = [path.parent for path in finished_pandda_mark_paths]
         print(finished_pandda_dirs)
 
-        system_names = [SystemName.from_pandda_dir(path) for path in finished_pandda_dirs]
         print(system_names)
 
         # Get model building dirs
