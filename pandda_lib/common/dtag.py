@@ -9,3 +9,6 @@ class Dtag:
     @staticmethod
     def from_string(string: str) -> Dtag:
         ...
+
+    def __hash__(self):
+        return hash(self.dtag)

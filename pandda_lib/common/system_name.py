@@ -32,5 +32,7 @@ class SystemName:
             except:
                 continue
 
-
         raise Exception("Could not match any dtags in dir")
+
+    def __hash__(self):
+        return hash(self.system_name)
