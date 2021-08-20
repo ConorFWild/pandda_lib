@@ -17,6 +17,7 @@ class XChemDiamondFS:
         xchem_diamond_dir = Path(xchem_diamond_dir)
 
         # Look for finished PanDDAs
+        print(f"Looking for finished PanDDAs...")
         finished_pandda_mark_paths = list(xchem_diamond_dir.glob("*/processing/analysis/**/pandda.done"))
         print(finished_pandda_mark_paths)
 
