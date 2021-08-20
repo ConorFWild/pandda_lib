@@ -12,4 +12,5 @@ def main(diamond_dir: str, output_dir: str):
     diamond_fs = XChemDiamondFS.from_path(diamond_dir)
 
 
-
+if __name__ == "__main__":
+    fire.Fire(main)
