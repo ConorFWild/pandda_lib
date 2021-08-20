@@ -15,6 +15,9 @@ def main(diamond_dir: str, output_dir: str):
 
     print(diamond_fs.model_building_dirs)
 
+    print(",".join(str(diamond_fs.model_building_dirs)))
+    print(",".join(diamond_fs.pandda_dirs))
+
 
 if __name__ == "__main__":
     fire.Fire(main)
