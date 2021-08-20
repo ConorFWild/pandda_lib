@@ -37,13 +37,13 @@ class XChemDiamondFS:
                 system_name = SystemName.from_pandda_dir(path)
                 finished_pandda_dirs.append(path)
                 system_names.append(system_name)
-            except:
+            except Exception as e:
+                print(e)
                 continue
 
 
         # FInished
         print(finished_pandda_dirs)
-
         print(system_names)
 
         # Get model building dirs
