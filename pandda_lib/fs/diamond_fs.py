@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import *
 from pathlib import Path
 from glob import glob
+import json
 
 from pandda_lib.common import Dtag, SystemName
 from pandda_lib.events import Event
@@ -24,8 +25,8 @@ class XChemDiamondFS:
         finished_pandda_mark_paths = []
         for path in glob(
                 glob_pattern,
-            recursive=True,
-            ):
+                recursive=True,
+        ):
             print(f"\t{path}")
             finished_pandda_mark_paths.append(Path(path))
         print(finished_pandda_mark_paths)
@@ -40,7 +41,6 @@ class XChemDiamondFS:
             except Exception as e:
                 print(e)
                 continue
-
 
         # FInished
         print(finished_pandda_dirs)
@@ -78,10 +78,18 @@ class XChemDiamondFS:
             pandda_dirs,
         )
 
-    # @staticmethod
-    # def from_json_path(json_path: Path):
-    #     ...
-    #
-    # def save_json(self, path):
-    #     with open(path, "w") as f:
-    #         json.dump()
+    @staticmethod
+    def from_json_path(json_path: Path):
+        ...
+
+    def save_json(self, path):
+
+        _module_building_dirs = {str(system): str(path) for system, path in self.model_building_dirs.items()}
+        _pandda_dirs = {str(system): str(path) for system, path in self.pandda_dirs.items()}
+        with open(path, "w") as f:
+            json.dump({
+                "model_building_dirs": _module_building_dirs,
+                "pandda_dirs": _pandda_dirs,
+            },
+                f
+            )
