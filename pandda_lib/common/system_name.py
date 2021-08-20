@@ -14,6 +14,7 @@ class SystemName:
     @staticmethod
     def from_dtag(dtag: Dtag) -> SystemName:
         match = re.match(f"(([^-]+)-.*)", dtag.dtag)
+        print(match)
         system_string = match.groups()[1]
         print(system_string)
         return SystemName(system_string)
@@ -21,7 +22,7 @@ class SystemName:
     @staticmethod
     def from_pandda_dir(path: Path):
         processed_datasets_dir = path / constants.PANDDA_PROCESSED_DATASETS_DIR
-
+        print(processed_datasets_dir)
         paths = processed_datasets_dir.glob("*")
         for dtag_path in paths:
             try:
