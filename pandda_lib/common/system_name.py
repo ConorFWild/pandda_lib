@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from pathlib import Path
 import re
 
-from pandda_lib.pandda_lib import constants
-from pandda_lib.pandda_lib.common import Dtag
+from pandda_lib import constants
+from pandda_lib.common import Dtag
 
 
 @dataclass()

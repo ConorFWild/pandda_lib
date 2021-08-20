@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from typing import *
 from pathlib import Path
 
-from pandda_lib.pandda_lib.common import Dtag, SystemName
-from pandda_lib.pandda_lib.events import Event
+from pandda_lib.common import Dtag, SystemName
+from pandda_lib.events import Event
 
 
 @dataclass

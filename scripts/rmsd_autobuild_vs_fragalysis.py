@@ -2,17 +2,13 @@ import os
 from typing import *
 from pathlib import Path
 from dataclasses import dataclass
-import re
 import itertools
 
 import fire
 
-from fragalysis_api.xcextracter.xcextracter import xcextracter
-from fragalysis_api.xcextracter.getdata import GetTargetsData, GetPdbData
-
 from pandda_lib.pandda_lib.common import Dtag, SystemName
 from pandda_lib.pandda_lib.frag import FragalysisDataDir
-from pandda_lib.pandda_lib.rmsd import Ligands, RMSD
+from pandda_lib.rmsd import Ligands, RMSD
 from pandda_lib.pandda_lib.fs import PanDDADir
 
 

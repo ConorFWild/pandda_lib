@@ -8,8 +8,8 @@ import re
 from fragalysis_api.xcextracter.xcextracter import xcextracter
 from fragalysis_api.xcextracter.getdata import GetTargetsData, GetPdbData
 
-from pandda_lib.pandda_lib.common import Dtag, SystemName
-from pandda_lib.pandda_lib.events import Event
+from pandda_lib.common import Dtag, SystemName
+from pandda_lib.events import Event
 
 
 @dataclass()
