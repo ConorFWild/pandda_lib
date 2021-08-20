@@ -27,8 +27,9 @@ class SystemName:
             try:
                 print(dtag_path)
                 dtag = Dtag(dtag_path.name)
-                break
+                return SystemName.from_dtag(dtag)
             except:
                 continue
 
-        return SystemName.from_dtag(dtag)
+
+        raise Exception("Could not match any dtags in dir")
