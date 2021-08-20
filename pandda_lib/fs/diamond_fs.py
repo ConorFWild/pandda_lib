@@ -27,7 +27,7 @@ class XChemDiamondFS:
             recursive=True,
             ):
             print(f"\t{path}")
-            finished_pandda_mark_paths.append(path)
+            finished_pandda_mark_paths.append(Path(path))
         print(finished_pandda_mark_paths)
 
         # FInished
