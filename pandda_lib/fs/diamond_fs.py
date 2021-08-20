@@ -2,6 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import *
 from pathlib import Path
+from glob import glob
 
 from pandda_lib.common import Dtag, SystemName
 from pandda_lib.events import Event
@@ -18,7 +19,14 @@ class XChemDiamondFS:
 
         # Look for finished PanDDAs
         print(f"Looking for finished PanDDAs...")
-        finished_pandda_mark_paths = list(xchem_diamond_dir.glob("*/processing/analysis/**/pandda.done"))
+        glob_pattern = str(xchem_diamond_dir / "*/processing/analysis/**/pandda.done")
+        print(f"Glob pattern is: {glob_pattern}")
+        finished_pandda_mark_paths = list(
+            glob(
+                glob_pattern,
+            recursive=True,
+            )
+        )
         print(finished_pandda_mark_paths)
 
         # FInished
