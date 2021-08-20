@@ -19,7 +19,7 @@ class XChemDiamondFS:
 
         # Look for finished PanDDAs
         print(f"Looking for finished PanDDAs...")
-        glob_pattern = str(xchem_diamond_dir / "*/processing/analysis/**/pandda.done")
+        glob_pattern = str(xchem_diamond_dir / "*/*/processing/analysis/**/pandda.done")
         print(f"Glob pattern is: {glob_pattern}")
         finished_pandda_mark_paths = list(
             glob(
