@@ -25,6 +25,7 @@ def main(diamond_dir: str, output_dir: str):
     print(client.server_info())
 
     diamond_paths = client.pandda.diamond_paths
+    diamond_paths.drop()
 
     docs = []
     for system_name, model_building_dir in diamond_fs.model_building_dirs.items():
