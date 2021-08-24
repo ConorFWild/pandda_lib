@@ -12,7 +12,7 @@ def main(output_dir, password):
 
     mongo_diamond_paths = client[constants.mongo_pandda][constants.mongo_diamond_paths]
 
-    output_dir = Path(output_dir)
+    output_dir = Path(output_dir).resolve()
     try:
         os.mkdir(output_dir)
     except Exception as e:
