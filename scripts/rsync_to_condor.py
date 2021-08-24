@@ -9,7 +9,7 @@ from pandda_lib import constants
 def main():
     client = MongoClient()
 
-    mongo_diamond_paths = client[constants.mongo_diamond_paths]
+    mongo_diamond_paths = client[constants.mongo_pandda][constants.mongo_diamond_paths]
 
     for system in mongo_diamond_paths.find():
         print(system)

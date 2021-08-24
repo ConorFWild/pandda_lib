@@ -123,6 +123,7 @@ LIGAND_CIF_FILE = "ligand.cif"
 # # MONGO
 ###################################################################
 
+mongo_pandda = "pandda"
 mongo_diamond_paths = "diamond_paths"
 
 ###################################################################
