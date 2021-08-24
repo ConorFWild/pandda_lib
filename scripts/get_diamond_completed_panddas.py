@@ -24,6 +24,7 @@ def main(diamond_dir: str, output_dir: str):
 
     diamond_paths = client.pandda.diamond_paths
 
+    docs = []
     for system_name, model_building_dir in diamond_fs.model_building_dirs.items():
         doc = {
                 "system_name": system_name.system_name,
@@ -33,6 +34,11 @@ def main(diamond_dir: str, output_dir: str):
         print(
             doc
         )
+        docs.append(doc)
+
+    diamond_paths.insert_many(docs)
+
+
 
 
 
