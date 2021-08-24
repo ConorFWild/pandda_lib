@@ -4,6 +4,7 @@ import fire
 import pymongo
 
 
+from pandda_lib import constants
 from pandda_lib.fs import XChemDiamondFS
 
 def main(diamond_dir: str, output_dir: str):
@@ -28,9 +29,9 @@ def main(diamond_dir: str, output_dir: str):
     docs = []
     for system_name, model_building_dir in diamond_fs.model_building_dirs.items():
         doc = {
-                "system_name": system_name.system_name,
-                "model_bulding_dir": str(model_building_dir),
-                "pandda_dirs": [str(x) for x in diamond_fs.pandda_dirs[system_name]],
+                constants.mongo_diamond_paths_system_name: system_name.system_name,
+                constants.mongo_diamond_paths_model_building_dir: str(model_building_dir),
+                constants.mongo_diamond_paths_pandda_dirs: [str(x) for x in diamond_fs.pandda_dirs[system_name]],
             }
         print(
             doc
