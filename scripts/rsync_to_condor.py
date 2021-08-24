@@ -44,6 +44,8 @@ def main(output_dir, password):
         )
         print(rsync_command.command)
 
+        rsync_command.run()
+
 
 
 
