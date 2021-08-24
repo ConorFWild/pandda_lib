@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 import subprocess
 
-command: str = "sshpass -p {password} rsync --progress --exclude 'autoprocessing' --exclude 'dimple' -avzh -e ssh zoh22914@ssh.diamond.ac.uk:{path_to_remote_dir}/ {path_to_loca_dir}"
+command: str = "sshpass -p '{password}' rsync --progress --exclude 'autoprocessing' --exclude 'dimple' -avzh -e ssh zoh22914@ssh.diamond.ac.uk:{path_to_remote_dir}/ {path_to_loca_dir}"
 
 
 @dataclass()
