@@ -29,6 +29,11 @@ def main(output_dir, password):
         model_building_dir = doc[constants.mongo_diamond_paths_model_building_dir]
         pandda_dirs = doc[constants.mongo_diamond_paths_pandda_dirs]
 
+        try:
+            os.mkdir(model_dirs / system_name)
+        except Exception as e:
+            print(e)
+
         rsync_command = RsyncDirs.from_paths(
             Path(model_building_dir),
             model_dirs / system_name,
