@@ -21,6 +21,7 @@ def main(diamond_dir: str, output_dir: str):
     # print(",".join([str(",") for x in diamond_fs.pandda_dirs.values()]))
 
     client = pymongo.MongoClient()
+    print(client.server_info())
 
     diamond_paths = client.pandda.diamond_paths
 
