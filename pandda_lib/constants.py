@@ -125,6 +125,9 @@ LIGAND_CIF_FILE = "ligand.cif"
 
 mongo_pandda = "pandda"
 mongo_diamond_paths = "diamond_paths"
+mongo_diamond_paths_system_name = "system_name"
+mongo_diamond_paths_model_building_dir = "model_building_dir"
+mongo_diamond_paths_pandda_dirs = "pandda_dirs"
 
 ###################################################################
 # # Test constants
