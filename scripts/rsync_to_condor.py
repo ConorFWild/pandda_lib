@@ -36,7 +36,7 @@ def main(output_dir, password):
         pandda_dirs = doc[constants.mongo_diamond_paths_pandda_dirs]
 
         #
-        system_pandda_dir = model_dirs / system_name
+        system_pandda_dir = target_pandda_dirs / system_name
         try_make(system_pandda_dir)
         for pandda_dir in pandda_dirs:
             rsync_command = RsyncDirs.from_paths(
