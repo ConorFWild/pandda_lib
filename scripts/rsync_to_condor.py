@@ -53,7 +53,7 @@ def main(output_dir, password):
 
         rsync_command = RsyncDirs.from_paths(
             Path(model_building_dir),
-            output_dir / system_name,
+            system_model_dir,
             password
         )
         print(rsync_command.command)
