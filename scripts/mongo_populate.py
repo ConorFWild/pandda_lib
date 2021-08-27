@@ -101,6 +101,7 @@ def main(data_dirs, pandda_dirs):
             model = Model.objects(
                 dataset=dataset,
             )
+            model.save()
             event = Event(
                 dataset=pandda_datasets,
                 event_idx=event_idx,
