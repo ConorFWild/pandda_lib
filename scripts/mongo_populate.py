@@ -116,6 +116,11 @@ def main(data_dirs, pandda_dirs):
 
         pandda_system = pandda_datasets[0].system
 
+        print(pandda_dir)
+        print(pandda_system)
+        print(pandda_events)
+        print(pandda_datasets)
+
         pandda = PanDDA(
             path=str(pandda_dir),
             system=pandda_system,
