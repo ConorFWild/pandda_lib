@@ -57,6 +57,7 @@ def main(data_dirs, pandda_dirs):
                 reflections=reflections,
                 compounds=compounds,
             )
+            dataset.save()
             system_datasets.append(dataset)
 
         system.datasets = system_datasets
