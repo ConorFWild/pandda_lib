@@ -14,7 +14,13 @@ def main(data_dirs, pandda_dirs):
 
     mongoengine.connect("pandda")
 
-
+    System.delete()
+    Dataset.delete()
+    Structure.delete()
+    Reflections.delete()
+    Compound.delete()
+    Event.delete()
+    PanDDA.delete()
 
     data_dirs = Path(data_dirs).resolve()
     pandda_dirs = Path(pandda_dirs).resolve()
@@ -89,7 +95,7 @@ def main(data_dirs, pandda_dirs):
             dataset = Dataset.objects(dtag=dtag)[0]
             event_idx = event_record["event_idx"]
             x = event_record["x"]
-            y= event_record["y"]
+            y = event_record["y"]
             z = event_record["z"]
             model = Model.objects(
                 dataset=dataset,
