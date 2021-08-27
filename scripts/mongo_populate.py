@@ -72,8 +72,11 @@ def main(data_dirs, pandda_dirs):
         pandda_models = []
         for dataset_dir in processed_datasets_dir.glob("*"):
             dtag = dataset_dir.name
-            dataset = Dataset.objects(dtag=dtag)[0]
-
+            try:
+                dataset = Dataset.objects(dtag=dtag)[0]
+            except Exception as e:
+                print(f"\t\tNo dataset with dtag: {dtag}: {e}")
+                continue
             model_dirs_path = dataset_dir / constants.PANDDA_MODELLED_STRUCTURES_DIR
             model_path = model_dirs_path / constants.PANDDA_EVENT_MODEL.format(dtag)
 
