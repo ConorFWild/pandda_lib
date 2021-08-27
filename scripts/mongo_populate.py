@@ -91,7 +91,7 @@ def main(data_dirs, pandda_dirs):
         event_table = pd.read_csv(event_table_path)
         pandda_events = []
         for index, event_record in event_table.iterrows():
-            print(event_record)
+            # print(event_record)
             dtag = event_record["dtag"]
             dataset = Dataset.objects(dtag=dtag)[0]
             event_idx = event_record["event_idx"]
@@ -109,7 +109,7 @@ def main(data_dirs, pandda_dirs):
                 z=z,
                 model=model,
             )
-            print(event)
+            # print(event)
             event.save()
             pandda_events.append(event)
 
