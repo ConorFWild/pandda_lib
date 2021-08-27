@@ -14,10 +14,13 @@ def main(data_dirs, pandda_dirs):
 
     mongoengine.connect("pandda")
 
-    data_dirs = Path(data_dirs)
-    pandda_dirs = Path(pandda_dirs)
+
+
+    data_dirs = Path(data_dirs).resolve()
+    pandda_dirs = Path(pandda_dirs).resolve()
 
     for data_dir in data_dirs.glob("*"):
+        print(f"\tProcessing data dir: {data_dir}")
         system_name = data_dir.name
         system = System(
             system_name=system_name,
@@ -56,7 +59,7 @@ def main(data_dirs, pandda_dirs):
     for pandda_dir in pandda_dirs.glob("*"):
         # system_name = pandda_dir.name
         # system = System.objects(system_name=system_name)[0]
-
+        print(f"\tProcessing pandda dir: {pandda_dir}")
         processed_datasets_dir = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR
         pandda_datasets = []
         pandda_models = []
