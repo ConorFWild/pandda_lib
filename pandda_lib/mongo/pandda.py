@@ -53,4 +53,4 @@ class PanDDA(Document):
     path = StringField()
     system = ReferenceField(System)
     events = ListField(ReferenceField(Event))
-    datasets = ListField(StringField)
+    datasets = ListField(ReferenceField(Dataset))
