@@ -100,8 +100,8 @@ def main(data_dirs, pandda_dirs):
             z = event_record["z"]
             model = Model.objects(
                 dataset=dataset,
-            )
-            model.save()
+            )[0]
+
             event = Event(
                 dataset=pandda_datasets,
                 event_idx=event_idx,
