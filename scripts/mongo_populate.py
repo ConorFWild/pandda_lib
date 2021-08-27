@@ -103,7 +103,7 @@ def main(data_dirs, pandda_dirs):
             )[0]
 
             event = Event(
-                dataset=pandda_datasets,
+                dataset=dataset,
                 event_idx=event_idx,
                 x=x,
                 y=y,
