@@ -102,13 +102,14 @@ def main(data_dirs, pandda_dirs):
                 dataset=dataset,
             )
             event = Event(
-                datasset=pandda_datasets,
+                dataset=pandda_datasets,
                 event_idx=event_idx,
                 x=x,
                 y=y,
                 z=z,
                 model=model,
             )
+            print(event)
             event.save()
             pandda_events.append(event)
 
