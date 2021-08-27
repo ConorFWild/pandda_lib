@@ -91,7 +91,11 @@ def main(data_dirs, pandda_dirs):
         analysis_dir_path = pandda_dir / constants.PANDDA_ANALYSES_DIR
         event_table_path = analysis_dir_path / constants.PANDDA_ANALYSE_EVENTS_FILE
 
-        event_table = pd.read_csv(event_table_path)
+        try:
+            event_table = pd.read_csv(event_table_path)
+        except Exception as e:
+            print(f"\t\tNo such csv: {event_table_path}: {e}")
+            continue
         pandda_events = []
         for index, event_record in event_table.iterrows():
             # print(event_record)
@@ -122,11 +126,6 @@ def main(data_dirs, pandda_dirs):
             pandda_events.append(event)
 
         pandda_system = pandda_datasets[0].system
-
-        print(pandda_dir)
-        print(pandda_system)
-        print(pandda_events)
-        print(pandda_datasets)
 
         pandda = PanDDA(
             path=str(pandda_dir),
