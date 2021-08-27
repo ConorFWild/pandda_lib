@@ -12,6 +12,8 @@ def add_pandda():
 
 def main(data_dirs, pandda_dirs):
 
+    mongoengine.connect("pandda")
+
     data_dirs = Path(data_dirs)
     pandda_dirs = Path(pandda_dirs)
 
