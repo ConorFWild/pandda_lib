@@ -22,6 +22,7 @@ def main(data_dirs, pandda_dirs):
         system = System(
             system_name=system_name,
         )
+        system.save()
 
         system_datasets = []
         for dataset_dir in data_dir.glob("*"):
@@ -33,8 +34,12 @@ def main(data_dirs, pandda_dirs):
             compound_paths = compound_dir.glob("*.cif")
 
             reflections = Reflections(path=str(reflections_path))
+            reflections.save()
             structure = Structure(path=str(structure_path))
+            structure.save()
             compounds = [Compound(path=str(compound_path)) for compound_path in compound_paths]
+            for compound in compounds:
+                compound.save()
 
             dataset = Dataset(
                 dtag=dtag,
@@ -94,6 +99,7 @@ def main(data_dirs, pandda_dirs):
                 z=z,
                 model=model,
             )
+            event.save()
             pandda_events.append(event)
 
         pandda_system = pandda_datasets[0].system
