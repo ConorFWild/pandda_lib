@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from mongoengine import (
     Document,
     StringField,
@@ -25,7 +23,7 @@ class Compound:
 
 class System:
     system_name: StringField()
-    datasets: ListField(ReferenceField(Dataset))
+    datasets: ListField(ReferenceField("Dataset"))
 
 
 class Dataset(Document):
