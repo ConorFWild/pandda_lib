@@ -93,7 +93,11 @@ def main(data_dirs, pandda_dirs):
         for index, event_record in event_table.iterrows():
             # print(event_record)
             dtag = event_record["dtag"]
-            dataset = Dataset.objects(dtag=dtag)[0]
+            try:
+                dataset = Dataset.objects(dtag=dtag)[0]
+            except Exception as e:
+                print(f"\t\tNo dataset with dtag: {dtag}: {e}")
+                continue
             event_idx = event_record["event_idx"]
             x = event_record["x"]
             y = event_record["y"]
