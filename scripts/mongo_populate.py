@@ -14,13 +14,13 @@ def main(data_dirs, pandda_dirs):
 
     mongoengine.connect("pandda")
 
-    System.delete()
-    Dataset.delete()
-    Structure.delete()
-    Reflections.delete()
-    Compound.delete()
-    Event.delete()
-    PanDDA.delete()
+    System.drop_collection()
+    Dataset.drop_collection()
+    Structure.drop_collection()
+    Reflections.drop_collection()
+    Compound.drop_collection()
+    Event.drop_collection()
+    PanDDA.drop_collection()
 
     data_dirs = Path(data_dirs).resolve()
     pandda_dirs = Path(pandda_dirs).resolve()
