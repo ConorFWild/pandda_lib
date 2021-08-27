@@ -9,19 +9,19 @@ from mongoengine import (
 )
 
 
-class Structure:
+class Structure(Document):
     path = StringField()
 
 
-class Reflections:
+class Reflections(Document):
     path = StringField()
 
 
-class Compound:
+class Compound(Document):
     path = StringField()
 
 
-class System:
+class System(Document):
     system_name = StringField()
     datasets = ListField(ReferenceField("Dataset"))
 
@@ -34,7 +34,7 @@ class Dataset(Document):
     compounds = ListField(ReferenceField(Compound))
 
 
-class Model:
+class Model(Document):
     path = StringField()
     dataset = ReferenceField(Dataset)
     compounds = ListField(ReferenceField(Compound))
@@ -49,7 +49,7 @@ class Event(Document):
     model = ReferenceField(Model)
 
 
-class PanDDA:
+class PanDDA(Document):
     path = StringField()
     system = ReferenceField(System)
     events = ListField(ReferenceField(Event))
