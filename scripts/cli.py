@@ -22,7 +22,7 @@ if __name__ == "__main__":
     f = button_dialog(
         title='Button dialog example',
         text='Do you want to confirm?',
-        buttons=[(name, functions[name]) for name in config]*5
+        buttons=[(name, functions[name]) for name in config]*10
         ,
     ).run()
 
