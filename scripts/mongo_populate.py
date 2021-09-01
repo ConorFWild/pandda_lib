@@ -96,6 +96,7 @@ def main(data_dirs, pandda_dirs):
         except Exception as e:
             print(f"\t\tNo such csv: {event_table_path}: {e}")
             continue
+
         pandda_events = []
         for index, event_record in event_table.iterrows():
             # print(event_record)
