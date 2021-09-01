@@ -15,7 +15,8 @@ if __name__ == "__main__":
         "mongo_populate": lambda: mongo_populate.main(
             config["mongo_populate"]["model_dirs"],
             config["mongo_populate"]["pandda_dirs"],
-        )
+        ),
+        "test": lambda: None,
     }
 
     f = button_dialog(

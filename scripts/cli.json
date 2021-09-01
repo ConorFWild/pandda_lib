@@ -2,5 +2,8 @@
   "mongo_populate": {
     "model_dirs": "/data/share-2/conor/pandda/output/diamond_data/model_dirs",
     "pandda_dirs": "/data/share-2/conor/pandda/output/diamond_data/panddas"
+  },
+  "test": {
+    "none": "none"
   }
 }
