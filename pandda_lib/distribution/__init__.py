@@ -1,1 +1,1 @@
-from htcondor import ClusterHTCondor
+from pandda_lib.distribution.htcondor import ClusterHTCondor
