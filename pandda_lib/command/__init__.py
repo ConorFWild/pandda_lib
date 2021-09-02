@@ -1,2 +1,2 @@
-from pandda_2_command import PanDDA2Command
-from shell_command import ShellCommand
+from pandda_lib.pandda_2_command import PanDDA2Command
+from pandda_lib.shell_command import ShellCommand
