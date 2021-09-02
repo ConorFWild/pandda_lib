@@ -27,7 +27,7 @@ def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core
     )
 
     for data_dir in data_dirs.glob("*"):
-        pandda_dir = pandda_dirs / pandda_dir.name
+        pandda_dir = pandda_dirs / data_dir.name
         TryMake(pandda_dir)()
 
         pandda_command = PanDDA2Command(
