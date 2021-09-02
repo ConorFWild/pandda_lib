@@ -2,7 +2,7 @@ from pathlib import Path
 
 import fire
 
-from pandda_lib.command import PanDDA2Command
+from pandda_lib.command import PanDDA2Command, TryMake, ShellCommand
 from pandda_lib.distribution import ClusterHTCondor
 
 
@@ -18,6 +18,8 @@ def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core
 
     data_dirs = Path(data_dirs)
     pandda_dirs = Path(pandda_dirs)
+
+
     htcondor = ClusterHTCondor(
         cores_per_worker=cores_per_worker,
         distributed_mem_per_core=mem_per_core
@@ -25,6 +27,8 @@ def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core
 
     for pandda_dir in data_dirs.glob("*"):
         pandda_dir = pandda_dirs / pandda_dir.name
+        TryMake(pandda_dir)()
+
         pandda_command = PanDDA2Command(
             analyse_path=analyse_path,
             data_dirs=pandda_dir,
