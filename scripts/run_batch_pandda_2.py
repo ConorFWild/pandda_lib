@@ -19,6 +19,7 @@ def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core
     data_dirs = Path(data_dirs)
     pandda_dirs = Path(pandda_dirs)
 
+    TryMake(pandda_dirs)()
 
     htcondor = ClusterHTCondor(
         cores_per_worker=cores_per_worker,
