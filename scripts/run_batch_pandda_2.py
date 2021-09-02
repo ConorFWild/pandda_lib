@@ -26,13 +26,13 @@ def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core
         distributed_mem_per_core=mem_per_core
     )
 
-    for pandda_dir in data_dirs.glob("*"):
+    for data_dir in data_dirs.glob("*"):
         pandda_dir = pandda_dirs / pandda_dir.name
         TryMake(pandda_dir)()
 
         pandda_command = PanDDA2Command(
             analyse_path=analyse_path,
-            data_dirs=pandda_dir,
+            data_dirs=data_dir,
             out_dir=pandda_dir,
             pdb_regex=pdb_regex,
             mtz_regex=mtz_regex,
