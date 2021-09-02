@@ -4,9 +4,9 @@ import fire
 
 from pandda_lib.command import PanDDA2Command, TryMake, ShellCommand
 from pandda_lib.distribution import ClusterHTCondor
+from pandda_lib import constants
 
-
-def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core=10,
+def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core=20,
          pdb_regex="dimple.pdb",
          mtz_regex="dimple.mtz",
          structure_factors_f="FWT",
@@ -30,6 +30,9 @@ def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core
         pandda_dir = pandda_dirs / data_dir.name
         TryMake(pandda_dir)()
 
+        out_file = pandda_dir / constants.PANDDA_ANALYSES_DIR / constants.PANDDA_ANALYSE_EVENTS_FILE
+
+
         pandda_command = PanDDA2Command(
             analyse_path=analyse_path,
             data_dirs=data_dir,
@@ -44,9 +47,12 @@ def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core
             local_cpus=cores_per_worker,
             mem_per_core=mem_per_core,
         )
-        print(pandda_command.command)
+        print(f"\tPanDDA command for {data_dir.name}: {pandda_command.command}")
 
-        # htcondor.submit(pandda_command.run)
+        if not out_file.exists():
+            print(f"\tNo event file for {data_dir.name}: submitting a cluster job!")
+
+            htcondor.submit(ShellCommand(pandda_command).run)
 
 
 if __name__ == "__main__":
