@@ -18,9 +18,11 @@ class PanDDA2Command:
                  distributed_scheduler,
                  local_cpus,
                  mem_per_core,
+                 distributed_tmp,
                  ):
         self.command = f"python {analyse_path} {data_dirs} {out_dir} --pdb_regex='{pdb_regex}' --mtz_regex='" \
                        f"{mtz_regex}' --structure_factors='(\"{structure_factors_f}\",\"{structure_factors_phi}\")' " \
                        f"--autobuild={autobuild} --global_processing='{global_processing}' --local_cpus={local_cpus} " \
-                       f"--distributed_mem_per_core={mem_per_core} --distributed_scheduler={distributed_scheduler}  --distributed_tmp=/data/share-2/conor/pandda/tmp"
+                       f"--distributed_mem_per_core={mem_per_core} --distributed_scheduler={distributed_scheduler} " \
+                       f"--distributed_tmp={distributed_tmp}"
 

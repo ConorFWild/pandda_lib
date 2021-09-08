@@ -14,6 +14,7 @@ def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core
          autobuild=True,
          global_processing="distributed",
          distributed_scheduler="HTCONDOR",
+        distributed_tmp="/data/share-2/conor/pandda/tmp",
          ):
 
     data_dirs = Path(data_dirs)
@@ -45,6 +46,7 @@ def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core
             distributed_scheduler=distributed_scheduler,
             local_cpus=cores_per_worker,
             mem_per_core=mem_per_core,
+            distributed_tmp=distributed_tmp,
         )
         print(f"\tPanDDA command for {data_dir.name}: {pandda_command.command}")
 
