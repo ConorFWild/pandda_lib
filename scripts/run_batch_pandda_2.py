@@ -53,7 +53,7 @@ def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=6, mem_per_core=
         if not out_file.exists():
             print(f"\tNo event file for {data_dir.name} at {out_file}: submitting a cluster job!")
 
-            htcondor.submit(ShellCommand(pandda_command))
+            htcondor.submit(ShellCommand(pandda_command.command))
 
 
 if __name__ == "__main__":
