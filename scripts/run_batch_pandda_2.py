@@ -6,7 +6,7 @@ from pandda_lib.command import PanDDA2Command, TryMake, ShellCommand
 from pandda_lib.distribution import ClusterHTCondor
 from pandda_lib import constants
 
-def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core=20,
+def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=6, mem_per_core=10,
          pdb_regex="dimple.pdb",
          mtz_regex="dimple.mtz",
          structure_factors_f="FWT",
