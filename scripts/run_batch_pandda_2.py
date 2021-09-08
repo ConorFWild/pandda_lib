@@ -32,7 +32,6 @@ def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core
 
         out_file = pandda_dir / constants.PANDDA_ANALYSES_DIR / constants.PANDDA_ANALYSE_EVENTS_FILE
 
-
         pandda_command = PanDDA2Command(
             analyse_path=analyse_path,
             data_dirs=data_dir,
@@ -50,7 +49,7 @@ def main(analyse_path, data_dirs, pandda_dirs, cores_per_worker=12, mem_per_core
         print(f"\tPanDDA command for {data_dir.name}: {pandda_command.command}")
 
         if not out_file.exists():
-            print(f"\tNo event file for {data_dir.name}: submitting a cluster job!")
+            print(f"\tNo event file for {data_dir.name} at {out_file}: submitting a cluster job!")
 
             htcondor.submit(ShellCommand(pandda_command).run)
 
