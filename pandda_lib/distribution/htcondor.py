@@ -33,7 +33,7 @@ class ClusterHTCondor:
             sleep(0.1)
 
         if process.status == 'error':
-            self.client.recreate_error_locally(process)
+            self.client.recreate_error_locally([process,])
             raise Exception(f'Failed to recreate errors in dask distribution locally!')
 
         result = process.result()
