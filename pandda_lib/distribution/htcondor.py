@@ -29,8 +29,8 @@ class ClusterHTCondor:
         # Multiprocess
         process = self.client.submit(f)
         while process.status == 'pending':
-            print(f"Process status is: {process.status}")
-            sleep(10)
+            # print(f"Process status is: {process.status}")
+            sleep(0.1)
 
         if process.status == 'error':
             raise Exception(f'Failed to recreate errors in dask distribution locally!')
