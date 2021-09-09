@@ -1,4 +1,5 @@
 from time import sleep
+import time
 
 
 class ClusterHTCondor:
@@ -29,9 +30,14 @@ class ClusterHTCondor:
     def __call__(self, funcs):
         processes = [self.client.submit(func) for func in funcs]
 
+        time_started = time.time()
         while any(process.status == 'pending' for process in processes):
             # print(f"Process status is: {process.status}")
             sleep(0.1)
+            current_time = time.time()
+            if (current_time-time_started) % 60 < 1:
+                print(f"Statuses are: {[process.status for process in processes]}")
+
 
 
 
