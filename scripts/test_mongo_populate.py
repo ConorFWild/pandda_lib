@@ -8,9 +8,6 @@ from pandda_lib.mongo.pandda import *
 from pandda_lib import constants
 
 
-def add_pandda():
-    ...
-
 
 def main(data_dir, pandda_dir, mtz_regex="*.dimple.mtz", pdb_regex="*.dimple.pdb", compound_dir=None):
     mongoengine.connect("test_pandda")
