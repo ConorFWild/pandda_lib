@@ -4,6 +4,7 @@ from time import sleep
 class ClusterHTCondor:
 
     def __init__(self,
+                 jobs,
                  cores_per_worker=12,
                  distributed_mem_per_core=10,
                  ):
@@ -18,12 +19,21 @@ class ClusterHTCondor:
             cores=cores_per_worker,
             memory=f"{distributed_mem_per_core * cores_per_worker}G",
             disk="10G",
-            processes=1,
+            processes=jobs,
             job_extra=job_extra,
         )
         self.cluster.scale(jobs=1)
 
         self.client = Client(self.cluster)
+
+    def __call__(self, funcs):
+        processes = [self.client.submit(func) for func in funcs]
+
+        while any(process.status == 'pending' for process in processes):
+            # print(f"Process status is: {process.status}")
+            sleep(0.1)
+
+
 
     def submit(self, f):
         # Multiprocess
