@@ -41,11 +41,11 @@ def main(analyse_path,
         out_file = pandda_dir / constants.PANDDA_ANALYSES_DIR / constants.PANDDA_ANALYSE_EVENTS_FILE
 
         if not out_file.exists():
+            print(f"\tNo event file for {data_dir.name} at {out_file}: submitting a cluster job!")
 
             TryRemove(pandda_dir)()
             TryMake(pandda_dir)()
 
-            print(f"\tNo event file for {data_dir.name} at {out_file}: submitting a cluster job!")
 
             pandda_command = PanDDA2Command(
                 analyse_path=analyse_path,
