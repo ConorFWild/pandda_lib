@@ -9,7 +9,7 @@ from pandda_lib import constants
 def main(analyse_path,
          data_dirs,
          pandda_dirs,
-         jobs=3,
+         jobs=5,
          cores_per_worker=6,
          mem_per_core=10,
          pdb_regex="dimple.pdb",
