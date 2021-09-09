@@ -20,10 +20,10 @@ class ClusterHTCondor:
             cores=cores_per_worker,
             memory=f"{distributed_mem_per_core * cores_per_worker}G",
             disk="10G",
-            processes=jobs,
+            processes=1,
             job_extra=job_extra,
         )
-        self.cluster.scale(jobs=1)
+        self.cluster.scale(jobs=jobs)
 
         self.client = Client(self.cluster)
 
