@@ -33,6 +33,8 @@ def main(analyse_path,
         distributed_mem_per_core=mem_per_core
     )
 
+    commands =[]
+
     for data_dir in data_dirs.glob("*"):
         pandda_dir = pandda_dirs / data_dir.name
         TryMake(pandda_dir)()
@@ -60,8 +62,11 @@ def main(analyse_path,
         if not out_file.exists():
             print(f"\tNo event file for {data_dir.name} at {out_file}: submitting a cluster job!")
 
-            htcondor.submit(ShellCommand(pandda_command.command))
+            commands.append(ShellCommand(pandda_command.command))
 
+            # htcondor.submit(ShellCommand(pandda_command.command))
+
+    htcondor(commands)
 
 if __name__ == "__main__":
     fire.Fire(main)
