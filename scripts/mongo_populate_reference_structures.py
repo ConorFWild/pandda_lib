@@ -30,7 +30,7 @@ def main(reference_structure_dir: str):
 
     for path in reference_structure_dir.glob("*"):
         print(f"\tPath is: {path}")
-        dtag = Dtag.from_string(path.name)
+        dtag = Dtag.from_name(path.name)
         print(f"\t\tDtag is {dtag}")
         system_name = SystemName.from_dtag(dtag)
         print(f"\t\tSystem is: {system_name}")
