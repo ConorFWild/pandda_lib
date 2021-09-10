@@ -57,7 +57,7 @@ def main(reference_structure_dir: str):
                 z=centroid[2],
             )
             mongo_ligand.save()
-            mongo_ligand.append(mongo_ligand)
+            mongo_ligands.append(mongo_ligand)
 
         mongo_reference_model = pandda.ReferenceModel(
             path=str(path),
