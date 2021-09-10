@@ -66,3 +66,6 @@ def main(reference_structure_dir: str):
             ligands=mongo_ligands
         )
         mongo_reference_model.save()
+
+if __name__ == "__main__":
+    fire.Fire(main)
