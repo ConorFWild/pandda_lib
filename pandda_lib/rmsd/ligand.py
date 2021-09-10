@@ -8,7 +8,7 @@ import gemmi
 
 from pandda_lib.common import Dtag
 from pandda_lib.events import Event
-from pandda_lib.rmsd import Structure
+from pandda_lib.rmsd.structure import Structure
 
 
 @dataclass()
