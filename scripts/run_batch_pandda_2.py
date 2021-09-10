@@ -6,6 +6,7 @@ from pandda_lib.command import PanDDA2Command, TryMake, ShellCommand, TryRemove
 from pandda_lib.distribution import ClusterHTCondor
 from pandda_lib import constants
 
+
 def main(analyse_path,
          data_dirs,
          pandda_dirs,
@@ -19,9 +20,8 @@ def main(analyse_path,
          autobuild=True,
          global_processing="distributed",
          distributed_scheduler="HTCONDOR",
-        distributed_tmp="/data/share-2/conor/pandda/tmp",
+         distributed_tmp="/data/share-2/conor/pandda/tmp",
          ):
-
     data_dirs = Path(data_dirs)
     pandda_dirs = Path(pandda_dirs)
 
@@ -33,7 +33,7 @@ def main(analyse_path,
         distributed_mem_per_core=mem_per_core
     )
 
-    commands =[]
+    commands = []
 
     for data_dir in data_dirs.glob("*"):
         pandda_dir = pandda_dirs / data_dir.name
@@ -45,7 +45,6 @@ def main(analyse_path,
 
             TryRemove(pandda_dir)()
             TryMake(pandda_dir)()
-
 
             pandda_command = PanDDA2Command(
                 analyse_path=analyse_path,
@@ -72,6 +71,7 @@ def main(analyse_path,
     print(f"Got {len(commands)} commands to submit...")
 
     htcondor(commands)
+
 
 if __name__ == "__main__":
     fire.Fire(main)

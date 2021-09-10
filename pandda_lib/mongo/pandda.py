@@ -54,3 +54,19 @@ class PanDDA(Document):
     system = ReferenceField(System)
     events = ListField(ReferenceField(Event))
     datasets = ListField(ReferenceField(Dataset))
+
+
+class Ligand(Document):
+    reference_model = ReferenceField("ReferenceModel")
+    x = FloatField()
+    y = FloatField()
+    z = FloatField()
+
+
+class ReferenceModel(Document):
+    path = StringField()
+    system = ReferenceField(System)
+    dataset = ReferenceField(Dataset)
+    event = ReferenceField(Event)
+    dataset = ReferenceField(Dataset)
+    ligands = ListField(ReferenceField(Ligand))
