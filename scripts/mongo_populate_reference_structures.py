@@ -14,15 +14,15 @@ from pandda_lib import constants
 def main(reference_structure_dir: str):
     mongoengine.connect("test_pandda")
 
-    pandda.System.drop_collection()
-    pandda.Dataset.drop_collection()
-    pandda.Structure.drop_collection()
-    pandda.Reflections.drop_collection()
-    pandda.Compound.drop_collection()
-    pandda.Event.drop_collection()
-    pandda.PanDDA.drop_collection()
-    pandda.ReferenceModel.drop_collection()
-    pandda.Ligand.drop_collection()
+    # pandda.System.drop_collection()
+    # pandda.Dataset.drop_collection()
+    # pandda.Structure.drop_collection()
+    # pandda.Reflections.drop_collection()
+    # pandda.Compound.drop_collection()
+    # pandda.Event.drop_collection()
+    # pandda.PanDDA.drop_collection()
+    # pandda.ReferenceModel.drop_collection()
+    # pandda.Ligand.drop_collection()
 
     reference_structure_dir = Path(reference_structure_dir)
 
