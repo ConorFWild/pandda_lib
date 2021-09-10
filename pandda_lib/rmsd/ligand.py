@@ -46,13 +46,14 @@ class Ligands:
     def from_structure(struc: Any):
 
         ligands: List[Ligand] = []
-        sel = gemmi.Selection('(LIG)')
+        # sel = gemmi.Selection('(LIG)')
 
-        for model in sel.models(struc):
+        for model in struc:
 
-            for chain in sel.chains(model):
+            for chain in model:
 
-                for residue in sel.residues(chain):
-                    ligands.append(Ligand(residue))
+                for residue in chain:
+                    if residue.name == "LIG":
+                        ligands.append(Ligand(residue))
 
         return Ligands(ligands)
