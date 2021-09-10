@@ -3,6 +3,8 @@ from dataclasses import dataclass
 from typing import *
 from pathlib import Path
 
+import gemmi
+
 from pandda_lib.common import Dtag
 from pandda_lib.events import Event
 
