@@ -36,14 +36,18 @@ def main(reference_structure_dir: str):
             system_name = SystemName.from_dtag(dtag)
             print(f"\t\tSystem is: {system_name}")
 
-            mongo_system = pandda.System(system_name=system_name.system_name, )
-            mongo_system.save()
-            mongo_dataset = pandda.Dataset(dtag=dtag.dtag, system=mongo_system)
-            mongo_dataset.save()
+            try:
+                mongo_system = pandda.System.objects(system_name=system_name.system_name,)[0]
+            except Exception as e:
+                mongo_system = pandda.System(system_name=system_name.system_name, )
+                mongo_system.save()
 
-            # mongo_system = pandda.System.objects(system_name=system_name.system_name,)[0]
-            # mongo_dtag = pandda.Dataset.objects(dtag=dtag.dtag)[0]
-            #
+            try:
+                mongo_dataset = pandda.Dataset.objects(dtag=dtag.dtag)[0]
+            except Exception as e:
+                mongo_dataset = pandda.Dataset(dtag=dtag.dtag, system=mongo_system)
+                mongo_dataset.save()
+
 
             structure = rmsd.Structure.from_path(path)
             ligands = rmsd.Ligands.from_structure(structure)
