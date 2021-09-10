@@ -52,26 +52,31 @@ def main(reference_structure_dir: str):
             structure = rmsd.Structure.from_path(path)
             ligands = rmsd.Ligands.from_structure(structure)
 
-            mongo_ligands=[]
-            for ligand in ligands.structures:
-                centroid = ligand.centroid()
-                mongo_ligand = pandda.Ligand(
-                    reference_model=None,
-                    x=centroid[0],
-                    y=centroid[1],
-                    z=centroid[2],
-                )
-                mongo_ligand.save()
-                mongo_ligands.append(mongo_ligand)
 
-            mongo_reference_model = pandda.ReferenceModel(
-                path=str(path),
-                system=mongo_system,
-                dataset=mongo_dataset,
-                event=None,
-                ligands=mongo_ligands
-            )
-            mongo_reference_model.save()
+
+            try:
+                mongo_reference_model = pandda.ReferenceModel(path=str(path))[0]
+            except Exception as e:
+                mongo_ligands = []
+                for ligand in ligands.structures:
+                    centroid = ligand.centroid()
+                    mongo_ligand = pandda.Ligand(
+                        reference_model=None,
+                        x=centroid[0],
+                        y=centroid[1],
+                        z=centroid[2],
+                    )
+                    mongo_ligand.save()
+                    mongo_ligands.append(mongo_ligand)
+
+                mongo_reference_model = pandda.ReferenceModel(
+                    path=str(path),
+                    system=mongo_system,
+                    dataset=mongo_dataset,
+                    event=None,
+                    ligands=mongo_ligands
+                )
+                mongo_reference_model.save()
 
         except Exception as e:
             print(e)
