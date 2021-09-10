@@ -29,10 +29,11 @@ def main(reference_structure_dir: str):
     print(f"Reference scructure dir is: {reference_structure_dir}")
 
     for path in reference_structure_dir.glob("*"):
+        print(f"\tPath is: {path}")
         dtag = Dtag.from_string(path.name)
-        print(dtag)
+        print(f"\t\tDtag is {dtag}")
         system_name = SystemName.from_dtag(dtag)
-        print(system_name)
+        print(f"\t\tSystem is: {system_name}")
 
         mongo_system = pandda.System(system_name=system_name.system_name, )
         mongo_system.save()
