@@ -10,7 +10,9 @@ from pandda_lib import constants
 def main(analyse_path,
          data_dirs,
          pandda_dirs,
-         jobs=5,
+         jobs=1,
+         main_cores_per_worker=6,
+         main_mem_per_core=50,
          cores_per_worker=6,
          mem_per_core=10,
          pdb_regex="dimple.pdb",
@@ -29,8 +31,8 @@ def main(analyse_path,
 
     htcondor = ClusterHTCondor(
         jobs=jobs,
-        cores_per_worker=cores_per_worker,
-        distributed_mem_per_core=mem_per_core
+        cores_per_worker=main_cores_per_worker,
+        distributed_mem_per_core=main_mem_per_core
     )
 
     commands = []
