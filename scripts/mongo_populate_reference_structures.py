@@ -26,6 +26,8 @@ def main(reference_structure_dir: str):
 
     reference_structure_dir = Path(reference_structure_dir)
 
+    print(f"Reference scructure dir is: {reference_structure_dir}")
+
     for path in reference_structure_dir.glob("*"):
         dtag = Dtag.from_string(path.name)
         print(dtag)
