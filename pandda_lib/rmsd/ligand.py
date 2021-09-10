@@ -8,6 +8,7 @@ import gemmi
 
 from pandda_lib.common import Dtag
 from pandda_lib.events import Event
+from pandda_lib.rmsd import Structure
 
 
 @dataclass()
@@ -43,12 +44,12 @@ class Ligands:
     structures: List[Ligand]
 
     @staticmethod
-    def from_structure(struc: Any):
+    def from_structure(struc: Structure):
 
         ligands: List[Ligand] = []
         # sel = gemmi.Selection('(LIG)')
 
-        for model in struc:
+        for model in struc.structure:
 
             for chain in model:
 

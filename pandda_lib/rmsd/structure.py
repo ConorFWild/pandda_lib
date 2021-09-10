@@ -12,4 +12,5 @@ class Structure:
 
     @staticmethod
     def from_path(path: Path) -> Structure:
-        ...
+        struc = gemmi.read_structure(str(path))
+        return Structure(struc)
