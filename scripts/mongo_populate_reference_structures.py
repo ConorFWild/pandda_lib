@@ -37,7 +37,7 @@ def main(reference_structure_dir: str):
             print(f"\t\tSystem is: {system_name}")
 
             try:
-                mongo_system = pandda.System.objects(system_name=system_name.system_name,)[0]
+                mongo_system = pandda.System.objects(system_name=system_name.system_name, )[0]
             except Exception as e:
                 mongo_system = pandda.System(system_name=system_name.system_name, )
                 mongo_system.save()
@@ -48,11 +48,8 @@ def main(reference_structure_dir: str):
                 mongo_dataset = pandda.Dataset(dtag=dtag.dtag, system=mongo_system)
                 mongo_dataset.save()
 
-
             structure = rmsd.Structure.from_path(path)
             ligands = rmsd.Ligands.from_structure(structure)
-
-
 
             try:
                 mongo_reference_model = pandda.ReferenceModel(path=str(path))[0]
@@ -80,6 +77,7 @@ def main(reference_structure_dir: str):
 
         except Exception as e:
             print(e)
+
 
 if __name__ == "__main__":
     fire.Fire(main)
