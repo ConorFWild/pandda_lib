@@ -6,8 +6,8 @@ from pathlib import Path
 import numpy as np
 import gemmi
 
-from pandda_lib.pandda_lib.common import Dtag
-from pandda_lib.pandda_lib.events import Event
+from pandda_lib.common import Dtag
+from pandda_lib.events import Event
 
 
 @dataclass()
