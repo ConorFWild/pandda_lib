@@ -69,6 +69,8 @@ def main(analyse_path,
             commands.append(ShellCommand(pandda_command.command))
 
             # htcondor.submit(ShellCommand(pandda_command.command))
+        else:
+            print(f"\tEvent csv file: {out_file} already generated!")
 
     print(f"Got {len(commands)} commands to submit...")
 
