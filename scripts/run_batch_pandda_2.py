@@ -37,6 +37,7 @@ def main(analyse_path,
 
     commands = []
 
+    callbacks = []
     for data_dir in data_dirs.glob("*"):
         pandda_dir = pandda_dirs / data_dir.name
 
@@ -69,15 +70,13 @@ def main(analyse_path,
             commands.append(ShellCommand(pandda_command.command))
 
             # htcondor.submit(ShellCommand(pandda_command.command))
+            callbacks.append(out_file.exists)
         else:
             print(f"\tEvent csv file: {out_file} already generated!")
 
     print(f"Got {len(commands)} commands to submit...")
 
-    callback = [(pandda_dirs / data_dir.name / constants.PANDDA_ANALYSES_DIR /
-                 constants.PANDDA_ANALYSE_EVENTS_FILE).exists()
-                for data_dir
-                in data_dirs.glob("*")]
+    callback = lambda: [x() for x in callbacks]
 
     htcondor(commands, callback)
 

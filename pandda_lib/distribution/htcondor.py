@@ -39,7 +39,7 @@ class ClusterHTCondor:
                 print("#####################################")
                 print(f"Statuses are: {[process.status for process in processes]}")
                 if callback:
-                    print(callback)
+                    print(callback())
 
 
 
