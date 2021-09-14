@@ -46,16 +46,27 @@ class ClusterHTCondor:
 
 
 
-    def submit(self, f):
+    def submit(self, f, callback):
         # Multiprocess
         process = self.client.submit(f)
+        time_started = time.time()
+
         while process.status == 'pending':
             # print(f"Process status is: {process.status}")
             sleep(0.1)
 
-        if process.status == 'error':
-            self.client.recreate_error_locally([process,])
-            raise Exception(f'Failed to recreate errors in dask distribution locally!')
+            current_time = time.time()
+            if (current_time - time_started) % 60 < 1:
+                print("#####################################")
+                print(f"Statuses are: {[process.status ]}")
+                if callback:
+                    print(callback())
+
+                time.sleep(1)
+        #
+        # if process.status == 'error':
+        #     self.client.recreate_error_locally([process,])
+        #     raise Exception(f'Failed to recreate errors in dask distribution locally!')
 
         result = process.result()
 
