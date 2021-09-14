@@ -76,9 +76,13 @@ def main(analyse_path,
 
     print(f"Got {len(commands)} commands to submit...")
 
-    callback = lambda: [x() for x in callbacks]
+    from functools import partial
 
-    htcondor(commands, callback)
+    def callback(_callbacks):
+        return [_callback() for _callback in _callbacks]
+    # callback = lambda: [x() for x in callbacks]
+
+    htcondor(commands, partial(callback, callbacks))
 
 
 if __name__ == "__main__":
