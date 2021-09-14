@@ -27,7 +27,7 @@ class ClusterHTCondor:
 
         self.client = Client(self.cluster)
 
-    def __call__(self, funcs):
+    def __call__(self, funcs, callback=None):
         processes = [self.client.submit(func) for func in funcs]
 
         time_started = time.time()
@@ -36,7 +36,10 @@ class ClusterHTCondor:
             sleep(0.1)
             current_time = time.time()
             if (current_time-time_started) % 60 < 1:
+                print("#####################################")
                 print(f"Statuses are: {[process.status for process in processes]}")
+                if callback:
+                    print(callback)
 
 
 
