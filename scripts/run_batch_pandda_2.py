@@ -74,9 +74,10 @@ def main(analyse_path,
 
     print(f"Got {len(commands)} commands to submit...")
 
-    callback = [(pandda_dir / constants.PANDDA_ANALYSES_DIR / constants.PANDDA_ANALYSE_EVENTS_FILE).exists()
-                for pandda_dir
-                in pandda_dirs]
+    callback = [(pandda_dirs / data_dir.name / constants.PANDDA_ANALYSES_DIR /
+                 constants.PANDDA_ANALYSE_EVENTS_FILE).exists()
+                for data_dir
+                in data_dirs.glob("*")]
 
     htcondor(commands, callback)
 
