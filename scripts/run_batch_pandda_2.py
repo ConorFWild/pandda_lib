@@ -69,8 +69,6 @@ def main(analyse_path,
 
             # commands.append(ShellCommand(pandda_command.command))
 
-
-
             htcondor.submit(ShellCommand(pandda_command.command, ), lambda: f"{pandda_dir}")
             # callbacks.append(out_file.exists)
         else:

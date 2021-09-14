@@ -25,5 +25,5 @@ class PanDDA2Command:
                        f"{mtz_regex}' --structure_factors='(\"{structure_factors_f}\",\"{structure_factors_phi}\")' " \
                        f"--autobuild={autobuild} --global_processing='{global_processing}' --local_cpus={local_cpus} " \
                        f"--distributed_mem_per_core={mem_per_core} --distributed_scheduler={distributed_scheduler} " \
-                       f"--distributed_tmp={distributed_tmp} &> {log_file}"
+                       f"--distributed_tmp={distributed_tmp} --rank_method=autobuild &> {log_file}"
 

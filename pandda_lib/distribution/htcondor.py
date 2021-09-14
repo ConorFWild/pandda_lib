@@ -35,16 +35,13 @@ class ClusterHTCondor:
             # print(f"Process status is: {process.status}")
             sleep(0.1)
             current_time = time.time()
-            if (current_time-time_started) % 60 < 1:
+            if (current_time - time_started) % 60 < 1:
                 print("#####################################")
                 print(f"Statuses are: {[process.status for process in processes]}")
                 if callback:
                     print(callback())
 
                 time.sleep(1)
-
-
-
 
     def submit(self, f, callback):
         # Multiprocess
@@ -58,7 +55,7 @@ class ClusterHTCondor:
             current_time = time.time()
             if (current_time - time_started) % 60 < 1:
                 print("#####################################")
-                print(f"Statuses are: {[process.status ]}")
+                print(f"Statuses are: {[process.status]}")
                 if callback:
                     print(callback())
 
