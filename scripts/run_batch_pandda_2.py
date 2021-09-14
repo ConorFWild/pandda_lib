@@ -32,7 +32,8 @@ def main(analyse_path,
     htcondor = ClusterHTCondor(
         jobs=jobs,
         cores_per_worker=main_cores_per_worker,
-        distributed_mem_per_core=main_mem_per_core
+        distributed_mem_per_core=main_mem_per_core,
+        log_directory=distributed_tmp,
     )
 
     commands = []

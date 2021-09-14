@@ -8,6 +8,7 @@ class ClusterHTCondor:
                  jobs,
                  cores_per_worker=12,
                  distributed_mem_per_core=10,
+                 log_directory="/tmp",
                  ):
         import dask
         from dask.distributed import Client
@@ -22,6 +23,7 @@ class ClusterHTCondor:
             disk="10G",
             processes=1,
             job_extra=job_extra,
+            log_directory=log_directory,
         )
         self.cluster.scale(jobs=jobs)
 
