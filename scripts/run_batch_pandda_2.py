@@ -67,22 +67,22 @@ def main(analyse_path,
             )
             print(f"\tPanDDA command for {data_dir.name}: {pandda_command.command}")
 
-            commands.append(ShellCommand(pandda_command.command))
+            # commands.append(ShellCommand(pandda_command.command))
 
-            # htcondor.submit(ShellCommand(pandda_command.command))
-            callbacks.append(out_file.exists)
+            htcondor.submit(ShellCommand(pandda_command.command))
+            # callbacks.append(out_file.exists)
         else:
             print(f"\tEvent csv file: {out_file} already generated!")
 
-    print(f"Got {len(commands)} commands to submit...")
-
-    from functools import partial
-
-    def callback(_callbacks):
-        return [_callback() for _callback in _callbacks]
-    # callback = lambda: [x() for x in callbacks]
-
-    htcondor(commands, partial(callback, callbacks))
+    # print(f"Got {len(commands)} commands to submit...")
+    #
+    # from functools import partial
+    #
+    # def callback(_callbacks):
+    #     return [_callback() for _callback in _callbacks]
+    # # callback = lambda: [x() for x in callbacks]
+    #
+    # htcondor(commands, partial(callback, callbacks))
 
 
 if __name__ == "__main__":
