@@ -41,6 +41,8 @@ class ClusterHTCondor:
                 if callback:
                     print(callback())
 
+                time.sleep(1)
+
 
 
 
