@@ -106,7 +106,7 @@ def main(data_dir, pandda_dir, mtz_regex="*.dimple.mtz", pdb_regex="*.dimple.pdb
         x = event_record["x"]
         y = event_record["y"]
         z = event_record["z"]
-        event_model_path = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / event_idx / "rhofit" / "best.pdb"
+        event_model_path = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / str(event_idx) / "rhofit" / "best.pdb"
         event_model = Model(
             path=str(event_model_path.resolve()),
             dataset=dataset,
