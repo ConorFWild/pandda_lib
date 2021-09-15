@@ -67,7 +67,7 @@ def main(reference_structure_dir: str):
                     mongo_ligands.append(mongo_ligand)
 
                 mongo_reference_model = pandda.ReferenceModel(
-                    path=str(path),
+                    path=str(path.resolve()),
                     system=mongo_system,
                     dataset=mongo_dataset,
                     event=None,
