@@ -106,9 +106,15 @@ def main(data_dir, pandda_dir, mtz_regex="*.dimple.mtz", pdb_regex="*.dimple.pdb
         x = event_record["x"]
         y = event_record["y"]
         z = event_record["z"]
-        model = Model.objects(
-            dataset=dataset,
-        )[0]
+        event_model_path = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / event_idx / "rhofit" / "best.pdb"
+        event_model = Model(path=str(event_model_path.resolve()),
+                            dataset=dataset,
+                            )
+        event_model.save()
+
+        # model = Model.objects(
+        #     dataset=dataset,
+        # )[0]
 
         event = Event(
             dataset=dataset,
@@ -116,7 +122,7 @@ def main(data_dir, pandda_dir, mtz_regex="*.dimple.mtz", pdb_regex="*.dimple.pdb
             x=x,
             y=y,
             z=z,
-            model=model,
+            model=event_model,
         )
         # print(event)
         event.save()
