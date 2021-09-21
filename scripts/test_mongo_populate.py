@@ -9,7 +9,7 @@ from pandda_lib import constants
 
 
 def main(data_dir, pandda_dir, mtz_regex="*.dimple.mtz", pdb_regex="*.dimple.pdb", compound_dir=None):
-    mongoengine.connect("test_pandda_closest")
+    mongoengine.connect("test_pandda_far")
 
     System.drop_collection()
     Dataset.drop_collection()
