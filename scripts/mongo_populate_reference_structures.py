@@ -12,7 +12,7 @@ from pandda_lib import constants
 
 
 def main(reference_structure_dir: str):
-    mongoengine.connect("test_pandda_far")
+    mongoengine.connect("test_pandda_random")
 
     # pandda.System.drop_collection()
     # pandda.Dataset.drop_collection()
