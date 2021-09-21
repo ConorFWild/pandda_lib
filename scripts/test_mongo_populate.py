@@ -9,7 +9,7 @@ from pandda_lib import constants
 
 
 def main(data_dir, pandda_dir, mtz_regex="*.dimple.mtz", pdb_regex="*.dimple.pdb", compound_dir=None):
-    mongoengine.connect("test_pandda")
+    mongoengine.connect("test_pandda_closest")
 
     System.drop_collection()
     Dataset.drop_collection()
@@ -106,6 +106,7 @@ def main(data_dir, pandda_dir, mtz_regex="*.dimple.mtz", pdb_regex="*.dimple.pdb
         x = event_record["x"]
         y = event_record["y"]
         z = event_record["z"]
+
         event_model_path = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / dtag / str(event_idx) / "rhofit" / \
                            "best.pdb"
         event_model = Model(

@@ -32,6 +32,7 @@ class Dataset(Document):
     structure = ReferenceField(Structure)
     reflections = ReferenceField(Reflections)
     compounds = ListField(ReferenceField(Compound))
+    # model = ReferenceField("Model")
 
 
 class Model(Document):
