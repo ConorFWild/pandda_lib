@@ -8,8 +8,9 @@ from pandda_lib.mongo.pandda import *
 from pandda_lib import constants
 
 
-def main(data_dir, pandda_dir, mtz_regex="*.dimple.mtz", pdb_regex="*.dimple.pdb", compound_dir=None):
-    mongoengine.connect("test_pandda_random")
+def main(data_dir, pandda_dir, mtz_regex="*.dimple.mtz", pdb_regex="*.dimple.pdb", compound_dir=None,
+         table="test_pandda"):
+    mongoengine.connect(table)
 
     System.drop_collection()
     Dataset.drop_collection()

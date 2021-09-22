@@ -11,8 +11,8 @@ from pandda_lib import rmsd
 from pandda_lib import constants
 
 
-def main(reference_structure_dir: str):
-    mongoengine.connect("test_pandda_random")
+def main(reference_structure_dir: str, table="pandda"):
+    mongoengine.connect(table)
 
     # pandda.System.drop_collection()
     # pandda.Dataset.drop_collection()
