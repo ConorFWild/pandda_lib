@@ -67,7 +67,7 @@ def main(analyse_path,
                 rank_method="autobuild",
                 comparison_strategy="closest_cluster",
                 cluster_selection="close",
-                log_file=pandda_dir / "log.txt",
+                log_file=pandda_dirs / f"{data_dir.name}.txt",
             )
             print(f"\tPanDDA command for {data_dir.name}: {pandda_command.command}")
 
