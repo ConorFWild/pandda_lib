@@ -32,5 +32,5 @@ class PanDDA2Command:
                        f"--distributed_tmp={distributed_tmp} --rank_method=" \
                        f"{rank_method} --comparison_strategy={comparison_strategy} " \
                        f"--cluster_selection={cluster_selection} " \
-                       f"&> {log_file}"
+                       f"> {log_file}"
 
