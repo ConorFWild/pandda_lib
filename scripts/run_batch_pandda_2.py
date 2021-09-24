@@ -65,7 +65,7 @@ def main(analyse_path,
                 mem_per_core=mem_per_core,
                 distributed_tmp=distributed_tmp,
                 rank_method="autobuild",
-                comparison_strategy="closest_cluster",
+                comparison_strategy="high_res_random",
                 cluster_selection="close",
                 log_file=pandda_dirs / f"{data_dir.name}.txt",
             )
