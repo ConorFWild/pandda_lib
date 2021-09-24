@@ -31,6 +31,6 @@ class PanDDA2Command:
                        f"--distributed_mem_per_core={mem_per_core} --distributed_scheduler={distributed_scheduler} " \
                        f"--distributed_tmp={distributed_tmp} --rank_method=" \
                        f"{rank_method} --comparison_strategy={comparison_strategy} " \
-                       f"--cluster_selection={cluster_selection} /" \
+                       f"--cluster_selection={cluster_selection} " \
                        f"&> {log_file}"
 
