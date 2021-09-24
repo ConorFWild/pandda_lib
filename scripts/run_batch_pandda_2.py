@@ -64,6 +64,9 @@ def main(analyse_path,
                 local_cpus=cores_per_worker,
                 mem_per_core=mem_per_core,
                 distributed_tmp=distributed_tmp,
+                rank_method="autobuild",
+                comparison_strategy="closest_cluster",
+                cluster_selection="close",
                 log_file=pandda_dir / "log.txt",
             )
             print(f"\tPanDDA command for {data_dir.name}: {pandda_command.command}")
