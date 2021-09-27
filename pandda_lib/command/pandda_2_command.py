@@ -22,6 +22,7 @@ class PanDDA2Command:
                  rank_method,
                  comparison_strategy,
                  cluster_selection,
+                 num_workers,
                  log_file,
 
                  ):
@@ -32,5 +33,6 @@ class PanDDA2Command:
                        f"--distributed_tmp={distributed_tmp} --rank_method=" \
                        f"{rank_method} --comparison_strategy={comparison_strategy} " \
                        f"--cluster_selection={cluster_selection} --memory_availability=low " \
+                       f"--distributed_num_workers={num_workers} " \
                        f"> {log_file}"
 
