@@ -36,11 +36,19 @@ def main(data_dir, pandda_dir, mtz_regex="*.dimple.mtz", pdb_regex="*.dimple.pdb
         dtag = dataset_dir.name
 
         print(f"\tSearching {dataset_dir} for {mtz_regex}")
-        reflections_path = next(dataset_dir.glob(mtz_regex))
+        try:
+            reflections_path = next(dataset_dir.glob(mtz_regex))
+        except Exception as e:
+            print(e)
+            continue
+
 
         print(f"\tSearching {dataset_dir} for {pdb_regex}")
-        structure_path = next(dataset_dir.glob(pdb_regex))
-
+        try:
+            structure_path = next(dataset_dir.glob(pdb_regex))
+        except Exception as e:
+            print(e)
+            continue
 
         if compound_dir:
             compound_dir = dataset_dir / "compound"
