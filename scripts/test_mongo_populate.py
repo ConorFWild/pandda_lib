@@ -121,6 +121,7 @@ def main(data_dir, pandda_dir, mtz_regex="*.dimple.mtz", pdb_regex="*.dimple.pdb
         x = event_record["x"]
         y = event_record["y"]
         z = event_record["z"]
+        size = event_record["cluster_size"]
 
         event_model_path = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / dtag / str(event_idx) / "rhofit" / \
                            "best.pdb"
@@ -141,6 +142,7 @@ def main(data_dir, pandda_dir, mtz_regex="*.dimple.mtz", pdb_regex="*.dimple.pdb
             y=y,
             z=z,
             model=event_model,
+            size=size,
         )
         # print(event)
         event.save()

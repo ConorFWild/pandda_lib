@@ -48,6 +48,7 @@ class Event(Document):
     y = FloatField()
     z = FloatField()
     model = ReferenceField(Model)
+    size = FloatField()
 
 
 class PanDDA(Document):
