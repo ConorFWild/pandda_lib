@@ -19,7 +19,7 @@ class RMSD:
     def graph_from_res(res):
         G = networkx.Graph()
         for j, atom in enumerate(res):
-            G.add_node(j, Z=atom.el.atomic_number,
+            G.add_node(j, Z=atom.element.atomic_number,
                        # x=atom.pos.x, y=atom.pos.y, z=atom.pos.z,
                        pos=atom.pos,
                        )
