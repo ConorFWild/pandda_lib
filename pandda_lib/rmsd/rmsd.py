@@ -19,10 +19,13 @@ class RMSD:
     def graph_from_res(res):
         G = networkx.Graph()
         for j, atom in enumerate(res):
-            G.add_node(j, Z=atom.element.atomic_number,
-                       # x=atom.pos.x, y=atom.pos.y, z=atom.pos.z,
-                       pos=atom.pos,
-                       )
+            if atom.element.name == "H":
+                continue
+            else:
+                G.add_node(j, Z=atom.element.atomic_number,
+                           # x=atom.pos.x, y=atom.pos.y, z=atom.pos.z,
+                           pos=atom.pos,
+                           )
         # add bonds
         for j, atom_1 in enumerate(res):
             if atom_1.element.name == "H":
