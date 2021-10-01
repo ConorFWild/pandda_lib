@@ -98,8 +98,8 @@ class RMSD:
             raise Exception(f"{res_1} and {res_2} are NOT isomorphic, wtf? "
                             f"res 1 len: {len([atom for atom in res_1])}; "
                             f"res 2 len: {len([atom for atom in res_2])}; "
-                            f"Graph 1: {graph_1.nodes}; {[graph_1.nodes[j] for j in graph_1.nodes]}; "
-                            f"Graph 2: {graph_2.nodes}; {[graph_2.nodes[j] for j in graph_2.nodes]}")
+                            f"Graph 1: {graph_1.nodes}; {[graph_1.nodes[j]['Z'] for j in graph_1.nodes]}; "
+                            f"Graph 2: {graph_2.nodes}; {[graph_2.nodes[j]['Z'] for j in graph_2.nodes]}")
 
     @staticmethod
     def from_structures(res_1, res_2):
