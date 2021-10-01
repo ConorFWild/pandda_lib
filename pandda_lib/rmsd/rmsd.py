@@ -56,35 +56,41 @@ class RMSD:
         if gm.is_isomorphic():
             # print(cc1.name, 'is isomorphic')
             # we could use GM.match(), but here we try to find the shortest diff
+
+            mean_distances = []
             short_diff = None
             for n, mapping in enumerate(gm.isomorphisms_iter()):
-                diff = {k: v for k, v in mapping.items() if k != v}
-                if short_diff is None or len(diff) < len(short_diff):
-                    short_diff = diff
+                # diff = {k: v for k, v in mapping.items() if k != v}
+                # if short_diff is None or len(diff) < len(short_diff):
+                #     short_diff = diff
                 if n == 10000:  # don't spend too much here
-                    # print(' (it may not be the simplest isomorphism)')
-                    break
+                    print(' (it may not be the simplest isomorphism)')
 
-            print(short_diff)
+                #     break
+                # print(short_diff)
 
-            # Get Distance between points
-            distances = []
+                # Get Distance between points
+                distances = []
 
-            for j in graph_1.nodes:
+                for j in graph_1.nodes:
 
-                atom_1_node = graph_1.nodes[j]
-                print(atom_1_node)
+                    atom_1_node = graph_1.nodes[j]
+                    # print(atom_1_node)
 
-                atom_2_id = short_diff[j]
-                atom_2_node = graph_2.nodes[atom_2_id]
+                    atom_2_id = mapping[j]
+                    atom_2_node = graph_2.nodes[atom_2_id]
 
-                assert atom_1_node["Z"] == atom_2_node["Z"]
+                    assert atom_1_node["Z"] == atom_2_node["Z"]
 
-                distance = atom_1_node["pos"].dist(atom_2_node["pos"])
-                distances.append(distance)
-            mean_distance = np.mean(distances)
+                    distance = atom_1_node["pos"].dist(atom_2_node["pos"])
+                    distances.append(distance)
+                mean_distance = np.mean(distances)
+                mean_distances.append(mean_distance)
 
-            return RMSD(mean_distance)
+            print(mean_distances)
+            min_mean_distance = min(mean_distance)
+
+            return RMSD(min_mean_distance)
 
         # Ottherwise something has gone terribly wrong
         else:
