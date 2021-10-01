@@ -74,8 +74,8 @@ class RMSD:
         # Ottherwise something has gone terribly wrong
         else:
             raise Exception(f"{res_1} and {res_2} are NOT isomorphic, wtf? "
-                            f"{len([atom for atom in res_1])} "
-                            f"{len([atom for atom in res_2])}")
+                            f"res 1 len: {len([atom for atom in res_1])}; "
+                            f"res 2 len: {len([atom for atom in res_2])}")
 
     @staticmethod
     def from_structures(res_1, res_2):
