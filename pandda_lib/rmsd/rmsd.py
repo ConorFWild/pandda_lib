@@ -70,7 +70,7 @@ class RMSD:
 
             for j in graph_1.nodes:
 
-                atom_1_node = graph_1[j]
+                atom_1_node = graph_1.nodes[j]
 
                 atom_2_id = short_diff[j]
                 atom_2_node = graph_2.nodes[atom_2_id]
