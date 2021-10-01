@@ -73,7 +73,8 @@ class RMSD:
 
         # Ottherwise something has gone terribly wrong
         else:
-            raise Exception(f"{res_1} and {res_2} are NOT isomorphic, wtf? {len([atom for atom in res_1])} "
+            raise Exception(f"{res_1} and {res_2} are NOT isomorphic, wtf? "
+                            f"{len([atom for atom in res_1])} "
                             f"{len([atom for atom in res_2])}")
 
     @staticmethod
