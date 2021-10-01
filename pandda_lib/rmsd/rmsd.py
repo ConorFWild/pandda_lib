@@ -58,7 +58,7 @@ class RMSD:
             # we could use GM.match(), but here we try to find the shortest diff
 
             mean_distances = []
-            short_diff = None
+            # short_diff = None
             for n, mapping in enumerate(gm.isomorphisms_iter()):
                 # diff = {k: v for k, v in mapping.items() if k != v}
                 # if short_diff is None or len(diff) < len(short_diff):
@@ -96,7 +96,9 @@ class RMSD:
         else:
             raise Exception(f"{res_1} and {res_2} are NOT isomorphic, wtf? "
                             f"res 1 len: {len([atom for atom in res_1])}; "
-                            f"res 2 len: {len([atom for atom in res_2])}")
+                            f"res 2 len: {len([atom for atom in res_2])}; "
+                            f"Graph 1: {graph_1}; "
+                            f"Graph 2: {graph_2}")
 
     @staticmethod
     def from_structures(res_1, res_2):
