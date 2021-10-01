@@ -70,7 +70,10 @@ class RMSD:
             for j, atom_1 in enumerate(res_1):
                 if atom_1.element.name == "H":
                     continue
-                atom_2 = graph_2.nodes[short_diff[j]]
+
+
+                atom_2_id = short_diff[j]
+                atom_2 = graph_2.nodes[atom_2_id]
 
                 assert atom_1.element.atomic_number == atom_2["Z"]
 
