@@ -44,9 +44,9 @@ class RMSD:
     @staticmethod
     def from_structures_iso(res_1, res_2):
         graph_1 = RMSD.graph_from_res(res_1)
-        print(graph_1.nodes)
+        # print(graph_1.nodes)
         graph_2 = RMSD.graph_from_res(res_2)
-        print(graph_2.nodes)
+        # print(graph_2.nodes)
 
         # Match!
         node_match = isomorphism.categorical_node_match('Z', 0)
@@ -87,7 +87,7 @@ class RMSD:
                 mean_distance = np.mean(distances)
                 mean_distances.append(mean_distance)
 
-            print(mean_distances)
+            # print(mean_distances)
             min_mean_distance = min(mean_distances)
 
             return RMSD(min_mean_distance)
