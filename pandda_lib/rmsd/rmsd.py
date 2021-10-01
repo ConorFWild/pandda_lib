@@ -68,7 +68,7 @@ class RMSD:
             # Get Distance between points
             distances = []
 
-            for j, atom_1_node in enumerate(graph_1):
+            for j, atom_1_node in enumerate(graph_1.nodes):
 
                 atom_2_id = short_diff[j]
                 atom_2_node = graph_2.nodes[atom_2_id]
