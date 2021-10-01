@@ -99,7 +99,9 @@ class RMSD:
                             f"res 1 len: {len([atom for atom in res_1])}; "
                             f"res 2 len: {len([atom for atom in res_2])}; "
                             f"Graph 1: {graph_1.nodes}; {[graph_1.nodes[j]['Z'] for j in graph_1.nodes]}; "
-                            f"Graph 2: {graph_2.nodes}; {[graph_2.nodes[j]['Z'] for j in graph_2.nodes]}")
+                            f"{len(graph_1.edges)}; "
+                            f"Graph 2: {graph_2.nodes}; {[graph_2.nodes[j]['Z'] for j in graph_2.nodes]}; "
+                            f"{len(graph_2.edges)}; ")
 
     @staticmethod
     def from_structures(res_1, res_2):
