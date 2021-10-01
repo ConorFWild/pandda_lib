@@ -66,9 +66,9 @@ class RMSD:
             # Get Distance between points
             distances = []
             for j, atom_1 in enumerate(res_1):
-                atom_2 = res_2[short_diff[j]]
+                atom_2 = graph_2[short_diff[j]]
 
-                assert atom_1.element.atomic_number == atom_2.element.atomic_number
+                assert atom_1.element.atomic_number == atom_2.z
 
                 distance = atom_1.pos.dist(atom_2.pos)
                 distances.append(distance)
