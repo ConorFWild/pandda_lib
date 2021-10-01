@@ -67,19 +67,16 @@ class RMSD:
 
             # Get Distance between points
             distances = []
-            for j, atom_1 in enumerate(res_1):
-                if atom_1.element.name == "H":
-                    continue
 
+            for j, atom_1_node in enumerate(graph_1):
 
                 atom_2_id = short_diff[j]
                 atom_2 = graph_2.nodes[atom_2_id]
 
-                assert atom_1.element.atomic_number == atom_2["Z"]
+                assert atom_1_node["Z"] == atom_2_node["Z"]
 
-                distance = atom_1.pos.dist(atom_2["pos"])
+                distance = atom_1_node["pos"].dist(atom_2["pos"])
                 distances.append(distance)
-
             mean_distance = np.mean(distances)
 
             return RMSD(mean_distance)
