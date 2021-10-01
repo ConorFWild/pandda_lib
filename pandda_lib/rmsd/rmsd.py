@@ -2,15 +2,79 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import *
 from pathlib import Path
+import networkx
+from networkx.algorithms import isomorphism
 
 import numpy as np
 
 from pandda_lib.common import Dtag
 from pandda_lib.events import Event
 
+
 @dataclass()
 class RMSD:
     rmsd: float
+
+    @staticmethod
+    def graph_from_res(res):
+        G = networkx.Graph()
+        for atom in res:
+            G.add_node(atom.id, Z=atom.el.atomic_number,
+                       # x=atom.pos.x, y=atom.pos.y, z=atom.pos.z,
+                       pos=atom.pos,
+                       )
+
+        # add bonds
+        for j, atom_1 in enumerate(res):
+            if atom_1.element.name == "H":
+                continue
+            pos_1 = atom_1.pos
+
+            for k, atom_2 in enumerate(res):
+                if atom_2.element.name == "H":
+                    continue
+                pos_2 = atom_2.pos
+                if pos_1.dist(pos_2) < 2.0:
+                    G.add_edge(atom_1.id, atom_2.id)
+
+        return G
+
+    @staticmethod
+    def from_structures_iso(res_1, res_2):
+        graph_1 = RMSD.graph_from_res(res_1)
+        graph_2 = RMSD.graph_from_res(res_2)
+
+        # Match!
+        node_match = isomorphism.categorical_node_match('Z', 0)
+        gm = isomorphism.GraphMatcher(graph_1, graph_2, node_match=node_match)
+
+        # Get shortest iso
+        if gm.is_isomorphic():
+            # print(cc1.name, 'is isomorphic')
+            # we could use GM.match(), but here we try to find the shortest diff
+            short_diff = None
+            for n, mapping in enumerate(gm.isomorphisms_iter()):
+                diff = {k: v for k, v in mapping.items() if k != v}
+                if short_diff is None or len(diff) < len(short_diff):
+                    short_diff = diff
+                if n == 10000:  # don't spend too much here
+                    # print(' (it may not be the simplest isomorphism)')
+                    break
+
+            # Get Distance between points
+            distances = []
+            for atom_1 in res_1:
+                atom_2 = short_diff[atom_1.id]
+
+                distance = atom_1.pos.dist(atom_2.pos)
+
+            mean_distance = np.mean(distances)
+
+            return RMSD(mean_distance)
+
+        # Ottherwise something has gone terribly wrong
+        else:
+            raise Exception(f"{res_1} and {res_2} are NOT isomorphic, wtf?")
 
     @staticmethod
     def from_structures(res_1, res_2):
@@ -25,4 +89,3 @@ class RMSD:
             closest_distance = min(distances)
             closest_distances.append(closest_distance)
         return RMSD(np.mean(closest_distances))
-
