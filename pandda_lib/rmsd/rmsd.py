@@ -88,7 +88,7 @@ class RMSD:
                 mean_distances.append(mean_distance)
 
             print(mean_distances)
-            min_mean_distance = min(mean_distance)
+            min_mean_distance = min(mean_distances)
 
             return RMSD(min_mean_distance)
 
