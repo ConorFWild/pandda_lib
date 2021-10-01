@@ -65,10 +65,11 @@ class RMSD:
 
             # Get Distance between points
             distances = []
-            for atom_1 in res_1:
-                atom_2 = short_diff[atom_1.id]
+            for j, atom_1 in enumerate(res_1):
+                atom_2 = short_diff[j]
 
                 distance = atom_1.pos.dist(atom_2.pos)
+                distances.append(distance)
 
             mean_distance = np.mean(distances)
 
