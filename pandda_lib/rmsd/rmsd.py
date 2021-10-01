@@ -68,7 +68,7 @@ class RMSD:
             for j, atom_1 in enumerate(res_1):
                 atom_2 = graph_2.nodes[short_diff[j]]
 
-                assert atom_1.element.atomic_number == atom_2.z
+                assert atom_1.element.atomic_number == atom_2.Z
 
                 distance = atom_1.pos.dist(atom_2.pos)
                 distances.append(distance)
