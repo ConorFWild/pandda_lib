@@ -44,7 +44,9 @@ class RMSD:
     @staticmethod
     def from_structures_iso(res_1, res_2):
         graph_1 = RMSD.graph_from_res(res_1)
+        print(graph_1)
         graph_2 = RMSD.graph_from_res(res_2)
+        print(graph_2)
 
         # Match!
         node_match = isomorphism.categorical_node_match('Z', 0)
