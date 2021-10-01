@@ -70,7 +70,7 @@ class RMSD:
 
                 assert atom_1.element.atomic_number == atom_2["Z"]
 
-                distance = atom_1.pos.dist(atom_2.pos)
+                distance = atom_1.pos.dist(atom_2["pos"])
                 distances.append(distance)
 
             mean_distance = np.mean(distances)
