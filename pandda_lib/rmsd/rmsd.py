@@ -37,7 +37,7 @@ class RMSD:
                 if atom_2.element.name == "H":
                     continue
                 pos_2 = atom_2.pos
-                if pos_1.dist(pos_2) < 1.6:
+                if pos_1.dist(pos_2) < 1.81:
                     G.add_edge(j, k)
 
         return G
