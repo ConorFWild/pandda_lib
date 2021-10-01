@@ -22,7 +22,8 @@ class RMSD:
             if atom.element.name == "H":
                 continue
             else:
-                G.add_node(j, Z=atom.element.atomic_number,
+                G.add_node(j,
+                           Z=atom.element.atomic_number,
                            # x=atom.pos.x, y=atom.pos.y, z=atom.pos.z,
                            pos=atom.pos,
                            )
