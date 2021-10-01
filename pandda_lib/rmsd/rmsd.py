@@ -23,7 +23,6 @@ class RMSD:
                        # x=atom.pos.x, y=atom.pos.y, z=atom.pos.z,
                        pos=atom.pos,
                        )
-
         # add bonds
         for j, atom_1 in enumerate(res):
             if atom_1.element.name == "H":
