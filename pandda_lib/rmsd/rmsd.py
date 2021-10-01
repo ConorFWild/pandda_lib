@@ -63,6 +63,8 @@ class RMSD:
                     # print(' (it may not be the simplest isomorphism)')
                     break
 
+            print(short_diff)
+
             # Get Distance between points
             distances = []
             for j, atom_1 in enumerate(res_1):
