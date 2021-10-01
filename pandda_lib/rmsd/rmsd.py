@@ -18,8 +18,8 @@ class RMSD:
     @staticmethod
     def graph_from_res(res):
         G = networkx.Graph()
-        for atom in res:
-            G.add_node(atom.id, Z=atom.el.atomic_number,
+        for j, atom in enumerate(res):
+            G.add_node(j, Z=atom.el.atomic_number,
                        # x=atom.pos.x, y=atom.pos.y, z=atom.pos.z,
                        pos=atom.pos,
                        )
@@ -35,7 +35,7 @@ class RMSD:
                     continue
                 pos_2 = atom_2.pos
                 if pos_1.dist(pos_2) < 2.0:
-                    G.add_edge(atom_1.id, atom_2.id)
+                    G.add_edge(j, k)
 
         return G
 
