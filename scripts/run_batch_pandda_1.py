@@ -2,7 +2,7 @@ from pathlib import Path
 
 import fire
 
-from pandda_lib.command import PanDDA2Command, TryMake, ShellCommand, TryRemove
+from pandda_lib.command import PanDDA1Command, TryMake, ShellCommand, TryRemove
 from pandda_lib.distribution import ClusterHTCondor
 from pandda_lib import constants
 
@@ -51,7 +51,7 @@ def main(analyse_path,
             TryRemove(pandda_dir)()
             TryMake(pandda_dir)()
 
-            pandda_command = PanDDA2Command(
+            pandda_command = PanDDA1Command(
                 analyse_path=analyse_path,
                 data_dirs=data_dir,
                 out_dir=pandda_dir,
