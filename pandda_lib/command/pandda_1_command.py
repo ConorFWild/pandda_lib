@@ -18,7 +18,7 @@ class PanDDA1Command:
                  ):
         self.command = (
             f'pandda.analyse '
-            f'data_dirs={data_dirs + "/*"} '
+            f'data_dirs={data_dirs / "*"} '
             f'out_dir={out_dir} '
             f'min_build_datasets={min_build_datasets} '
             f'max_new_datasets={max_new_datasets} '
