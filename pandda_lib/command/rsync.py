@@ -31,7 +31,7 @@ class RsyncPanDDADirs:
             )
         )
 
-command: str = "sshpass -p '{password}' rsync --progress -L -avzh -e ssh  {path_to_local_dir} zoh22914@ssh.diamond.ac.uk:{path_to_remote_dir}/"
+command: str = "sshpass -p '{password}' rsync --progress -L -avzh -e ssh {path_to_local_dir} zoh22914@ssh.diamond.ac.uk:{path_to_remote_dir}/"
 
 @dataclass()
 class RsyncDirToDiamond:
@@ -47,8 +47,8 @@ class RsyncDirToDiamond:
 
     @staticmethod
     def from_paths(
-            path_to_remote_dir: Path,
             path_to_local_dir: Path,
+            path_to_remote_dir: Path,
             password: str,
     ):
         return RsyncPanDDADirs(
