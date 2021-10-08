@@ -7,7 +7,7 @@ from pandda_lib import constants
 from pandda_lib.command.rsync import RsyncDirToDiamond
 
 
-def main(local_dir, remote_dir, password, dry=False):
+def main(local_dir, remote_dir, password, dry=True):
     rsync_command = RsyncDirToDiamond.from_paths(
         Path(local_dir),
         Path(remote_dir),
