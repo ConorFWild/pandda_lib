@@ -3,6 +3,8 @@ from pathlib import Path
 import fire
 # import pymongo
 
+import subprocess
+from dataclasses import dataclass
 
 from pandda_lib import constants
 from pandda_lib.fs import XChemDiamondFS
@@ -11,6 +13,34 @@ from pandda_lib.command.rsync import RsyncPanDDADirsToAWS
 
 from joblib import Parallel, delayed
 
+command_aws: str = "cp -R {path_to_local_dir} {path_to_remote_dir}"
+
+@dataclass()
+class RsyncPanDDADirsToAWS:
+    # def __init__(self):
+    command: str = command_aws
+
+    def run(self):
+        p = subprocess.Popen(
+            self.command,
+            shell=True,
+        )
+
+        p.communicate()
+
+    @staticmethod
+    def from_paths(
+            path_to_remote_dir: Path,
+            path_to_local_dir: Path,
+            # password: str,
+    ):
+        return RsyncPanDDADirsToAWS(
+            command_aws.format(
+                path_to_remote_dir=path_to_remote_dir,
+                path_to_local_dir=path_to_local_dir,
+                # password=password,
+            )
+        )
 
 def main(diamond_dir: str, output_dir: str):
     diamond_dir = Path(diamond_dir)
