@@ -32,6 +32,7 @@ def main(diamond_dir: str, output_dir: str):
     # diamond_paths = client.pandda.diamond_paths
     # diamond_paths.drop()
 
+    rsyncs = []
     docs = []
     for system_name, model_building_dir in diamond_fs.model_building_dirs.items():
         doc = {
@@ -42,16 +43,20 @@ def main(diamond_dir: str, output_dir: str):
         print(
             doc
         )
+
+        rsync = RsyncPanDDADirsToAWS.from_paths(
+            path_to_remote_dir=Path(doc[constants.mongo_diamond_paths_model_building_dir]),
+            path_to_local_dir=Path('/opt/clusterdata') / doc[constants.mongo_diamond_paths_system_name],
+        )
+
         docs.append(doc)
+        rsyncs.append(rsync)
 
     # diamond_paths.insert_many(docs)
 
-    rsync = RsyncPanDDADirsToAWS.from_paths(
-                path_to_remote_dir=Path(doc[constants.mongo_diamond_paths_model_building_dir]),
-                path_to_local_dir=Path('/opt/clusterdata') / doc[constants.mongo_diamond_paths_system_name],
-            )
 
-    print(rsync)
+
+        print(rsync.command)
 
     Parallel(n_jobs=1)(
         delayed(
