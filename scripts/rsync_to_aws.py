@@ -75,8 +75,8 @@ def main(diamond_dir: str, output_dir: str):
         )
 
         rsync = RsyncPanDDADirsToAWS.from_paths(
-            path_to_remote_dir=Path(doc[constants.mongo_diamond_paths_model_building_dir]),
-            path_to_local_dir=Path('/opt/clusterdata') / doc[constants.mongo_diamond_paths_system_name],
+            path_to_remote_dir=Path('/opt/clusterdata') / doc[constants.mongo_diamond_paths_system_name],
+            path_to_local_dir=Path(doc[constants.mongo_diamond_paths_model_building_dir]),
         )
 
         docs.append(doc)
