@@ -32,14 +32,14 @@ class RsyncPanDDADirs:
         )
 
 
-command_aws: str = "sshpass -p '{password}' rsync --progress --exclude 'autoprocessing' --exclude 'dimple' --exclude " \
+command_aws: str = "rsync --progress --exclude 'autoprocessing' --exclude 'dimple' --exclude " \
                    "'jpg' --exclude '*.map' --exclude 'processed' --exclude '*.png' --exclude '*.pickle' --exclude " \
                    "'*.jpg' -L -avzh -e ssh {path_to_local_dir} mx-static-highmem-htcondor-submit.diamond.ac.uk:{path_to_remote_dir}/"
 
-
+@dataclass()
 class RsyncPanDDADirsToAWS:
-    def __init__(self):
-        self.command: str = command_aws
+    # def __init__(self):
+    command: str = command_aws
 
     def run(self):
         p = subprocess.Popen(
@@ -53,13 +53,13 @@ class RsyncPanDDADirsToAWS:
     def from_paths(
             path_to_remote_dir: Path,
             path_to_local_dir: Path,
-            password: str,
+            # password: str,
     ):
         return RsyncPanDDADirs(
-            command.format(
+            command_aws.format(
                 path_to_remote_dir=path_to_remote_dir,
                 path_to_local_dir=path_to_local_dir,
-                password=password,
+                # password=password,
             )
         )
 
