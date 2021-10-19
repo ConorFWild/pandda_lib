@@ -46,12 +46,16 @@ def main(diamond_dir: str, output_dir: str):
 
     # diamond_paths.insert_many(docs)
 
-    Parallel(n_jobs=1)(
-        delayed(
-            RsyncPanDDADirsToAWS.from_paths(
+    rsync = RsyncPanDDADirsToAWS.from_paths(
                 path_to_remote_dir=Path(doc[constants.mongo_diamond_paths_model_building_dir]),
                 path_to_local_dir=Path('/opt/clusterdata') / doc[constants.mongo_diamond_paths_system_name],
-            ).run
+            )
+
+    print(rsync)
+
+    Parallel(n_jobs=1)(
+        delayed(
+            rsync.run
         )() for doc in docs)
 
 
