@@ -36,7 +36,8 @@ class CpDirToAWS:
         for path in dataset_paths:
             remote_dataset_path = self.path_to_remote_dir / path.name
             # cp dir
-            command = f"cp {str(path)} {str(remote_dataset_path)}"
+            # command = f"cp {str(path)} {str(remote_dataset_path)}"
+            command = f"mkdir {str(remote_dataset_path)}"
             print(command)
             p = subprocess.Popen(
                 command,
