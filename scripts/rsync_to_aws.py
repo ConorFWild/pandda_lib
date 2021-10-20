@@ -13,20 +13,77 @@ from pandda_lib.command.rsync import RsyncPanDDADirsToAWS
 
 from joblib import Parallel, delayed
 
-command_aws: str = "cp -R {path_to_local_dir} {path_to_remote_dir}"
+command_aws: str = "cp -R -L {path_to_local_dir} {path_to_remote_dir}"
 
 @dataclass()
-class RsyncPanDDADirsToAWS:
+class CpDirToAWS:
     # def __init__(self):
-    command: str = command_aws
+    # command: str = command_aws
+    path_to_remote_dir :Path
+    path_to_local_dir: Path
 
     def run(self):
+
+        # Copy dir
+        command = f"cp {self.path_to_local_dir} {self.path_to_remote_dir}"
         p = subprocess.Popen(
-            self.command,
+            command,
             shell=True,
         )
-
         p.communicate()
+
+        dataset_paths = [path for path in self.path_to_local_dir.glob("*")]
+        for path in dataset_paths:
+            remote_dataset_path = self.path_to_remote_dir / path.name
+            # cp dir
+            command = f"cp {str(path)} {str(remote_dataset_path)}"
+            print(command)
+            p = subprocess.Popen(
+                command,
+                shell=True,
+            )
+            p.communicate()
+
+            # copy mtz
+            local_mtz_path = path / "dimple.mtz"
+            mtz_path = remote_dataset_path / "dimple.mtz"
+            command = f"cp {str(local_mtz_path)} {str(mtz_path)}"
+            print(command)
+            p = subprocess.Popen(
+                command,
+                shell=True,
+            )
+            p.communicate()
+
+            # copy pdb
+            local_pdb_path = path / "dimple.pdb"
+            pdb_path = remote_dataset_path / "dimple.pdb"
+            command = f"cp {str(local_pdb_path)} {str(pdb_path)}"
+            print(command)
+            p = subprocess.Popen(
+                command,
+                shell=True,
+            )
+            p.communicate()
+
+            # copy compound dir
+            local_compound_dir = path / "compound"
+            compound_dir_path = remote_dataset_path / "compound"
+            command = f"cp -R {str(local_compound_dir)} {str(compound_dir_path)}"
+            print(command)
+            p = subprocess.Popen(
+                command,
+                shell=True,
+            )
+            p.communicate()
+
+
+        # p = subprocess.Popen(
+        #     self.command,
+        #     shell=True,
+        # )
+        #
+        # p.communicate()
 
     @staticmethod
     def from_paths(
@@ -34,12 +91,12 @@ class RsyncPanDDADirsToAWS:
             path_to_local_dir: Path,
             # password: str,
     ):
-        return RsyncPanDDADirsToAWS(
-            command_aws.format(
-                path_to_remote_dir=path_to_remote_dir,
-                path_to_local_dir=path_to_local_dir,
+        return CpDirToAWS(
+            # command_aws.format(
+            path_to_remote_dir=path_to_remote_dir,
+            path_to_local_dir=path_to_local_dir,
                 # password=password,
-            )
+            # )
         )
 
 def main(diamond_dir: str, output_dir: str):
@@ -74,7 +131,7 @@ def main(diamond_dir: str, output_dir: str):
             doc
         )
 
-        rsync = RsyncPanDDADirsToAWS.from_paths(
+        rsync = CpDirToAWS.from_paths(
             path_to_remote_dir=Path('/opt/clusterdata') / doc[constants.mongo_diamond_paths_system_name],
             path_to_local_dir=Path(doc[constants.mongo_diamond_paths_model_building_dir]),
         )
@@ -91,7 +148,7 @@ def main(diamond_dir: str, output_dir: str):
     Parallel(n_jobs=1)(
         delayed(
             rsync.run
-        )() for doc in docs)
+        )() for rsync in docs)
 
 
 if __name__ == "__main__":
