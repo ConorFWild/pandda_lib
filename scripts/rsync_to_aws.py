@@ -25,7 +25,8 @@ class CpDirToAWS:
     def run(self):
 
         # Copy dir
-        command = f"cp {self.path_to_local_dir} {self.path_to_remote_dir}"
+        command = f"mkdir {self.path_to_remote_dir}"
+        print(command)
         p = subprocess.Popen(
             command,
             shell=True,
