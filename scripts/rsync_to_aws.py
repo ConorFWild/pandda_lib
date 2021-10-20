@@ -148,7 +148,7 @@ def main(diamond_dir: str, output_dir: str):
     Parallel(n_jobs=1)(
         delayed(
             rsync.run
-        )() for rsync in docs)
+        )() for rsync in rsyncs)
 
 
 if __name__ == "__main__":
