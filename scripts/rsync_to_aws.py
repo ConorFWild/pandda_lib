@@ -147,7 +147,7 @@ def main(diamond_dir: str, output_dir: str):
 
         # print(rsync.command)
 
-    Parallel(n_jobs=1)(
+    Parallel(n_jobs=20)(
         delayed(
             rsync.run
         )() for rsync in rsyncs)
