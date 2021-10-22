@@ -35,7 +35,7 @@ class CpDirToAWS:
 
         dataset_paths = [path for path in self.path_to_local_dir.glob("*")]
         # for path in dataset_paths:
-        Parallel(n_jobs=200)(
+        Parallel(n_jobs=150)(
             delayed(
                 self.copy_dataset_directory
             )(_path)
