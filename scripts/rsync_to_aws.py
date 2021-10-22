@@ -15,15 +15,15 @@ from joblib import Parallel, delayed
 
 command_aws: str = "cp -R -L {path_to_local_dir} {path_to_remote_dir}"
 
+
 @dataclass()
 class CpDirToAWS:
     # def __init__(self):
     # command: str = command_aws
-    path_to_remote_dir :Path
+    path_to_remote_dir: Path
     path_to_local_dir: Path
 
     def run(self):
-
         # Copy dir
         command = f"mkdir {self.path_to_remote_dir}"
         print(command)
@@ -34,51 +34,59 @@ class CpDirToAWS:
         p.communicate()
 
         dataset_paths = [path for path in self.path_to_local_dir.glob("*")]
-        for path in dataset_paths:
-            remote_dataset_path = self.path_to_remote_dir / path.name
-            # cp dir
-            # command = f"cp {str(path)} {str(remote_dataset_path)}"
-            command = f"mkdir {str(remote_dataset_path)}"
-            print(command)
-            p = subprocess.Popen(
-                command,
-                shell=True,
-            )
-            p.communicate()
+        # for path in dataset_paths:
+        Parallel(n_jobs=60)(
+            delayed(
+                self.copy_dataset_directory
+            )(_path)
+            for _path
+            in dataset_paths
+        )
 
-            # copy mtz
-            local_mtz_path = path / "dimple.mtz"
-            mtz_path = remote_dataset_path / "dimple.mtz"
-            command = f"cp -L --remove-destination {str(local_mtz_path)} {str(mtz_path)}"
-            print(command)
-            p = subprocess.Popen(
-                command,
-                shell=True,
-            )
-            p.communicate()
+    def copy_dataset_directory(self, path):
+        remote_dataset_path = self.path_to_remote_dir / path.name
+        # cp dir
+        # command = f"cp {str(path)} {str(remote_dataset_path)}"
+        command = f"mkdir {str(remote_dataset_path)}"
+        print(command)
+        p = subprocess.Popen(
+            command,
+            shell=True,
+        )
+        p.communicate()
 
-            # copy pdb
-            local_pdb_path = path / "dimple.pdb"
-            pdb_path = remote_dataset_path / "dimple.pdb"
-            command = f"cp -L --remove-destination {str(local_pdb_path)} {str(pdb_path)}"
-            print(command)
-            p = subprocess.Popen(
-                command,
-                shell=True,
-            )
-            p.communicate()
+        # copy mtz
+        local_mtz_path = path / "dimple.mtz"
+        mtz_path = remote_dataset_path / "dimple.mtz"
+        command = f"cp -L --remove-destination {str(local_mtz_path)} {str(mtz_path)}"
+        print(command)
+        p = subprocess.Popen(
+            command,
+            shell=True,
+        )
+        p.communicate()
 
-            # copy compound dir
-            local_compound_dir = path / "compound"
-            compound_dir_path = remote_dataset_path / "compound"
-            command = f"cp -R {str(local_compound_dir)} {str(compound_dir_path)}"
-            print(command)
-            p = subprocess.Popen(
-                command,
-                shell=True,
-            )
-            p.communicate()
+        # copy pdb
+        local_pdb_path = path / "dimple.pdb"
+        pdb_path = remote_dataset_path / "dimple.pdb"
+        command = f"cp -L --remove-destination {str(local_pdb_path)} {str(pdb_path)}"
+        print(command)
+        p = subprocess.Popen(
+            command,
+            shell=True,
+        )
+        p.communicate()
 
+        # copy compound dir
+        local_compound_dir = path / "compound"
+        compound_dir_path = remote_dataset_path / "compound"
+        command = f"cp -R {str(local_compound_dir)} {str(compound_dir_path)}"
+        print(command)
+        p = subprocess.Popen(
+            command,
+            shell=True,
+        )
+        p.communicate()
 
         # p = subprocess.Popen(
         #     self.command,
@@ -97,9 +105,10 @@ class CpDirToAWS:
             # command_aws.format(
             path_to_remote_dir=path_to_remote_dir,
             path_to_local_dir=path_to_local_dir,
-                # password=password,
+            # password=password,
             # )
         )
+
 
 def main(diamond_dir: str, output_dir: str):
     diamond_dir = Path(diamond_dir)
@@ -143,14 +152,7 @@ def main(diamond_dir: str, output_dir: str):
 
     # diamond_paths.insert_many(docs)
 
-
-
-        # print(rsync.command)
-
-    Parallel(n_jobs=20)(
-        delayed(
-            rsync.run
-        )() for rsync in rsyncs)
+    # print(rsync.command)
 
 
 if __name__ == "__main__":
