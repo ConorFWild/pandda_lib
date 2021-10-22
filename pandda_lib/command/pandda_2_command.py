@@ -24,7 +24,6 @@ class PanDDA2Command:
                  cluster_selection,
                  num_workers,
                  log_file,
-
                  ):
         self.command = f"python {analyse_path} {data_dirs} {out_dir} --pdb_regex='{pdb_regex}' --mtz_regex='" \
                        f"{mtz_regex}' --structure_factors='(\"{structure_factors_f}\",\"{structure_factors_phi}\")' " \

@@ -49,7 +49,7 @@ class CpDirToAWS:
             # copy mtz
             local_mtz_path = path / "dimple.mtz"
             mtz_path = remote_dataset_path / "dimple.mtz"
-            command = f"cp {str(local_mtz_path)} {str(mtz_path)}"
+            command = f"cp -L --remove-destination {str(local_mtz_path)} {str(mtz_path)}"
             print(command)
             p = subprocess.Popen(
                 command,
@@ -60,7 +60,7 @@ class CpDirToAWS:
             # copy pdb
             local_pdb_path = path / "dimple.pdb"
             pdb_path = remote_dataset_path / "dimple.pdb"
-            command = f"cp {str(local_pdb_path)} {str(pdb_path)}"
+            command = f"cp -L --remove-destination {str(local_pdb_path)} {str(pdb_path)}"
             print(command)
             p = subprocess.Popen(
                 command,
