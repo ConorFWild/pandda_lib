@@ -154,6 +154,9 @@ def main(diamond_dir: str, output_dir: str):
 
     # print(rsync.command)
 
+    for rsync in rsyncs:
+        rsync.run()
+
 
 if __name__ == "__main__":
     fire.Fire(main)
