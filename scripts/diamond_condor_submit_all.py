@@ -59,7 +59,7 @@ def main():
 
         # If not generate job script
         script = SCRIPT.format(
-            data_dir=str(data_dir),
+            data_dirs=str(data_dir),
             out_dir=str(out_dir),
         )
         print(f"\t\tScript is: {script}")
