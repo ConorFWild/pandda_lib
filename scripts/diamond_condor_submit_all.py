@@ -29,12 +29,14 @@ echo "done pandda"
 
 
 def main():
+    print("Starting")
     # Define data
     data_dirs = Path('/opt/clusterdata/pandda')
     results_dirs = Path('/opt/clusterdata/pandda/pandda_results')
     ignores = ['containers', 'pandda_results', 'scripts']
 
     # Get Scheduler
+    print("Getting scheduler")
     schedd = htcondor.Schedd()  # get the Python representation of the scheduler
 
     # Loop over PanDDA data dirs
