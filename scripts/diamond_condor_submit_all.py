@@ -32,7 +32,7 @@ def main():
     # Define data
     data_dirs = Path('/opt/clusterdata/pandda')
     results_dirs = Path('/opt/clusterdata/pandda/pandda_results')
-    ignores = []
+    ignores = ['containers', 'pandda_results', 'scripts']
 
     # Get Scheduler
     schedd = htcondor.Schedd()  # get the Python representation of the scheduler
