@@ -38,7 +38,7 @@ def main():
     schedd = htcondor.Schedd()  # get the Python representation of the scheduler
 
     # Loop over PanDDA data dirs
-    for data_dir in data_dirs:
+    for data_dir in data_dirs.glob("*"):
         print(f"\tProcessing: {data_dir}")
         system_name = data_dir.name
         print(f"\t\tSystem name is: {system_name}")
