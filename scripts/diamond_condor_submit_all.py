@@ -4,7 +4,9 @@ from pathlib import Path
 import fire
 import htcondor
 
-ARGUMENTS = "exec -B /opt,/tmp --writable-tmpfs /opt/clusterdata/pandda/containers/pandda.sif bash {pandda_script}"
+SINGULARITY_SCRIPT = """#!/bin/bash
+
+exec -B /opt,/tmp --writable-tmpfs /opt/clusterdata/pandda/containers/pandda.sif bash {pandda_script}"""
 
 SCRIPT = """#!/bin/bash
 
@@ -72,15 +74,22 @@ def main():
         os.chmod(str(pandda_script_file), 0o777)
 
         # Generate the args for singularity
-        arguments = ARGUMENTS.format(
+        singularity_script = SINGULARITY_SCRIPT.format(
             pandda_script=str(pandda_script_file),
         )
-        print(f"\t\tArguments are: {arguments}")
+        print(f"\t\tsingularity_script are: {singularity_script}")
+
+        # Write singularity script
+        singularity_script_file = results_dirs / f"{system_name}.singularity.sh"
+        with open(singularity_script_file, "w") as f:
+            f.write(singularity_script)
+
+        os.chmod(str(singularity_script), 0o777)
 
         # Generate job
         job_dict = {
-            "executable": "/usr/bin/singularity",  # the program to run on the execute node
-            "arguments": arguments,
+            "executable": f"{str(singularity_script_file)}",  # the program to run on the execute node
+            # "arguments": arguments,
             "output": f"/tmp/{system_name}.out",  # anything the job prints to standard output will end up in this file
             "error": f"/tmp/{system_name}.err",  # anything the job prints to standard error will end up in this file
             "log": f"/tmp/.{system_name}.log",  # this file will contain a record of what happened to the job
