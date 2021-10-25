@@ -6,7 +6,8 @@ import htcondor
 
 SINGULARITY_SCRIPT = """#!/bin/bash
 
-exec -B /opt,/tmp --writable-tmpfs /opt/clusterdata/pandda/containers/pandda.sif bash {pandda_script}"""
+singularity exec -B /opt,/tmp --writable-tmpfs /opt/clusterdata/pandda/containers/pandda.sif bash {pandda_script}
+"""
 
 SCRIPT = """#!/bin/bash
 
