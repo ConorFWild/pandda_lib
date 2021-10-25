@@ -85,7 +85,7 @@ def main():
         with open(singularity_script_file, "w") as f:
             f.write(singularity_script)
 
-        os.chmod(str(singularity_script), 0o777)
+        os.chmod(str(singularity_script_file), 0o777)
 
         # Generate job
         job_dict = {
