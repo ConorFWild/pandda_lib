@@ -79,7 +79,7 @@ def main():
 
         # Generate job
         job_dict = {
-            "executable": "singularity",  # the program to run on the execute node
+            "executable": "/usr/bin/singularity",  # the program to run on the execute node
             "arguments": arguments,
             "output": f"/tmp/{system_name}.out",  # anything the job prints to standard output will end up in this file
             "error": f"/tmp/{system_name}.err",  # anything the job prints to standard error will end up in this file
