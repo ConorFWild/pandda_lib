@@ -26,8 +26,7 @@ conda activate pandda2
 echo "pandda" 
 
 python /xtal_software/pandda_2_gemmi/pandda_gemmi/analyse.py {data_dirs} {out_dir} --pdb_regex='dimple.pdb' 
---mtz_regex='dimple.mtz' --structure_factors='("FWT","PHWT")' --autobuild=True --global_processing='serial' 
---local_cpus=12 --distributed_mem_per_core=10 --distributed_scheduler='HTCONDOR' --distributed_tmp=/opt/clusterdata/pandda/tmp --rank_method=autobuild --comparison_strategy="high_res" 
+--mtz_regex='dimple.mtz' --structure_factors='("FWT","PHWT")' --autobuild=True --global_processing='serial' --local_cpus=12 --distributed_mem_per_core=10 --distributed_scheduler='HTCONDOR' --distributed_tmp=/opt/clusterdata/pandda/tmp --rank_method=autobuild --comparison_strategy="high_res" 
 
 echo "done pandda" 
 """
