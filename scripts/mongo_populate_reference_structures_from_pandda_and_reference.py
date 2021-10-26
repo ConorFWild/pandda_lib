@@ -29,40 +29,41 @@ def main(model_dirs: str, reference_structure_dir: str, pandda_dirs: str, table=
     # Get
     model_dirs = Path(model_dirs).resolve()
     for model_dir in model_dirs.glob("*"):
-        try:
-            print(f"\tPath is: {model_dir}")
-            dtag = Dtag.from_name(model_dir.name)
-            print(f"\t\tDtag is {dtag}")
-            system_name = SystemName.from_dtag(dtag)
-            print(f"\t\tSystem is: {system_name}")
-
+        for dataset_dir in model_dir.glob("*"):
             try:
-                mongo_system = pandda.System.objects(system_name=system_name.system_name, )[0]
+                print(f"\tPath is: {dataset_dir}")
+                dtag = Dtag.from_name(dataset_dir.name)
+                print(f"\t\tDtag is {dtag}")
+                system_name = SystemName.from_dtag(dtag)
+                print(f"\t\tSystem is: {system_name}")
+
+                try:
+                    mongo_system = pandda.System.objects(system_name=system_name.system_name, )[0]
+                except Exception as e:
+                    mongo_system = pandda.System(system_name=system_name.system_name, )
+                    mongo_system.save()
+
+                try:
+                    mongo_dataset = pandda.Dataset.objects(dtag=dtag.dtag)[0]
+                except Exception as e:
+                    structure_path = dataset_dir / 'dimple.pdb'
+                    mongo_structure = pandda.Structure(path=structure_path)
+                    mongo_structure.save()
+                    reflections_path = dataset_dir / 'dimple.mtz'
+                    mongo_reflections = pandda.Reflections(path=reflections_path)
+                    mongo_reflections.save()
+                    # reflections = model_dir / 'dimple.mtz'
+
+                    mongo_dataset = pandda.Dataset(
+                        dtag=dtag.dtag,
+                        system=mongo_system,
+                        structure=mongo_structure,
+                        reflections=mongo_reflections,
+                    )
+                    mongo_dataset.save()
+
             except Exception as e:
-                mongo_system = pandda.System(system_name=system_name.system_name, )
-                mongo_system.save()
-
-            try:
-                mongo_dataset = pandda.Dataset.objects(dtag=dtag.dtag)[0]
-            except Exception as e:
-                structure_path = model_dir / 'dimple.pdb'
-                mongo_structure = pandda.Structure(path=structure_path)
-                mongo_structure.save()
-                reflections_path = model_dir / 'dimple.mtz'
-                mongo_reflections = pandda.Reflections(path=reflections_path)
-                mongo_reflections.save()
-                # reflections = model_dir / 'dimple.mtz'
-
-                mongo_dataset = pandda.Dataset(
-                    dtag=dtag.dtag,
-                    system=mongo_system,
-                    structure=mongo_structure,
-                    reflections=mongo_reflections,
-                )
-                mongo_dataset.save()
-
-        except Exception as e:
-            print(e)
+                print(e)
 
     #
     print(f"PanDDA scructure dir is: {pandda_dirs}")
