@@ -11,14 +11,14 @@ from pandda_lib import rmsd
 from pandda_lib import constants
 
 
-def main(reference_structure_dir:str, pandda_dir: str, table="pandda"):
+def main(reference_structure_dir:str, pandda_dirs: str, table="pandda"):
     mongoengine.connect(table)
 
-    pandda_dirs = Path(pandda_dir)
+    pandda_dirs = Path(pandda_dirs)
 
-    print(f"PanDDA scructure dir is: {pandda_dir}")
+    print(f"PanDDA scructure dir is: {pandda_dirs}")
 
-    for pandda_dir in pandda_dirs:
+    for pandda_dir in pandda_dirs.glob("*"):
 
         processed_dataset_dirs = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR
 
