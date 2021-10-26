@@ -11,13 +11,53 @@ from pandda_lib import rmsd
 from pandda_lib import constants
 
 
-def main(reference_structure_dir:str, pandda_dirs: str, table="pandda"):
+def main(model_dirs: str, reference_structure_dir: str, pandda_dirs: str, table="pandda"):
     mongoengine.connect(table)
 
-    pandda_dirs = Path(pandda_dirs)
+    pandda.System.drop_collection()
+    pandda.Dataset.drop_collection()
+    pandda.Structure.drop_collection()
+    pandda.Reflections.drop_collection()
+    pandda.Compound.drop_collection()
+    pandda.Event.drop_collection()
+    pandda.PanDDA.drop_collection()
 
+    pandda_dirs = Path(pandda_dirs).resolve()
+
+    # Get
+    model_dirs = Path(model_dirs).resolve()
+    for model_dir in model_dirs.glob("*"):
+        try:
+            print(f"\tPath is: {model_dir}")
+            dtag = Dtag.from_name(model_dir.name)
+            print(f"\t\tDtag is {dtag}")
+            system_name = SystemName.from_dtag(dtag)
+            print(f"\t\tSystem is: {system_name}")
+
+            try:
+                mongo_system = pandda.System.objects(system_name=system_name.system_name, )[0]
+            except Exception as e:
+                mongo_system = pandda.System(system_name=system_name.system_name, )
+                mongo_system.save()
+
+            try:
+                mongo_dataset = pandda.Dataset.objects(dtag=dtag.dtag)[0]
+            except Exception as e:
+                structure = model_dir / 'dimple.pdb'
+                reflections = model_dir / 'dimple.mtz'
+                mongo_dataset = pandda.Dataset(
+                    dtag=dtag.dtag,
+                    system=mongo_system,
+                    structure=str(structure),
+                    reflections=str(reflections),
+                )
+                mongo_dataset.save()
+
+        except Exception as e:
+            print(e)
+
+    #
     print(f"PanDDA scructure dir is: {pandda_dirs}")
-
     for pandda_dir in pandda_dirs.glob("*"):
 
         processed_dataset_dirs = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR
@@ -81,7 +121,7 @@ def main(reference_structure_dir:str, pandda_dirs: str, table="pandda"):
 
     ################
 
-    reference_structure_dir = Path(reference_structure_dir)
+    reference_structure_dir = Path(reference_structure_dir).resolve()
 
     print(f"Reference scructure dir is: {reference_structure_dir}")
 
