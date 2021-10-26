@@ -47,10 +47,10 @@ def main(model_dirs: str, reference_structure_dir: str, pandda_dirs: str, table=
                     mongo_dataset = pandda.Dataset.objects(dtag=dtag.dtag)[0]
                 except Exception as e:
                     structure_path = dataset_dir / 'dimple.pdb'
-                    mongo_structure = pandda.Structure(path=structure_path)
+                    mongo_structure = pandda.Structure(path=str(structure_path))
                     mongo_structure.save()
                     reflections_path = dataset_dir / 'dimple.mtz'
-                    mongo_reflections = pandda.Reflections(path=reflections_path)
+                    mongo_reflections = pandda.Reflections(path=str(reflections_path))
                     mongo_reflections.save()
                     # reflections = model_dir / 'dimple.mtz'
 
