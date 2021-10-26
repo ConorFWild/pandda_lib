@@ -34,6 +34,7 @@ def main(reference_dir: str, remote_dir: str, table: str, password: str):
         # Check if has any findable ligands modelled, else skip
         if len(reference_model.ligands) == 0:
             print(f"\t\tNo ligands in reference: skipping!")
+            continue
 
         # Check if has reflections or structures
         if not dataset.reflections:
