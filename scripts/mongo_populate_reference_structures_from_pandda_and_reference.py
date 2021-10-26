@@ -22,6 +22,8 @@ def main(model_dirs: str, reference_structure_dir: str, pandda_dirs: str, table=
     pandda.Event.drop_collection()
     pandda.PanDDA.drop_collection()
     pandda.ReferenceModel.drop_collection()
+    pandda.Ligand.drop_collection()
+
 
 
     pandda_dirs = Path(pandda_dirs).resolve()
