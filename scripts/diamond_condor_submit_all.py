@@ -94,7 +94,7 @@ def main():
             # "arguments": arguments,
             "output": f"/tmp/{system_name}.out",  # anything the job prints to standard output will end up in this file
             "error": f"/tmp/{system_name}.err",  # anything the job prints to standard error will end up in this file
-            "log": f"/tmp/.{system_name}.log",  # this file will contain a record of what happened to the job
+            "log": f"/tmp/{system_name}.log",  # this file will contain a record of what happened to the job
             "request_cpus": "6",  # how many CPU cores we want
             "request_memory": "300GB",  # how much memory we want
             # "request_disk": "300GB",
