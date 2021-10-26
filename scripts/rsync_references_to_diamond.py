@@ -36,6 +36,12 @@ def main(reference_dir: str, remote_dir: str, table: str, password: str):
             print(f"\t\tNo ligands in reference: skipping!")
 
         # Check if has reflections or structures
+        if not dataset.reflections:
+            print(f"\t\tNo reflections for dataset: skipping!")
+            continue
+        if not dataset.structure:
+            print(f"\t\tNo structure for dataset: skipping!")
+            continue
 
         # Get base model, reflections and fragment model
         model_file = Path(reference_model.path)
