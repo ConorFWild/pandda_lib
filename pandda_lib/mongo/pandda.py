@@ -70,5 +70,4 @@ class ReferenceModel(Document):
     system = ReferenceField(System)
     dataset = ReferenceField(Dataset)
     event = ReferenceField(Event)
-    dataset = ReferenceField(Dataset)
     ligands = ListField(ReferenceField(Ligand))
