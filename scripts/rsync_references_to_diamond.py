@@ -72,3 +72,6 @@ def main(reference_dir: str, remote_dir: str, table: str, password: str):
         remote_dir,
         password
     )
+
+if __name__ == "__main__":
+    fire.Fire(main)
