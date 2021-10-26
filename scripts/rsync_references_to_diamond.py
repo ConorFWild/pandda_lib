@@ -24,6 +24,7 @@ def main(reference_dir: str, remote_dir: str, table: str, password: str):
     mongoengine.connect(table)
 
     reference_models = pandda.ReferenceModel.objects()
+    print(f"Got {len(reference_models)} reference models!")
 
     for reference_model in reference_models:
         dataset = reference_model.dataset
