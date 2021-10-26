@@ -66,6 +66,11 @@ def main(reference_dir: str, remote_dir: str, table: str, password: str):
             print(f"\t\tNo structure  for reference: skipping!")
             continue
 
+        #
+        if dataset_dir.exists():
+            print(f"\t\tDataset dir is already there! Continuing!")
+            continue
+
         # Make outputdir
         os.mkdir(dataset_dir)
 
