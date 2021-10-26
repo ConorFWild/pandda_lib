@@ -24,8 +24,6 @@ def main(model_dirs: str, reference_structure_dir: str, pandda_dirs: str, table=
     pandda.ReferenceModel.drop_collection()
     pandda.Ligand.drop_collection()
 
-
-
     pandda_dirs = Path(pandda_dirs).resolve()
 
     # Get
@@ -47,13 +45,19 @@ def main(model_dirs: str, reference_structure_dir: str, pandda_dirs: str, table=
             try:
                 mongo_dataset = pandda.Dataset.objects(dtag=dtag.dtag)[0]
             except Exception as e:
-                structure = model_dir / 'dimple.pdb'
-                reflections = model_dir / 'dimple.mtz'
+                structure_path = model_dir / 'dimple.pdb'
+                mongo_structure = pandda.Structure(path=structure_path)
+                mongo_structure.save()
+                reflections_path = model_dir / 'dimple.mtz'
+                mongo_reflections = pandda.Reflections(path=reflections_path)
+                mongo_reflections.save()
+                # reflections = model_dir / 'dimple.mtz'
+
                 mongo_dataset = pandda.Dataset(
                     dtag=dtag.dtag,
                     system=mongo_system,
-                    structure=str(structure),
-                    reflections=str(reflections),
+                    structure=mongo_structure,
+                    reflections=mongo_reflections,
                 )
                 mongo_dataset.save()
 

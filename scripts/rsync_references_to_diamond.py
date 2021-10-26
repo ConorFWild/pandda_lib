@@ -35,6 +35,8 @@ def main(reference_dir: str, remote_dir: str, table: str, password: str):
         if len(reference_model.ligands) == 0:
             print(f"\t\tNo ligands in reference: skipping!")
 
+        # Check if has reflections or structures
+
         # Get base model, reflections and fragment model
         model_file = Path(reference_model.path)
         mtz_file = Path(dataset.reflections.path)
