@@ -120,9 +120,11 @@ def main():
 
         print(query)
 
-        while len(query) > 10:
+        num_jobs = len(query)
+        while num_jobs > 10:
             print("\t\t\tToo many jobs at once, hold on there!")
             time.sleep(10)
+            num_jobs = len(query)
 
 
 if __name__ == "__main__":
