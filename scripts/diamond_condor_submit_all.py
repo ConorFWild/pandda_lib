@@ -122,7 +122,7 @@ def main():
 
         num_jobs = len(query)
         while num_jobs > 10:
-            print("\t\t\tToo many jobs at once, hold on there!")
+            print(f"\t\t\tToo many jobs: {len(query)} at once, hold on there!")
             time.sleep(10)
             num_jobs = len(query)
 
