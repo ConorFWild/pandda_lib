@@ -51,6 +51,10 @@ def main():
         print(f"\t\tSystem name is: {system_name}")
         out_dir = results_dirs / system_name
         print(f"\t\tOut dir is: {out_dir}")
+        # If not a directory, continue
+        if not data_dir.is_dir():
+            continue
+
         # Check if should ignore because not pandda data
         if data_dir.name in ignores:
             print(f"\t\tSkipped: {data_dir}: not pandda data")
