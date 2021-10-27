@@ -130,7 +130,7 @@ def main():
                    for _system_name, _submit_result
                    in jobs.items()
                    }
-            print()
+            print(status)
             time.sleep(10)
             num_jobs = sum([length for length in status.values()])
 
