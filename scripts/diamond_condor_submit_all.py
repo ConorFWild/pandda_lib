@@ -126,12 +126,13 @@ def main():
         num_jobs = len(query)
         while num_jobs > 10:
             print(f"\t\t\tToo many jobs: {len(query)} at once, hold on there!")
-            print({_system_name: len(schedd.query(constraint=f"ClusterId == {_submit_result.cluster()}"))
+            status = {_system_name: len(schedd.query(constraint=f"ClusterId == {_submit_result.cluster()}"))
                    for _system_name, _submit_result
                    in jobs.items()
-                   })
+                   }
+            print()
             time.sleep(10)
-            num_jobs = len(query)
+            num_jobs = sum([length for length in status.values()])
 
 
 if __name__ == "__main__":
