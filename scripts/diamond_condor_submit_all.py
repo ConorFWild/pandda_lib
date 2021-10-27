@@ -116,10 +116,7 @@ def main():
         submit_result = schedd.submit(job)
         print(f"\t\tSubmitted!")
 
-        query = schedd.query(
-            constraint=f"ClusterId == {submit_result.cluster()}",
-            projection=["ClusterId", "ProcId", ],
-        )
+        query = schedd.query()
 
         print(query)
 
