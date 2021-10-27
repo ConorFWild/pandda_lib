@@ -4,9 +4,14 @@ from pathlib import Path
 import fire
 import htcondor
 
+# SINGULARITY_SCRIPT = """#!/bin/bash
+#
+# singularity exec -B /opt,/tmp --writable-tmpfs /opt/clusterdata/pandda/containers/pandda.sif bash {pandda_script}
+# """
+
 SINGULARITY_SCRIPT = """#!/bin/bash
 
-singularity exec -B /opt,/tmp --writable-tmpfs /opt/clusterdata/pandda/containers/pandda.sif bash {pandda_script}
+singularity exec -B /opt,/tmp /opt/clusterdata/pandda/containers/pandda.sif bash {pandda_script}
 """
 
 SCRIPT = """#!/bin/bash
