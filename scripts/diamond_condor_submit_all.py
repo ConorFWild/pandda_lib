@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import time
 
 import fire
 import htcondor
@@ -114,6 +115,20 @@ def main():
         # Submit job
         submit_result = schedd.submit(job)
         print(f"\t\tSubmitted!")
+
+        query = schedd.query(
+            constraint=f"ClusterId == {submit_result.cluster()}",
+            projection=["ClusterId", "ProcId",]
+        )
+
+        print(query)
+
+        while len(query) > 11:
+            print("\t\t\tToo many jobs at once, hold on there!")
+            time.sleep(10)
+
+
+
 
 
 if __name__ == "__main__":
