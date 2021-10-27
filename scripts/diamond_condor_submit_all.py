@@ -51,6 +51,7 @@ def main():
 
     # Loop over PanDDA data dirs
     print("Globbing...")
+    jobs = {}
     for data_dir in data_dirs.glob("*"):
         print(f"\tProcessing: {data_dir}")
         system_name = data_dir.name
@@ -116,6 +117,8 @@ def main():
         submit_result = schedd.submit(job)
         print(f"\t\tSubmitted!")
 
+        jobs[system_name] = submit_result
+
         query = schedd.query()
 
         print(query)
@@ -123,6 +126,10 @@ def main():
         num_jobs = len(query)
         while num_jobs > 10:
             print(f"\t\t\tToo many jobs: {len(query)} at once, hold on there!")
+            print({_system_name: len(query(constraint=f"ClusterId == {_submit_result.cluster()}"))
+                   for _system_name, _submit_result
+                   in jobs.items()
+                   })
             time.sleep(10)
             num_jobs = len(query)
 
