@@ -123,7 +123,7 @@ def main():
 
         print(query)
 
-        while len(query) > 11:
+        while len(query) > 10:
             print("\t\t\tToo many jobs at once, hold on there!")
             time.sleep(10)
 
