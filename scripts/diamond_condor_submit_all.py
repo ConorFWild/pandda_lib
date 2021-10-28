@@ -12,7 +12,11 @@ import htcondor
 
 SINGULARITY_SCRIPT = """#!/bin/bash
 
-singularity exec -B /opt /opt/clusterdata/pandda/containers/pandda.sif bash {pandda_script}
+rm {personal_container_path}
+
+cp {container_path} {personal_container_path}
+
+singularity exec -B /opt {personal_container_path} bash {pandda_script}
 """
 
 SCRIPT = """#!/bin/bash
@@ -38,9 +42,10 @@ echo "done pandda"
 """
 
 
-def main():
+def main(container_path: str):
     print("Starting")
     # Define data
+    container_path = Path(container_path)
     data_dirs = Path('/opt/clusterdata/pandda')
     results_dirs = Path('/opt/clusterdata/pandda/pandda_results')
     ignores = ['containers', 'pandda_results', 'scripts']
@@ -88,7 +93,10 @@ def main():
         os.chmod(str(pandda_script_file), 0o777)
 
         # Generate the args for singularity
+        personal_container_path = results_dirs / f"{system_name}.sif"
         singularity_script = SINGULARITY_SCRIPT.format(
+            container_path=str(container_path),
+            personal_container_path=str(personal_container_path),
             pandda_script=str(pandda_script_file),
         )
         print(f"\t\tsingularity_script are: {singularity_script}")
