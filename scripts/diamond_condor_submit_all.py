@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import time
+import shutil
 
 import fire
 import htcondor
@@ -11,10 +12,6 @@ import htcondor
 # """
 
 SINGULARITY_SCRIPT = """#!/bin/bash
-
-rm -f {personal_container_path}
-
-cp {container_path} {personal_container_path}
 
 singularity exec -B /opt {personal_container_path} bash {pandda_script}
 """
@@ -94,8 +91,13 @@ def main(container_path: str):
 
         # Generate the args for singularity
         personal_container_path = results_dirs / f"{system_name}.sif"
+        if personal_container_path.exists():
+            os.remove(str(personal_container_path))
+
+        shutil.copy(str(container_path), str(personal_container_path))
+
         singularity_script = SINGULARITY_SCRIPT.format(
-            container_path=str(container_path),
+            # container_path=str(container_path),
             personal_container_path=str(personal_container_path),
             pandda_script=str(pandda_script_file),
         )
