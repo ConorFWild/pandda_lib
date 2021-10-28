@@ -118,6 +118,7 @@ def main():
         # Submit job
         submit_result = schedd.submit(job)
         print(f"\t\tSubmitted!")
+        time.sleep(30)
 
         jobs[system_name] = submit_result
 
