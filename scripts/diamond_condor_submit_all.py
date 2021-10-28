@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 import time
 import shutil
+import pickle
 
 import fire
 import htcondor
@@ -52,8 +53,19 @@ def main(container_path: str):
 
     # Loop over PanDDA data dirs
     print("Globbing...")
+    paths_dir = Path("/tmp/paths.pickle")
+    if paths_dir.exists():
+        with open(paths_dir, "rb") as f:
+            paths = pickle.load(f)
+    else:
+        paths = [path for path in data_dirs.glob("*")]
+        with open(paths_dir, "wb") as f:
+            pickle.dump(paths, f)
+
     jobs = {}
-    for data_dir in data_dirs.glob("*"):
+
+
+    for data_dir in paths:
         print(f"\tProcessing: {data_dir}")
         system_name = data_dir.name
         print(f"\t\tSystem name is: {system_name}")
