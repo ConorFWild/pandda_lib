@@ -3,6 +3,7 @@ from pathlib import Path
 import time
 import shutil
 import pickle
+import subprocess
 
 import fire
 import htcondor
@@ -105,7 +106,13 @@ def main(container_path: str):
         if personal_container_path.exists():
             os.remove(str(personal_container_path))
 
-        shutil.copy(str(container_path), str(personal_container_path))
+        # shutil.copy(str(container_path), str(personal_container_path))
+
+        p = subprocess.Popen(
+            f"cp {str(container_path)} {str(personal_container_path)}",
+            shell=True,)
+
+        p.communicate()
 
         singularity_script = SINGULARITY_SCRIPT.format(
             # container_path=str(container_path),
