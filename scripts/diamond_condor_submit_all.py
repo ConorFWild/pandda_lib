@@ -101,6 +101,7 @@ def main(container_path: str):
         )
         print(f"\t\tsingularity_script are: {singularity_script}")
 
+
         # Write singularity script
         singularity_script_file = results_dirs / f"{system_name}.singularity.sh"
         with open(singularity_script_file, "w") as f:
