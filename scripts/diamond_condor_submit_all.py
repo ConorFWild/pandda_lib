@@ -12,7 +12,7 @@ import htcondor
 
 SINGULARITY_SCRIPT = """#!/bin/bash
 
-rm {personal_container_path}
+rm -f {personal_container_path}
 
 cp {container_path} {personal_container_path}
 
