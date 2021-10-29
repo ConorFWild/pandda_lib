@@ -44,8 +44,8 @@ def main(container_path: str):
     print("Starting")
     # Define data
     container_path = Path(container_path)
-    data_dirs = Path('/opt/clusterdata/pandda')
-    results_dirs = Path('/opt/clusterdata/pandda/pandda_results')
+    data_dirs = Path('/opt/clusterscratch/pandda/data')
+    results_dirs = Path('/opt/clusterdata/pandda/output/pandda_results')
     ignores = ['containers', 'pandda_results', 'scripts']
 
     # Get Scheduler
@@ -53,15 +53,16 @@ def main(container_path: str):
     schedd = htcondor.Schedd()  # get the Python representation of the scheduler
 
     # Loop over PanDDA data dirs
-    print("Globbing...")
-    paths_dir = Path("/tmp/paths.pickle")
-    if paths_dir.exists():
-        with open(paths_dir, "rb") as f:
-            paths = pickle.load(f)
-    else:
-        paths = [path for path in data_dirs.glob("*")]
-        with open(paths_dir, "wb") as f:
-            pickle.dump(paths, f)
+    # print("Globbing...")
+    # paths_dir = Path("/tmp/paths.pickle")
+    # if paths_dir.exists():
+    #     with open(paths_dir, "rb") as f:
+    #         paths = pickle.load(f)
+    # else:
+    #     paths = [path for path in data_dirs.glob("*")]
+    #     with open(paths_dir, "wb") as f:
+    #         pickle.dump(paths, f)
+    paths = [path for path in data_dirs.glob("*")]
 
     jobs = {}
 
