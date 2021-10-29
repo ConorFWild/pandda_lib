@@ -103,11 +103,11 @@ def main(container_path: str):
         os.chmod(str(pandda_script_file), 0o777)
 
         # Generate the args for singularity
-        personal_container_path = results_dirs / f"{system_name}.sif"
-        if personal_container_path.exists():
-            os.remove(str(personal_container_path))
-
-        shutil.copy(str(container_path), str(personal_container_path))
+        # personal_container_path = results_dirs / f"{system_name}.sif"
+        # if personal_container_path.exists():
+        #     os.remove(str(personal_container_path))
+        #
+        # shutil.copy(str(container_path), str(personal_container_path))
 
         # p = subprocess.Popen(
         #     f"cp {str(container_path)} {str(personal_container_path)}",
@@ -117,7 +117,7 @@ def main(container_path: str):
 
         singularity_script = SINGULARITY_SCRIPT.format(
             # container_path=str(container_path),
-            personal_container_path=str(personal_container_path),
+            personal_container_path=str(container_path),
             pandda_script=str(pandda_script_file),
         )
         print(f"\t\tsingularity_script are: {singularity_script}")
@@ -134,9 +134,7 @@ def main(container_path: str):
         job_dict = {
             "executable": f"{str(singularity_script_file)}",  # the program to run on the execute node
             # "arguments": arguments,
-            "output": str(results_dirs / f"{system_name}.out"),  # anything the job prints to
-            # standard output will end up
-            # in this file
+            "output": str(results_dirs / f"{system_name}.out"),  # anything the job prints to standard output will end up in this file
             "error": str(results_dirs / f"{system_name}.err"),  # anything the job prints to  standard error will end up in this file
             "log": str(results_dirs / f"{system_name}.log"),  # this file will contain a record  of what happened to the job
             "request_cpus": "47",  # how many CPU cores we want
