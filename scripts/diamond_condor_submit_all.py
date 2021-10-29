@@ -152,7 +152,7 @@ def main(container_path: str):
 
         query = schedd.query()
 
-        print(query)
+        # print(query)
 
         num_jobs = len(query)
         while num_jobs > 10:
