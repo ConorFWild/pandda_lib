@@ -134,11 +134,11 @@ def main(container_path: str):
         job_dict = {
             "executable": f"{str(singularity_script_file)}",  # the program to run on the execute node
             # "arguments": arguments,
-            "output": f"/opt/clusterdata/pandda/pandda_results/{system_name}.out",  # anything the job prints to
+            "output": str(results_dirs / f"{system_name}.out"),  # anything the job prints to
             # standard output will end up
             # in this file
-            "error": f"/opt/clusterdata/pandda/pandda_results/{system_name}.err",  # anything the job prints to standard error will end up in this file
-            "log": f"/opt/clusterdata/pandda/pandda_results/{system_name}.log",  # this file will contain a record of what happened to the job
+            "error": str(results_dirs / f"{system_name}.err"),  # anything the job prints to  standard error will end up in this file
+            "log": str(results_dirs / f"{system_name}.log"),  # this file will contain a record  of what happened to the job
             "request_cpus": "47",  # how many CPU cores we want
             "request_memory": "300GB",  # how much memory we want
             # "request_disk": "300GB",
