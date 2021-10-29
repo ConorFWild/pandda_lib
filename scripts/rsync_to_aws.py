@@ -143,7 +143,7 @@ def main(diamond_dir: str, output_dir: str):
         )
 
         rsync = CpDirToAWS.from_paths(
-            path_to_remote_dir=Path('/opt/clusterdata/pandda') / doc[constants.mongo_diamond_paths_system_name],
+            path_to_remote_dir=Path('/opt/clusterscratch/pandda/data') / doc[constants.mongo_diamond_paths_system_name],
             path_to_local_dir=Path(doc[constants.mongo_diamond_paths_model_building_dir]),
         )
 
