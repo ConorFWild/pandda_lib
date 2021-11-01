@@ -80,9 +80,9 @@ class PanDDAResult:
     processed_datasets: Dict[Dtag, DatasetResult]
 
     @staticmethod
-    def from_dir(dir: Path):
-        processed_datasets_dir = dir / constants.PANDDA_PROCESSED_DATASETS_DIR
-        analyses_dir = dir / constants.PANDDA_ANALYSES_DIR
+    def from_dir(pandda_dir: Path):
+        processed_datasets_dir = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR
+        analyses_dir = pandda_dir / constants.PANDDA_ANALYSES_DIR
         event_csv = analyses_dir / constants.PANDDA_ANALYSE_EVENTS_FILE
         event_table = pd.read_csv(event_csv)
 
@@ -93,7 +93,7 @@ class PanDDAResult:
             processed_datasets[dtag] = processed_dataset
 
         return PanDDAResult(
-            dir,
+            pandda_dir,
             processed_datasets,
         )
 
@@ -106,10 +106,10 @@ class PanDDAsResult:
     panddas: Dict[SystemName, PanDDAResult]
 
     @staticmethod
-    def from_dir(dir: Path):
+    def from_dir(panddas_dir: Path):
         # For each dir construct the PanDDA
         pandda_results = {}
-        for dir in dir.glob('*'):
+        for pandda_dir in panddas_dir.glob('*'):
             system_name = SystemName(dir.name)
             pandda_result = PanDDAResult.from_dir(dir)
             pandda_results[system_name] = pandda_result
