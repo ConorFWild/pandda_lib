@@ -26,17 +26,19 @@ class ReferenceStructure:
         return ReferenceStructure(file,
                                   structure)
 
-    def get_rmsds_from_path(self, path: Path):
-        compatator_structure = Structure.from_path(path)
+    def get_rmsds_from_path(self, path_align: Path, path_lig: Path):
+        structure_align = Structure.from_path(path_align)
 
         st_ref = self.structure.structure
-        st_comp = compatator_structure.structure
+        st_align = structure_align.structure
 
         polymer_ref = st_ref[0][0].get_polymer()
-        polymer_comp = st_comp[0][0].get_polymer()
+        polymer_comp = st_align[0][0].get_polymer()
         ptype = polymer_ref.check_polymer_type()
         sup = gemmi.calculate_superposition(polymer_ref, polymer_comp, ptype, gemmi.SupSelect.CaP)
 
+        compatator_structure = Structure.from_path(path_lig)
+        st_comp = compatator_structure.structure
         for model in st_comp:
             for chain in model:
                 ress = chain.get_ligands()
@@ -75,7 +77,7 @@ class ReferenceDataset:
 @dataclass()
 class ReferenceDatasets:
     path: Path
-    reference_structures: Dict[Dtag, ReferenceStructure]
+    reference_datasets: Dict[Dtag, ReferenceStructure]
 
     @staticmethod
     def from_dir(reference_datasets_dir: Path):
@@ -90,4 +92,4 @@ class ReferenceDatasets:
         )
 
     def get_reference_dataset(self, key):
-        return self.reference_structures[key]
+        return self.reference_datasets[key]
