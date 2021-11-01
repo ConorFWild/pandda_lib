@@ -30,7 +30,7 @@ class EventResult:
         rhofit_dir = event_dir / 'rhofit'
 
         dataset_dir = event_dir.parent
-        for file in dataset_dir:
+        for file in dataset_dir.glob('*'):
             if re.match(f"{dataset_dir.name}-event_{event_dir.name}.+", file.name):
                 event_map_path = file
 
