@@ -12,6 +12,7 @@ from pandda_lib.events import Event
 from pandda_lib import constants
 from pandda_lib.rmsd import Structure, Ligands, RMSD
 
+
 @dataclass()
 class ReferenceStructure:
     path: Path
