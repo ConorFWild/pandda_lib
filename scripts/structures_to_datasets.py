@@ -9,10 +9,12 @@ import fire
 
 
 def main(reference_structure_dir, reference_data_dir):
-    for reference_structure_path in reference_structure_dir:
+    for reference_structure_path in Path(reference_structure_dir):
         dtag = reference_structure_path.stem
+        print(dtag)
+        exit()
 
-        reference_dataset_dir = reference_data_dir / dtag
+        reference_dataset_dir = Path(reference_data_dir) / dtag
         if reference_dataset_dir.exists():
             continue
 
