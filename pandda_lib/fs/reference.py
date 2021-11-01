@@ -88,3 +88,6 @@ class ReferenceDatasets:
             reference_datasets_dir,
             reference_datasets,
         )
+
+    def get_reference_dataset(self, key):
+        return self.reference_structures[key]
