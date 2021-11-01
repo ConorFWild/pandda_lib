@@ -9,7 +9,7 @@ import fire
 
 
 def main(reference_structure_dir, reference_data_dir):
-    for reference_structure_path in Path(reference_structure_dir):
+    for reference_structure_path in Path(reference_structure_dir).glob('*'):
         dtag = reference_structure_path.stem
         print(dtag)
         exit()
