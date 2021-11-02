@@ -61,7 +61,8 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                         # print(build.percentage_signal)
                         # print(build.percentage_noise)
                         signal_to_noises.append(build.percentage_signal - (build.percentage_noise))
-                    except:
+                    except Exception as e:
+                        print(e)
                         continue
 
             if len(rmsds) > 0:
