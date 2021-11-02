@@ -48,24 +48,23 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
 
             signal_to_noises = []
             rmsds = []
-            for event_num, event_result in dataset_result.events.items():
-                for build_num, build in event_result.build_results.items():
-                    try:
-                        build_path = build.path
-                        _rmsds = get_rmsds_from_path(reference_dataset.reference_structure_path, dataset_structure_path,
-                                                     build_path)
-                        # print(_rmsds)
-                        closest = min(_rmsds)
-                        rmsds.append(closest)
-                        # print("########")
-                        # print(build.percentage_signal)
-                        # print(build.percentage_noise)
-                        signal_to_noises.append(build.percentage_signal - (build.percentage_noise))
-                    except Exception as e:
-                        print(e)
-                        continue
-
-            if len(rmsds) > 0:
+            if len(dataset_result.events) != 0:
+                for event_num, event_result in dataset_result.events.items():
+                    for build_num, build in event_result.build_results.items():
+                        try:
+                            build_path = build.path
+                            _rmsds = get_rmsds_from_path(reference_dataset.reference_structure_path, dataset_structure_path,
+                                                         build_path)
+                            # print(_rmsds)
+                            closest = min(_rmsds)
+                            rmsds.append(closest)
+                            # print("########")
+                            # print(build.percentage_signal)
+                            # print(build.percentage_noise)
+                            signal_to_noises.append(build.percentage_signal - (build.percentage_noise))
+                        except Exception as e:
+                            # print(e)
+                            continue
                 closest = min(rmsds)
                 signalest = max(signal_to_noises)
                 if dtag.dtag in high_confidence_structures:
@@ -78,6 +77,8 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                     print(f'\t\tHIGH CONFIDENCE: {dtag.dtag}: {dataset_result.processed}: NO EVENTS!')
                 else:
                     print(f"\t\t{dtag.dtag}: {dataset_result.processed}: NO EVENTS!")
+
+
 
             # except Exception as e:
             #     print(e)
