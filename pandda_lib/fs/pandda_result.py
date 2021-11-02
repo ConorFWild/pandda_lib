@@ -62,17 +62,21 @@ class EventResult:
 
         # Get build log
         build_log_file = event_dir / 'log.json'
-        with open(build_log_file, 'r') as f:
-            build_log = json.load(f)
+        if build_log_file.exists():
+            with open(build_log_file, 'r') as f:
+                build_log = json.load(f)
 
-        rescoring_log = build_log['rescoring_log']
+            rescoring_log = build_log['rescoring_log']
 
-        build_results = {}
-        for file in rhofit_dir.glob("*"):
-            if re.match('Hit.+\.pdb', file.name):
-                build_log = rescoring_log[str(file)]
-                build_result = BuildResult.from_file(file, build_log)
-                build_results[file.name] = build_result
+            build_results = {}
+            for file in rhofit_dir.glob("*"):
+                if re.match('Hit.+\.pdb', file.name):
+                    build_log = rescoring_log[str(file)]
+                    build_result = BuildResult.from_file(file, build_log)
+                    build_results[file.name] = build_result
+
+        else:
+            build_results = {}
 
         return EventResult(
             event_map_path,
