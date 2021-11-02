@@ -12,11 +12,15 @@ from pandda_lib.common import Dtag, SystemName
 from pandda_lib.rmsd import Ligands, RMSD, get_rmsds_from_path
 
 
-def main(reference_structure_dir, panddas_dir):
+def main(reference_data_dir, reference_structure_dir, panddas_dir):
+
+    reference_data_dir = Path(reference_data_dir).resolve()
     reference_structure_dir = Path(reference_structure_dir).resolve()
     panddas_dir = Path(panddas_dir).resolve()
 
-    reference_datasets = ReferenceDatasets.from_dir(reference_structure_dir)
+    high_confidence_structures = [x.name for x in reference_structure_dir.glob('*')]
+
+    reference_datasets = ReferenceDatasets.from_dir(reference_data_dir)
     print(f'Got reference datasets model')
 
     for pandda_dir in panddas_dir.glob('*'):
@@ -56,9 +60,17 @@ def main(reference_structure_dir, panddas_dir):
 
             if len(rmsds) > 0:
                 closest = min(rmsds)
-                print(f"\t\t{dtag.dtag}: {closest}")
+                if dtag.dtag in high_confidence_structures:
+
+                    print(f"\t\t{dtag.dtag}: {closest}")
+                else:
+                    print(f"\t\tHIGH CONFIDENCE: {dtag.dtag}: {closest}")
             else:
-                print(f'\t\t{dtag.dtag}: NO EVENTS!')
+                if dtag.dtag in high_confidence_structures:
+                    print(f'\t\t{dtag.dtag}: NO EVENTS!')
+                else:
+                    print(f"\t\tHIGH CONFIDENCE: {dtag.dtag}: NO EVENTS!")
+
 
             # except Exception as e:
             #     print(e)
