@@ -46,6 +46,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
             dataset_result = pandda_result.processed_datasets[dtag]
             dataset_structure_path = dataset_result.structure_path
 
+            signal_to_noises = []
             rmsds = []
             for event_num, event_result in dataset_result.events.items():
                 for build_num, build in event_result.build_results.items():
@@ -56,16 +57,18 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                         # print(_rmsds)
                         closest = min(_rmsds)
                         rmsds.append(closest)
+                        signal_to_noises.append(build.percentage_signal - (build.percentage_noise+1))
                     except:
                         continue
 
             if len(rmsds) > 0:
                 closest = min(rmsds)
+                signalest = max(signal_to_noises)
                 if dtag.dtag in high_confidence_structures:
 
-                    print(f"\t\tHIGH CONFIDENCE: {dtag.dtag}: {closest}")
+                    print(f"\t\tHIGH CONFIDENCE: {dtag.dtag}: {closest}: {signalest}")
                 else:
-                    print(f"\t\t{dtag.dtag}: {closest}")
+                    print(f"\t\t{dtag.dtag}: {closest}: {signalest}")
             else:
                 if dtag.dtag in high_confidence_structures:
                     print(f'\t\tHIGH CONFIDENCE: {dtag.dtag}: NO EVENTS!')

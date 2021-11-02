@@ -19,16 +19,30 @@ class BuildResult:
     total_signal_samples: int
     noise_samples: int
     total_noise_samples: int
+    percentage_signal: float
+    percentage_noise: float
 
     @staticmethod
     def from_file(file: Path, build_log):
         signal_log = build_log['signal_log']
         noise_log = build_log['noise_log']
+        signal_samples = signal_log['signal_samples_signal']
+        signal_samples_total = signal_log['total_valid_samples']
+        noise_samples = noise_log['noise_samples']
+        noise_samples_total = noise_log['total_valid_samples']
+
+        total_noise = (signal_samples_total - signal_samples) + noise_samples
+
+        percentage_signal = signal_samples / signal_samples_total
+        percentage_noise = total_noise / (noise_samples_total + (signal_samples_total - signal_samples))
+
         return BuildResult(file,
                            signal_log['signal_samples_signal'],
                            signal_log['total_valid_samples'],
                            noise_log['noise_samples'],
                            noise_log['total_valid_samples'],
+                           percentage_signal,
+                           percentage_noise,
                            )
 
 
