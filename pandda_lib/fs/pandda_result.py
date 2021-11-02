@@ -52,12 +52,15 @@ class EventResult:
 
 @dataclass()
 class DatasetResult:
+    structure_path: Path
     events: Dict[str, EventResult]
 
     @staticmethod
     def from_dir(processed_dataset_dir, event_table):
 
         dtag = Dtag(processed_dataset_dir.name)
+
+        structure_path = processed_dataset_dir / constants.PANDDA_PDB_FILE.format(dtag.dtag)
 
         events = {}
 
@@ -67,6 +70,7 @@ class DatasetResult:
                 events[event_dir.name] = event_result
 
         return DatasetResult(
+            structure_path,
             events
         )
 
