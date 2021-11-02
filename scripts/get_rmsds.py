@@ -35,12 +35,15 @@ def main(reference_structure_dir, pandda_dir):
         rmsds = []
         for event_num, event_result in dataset_result.events.items():
             for build_num, build in event_result.build_results.items():
-                build_path = build.path
-                _rmsds = get_rmsds_from_path(reference_dataset.reference_structure_path, dataset_structure_path,
-                                             build_path)
-                # print(_rmsds)
-                closest = min(_rmsds)
-                rmsds.append(closest)
+                try:
+                    build_path = build.path
+                    _rmsds = get_rmsds_from_path(reference_dataset.reference_structure_path, dataset_structure_path,
+                                                 build_path)
+                    # print(_rmsds)
+                    closest = min(_rmsds)
+                    rmsds.append(closest)
+                except:
+                    continue
 
         if len(rmsds) > 0:
             closest = min(rmsds)
