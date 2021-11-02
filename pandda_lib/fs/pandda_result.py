@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import *
 from pathlib import Path
 import re
+import json
 
 import pandas as pd
 
@@ -14,10 +15,20 @@ from pandda_lib import constants
 @dataclass()
 class BuildResult:
     path: Path
+    signal_samples: int
+    total_signal_samples: int
+    noise_samples: int
+    total_noise_samples: int
 
     @staticmethod
-    def from_file(file: Path):
-        return BuildResult(file)
+    def from_file(file: Path, build_log):
+        signal_log = build_log['signal_log']
+        noise_log = build_log['noise_log']
+        return BuildResult(file,
+                           signal_log['signal_samples_signal'],
+                           signal_log['total_valid_samples'],
+                           noise_log['noise_samples'],
+                           noise_log['total_valid_samples'])
 
 
 @dataclass()
@@ -34,11 +45,18 @@ class EventResult:
             if re.match(f"{dataset_dir.name}-event_{event_dir.name}.+", file.name):
                 event_map_path = file
 
-        build_results = {}
+        # Get build log
+        build_log_file = event_dir / 'log.json'
+        with open(build_log_file, 'r') as f:
+            build_log = json.load(f)
 
+        rescoring_log = build_log['rescoring_log']
+
+        build_results = {}
         for file in rhofit_dir.glob("*"):
             if re.match('Hit.+\.pdb', file.name):
-                build_result = BuildResult.from_file(file)
+                build_log = rescoring_log[str(file)]
+                build_result = BuildResult.from_file(file, build_log)
                 build_results[file.name] = build_result
 
         return EventResult(
