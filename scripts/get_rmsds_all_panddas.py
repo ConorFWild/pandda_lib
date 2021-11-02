@@ -62,14 +62,14 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                 closest = min(rmsds)
                 if dtag.dtag in high_confidence_structures:
 
-                    print(f"\t\t{dtag.dtag}: {closest}")
-                else:
                     print(f"\t\tHIGH CONFIDENCE: {dtag.dtag}: {closest}")
+                else:
+                    print(f"\t\t{dtag.dtag}: {closest}")
             else:
                 if dtag.dtag in high_confidence_structures:
-                    print(f'\t\t{dtag.dtag}: NO EVENTS!')
+                    print(f'\t\tHIGH CONFIDENCE: {dtag.dtag}: NO EVENTS!')
                 else:
-                    print(f"\t\tHIGH CONFIDENCE: {dtag.dtag}: NO EVENTS!")
+                    print(f"\t\t{dtag.dtag}: NO EVENTS!")
 
 
             # except Exception as e:
