@@ -18,7 +18,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
     reference_structure_dir = Path(reference_structure_dir).resolve()
     panddas_dir = Path(panddas_dir).resolve()
 
-    high_confidence_structures = [x.name for x in reference_structure_dir.glob('*')]
+    high_confidence_structures = [x.stem for x in reference_structure_dir.glob('*')]
 
     reference_datasets = ReferenceDatasets.from_dir(reference_data_dir)
     print(f'Got reference datasets model')
