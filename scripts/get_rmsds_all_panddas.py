@@ -57,6 +57,9 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                         # print(_rmsds)
                         closest = min(_rmsds)
                         rmsds.append(closest)
+                        print("########")
+                        print(build.percentage_signal)
+                        print(build.percentage_noise)
                         signal_to_noises.append(build.percentage_signal - (build.percentage_noise+1))
                     except:
                         continue
