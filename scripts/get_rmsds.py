@@ -37,6 +37,7 @@ def main(reference_structure_dir, pandda_dir):
         except Exception as e:
             print(e)
 
+    print("Finished!")
 
 if __name__ == "__main__":
     fire.Fire(main)
