@@ -38,12 +38,15 @@ def main(reference_structure_dir, pandda_dir):
                 build_path = build.path
                 _rmsds = get_rmsds_from_path(reference_dataset.reference_structure_path, dataset_structure_path,
                                              build_path)
-                print(_rmsds)
+                # print(_rmsds)
                 closest = min(_rmsds)
                 rmsds.append(closest)
 
-        closest = min(rmsds)
-        print(f"\t\t{dtag.dtag}: {closest}")
+        if len(rmsds) > 0:
+            closest = min(rmsds)
+            print(f"\t\t{dtag.dtag}: {closest}")
+        else:
+            print(f'\t\t{dtag.dtag}: NO EVENTS!')
 
         # except Exception as e:
         #     print(e)
