@@ -29,7 +29,7 @@ def main(reference_structure_dir, panddas_dir):
             print(f'\tNO EVENT TABLE! SKIPPING!')
             continue
         pandda_result = PanDDAResult.from_dir(pandda_dir)
-        print(f'Got PanDDA model')
+        # print(f'Got PanDDA model')
 
         for dtag, reference_dataset in reference_datasets.reference_datasets.items():
             # print(f'Getting RMSDs for dtag: ')
