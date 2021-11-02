@@ -60,7 +60,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                         print("########")
                         print(build.percentage_signal)
                         print(build.percentage_noise)
-                        signal_to_noises.append(build.percentage_signal - (build.percentage_noise+1))
+                        signal_to_noises.append(build.percentage_signal - (build.percentage_noise))
                     except:
                         continue
 
