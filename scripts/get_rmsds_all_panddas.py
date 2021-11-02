@@ -65,13 +65,23 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                         except Exception as e:
                             # print(e)
                             continue
-                closest = min(rmsds)
-                signalest = max(signal_to_noises)
-                if dtag.dtag in high_confidence_structures:
 
-                    print(f"\t\tHIGH CONFIDENCE: {dtag.dtag}: {dataset_result.processed}: {closest}: {signalest}")
+                if len(rmsds) != 0:
+
+                    closest = min(rmsds)
+                    signalest = max(signal_to_noises)
+                    if dtag.dtag in high_confidence_structures:
+
+                        print(f"\t\tHIGH CONFIDENCE: {dtag.dtag}: {dataset_result.processed}: {closest}: {signalest}")
+                    else:
+                        print(f"\t\t{dtag.dtag}: {dataset_result.processed}: {closest}: {signalest}")
+
                 else:
-                    print(f"\t\t{dtag.dtag}: {dataset_result.processed}: {closest}: {signalest}")
+                    if dtag.dtag in high_confidence_structures:
+                        print(f'\t\tHIGH CONFIDENCE: {dtag.dtag}: {dataset_result.processed}: NO BUILDS!')
+                    else:
+                        print(f"\t\t{dtag.dtag}: {dataset_result.processed}: NO BUILDS!")
+
             else:
                 if dtag.dtag in high_confidence_structures:
                     print(f'\t\tHIGH CONFIDENCE: {dtag.dtag}: {dataset_result.processed}: NO EVENTS!')
