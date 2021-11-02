@@ -63,16 +63,18 @@ class ReferenceStructure:
 @dataclass()
 class ReferenceDataset:
     path: Path
-    reference_structure: ReferenceStructure
+    # reference_structure: ReferenceStructure
+    reference_structure_path: Path
 
     @staticmethod
     def from_dir(reference_dataset_dir: Path):
         pdb_file_path = reference_dataset_dir / 'final.pdb'
-        reference_structure = ReferenceStructure.from_file(pdb_file_path)
+        # reference_structure = ReferenceStructure.from_file(pdb_file_path)
 
         return ReferenceDataset(
             reference_dataset_dir,
-            reference_structure,
+            pdb_file_path,
+            # reference_structure,
         )
 
 
