@@ -91,6 +91,7 @@ class EventResult:
 class DatasetResult:
     structure_path: Path
     events: Dict[str, EventResult]
+    processed: bool
 
     @staticmethod
     def from_dir(processed_dataset_dir, event_table):
@@ -99,8 +100,14 @@ class DatasetResult:
 
         structure_path = processed_dataset_dir / constants.PANDDA_PDB_FILE.format(dtag.dtag)
 
-        events = {}
+        dataset_log = processed_dataset_dir / 'log.json'
 
+        if dataset_log.exists():
+            processed = True
+        else:
+            processed = False
+
+        events = {}
         for event_dir in processed_dataset_dir.glob('*'):
             if re.match('[0-9]+', event_dir.name):
                 event_result = EventResult.from_dir(event_dir)
@@ -108,7 +115,8 @@ class DatasetResult:
 
         return DatasetResult(
             structure_path,
-            events
+            events,
+            processed=processed
         )
 
     def get_event_result(self, key):
