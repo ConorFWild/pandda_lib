@@ -72,7 +72,6 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                 else:
                     print(f"\t\t{dtag.dtag}: NO EVENTS!")
 
-
             # except Exception as e:
             #     print(e)
 
