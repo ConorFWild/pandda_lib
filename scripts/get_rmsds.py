@@ -13,6 +13,9 @@ from pandda_lib.rmsd import Ligands, RMSD
 
 
 def main(reference_structure_dir, pandda_dir):
+    reference_structure_dir = Path(reference_structure_dir)
+    pandda_dir = Path(pandda_dir)
+
     pandda_result = PanDDAResult.from_dir(pandda_dir)
     reference_datasets = ReferenceDatasets.from_dir(reference_structure_dir)
 
