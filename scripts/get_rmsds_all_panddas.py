@@ -20,6 +20,10 @@ def main(reference_structure_dir, panddas_dir):
     print(f'Got reference datasets model')
 
     for pandda_dir in panddas_dir.glob('*'):
+
+        if not pandda_dir.is_dir():
+            continue
+
         print(f'PanDDA: {pandda_dir.name}')
         if not (pandda_dir / 'analyses' / 'pandda_analyse_events.csv').exists():
             print(f'\tNO EVENT TABLE! SKIPPING!')
