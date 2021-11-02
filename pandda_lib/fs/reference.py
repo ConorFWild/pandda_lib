@@ -65,7 +65,7 @@ class ReferenceDataset:
 
     @staticmethod
     def from_dir(reference_dataset_dir: Path):
-        pdb_file_path = next(reference_dataset_dir.glob('*.pdb'))
+        pdb_file_path = next(reference_dataset_dir.glob('final.pdb'))
         reference_structure = ReferenceStructure.from_file(pdb_file_path)
 
         return ReferenceDataset(
