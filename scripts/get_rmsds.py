@@ -31,12 +31,18 @@ def main(reference_structure_dir, pandda_dir):
 
         dataset_result = pandda_result.processed_datasets[dtag]
         dataset_structure_path = dataset_result.structure_path
+
+        rmsds = []
         for event_num, event_result in dataset_result.events.items():
             for build_num, build in event_result.build_results.items():
                 build_path = build.path
-                rmsds = get_rmsds_from_path(reference_dataset.reference_structure_path, dataset_structure_path, build_path)
-                closest = min(rmsds)
-                print(f"\t\t{dtag.dtag}: {closest}")
+                _rmsds = get_rmsds_from_path(reference_dataset.reference_structure_path, dataset_structure_path,
+                                             build_path)
+                closest = min(_rmsds)
+                rmsds.append(closest)
+
+        closest = min(rmsds)
+        print(f"\t\t{dtag.dtag}: {closest}")
 
         # except Exception as e:
         #     print(e)
