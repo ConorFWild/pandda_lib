@@ -148,7 +148,7 @@ def get_rmsds_from_path(path_ref, path_align: Path, path_lig: Path):
     # Check every rmsd of every ligand against every ligand
     rmsds = []
     for ligand_ref in ligands_ref.structures:
-        for ligand_comp in ligands_comp.structure:
+        for ligand_comp in ligands_comp.structures:
             rmsd = RMSD.from_structures_iso(ligand_ref.structure, ligand_comp.structure)
             rmsds.append(rmsd.rmsd)
 
