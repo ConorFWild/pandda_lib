@@ -28,36 +28,7 @@ class ReferenceStructure:
             structure,
         )
 
-    def get_rmsds_from_path(self, path_align: Path, path_lig: Path):
-        structure_align = Structure.from_path(path_align)
 
-        st_ref = self.structure.structure
-        st_align = structure_align.structure
-
-        polymer_ref = st_ref[0][0].get_polymer()
-        polymer_comp = st_align[0][0].get_polymer()
-        ptype = polymer_ref.check_polymer_type()
-        sup = gemmi.calculate_superposition(polymer_ref, polymer_comp, ptype, gemmi.SupSelect.CaP)
-
-        compatator_structure = Structure.from_path(path_lig)
-        st_comp = compatator_structure.structure
-        for model in st_comp:
-            for chain in model:
-                ress = chain.get_ligands()
-
-                sup.apply(ress)
-
-        ligands_ref = Ligands.from_structure(self.structure)
-        ligands_comp = Ligands.from_structure(compatator_structure)
-
-        # Check every rmsd of every ligand against every ligand
-        rmsds = []
-        for ligand_ref in ligands_ref.structures:
-            for ligand_comp in ligands_comp.structure:
-                rmsd = RMSD.from_structures_iso(ligand_ref.structure, ligand_comp.structure)
-                rmsds.append(rmsd.rmsd)
-
-        return rmsds
 
 
 @dataclass()
