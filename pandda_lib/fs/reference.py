@@ -52,7 +52,7 @@ class ReferenceDataset:
 @dataclass()
 class ReferenceDatasets:
     path: Path
-    reference_datasets: Dict[Dtag, ReferenceStructure]
+    reference_datasets: Dict[Dtag, ReferenceDataset]
 
     @staticmethod
     def from_dir(reference_datasets_dir: Path):

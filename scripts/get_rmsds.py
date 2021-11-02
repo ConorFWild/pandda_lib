@@ -9,7 +9,7 @@ import fire
 from pandda_lib.fs import PanDDAResult
 from pandda_lib.fs.reference import ReferenceDatasets
 from pandda_lib.common import Dtag, SystemName
-from pandda_lib.rmsd import Ligands, RMSD
+from pandda_lib.rmsd import Ligands, RMSD, get_rmsds_from_path
 
 
 def main(reference_structure_dir, pandda_dir):
@@ -30,7 +30,7 @@ def main(reference_structure_dir, pandda_dir):
             for event_num, event_result in dataset_result.events.items():
                 for build_num, build in event_result.build_results.items():
                     build_path = build.path
-                    rmsds = reference_dataset.get_rmsds_from_path(dataset_structure_path, build_path)
+                    rmsds = get_rmsds_from_path(reference_dataset.reference_structure_path, dataset_structure_path, build_path)
                     closest = min(rmsds)
                     print(f"\t\t{dtag.dtag}: {closest}")
 
