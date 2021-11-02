@@ -25,6 +25,10 @@ def main(reference_structure_dir, pandda_dir):
     for dtag, reference_dataset in reference_datasets.reference_datasets.items():
         # print(f'Getting RMSDs for dtag: ')
         # try:
+        if dtag not in pandda_result.processed_datasets:
+            print(f'\tDtag {dtag.dtag} not in pandda results')
+            continue
+
         dataset_result = pandda_result.processed_datasets[dtag]
         dataset_structure_path = dataset_result.structure_path
         for event_num, event_result in dataset_result.events.items():
