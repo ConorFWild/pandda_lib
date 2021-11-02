@@ -86,6 +86,7 @@ class ReferenceDatasets:
         reference_datasets = {}
         for reference_dataset_dir in reference_datasets_dir.glob('*'):
             dtag = Dtag(reference_dataset_dir.name)
+            print(f'\tAttempting to load: {dtag.dtag}')
             reference_datasets[dtag] = ReferenceDataset.from_dir(reference_dataset_dir)
 
         return ReferenceDatasets(
