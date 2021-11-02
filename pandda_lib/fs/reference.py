@@ -23,8 +23,10 @@ class ReferenceStructure:
 
         structure = Structure.from_path(file)
 
-        return ReferenceStructure(file,
-                                  structure)
+        return ReferenceStructure(
+            file,
+            structure,
+        )
 
     def get_rmsds_from_path(self, path_align: Path, path_lig: Path):
         structure_align = Structure.from_path(path_align)
