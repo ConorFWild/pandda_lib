@@ -12,7 +12,8 @@ from pandda_lib.common import Dtag, SystemName
 from pandda_lib.events import Event
 
 from pandda_lib import constants
-from pandda_lib.rmsd import Structure, Ligands, RMSD
+from pandda_lib.rmsd.structure import Structure
+from pandda_lib.rmsd.ligand import Ligands
 
 @dataclass()
 class RMSD:
