@@ -66,6 +66,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                             # print(e)
                             continue
 
+                # If have builds to compare to
                 if len(rmsds) != 0:
 
                     closest = min(rmsds)
@@ -76,11 +77,13 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                     else:
                         print(f"\t\t{dtag.dtag}: {dataset_result.processed}: {closest}: {signalest}")
 
+                # If no builds
                 else:
                     if dtag.dtag in high_confidence_structures:
-                        print(f'\t\tHIGH CONFIDENCE: {dtag.dtag}: {dataset_result.processed}: NO BUILDS!')
+                        print(f'\t\tHIGH CONFIDENCE: {dtag.dtag}: {dataset_result.processed}: NO BUILDS OR BROKEN '
+                              f'LIGANDS!')
                     else:
-                        print(f"\t\t{dtag.dtag}: {dataset_result.processed}: NO BUILDS!")
+                        print(f"\t\t{dtag.dtag}: {dataset_result.processed}: NO BUILDS OR BROKEN LIGANDS!")
 
             else:
                 if dtag.dtag in high_confidence_structures:
