@@ -28,7 +28,8 @@ class BuildResult:
                            signal_log['signal_samples_signal'],
                            signal_log['total_valid_samples'],
                            noise_log['noise_samples'],
-                           noise_log['total_valid_samples'])
+                           noise_log['total_valid_samples'],
+                           )
 
 
 @dataclass()
