@@ -37,7 +37,7 @@ class EventResult:
         build_results = {}
 
         for file in rhofit_dir.glob("*"):
-            if re.match('Hit.+', file.name):
+            if re.match('Hit.+\.pdb', file.name):
                 build_result = BuildResult.from_file(file)
                 build_results[file.name] = build_result
 
