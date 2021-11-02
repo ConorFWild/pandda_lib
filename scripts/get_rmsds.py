@@ -17,9 +17,12 @@ def main(reference_structure_dir, pandda_dir):
     pandda_dir = Path(pandda_dir)
 
     pandda_result = PanDDAResult.from_dir(pandda_dir)
+    print(f'Got PanDDA model')
     reference_datasets = ReferenceDatasets.from_dir(reference_structure_dir)
+    print(f'Got reference datasets model')
 
     for dtag, reference_dataset in reference_datasets.reference_datasets.items():
+        # print(f'Getting RMSDs for dtag: ')
         try:
             dataset_result = pandda_result.processed_datasets[dtag]
             dataset_structure_path = dataset_result.structure_path
