@@ -160,18 +160,19 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                 #     else:
                 #         print(f"\t\t{dtag.dtag}: {dataset_result.processed}: NO EVENTS!")
 
-                record = {
-                    'dtag': dtag.dtag,
-                    'processed': processed,
-                    'num_events': num_events,
-                    'num_builds': num_builds,
-                    'broken_ligand': broken_ligand,
-                    'closest_event': closest_event,
-                    'closest_rmsd': closest_rmsd,  # None and num_events>0&num_builds>0 implies broken ligand
-                    'best_signal_to_noise': best_signal_to_noise,
-                }
-                records.append(record)
+            record = {
+                'dtag': dtag.dtag,
+                'processed': processed,
+                'num_events': num_events,
+                'num_builds': num_builds,
+                'broken_ligand': broken_ligand,
+                'closest_event': closest_event,
+                'closest_rmsd': closest_rmsd,  # None and num_events>0&num_builds>0 implies broken ligand
+                'best_signal_to_noise': best_signal_to_noise,
+            }
+            records.append(record)
 
+        print(pd.DataFrame(records).head())
         print(pd.DataFrame(records).tail())
 
             # except Exception as e:
