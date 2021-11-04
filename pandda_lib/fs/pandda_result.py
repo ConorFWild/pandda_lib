@@ -80,7 +80,7 @@ class EventResult:
             build_results = {}
 
         dtag = event_dir.parent.name
-        event_idx = event_dir.name
+        event_idx = int(event_dir.name)
 
         for index, row in event_table.iterrows():
             print(row)
