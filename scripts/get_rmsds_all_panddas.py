@@ -55,6 +55,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                 num_events = None
                 num_builds = None
                 broken_ligand = False
+                alignment_error = False
                 closest_event = None
                 closest_rmsd = None
                 best_signal_to_noise = None
@@ -69,24 +70,42 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
 
                 if len(dataset_result.events) != 0:
 
-                    event_distances = []
+                    # event_distances = []
                     is_ligand_broken = False
+                    has_alignment_error = False
 
-                    closest_event = get_closest_event(reference_dataset.reference_structure_path,
-                                                                 dataset_structure_path,
+                    has_closest_event = get_closest_event(reference_dataset.reference_structure_path,
+                                                      dataset_structure_path,
                                                       dataset_result.events,
                                                       )
 
-                    for event_num, event_result in dataset_result.events.items():
+                    if has_closest_event == "ALIGNMENTERROR":
+                        alignment_error = has_alignment_error
+                        broken_ligand = False
+                        closest_event = None
+                        closest_rmsd = None
+                        best_signal_to_noise = None
 
+                    else:
+                        closest_event = has_closest_event
 
-                        if len(event_result.build_results) != 0:
+                        for event_num, event_result in dataset_result.events.items():
+
+                            # if len(event_result.build_results) != 0:
                             for build_num, build in event_result.build_results.items():
                                 try:
                                     build_path = build.path
                                     _rmsds = get_rmsds_from_path(reference_dataset.reference_structure_path,
                                                                  dataset_structure_path,
                                                                  build_path)
+
+                                    if _rmsds == "BROKENLIGAND":
+                                        is_ligand_broken = True
+                                        continue
+
+                                    if _rmsds == "ALIGNMENTERROR":
+                                        has_alignment_error = True
+                                        continue
                                     # print(_rmsds)
                                     closest = min(_rmsds)
                                     rmsds.append(closest)
@@ -95,35 +114,35 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                                     # print(build.percentage_noise)
                                     signal_to_noises.append(build.percentage_signal - (build.percentage_noise))
                                 except Exception as e:
-                                    is_ligand_broken = True
+                                    # is_ligand_broken = True
                                     continue
 
-
-
-
-                    if num_builds == 0:
-                        num_builds = 0
-                        broken_ligand = False
-                        closest_rmsd = None
-                        best_signal_to_noise = None
-
-                    else:
-                        if len(rmsds) == 0:
-                            broken_ligand = is_ligand_broken
+                        if num_builds == 0:
+                            num_builds = 0
+                            broken_ligand = False
+                            alignment_error = has_alignment_error
                             closest_rmsd = None
                             best_signal_to_noise = None
 
                         else:
-                            broken_ligand = is_ligand_broken
-                            closest_rmsd = min(rmsds)
-                            best_signal_to_noise = max(signal_to_noises)
+                            if len(rmsds) == 0:
+                                broken_ligand = is_ligand_broken
+                                alignment_error = has_alignment_error
+                                closest_rmsd = None
+                                best_signal_to_noise = None
+
+                            else:
+                                broken_ligand = is_ligand_broken
+                                alignment_error = has_alignment_error
+                                closest_rmsd = min(rmsds)
+                                best_signal_to_noise = max(signal_to_noises)
 
                     # closest_event = min(event_distances)
-
 
                 else:
                     num_events = 0
                     num_builds = None
+                    alignment_error = False
                     broken_ligand = False
                     closest_event = None
                     closest_rmsd = None
@@ -160,6 +179,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                 'num_events': num_events,
                 'num_builds': num_builds,
                 'broken_ligand': broken_ligand,
+                'alignment_error': alignment_error,
                 'closest_event': closest_event,
                 'closest_rmsd': closest_rmsd,  # None and num_events>0&num_builds>0 implies broken ligand
                 'best_signal_to_noise': best_signal_to_noise,
@@ -169,8 +189,8 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
         print(pd.DataFrame(records).head())
         print(pd.DataFrame(records).tail())
 
-            # except Exception as e:
-            #     print(e)
+        # except Exception as e:
+        #     print(e)
 
     table = pd.DataFrame(records)
     print(table)

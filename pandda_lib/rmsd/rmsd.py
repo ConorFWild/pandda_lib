@@ -134,10 +134,13 @@ def get_closest_event(
     st_ref = structure_ref.structure
     st_align = structure_align.structure
 
-    polymer_ref = st_ref[0][0].get_polymer()
-    polymer_comp = st_align[0][0].get_polymer()
-    ptype = polymer_ref.check_polymer_type()
-    sup = gemmi.calculate_superposition(polymer_ref, polymer_comp, ptype, gemmi.SupSelect.CaP)
+    try:
+        polymer_ref = st_ref[0][0].get_polymer()
+        polymer_comp = st_align[0][0].get_polymer()
+        ptype = polymer_ref.check_polymer_type()
+        sup = gemmi.calculate_superposition(polymer_ref, polymer_comp, ptype, gemmi.SupSelect.CaP)
+    except Exception as e:
+        return "ALIGNMENTERROR"
 
     reference_structure = Structure.from_path(reference_structure_path)
     reference_ligands = Ligands.from_structure(reference_structure)
@@ -173,10 +176,13 @@ def get_rmsds_from_path(path_ref, path_align: Path, path_lig: Path):
     st_ref = structure_ref.structure
     st_align = structure_align.structure
 
-    polymer_ref = st_ref[0][0].get_polymer()
-    polymer_comp = st_align[0][0].get_polymer()
-    ptype = polymer_ref.check_polymer_type()
-    sup = gemmi.calculate_superposition(polymer_ref, polymer_comp, ptype, gemmi.SupSelect.CaP)
+    try:
+        polymer_ref = st_ref[0][0].get_polymer()
+        polymer_comp = st_align[0][0].get_polymer()
+        ptype = polymer_ref.check_polymer_type()
+        sup = gemmi.calculate_superposition(polymer_ref, polymer_comp, ptype, gemmi.SupSelect.CaP)
+    except Exception as e:
+        return "ALIGNMENTERROR"
 
     compatator_structure = Structure.from_path(path_lig)
     st_comp = compatator_structure.structure
@@ -191,9 +197,12 @@ def get_rmsds_from_path(path_ref, path_align: Path, path_lig: Path):
 
     # Check every rmsd of every ligand against every ligand
     rmsds = []
-    for ligand_ref in ligands_ref.structures:
-        for ligand_comp in ligands_comp.structures:
-            rmsd = RMSD.from_structures_iso(ligand_ref.structure, ligand_comp.structure)
-            rmsds.append(rmsd.rmsd)
+    try:
+        for ligand_ref in ligands_ref.structures:
+            for ligand_comp in ligands_comp.structures:
+                rmsd = RMSD.from_structures_iso(ligand_ref.structure, ligand_comp.structure)
+                rmsds.append(rmsd.rmsd)
+    except Exception as e:
+        return "BROKENLIGAND"
 
     return rmsds
