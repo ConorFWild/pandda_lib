@@ -52,6 +52,8 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                 closest_rmsd = None
                 best_signal_to_noise = None
             else:
+                print(f'\tDtag {dtag.dtag} IS in pandda results')
+
                 processed = True
                 dataset_result = pandda_result.processed_datasets[dtag]
                 dataset_structure_path = dataset_result.structure_path
