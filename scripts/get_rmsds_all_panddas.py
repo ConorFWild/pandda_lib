@@ -187,7 +187,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
             }
             records.append(record)
 
-        print(pd.DataFrame(records).head())
+        # print(pd.DataFrame(records).head())
         print(pd.DataFrame(records).tail())
 
         # except Exception as e:
