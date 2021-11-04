@@ -43,7 +43,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
             # print(f'Getting RMSDs for dtag: ')
             # try:
             if dtag not in pandda_result.processed_datasets:
-                # print(f'\tDtag {dtag.dtag} not in pandda results')
+                print(f'\tDtag {dtag.dtag} not in pandda results')
                 processed = False
                 num_events = None
                 num_builds = None
