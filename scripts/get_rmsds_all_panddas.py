@@ -43,8 +43,15 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
             # print(f'Getting RMSDs for dtag: ')
             # try:
             if dtag not in pandda_result.processed_datasets:
-                print(f'\tDtag {dtag.dtag} not in pandda results')
-                processed = False
+                continue
+
+            dataset_result = pandda_result.processed_datasets[dtag]
+            dataset_structure_path = dataset_result.structure_path
+
+            processed = dataset_result.processed
+            if not processed:
+                # print(f'\tDtag {dtag.dtag} not in pandda results')
+                processed = processed
                 num_events = None
                 num_builds = None
                 broken_ligand = False
@@ -52,11 +59,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                 closest_rmsd = None
                 best_signal_to_noise = None
             else:
-                print(f'\tDtag {dtag.dtag} IS in pandda results')
-
-                processed = True
-                dataset_result = pandda_result.processed_datasets[dtag]
-                dataset_structure_path = dataset_result.structure_path
+                # print(f'\tDtag {dtag.dtag} IS in pandda results')
 
                 signal_to_noises = []
                 rmsds = []
