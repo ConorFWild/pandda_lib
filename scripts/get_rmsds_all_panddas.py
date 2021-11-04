@@ -118,7 +118,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                             closest_rmsd = min(rmsds)
                             best_signal_to_noise = max(signal_to_noises)
 
-                    closest_event = min(event_distances)
+                    # closest_event = min(event_distances)
 
 
                 else:
