@@ -11,7 +11,7 @@ import pandas as pd
 from pandda_lib.fs import PanDDAResult
 from pandda_lib.fs.reference import ReferenceDatasets
 from pandda_lib.common import Dtag, SystemName
-from pandda_lib.rmsd import Structure, Ligands, RMSD, get_rmsds_from_path
+from pandda_lib.rmsd import Structure, Ligands, RMSD, get_rmsds_from_path, get_closest_event
 
 
 def main(reference_data_dir, reference_structure_dir, panddas_dir):
