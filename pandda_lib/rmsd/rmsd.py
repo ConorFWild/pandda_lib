@@ -122,6 +122,50 @@ class RMSD:
         return RMSD(np.mean(closest_distances))
 
 
+def get_closest_event(
+        reference_structure_path,
+        dataset_structure_path,
+        events,
+):
+
+    structure_align = Structure.from_path(dataset_structure_path)
+    structure_ref = Structure.from_path(reference_structure_path)
+
+    st_ref = structure_ref.structure
+    st_align = structure_align.structure
+
+    polymer_ref = st_ref[0][0].get_polymer()
+    polymer_comp = st_align[0][0].get_polymer()
+    ptype = polymer_ref.check_polymer_type()
+    sup = gemmi.calculate_superposition(polymer_ref, polymer_comp, ptype, gemmi.SupSelect.CaP)
+
+    reference_structure = Structure.from_path(reference_structure_path)
+    reference_ligands = Ligands.from_structure(reference_structure)
+
+    event_distances = []
+    for event_num, event_result in events.items():
+
+        reference_structure_ligand_distance_to_events = []
+        for ligand in reference_ligands.structures:
+            ligand_centroid = ligand.centroid()
+            event_centroid_native = event_result.centroid
+
+            event_centroid = sup.transform.apply(gemmi.Position(*event_centroid_native))
+
+            distance_to_event = np.linalg.norm(
+                (
+                    event_centroid[0] - ligand_centroid[0],
+                    event_centroid[1] - ligand_centroid[1],
+                    event_centroid[2] - ligand_centroid[2],
+                ))
+            reference_structure_ligand_distance_to_events.append(distance_to_event)
+
+        distance_to_event = min(reference_structure_ligand_distance_to_events)
+        event_distances.append(distance_to_event)
+
+    return min(event_distances)
+
+
 def get_rmsds_from_path(path_ref, path_align: Path, path_lig: Path):
     structure_align = Structure.from_path(path_align)
     structure_ref = Structure.from_path(path_ref)

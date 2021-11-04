@@ -71,25 +71,14 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
 
                     event_distances = []
                     is_ligand_broken = False
+
+                    closest_event = get_closest_event(reference_dataset.reference_structure_path,
+                                                                 dataset_structure_path,
+                                                      dataset_result.events,
+                                                      )
+
                     for event_num, event_result in dataset_result.events.items():
 
-                        reference_structure = Structure.from_path(reference_dataset.reference_structure_path)
-                        reference_ligands = Ligands.from_structure(reference_structure)
-
-                        reference_structure_ligand_distance_to_events = []
-                        for ligand in reference_ligands.structures:
-                            ligand_centroid = ligand.centroid()
-                            event_centroid = event_result.centroid
-                            distance_to_event = np.linalg.norm(
-                                (
-                                    event_centroid[0] - ligand_centroid[0],
-                                    event_centroid[1] - ligand_centroid[1],
-                                    event_centroid[2] - ligand_centroid[2],
-                                ))
-                            reference_structure_ligand_distance_to_events.append(distance_to_event)
-
-                        distance_to_event = min(reference_structure_ligand_distance_to_events)
-                        event_distances.append(distance_to_event)
 
                         if len(event_result.build_results) != 0:
                             for build_num, build in event_result.build_results.items():
