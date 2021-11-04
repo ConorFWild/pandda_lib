@@ -83,8 +83,8 @@ class EventResult:
         event_idx = int(event_dir.name)
 
         for index, row in event_table.iterrows():
-            print(row)
-            print((dtag, event_idx))
+            # print(row)
+            # print((dtag, event_idx))
             if row['dtag'] == dtag:
                 if row['event_idx'] == event_idx:
                     centroid = (row['x'], row['y'], row['z'])
