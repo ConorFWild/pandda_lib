@@ -161,6 +161,8 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
             }
             records.append(record)
 
+        print(pd.DataFrame(records.head()))
+
             # except Exception as e:
             #     print(e)
 
