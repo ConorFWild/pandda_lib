@@ -80,6 +80,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                                                       )
 
                     if has_closest_event == "ALIGNMENTERROR":
+                        has_alignment_error = True
                         alignment_error = has_alignment_error
                         broken_ligand = False
                         closest_event = None
