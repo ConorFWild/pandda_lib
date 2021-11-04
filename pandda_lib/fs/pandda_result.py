@@ -80,9 +80,10 @@ class EventResult:
             build_results = {}
 
         for index, row in event_table.iterrows():
+            print(row)
+
             if row['dtag'] == event_dir.parent.name:
                 if row['event_idx'] == event_dir.name:
-                    print(row)
                     centroid = (row['x'], row['y'], row['z'])
 
         return EventResult(
