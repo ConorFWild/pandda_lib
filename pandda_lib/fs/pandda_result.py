@@ -50,9 +50,10 @@ class BuildResult:
 class EventResult:
     event_map_path: Path
     build_results: Dict[str, BuildResult]
+    centroid: Tuple[float, float, float]
 
     @staticmethod
-    def from_dir(event_dir: Path):
+    def from_dir(event_dir: Path, event_table):
         rhofit_dir = event_dir / 'rhofit'
 
         dataset_dir = event_dir.parent
@@ -78,9 +79,15 @@ class EventResult:
         else:
             build_results = {}
 
+        for index, row in event_table.iterrows():
+            if row['dtag'] == event_dir.parent.name:
+                if row['event_idx'] == event_dir.name:
+                    centroid = (row['x'], row['y'], row['z'])
+
         return EventResult(
             event_map_path,
-            build_results
+            build_results,
+            centroid,
         )
 
     def get_build_result(self, key):
@@ -110,7 +117,7 @@ class DatasetResult:
         events = {}
         for event_dir in processed_dataset_dir.glob('*'):
             if re.match('[0-9]+', event_dir.name):
-                event_result = EventResult.from_dir(event_dir)
+                event_result = EventResult.from_dir(event_dir, event_table)
                 events[event_dir.name] = event_result
 
         return DatasetResult(
