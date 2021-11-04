@@ -114,10 +114,18 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
                         best_signal_to_noise = None
 
                     else:
-                        closest_event = min(event_distances)
-                        broken_ligand = is_ligand_broken
-                        closest_rmsd = min(rmsds)
-                        best_signal_to_noise = max(signal_to_noises)
+                        if len(rmsds) == 0:
+                            broken_ligand = is_ligand_broken
+                            closest_rmsd = None
+                            best_signal_to_noise = None
+
+                        else:
+                            broken_ligand = is_ligand_broken
+                            closest_rmsd = min(rmsds)
+                            best_signal_to_noise = max(signal_to_noises)
+
+                    closest_event = min(event_distances)
+
 
                 else:
                     num_events = 0
