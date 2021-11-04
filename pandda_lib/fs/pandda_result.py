@@ -79,11 +79,14 @@ class EventResult:
         else:
             build_results = {}
 
+        dtag = event_dir.parent.name
+        event_idx = event_dir.name
+
         for index, row in event_table.iterrows():
             print(row)
-
-            if row['dtag'] == event_dir.parent.name:
-                if row['event_idx'] == event_dir.name:
+            print((dtag, event_idx))
+            if row['dtag'] == dtag:
+                if row['event_idx'] == event_idx:
                     centroid = (row['x'], row['y'], row['z'])
 
         return EventResult(
