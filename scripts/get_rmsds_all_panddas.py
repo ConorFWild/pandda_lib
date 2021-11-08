@@ -14,7 +14,7 @@ from pandda_lib.common import Dtag, SystemName
 from pandda_lib.rmsd import Structure, Ligands, RMSD, get_rmsds_from_path, get_closest_event
 
 
-def main(reference_data_dir, reference_structure_dir, panddas_dir):
+def main(reference_data_dir, reference_structure_dir, panddas_dir, output_file_path):
     reference_data_dir = Path(reference_data_dir).resolve()
     reference_structure_dir = Path(reference_structure_dir).resolve()
     panddas_dir = Path(panddas_dir).resolve()
@@ -195,6 +195,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir):
 
     table = pd.DataFrame(records)
     print(table)
+    table.to_csv(output_file_path)
 
     print("Finished!")
 
