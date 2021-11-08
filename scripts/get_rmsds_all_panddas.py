@@ -29,6 +29,8 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir, output_file_p
 
     for pandda_dir in panddas_dir.glob('*'):
 
+        system = pandda_dir.name
+
         if not pandda_dir.is_dir():
             continue
 
@@ -175,6 +177,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir, output_file_p
                 #         print(f"\t\t{dtag.dtag}: {dataset_result.processed}: NO EVENTS!")
 
             record = {
+                'system': system,
                 'dtag': dtag.dtag,
                 'processed': processed,
                 'num_events': num_events,
