@@ -126,7 +126,7 @@ class DatasetResult:
                     event_result = EventResult.from_dir(event_dir, event_table)
                     events[event_dir.name] = event_result
                 except Exception as e:
-                    print(e)
+                    print(f"\t{event_dir}: {e}")
                     continue
 
         return DatasetResult(
