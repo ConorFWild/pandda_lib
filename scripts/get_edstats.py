@@ -22,6 +22,7 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
         dtag = data_dir.name
         print(f"Processing dtag: {dtag}")
 
+        print(mtz_regex)
         mtz_file = next(data_dir.glob(mtz_regex))
         pdb_file = next(data_dir.glob(pdb_regex))
 
