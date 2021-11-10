@@ -7,7 +7,7 @@ import fire
 from pandda_lib.command import EDSTATS
 
 
-def main(data_dirs, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb"):
+def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb"):
     data_dirs = Path(data_dirs).resolve()
 
     records = []
@@ -42,12 +42,14 @@ def main(data_dirs, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb"):
 
     table = pd.DataFrame(records)
 
-    sns.catplot(
+    p = sns.catplot(
         x='dtag',
         y='rscc',
         data=table,
         kind='violin'
     )
+
+    p.savefig(output_plot_file)
 
 if __name__ == "__main__":
     fire.Fire(main)
