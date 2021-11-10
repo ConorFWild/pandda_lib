@@ -59,6 +59,8 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
         kind='violin'
     )
 
+    p.set(ylim=(0, 1))
+
     p.savefig(output_plot_file)
 
 
