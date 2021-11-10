@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pandas as pd
+import seaborn as sns
 import fire
 
 from pandda_lib.command import EDSTATS
@@ -26,16 +28,26 @@ def main(data_dirs, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb"):
 
         stats = EDSTATS(mtz_file, pdb_file)
 
-        stats_results = stats.run()
+        rsccs = stats.run()
 
-        record = {
-            "dtag": dtag,
-        }
+        for rscc in rsccs:
+            record = {
+                "dtag": dtag,
+                "rscc": rscc,
+            }
 
-        exit()
+            records.append(record)
 
-        records.append(record)
+        break
 
+    table = pd.DataFrame(records)
+
+    sns.catplot(
+        x='dtag',
+        y='rscc',
+        data=table,
+        kind='violin'
+    )
 
 if __name__ == "__main__":
     fire.Fire(main)
