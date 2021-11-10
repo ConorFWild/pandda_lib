@@ -17,6 +17,12 @@ def main(data_dirs, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb"):
 
         stats = EDSTATS(mtz_file, pdb_file)
 
-        record = stats.run()
+        stats_results = stats.run()
+
+        record = {
+            "dtag": dtag,
+        }
+
+        exit()
 
         records.append(record)
