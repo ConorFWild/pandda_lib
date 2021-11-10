@@ -6,7 +6,7 @@ from pandda_lib.command import EDSTATS
 
 
 def main(data_dirs, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb"):
-    data_dirs = Path(data_dirs)
+    data_dirs = Path(data_dirs).resolve()
 
     records = []
 

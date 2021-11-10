@@ -29,11 +29,12 @@ class EDSTATS:
         )
 
     def run(self):
-        stdout, stderr = subprocess.Popen(
+        p = subprocess.Popen(
             self.command,
             shell=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
         )
+        stdout, stderr = p.communicate()
         print(stdout)
         print(stderr)
