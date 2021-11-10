@@ -74,6 +74,9 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
 
     p.savefig(output_plot_file)
 
+    for unique_dtag in table['dtag'].unique():
+        print(f"{unique_dtag}: {table[table['dtag'] == unique_dtag].mean()}")
+
     # g = sns.catplot(
     #     x='dtag',
     #     y='rscc',
@@ -85,8 +88,6 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
     # g.set(ylim=(0, 1))
     #
     # g.savefig(output_plot_file)
-
-    print()
 
 
 if __name__ == "__main__":
