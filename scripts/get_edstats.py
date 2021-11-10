@@ -9,6 +9,7 @@ from pandda_lib.command import EDSTATS
 
 def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb"):
     data_dirs = Path(data_dirs).resolve()
+    output_plot_file = Path(output_plot_file).resolve()
 
     records = []
 
