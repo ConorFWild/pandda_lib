@@ -13,7 +13,8 @@ class EDSTATS:
         self.command = (
             f"#!/bin/tcsh\n"
             f"rm -f fixed.mtz\n"
-            f"mtzfix  FLABEL FP  HKLIN {input_mtz_file}  HKLOUT fixed.mtz  >mtzfix.log\n"
+            # f"mtzfix  FLABEL FP  HKLIN {input_mtz_file}  HKLOUT fixed.mtz  >mtzfix.log\n"
+            f"mtzfix HKLIN {input_mtz_file} HKLOUT fixed.mtz >mtzfix.log\n"
             f"if($?) exit $?\n"
             # Display the log
             f"less mtzfix.log\n"
