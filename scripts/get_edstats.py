@@ -7,7 +7,8 @@ import fire
 from pandda_lib.command import EDSTATS
 
 
-def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb"):
+def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb",
+         f="FWT", phi="PHWT", delta_f="DELFWT", delta_phi="PHDELWT"):
     data_dirs = Path(data_dirs).resolve()
     output_plot_file = Path(output_plot_file).resolve()
 
@@ -32,7 +33,9 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
             print("\tSkipping! No pdb!")
             continue
 
-        stats = EDSTATS(mtz_file, pdb_file)
+        stats = EDSTATS(mtz_file, pdb_file,
+                        f=f, phi=phi, delta_f=delta_f, delta_phi=delta_phi,
+                        )
 
         rsccs = stats.run()
 
