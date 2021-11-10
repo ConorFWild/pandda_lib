@@ -78,6 +78,7 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
     )
 
     # p.set(ylim=(0, 1))
+    p.set(ylim=(0, 10))
     # p.set_xticklabels(p.get_xticklabels(), rotation=30)
     for ax in p.axes.ravel():
         ax.set_xticklabels(ax.get_xticklabels(), rotation=90)
