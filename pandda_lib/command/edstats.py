@@ -74,8 +74,13 @@ class EDSTATS:
 """
 
         stats = table.iloc[:, 27:39]
-        rsccs = table['CCSa']
 
-        return rsccs
+        rsccs = table['CCSa']
+        b_factors = table['BAa']
+        rszos = table['ZOa']
+        rszds = table['ZDa']
+
+
+        return rsccs, b_factors, rszos, rszds
 
 
