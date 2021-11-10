@@ -21,10 +21,10 @@ class EDSTATS:
             # CHoose which mtz to use
             f"if(! -e fixed.mtz)  ln -s  in.mtz fixed.mtz\n"
             # FFT the 2FoFc map
-            f"echo 'labi F1=FWT PHI=PHWT\nxyzl asu\ngrid samp 4.5'  | fft HKLIN fixed.mtz  MAPOUT fo.map\n"
+            f"echo 'labi F1=FWT PHI=PHWT\\nxyzl asu\\ngrid samp 4.5'  | fft HKLIN fixed.mtz  MAPOUT fo.map\n"
             f"if($?) exit $?\n"
             # FFT The FoFc map
-            f"echo 'labi F1=DELFWT PHI=PHDELWT\nxyzl asu\ngrid samp 4.5'  | fft  HKLIN fixed.mtz  MAPOUT df.map\n"
+            f"echo 'labi F1=DELFWT PHI=PHDELWT\\nxyzl asu\\ngrid samp 4.5'  | fft  HKLIN fixed.mtz  MAPOUT df.map\n"
             # Do the edstats
             f"echo resl={res_low},resh={res_high}  | edstats  XYZIN {input_pdb_file}  MAPIN1 fo.map  MAPIN2 df.map  QQDOUT q-q.out  OUT stats.out\n"
         )
