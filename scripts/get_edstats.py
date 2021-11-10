@@ -4,6 +4,7 @@ import fire
 
 from pandda_lib.command import EDSTATS
 
+
 def main(data_dirs, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb"):
     data_dirs = Path(data_dirs)
 
@@ -26,3 +27,7 @@ def main(data_dirs, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb"):
         exit()
 
         records.append(record)
+
+
+if __name__ == "__main__":
+    fire.Fire(main)
