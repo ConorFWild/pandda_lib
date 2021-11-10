@@ -29,6 +29,7 @@ class EDSTATS:
         )
 
     def run(self):
+        print(self.command)
         p = subprocess.Popen(
             self.command,
             shell=True,
