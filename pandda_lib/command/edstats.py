@@ -55,7 +55,7 @@ class EDSTATS:
         )
         stdout, stderr = p.communicate()
         # print(stdout)
-        print(stderr)
+        # print(stderr)
 
         table = pd.read_csv('stats.out', delim_whitespace=True)
         """
