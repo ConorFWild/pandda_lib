@@ -1,5 +1,6 @@
 import subprocess
 
+import pandas as pd
 import gemmi
 
 
@@ -21,12 +22,12 @@ class EDSTATS:
             # CHoose which mtz to use
             f"if(! -e fixed.mtz)  ln -s  in.mtz fixed.mtz\n"
             # FFT the 2FoFc map
-            f"echo 'labi F1=FWT PHI=PHWT\\nxyzl asu\\ngrid samp 4.5'  | fft HKLIN fixed.mtz  MAPOUT fo.map\n"
+            f"echo 'labi F1=FWT PHI=PHWT\\nxyzl asu\\ngrid samp 4.5' | fft HKLIN fixed.mtz MAPOUT fo.map\n"
             f"if($?) exit $?\n"
             # FFT The FoFc map
-            f"echo 'labi F1=DELFWT PHI=PHDELWT\\nxyzl asu\\ngrid samp 4.5'  | fft  HKLIN fixed.mtz  MAPOUT df.map\n"
+            f"echo 'labi F1=DELFWT PHI=PHDELWT\\nxyzl asu\\ngrid samp 4.5' | fft HKLIN fixed.mtz MAPOUT df.map\n"
             # Do the edstats
-            f"echo resl={res_low},resh={res_high}  | edstats  XYZIN {input_pdb_file}  MAPIN1 fo.map  MAPIN2 df.map  QQDOUT q-q.out  OUT stats.out\n"
+            f"echo resl={res_low},resh={res_high}  | edstats  XYZIN {input_pdb_file} MAPIN1 fo.map MAPIN2 df.map QQDOUT q-q.out OUT stats.out\n"
         )
 
     def run(self):
@@ -41,3 +42,26 @@ class EDSTATS:
         stdout, stderr = p.communicate()
         print(stdout)
         print(stderr)
+
+        table = pd.read_csv('stats.out', delim_whitespace=True)
+        """
+        4. BAm:   Weighted average Biso.
+ 5. NPm:   No of statistically independent grid points covered by atoms.
+ 6. Rm:    Real-space R factor (RSR).
+ 7. RGm:   Real-space RG factor (RSRG).
+ 8. SRGm:  Standard uncertainty of RSRG.
+ 9. CCSm:  Real-space sample correlation coefficient (RSCC).
+10. CCPm:  Real-space 'population' correlation coefficient (RSPCC).
+11. ZCCPm: Z-score of real-space correlation coefficient.
+12. ZOm:   Real-space Zobs score (RSZO).
+13. ZDm:   Real-space Zdiff score (RSZD) i.e. max(-RSZD-,RSZD+).
+14. ZD-m:  Real-space Zdiff score for negative differences (RSZD-).
+15. ZD+m:  Real-space Zdiff score for positive differences (RSZD+).
+"""
+
+        stats = table.iloc[:, 27:39]
+        rsccs = table['CCSa']
+
+        return rsccs
+
+
