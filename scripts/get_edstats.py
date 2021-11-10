@@ -50,7 +50,7 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
 
         rsccs, b_factors, rszos, rszds = stats.run()
 
-        for k in enumerate(rsccs):
+        for k, rscc in enumerate(rsccs):
             rscc = rsccs[k]
             b_factor = b_factors[k]
             rszo = rszos[k]
