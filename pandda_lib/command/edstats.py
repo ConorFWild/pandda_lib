@@ -11,7 +11,7 @@ class EDSTATS:
         res_high = mtz.resolution_high()
 
         self.command = (
-            f"#!/bin/tcsh\n"
+            # f"#!/bin/tcsh\n"
             f"rm -f fixed.mtz\n"
             # f"mtzfix  FLABEL FP  HKLIN {input_mtz_file}  HKLOUT fixed.mtz  >mtzfix.log\n"
             f"mtzfix HKLIN {input_mtz_file} HKLOUT fixed.mtz >mtzfix.log\n"
@@ -34,6 +34,7 @@ class EDSTATS:
         p = subprocess.Popen(
             self.command,
             shell=True,
+            executable='/bin/tcsh',
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
         )
