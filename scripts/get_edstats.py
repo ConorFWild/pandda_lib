@@ -69,26 +69,39 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
 
     num_datasets = table['dtag'].nunique()
 
-    p = sns.catplot(
-        x='dtag',
-        y='rszo',
-        data=table,
-        kind='violin',
-        height=8.27, aspect=(11.7 / 8.27) * (num_datasets / 8),
-    )
+    # p = sns.catplot(
+    #     x='dtag',
+    #     y='rszo',
+    #     data=table,
+    #     kind='violin',
+    #     height=8.27, aspect=(11.7 / 8.27) * (num_datasets / 8),
+    # )
+    #
+    # # p.set(ylim=(0, 1))
+    # p.set(ylim=(0, 10))
+    # # p.set_xticklabels(p.get_xticklabels(), rotation=30)
+    # for ax in p.axes.ravel():
+    #     ax.set_xticklabels(ax.get_xticklabels(), rotation=90)
+    # p.savefig(output_plot_file)
 
-    # p.set(ylim=(0, 1))
-    p.set(ylim=(0, 10))
-    # p.set_xticklabels(p.get_xticklabels(), rotation=30)
-    for ax in p.axes.ravel():
-        ax.set_xticklabels(ax.get_xticklabels(), rotation=90)
-    p.savefig(output_plot_file)
+    drop = []
+    keep = []
 
     for unique_dtag in table['dtag'].unique():
         dtag_rsccs = table[table['dtag'] == unique_dtag]
         print(f"{unique_dtag}")
         print(f"\t{table[table['dtag'] == unique_dtag].mean()}")
         print(f"\t{len(dtag_rsccs[dtag_rsccs['rszo'] < 1.0]) / len(dtag_rsccs)}")
+
+        bad_residues = len(dtag_rsccs[dtag_rsccs['rszo'] < 1.0]) / len(dtag_rsccs)
+        if bad_residues > 0.05:
+            drop.append(unique_dtag)
+        else:
+            keep.append(unique_dtag)
+
+
+    print(f'Dtags to drop: {drop}')
+    print(f'Dtags to keep: {keep}')
 
     # g = sns.catplot(
     #     x='dtag',
