@@ -77,7 +77,10 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
     p.savefig(output_plot_file)
 
     for unique_dtag in table['dtag'].unique():
-        print(f"{unique_dtag}: {table[table['dtag'] == unique_dtag].mean()}")
+        dtag_rsccs = table[table['dtag'] == unique_dtag]
+        print(f"{unique_dtag}")
+        print(f"\t{table[table['dtag'] == unique_dtag].mean()}")
+        print(f"\t{len(dtag_rsccs[dtag_rsccs['rscc'] < 0.8]) / len(dtag_rsccs)}")
 
     # g = sns.catplot(
     #     x='dtag',
