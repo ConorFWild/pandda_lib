@@ -16,9 +16,9 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
 
     j = 0
     for data_dir in data_dirs.glob("*"):
-        if j > 10:
-            break
-        j = j + 1
+        # if j > 10:
+        #     break
+        # j = j + 1
         dtag = data_dir.name
         print(f"Processing dtag: {dtag}")
 
