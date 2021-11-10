@@ -26,9 +26,11 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
 
         if not mtz_file.exists():
             print("\tSkipping! No mtz!")
+            continue
 
         if not pdb_file.exists():
             print("\tSkipping! No pdb!")
+            continue
 
         stats = EDSTATS(mtz_file, pdb_file)
 
