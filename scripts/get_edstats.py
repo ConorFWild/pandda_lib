@@ -37,6 +37,8 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
                         f=f, phi=phi, delta_f=delta_f, delta_phi=delta_phi,
                         )
 
+        print(stats.command)
+
         rsccs = stats.run()
 
         for rscc in rsccs:
