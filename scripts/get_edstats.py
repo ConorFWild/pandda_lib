@@ -74,17 +74,17 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
 
     p.savefig(output_plot_file)
 
-    g = sns.catplot(
-        x='dtag',
-        y='rscc',
-        data=table,
-        kind='bar',
-    height = 8.27, aspect = (11.7 / 8.27) * (num_datasets / 5),
-    )
-
-    g.set(ylim=(0, 1))
-
-    g.savefig(output_plot_file)
+    # g = sns.catplot(
+    #     x='dtag',
+    #     y='rscc',
+    #     data=table,
+    #     kind='bar',
+    # height = 8.27, aspect = (11.7 / 8.27) * (num_datasets / 5),
+    # )
+    #
+    # g.set(ylim=(0, 1))
+    #
+    # g.savefig(output_plot_file)
 
     print()
 
