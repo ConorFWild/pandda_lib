@@ -13,7 +13,10 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
 
     records = []
 
+    j = 0
     for data_dir in data_dirs.glob("*"):
+        if j > 10:
+            break
         dtag = data_dir.name
         print(f"Processing dtag: {dtag}")
 
@@ -25,7 +28,6 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
 
         if not pdb_file.exists():
             print("\tSkipping! No pdb!")
-
 
         stats = EDSTATS(mtz_file, pdb_file)
 
@@ -39,8 +41,6 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
 
             records.append(record)
 
-        break
-
     table = pd.DataFrame(records)
 
     p = sns.catplot(
@@ -51,6 +51,7 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
     )
 
     p.savefig(output_plot_file)
+
 
 if __name__ == "__main__":
     fire.Fire(main)
