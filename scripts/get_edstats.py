@@ -60,17 +60,33 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
 
     table = pd.DataFrame(records)
 
+    num_datasets = table['dtag'].nunique()
+
     p = sns.catplot(
         x='dtag',
         y='rscc',
         data=table,
         kind='violin',
-    height = 8.27, aspect = 11.7 / 8.27,
+    height = 8.27, aspect = (11.7 / 8.27) * (num_datasets / 5),
     )
 
     p.set(ylim=(0, 1))
 
     p.savefig(output_plot_file)
+
+    g = sns.catplot(
+        x='dtag',
+        y='rscc',
+        data=table,
+        kind='bar',
+    height = 8.27, aspect = (11.7 / 8.27) * (num_datasets / 5),
+    )
+
+    g.set(ylim=(0, 1))
+
+    g.savefig(output_plot_file)
+
+    print()
 
 
 if __name__ == "__main__":
