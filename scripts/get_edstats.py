@@ -67,10 +67,11 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
         y='rscc',
         data=table,
         kind='violin',
-    height = 8.27, aspect = (11.7 / 8.27) * (num_datasets / 5),
+    height = 8.27, aspect = (11.7 / 8.27) * (num_datasets / 8),
     )
 
     p.set(ylim=(0, 1))
+    p.set_xticklabels(p.get_xticklabels(), rotation=30)
 
     p.savefig(output_plot_file)
 
