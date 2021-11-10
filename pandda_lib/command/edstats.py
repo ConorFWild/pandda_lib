@@ -31,7 +31,7 @@ class EDSTATS:
         )
 
     def run(self):
-        print(self.command)
+        # print(self.command)
         p = subprocess.Popen(
             self.command,
             shell=True,
@@ -40,8 +40,8 @@ class EDSTATS:
             stderr=subprocess.PIPE,
         )
         stdout, stderr = p.communicate()
-        print(stdout)
-        print(stderr)
+        # print(stdout)
+        # print(stderr)
 
         table = pd.read_csv('stats.out', delim_whitespace=True)
         """
