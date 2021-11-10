@@ -22,8 +22,16 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
         dtag = data_dir.name
         print(f"Processing dtag: {dtag}")
 
-        mtz_file = next(data_dir.glob(mtz_regex))
-        pdb_file = next(data_dir.glob(pdb_regex))
+        try:
+            mtz_file = next(data_dir.glob(mtz_regex))
+        except:
+            print("\tSkipping! No mtz!")
+            continue
+        try:
+            pdb_file = next(data_dir.glob(pdb_regex))
+        except:
+            print("\tSkipping! No pdb!")
+            continue
 
         if not mtz_file.exists():
             print("\tSkipping! No mtz!")
