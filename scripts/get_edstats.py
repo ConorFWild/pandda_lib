@@ -56,7 +56,8 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
         x='dtag',
         y='rscc',
         data=table,
-        kind='violin'
+        kind='violin',
+    height = 8.27, aspect = 11.7 / 8.27,
     )
 
     p.set(ylim=(0, 1))
