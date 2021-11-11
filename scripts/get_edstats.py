@@ -7,10 +7,12 @@ import fire
 from pandda_lib.command import EDSTATS
 
 
-def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb",
+def main(data_dirs, output_dir, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb",
          f="FWT", phi="PHWT", delta_f="DELFWT", delta_phi="PHDELWT", fix=True):
     data_dirs = Path(data_dirs).resolve()
-    output_plot_file = Path(output_plot_file).resolve()
+    output_dir = Path(output_dir).resolve()
+    output_plot_file = output_dir / "violin.png"
+    output_csv_file = output_dir / "table.csv"
 
     records = []
 
@@ -102,6 +104,8 @@ def main(data_dirs, output_plot_file, mtz_regex="dimple.mtz", pdb_regex="dimple.
 
     print(f'Dtags to drop: {drop}')
     print(f'Dtags to keep: {keep}')
+
+    table.write_csv(output_csv_file)
 
     # g = sns.catplot(
     #     x='dtag',
