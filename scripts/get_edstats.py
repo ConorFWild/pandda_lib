@@ -105,7 +105,7 @@ def main(data_dirs, output_dir, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb",
     print(f'Dtags to drop: {drop}')
     print(f'Dtags to keep: {keep}')
 
-    table.write_csv(output_csv_file)
+    table.to_csv(output_csv_file)
 
     # g = sns.catplot(
     #     x='dtag',
