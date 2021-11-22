@@ -66,7 +66,6 @@ def main(container_path: str):
 
     jobs = {}
 
-
     for data_dir in paths:
         print(f"\tProcessing: {data_dir}")
         system_name = data_dir.name
@@ -86,6 +85,11 @@ def main(container_path: str):
         event_table_file = out_dir / 'analyses' / 'pandda_analyse_events.csv'
         if event_table_file.exists():
             print(f"\t\tSkipped: {data_dir}: not already has analyse events")
+            continue
+
+        pandda_log_file = out_dir / 'pandda_log.json'
+        if pandda_log_file.exists():
+            print(f"\t\tSkipped: {data_dir}: already started!")
             continue
 
         # If not generate job script
