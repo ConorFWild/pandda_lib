@@ -126,6 +126,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir, output_file_p
                                         # None and num_events>0&num_builds>0 implies broken ligand
                                         'signal_to_noise': signal_to_noise,
                                     }
+                                    print(record)
                                     records.append(record)
 
                                 except Exception as e:
