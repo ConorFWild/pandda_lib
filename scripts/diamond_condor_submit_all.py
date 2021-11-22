@@ -150,7 +150,7 @@ def main(container_path: str):
         # Submit job
         submit_result = schedd.submit(job)
         print(f"\t\tSubmitted!")
-        time.sleep(120)
+        time.sleep(20)
 
         jobs[system_name] = submit_result
 
