@@ -124,6 +124,8 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir, output_file_p
                                         'closest_event': closest_event,
                                         'closest_rmsd': closest_rmsd,
                                         # None and num_events>0&num_builds>0 implies broken ligand
+                                        'signal': build.percentage_signal,
+                                        'noise': build.percentage_noise,
                                         'signal_to_noise': signal_to_noise,
                                     }
                                     print(record)
