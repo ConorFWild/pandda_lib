@@ -41,99 +41,134 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir, output_file_p
         pandda_result = PanDDAResult.from_dir(pandda_dir)
         # print(f'Got PanDDA model')
 
-        for dtag, reference_dataset in reference_datasets.reference_datasets.items():
+        for dtag, dataset_result in pandda_result.processed_datasets.items():
             # print(f'Getting RMSDs for dtag: ')
             # try:
-            if dtag not in pandda_result.processed_datasets:
-                continue
-
-            dataset_result = pandda_result.processed_datasets[dtag]
-            dataset_structure_path = dataset_result.structure_path
+            num_events = len(dataset_result.events)
+            num_builds = sum([len(event.build_results) for event in dataset_result.events.values()])
 
             processed = dataset_result.processed
             if not processed:
-                # print(f'\tDtag {dtag.dtag} not in pandda results')
-                processed = processed
-                num_events = None
-                num_builds = None
-                broken_ligand = False
-                alignment_error = False
-                closest_event = None
-                closest_rmsd = None
-                best_signal_to_noise = None
+                continue
+
+            if dtag not in reference_datasets.reference_datasets:
+                for event_num, event_result in dataset_result.events.items():
+
+                    for build_num, build in event_result.build_results.items():
+                        try:
+                            build_path = build.path
+
+                            signal_to_noise = build.percentage_signal - (build.percentage_noise)
+
+                            record = {
+                                'system': system,
+                                'dtag': dtag.dtag,
+                                'processed': processed,
+                                'num_events': num_events,
+                                'num_builds': num_builds,
+                                'closest_event': None,
+                                'closest_rmsd': None,
+                                # None and num_events>0&num_builds>0 implies broken ligand
+                                'signal': build.percentage_signal,
+                                'noise': build.percentage_noise,
+                                'signal_to_noise': signal_to_noise,
+                            }
+                            records.append(record)
+                        except Exception as e:
+                            # is_ligand_broken = True
+                            continue
+
+                continue
+
             else:
-                # print(f'\tDtag {dtag.dtag} IS in pandda results')
+                reference_dataset = reference_datasets.reference_datasets[dtag]
+                dataset_result = pandda_result.processed_datasets[dtag]
+                dataset_structure_path = dataset_result.structure_path
 
-                signal_to_noises = []
-                rmsds = []
+                processed = dataset_result.processed
+                if not processed:
+                    # print(f'\tDtag {dtag.dtag} not in pandda results')
+                    processed = processed
+                    num_events = None
+                    num_builds = None
+                    broken_ligand = False
+                    alignment_error = False
+                    closest_event = None
+                    closest_rmsd = None
+                    best_signal_to_noise = None
+                else:
+                    # print(f'\tDtag {dtag.dtag} IS in pandda results')
 
-                num_events = len(dataset_result.events)
-                num_builds = sum([len(event.build_results) for event in dataset_result.events.values()])
+                    signal_to_noises = []
+                    rmsds = []
 
-                if len(dataset_result.events) != 0:
+                    num_events = len(dataset_result.events)
+                    num_builds = sum([len(event.build_results) for event in dataset_result.events.values()])
 
-                    # event_distances = []
-                    is_ligand_broken = False
-                    has_alignment_error = False
+                    if len(dataset_result.events) != 0:
 
-                    has_closest_event = get_closest_event(reference_dataset.reference_structure_path,
-                                                      dataset_structure_path,
-                                                      dataset_result.events,
-                                                      )
+                        # event_distances = []
+                        is_ligand_broken = False
+                        has_alignment_error = False
 
-                    if has_closest_event == "ALIGNMENTERROR":
-                        has_alignment_error = True
-                        alignment_error = has_alignment_error
-                        broken_ligand = False
-                        closest_event = None
-                        closest_rmsd = None
-                        best_signal_to_noise = None
+                        has_closest_event = get_closest_event(reference_dataset.reference_structure_path,
+                                                          dataset_structure_path,
+                                                          dataset_result.events,
+                                                          )
 
-                    else:
-                        closest_event = has_closest_event
+                        if has_closest_event == "ALIGNMENTERROR":
+                            has_alignment_error = True
+                            alignment_error = has_alignment_error
+                            broken_ligand = False
+                            closest_event = None
+                            closest_rmsd = None
+                            best_signal_to_noise = None
 
-                        for event_num, event_result in dataset_result.events.items():
+                        else:
+                            closest_event = has_closest_event
 
-                            for build_num, build in event_result.build_results.items():
-                                try:
-                                    build_path = build.path
-                                    _rmsds = get_rmsds_from_path(reference_dataset.reference_structure_path,
-                                                                 dataset_structure_path,
-                                                                 build_path)
+                            for event_num, event_result in dataset_result.events.items():
 
-                                    if _rmsds == "BROKENLIGAND":
-                                        is_ligand_broken = True
+                                for build_num, build in event_result.build_results.items():
+                                    try:
+                                        build_path = build.path
+                                        _rmsds = get_rmsds_from_path(reference_dataset.reference_structure_path,
+                                                                     dataset_structure_path,
+                                                                     build_path)
+
+                                        if _rmsds == "BROKENLIGAND":
+                                            is_ligand_broken = True
+                                            continue
+
+                                        if _rmsds == "ALIGNMENTERROR":
+                                            has_alignment_error = True
+                                            continue
+                                        # print(_rmsds)
+                                        closest_rmsd = min(_rmsds)
+                                        # print("########")
+                                        # print(build.percentage_signal)
+                                        # print(build.percentage_noise)
+                                        signal_to_noise = build.percentage_signal - (build.percentage_noise)
+
+                                        record = {
+                                            'system': system,
+                                            'dtag': dtag.dtag,
+                                            'processed': processed,
+                                            'num_events': num_events,
+                                            'num_builds': num_builds,
+                                            'closest_event': closest_event,
+                                            'closest_rmsd': closest_rmsd,
+                                            # None and num_events>0&num_builds>0 implies broken ligand
+                                            'signal': build.percentage_signal,
+                                            'noise': build.percentage_noise,
+                                            'signal_to_noise': signal_to_noise,
+                                        }
+                                        print(record)
+                                        records.append(record)
+
+                                    except Exception as e:
+                                        # is_ligand_broken = True
                                         continue
-
-                                    if _rmsds == "ALIGNMENTERROR":
-                                        has_alignment_error = True
-                                        continue
-                                    # print(_rmsds)
-                                    closest_rmsd = min(_rmsds)
-                                    # print("########")
-                                    # print(build.percentage_signal)
-                                    # print(build.percentage_noise)
-                                    signal_to_noise = build.percentage_signal - (build.percentage_noise)
-
-                                    record = {
-                                        'system': system,
-                                        'dtag': dtag.dtag,
-                                        'processed': processed,
-                                        'num_events': num_events,
-                                        'num_builds': num_builds,
-                                        'closest_event': closest_event,
-                                        'closest_rmsd': closest_rmsd,
-                                        # None and num_events>0&num_builds>0 implies broken ligand
-                                        'signal': build.percentage_signal,
-                                        'noise': build.percentage_noise,
-                                        'signal_to_noise': signal_to_noise,
-                                    }
-                                    print(record)
-                                    records.append(record)
-
-                                except Exception as e:
-                                    # is_ligand_broken = True
-                                    continue
 
     table = pd.DataFrame(records)
     print(table)
