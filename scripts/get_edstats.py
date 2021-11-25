@@ -1,4 +1,5 @@
 from pathlib import Path
+import shutil
 
 import pandas as pd
 import seaborn as sns
@@ -13,6 +14,10 @@ def main(data_dirs, output_dir, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb",
     output_dir = Path(output_dir).resolve()
     output_plot_file = output_dir / "violin.png"
     output_csv_file = output_dir / "table.csv"
+
+    if not shutil.which("edstats"):
+        print('The "edstats" command is not in you path: have you got ccp4 installed?')
+        exit()
 
     records = []
 
