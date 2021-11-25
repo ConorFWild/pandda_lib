@@ -48,7 +48,7 @@ def main(data_dirs, output_dir, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb",
                         fix=fix
                         )
 
-        # print(stats.command)
+        print(stats.command)
 
         rsccs, b_factors, rszos, rszds = stats.run()
 
