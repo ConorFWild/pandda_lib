@@ -22,7 +22,7 @@ def main(data_dirs, output_dir, mtz_regex="dimple.mtz", pdb_regex="dimple.pdb",
         #     break
         # j = j + 1
         dtag = data_dir.name
-        print(f"Processing dtag: {dtag}")
+        print(f"Processing dtag: {dtag} in dir {data_dir}")
 
         try:
             mtz_file = next(data_dir.glob(mtz_regex))

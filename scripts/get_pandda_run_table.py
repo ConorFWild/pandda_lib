@@ -77,7 +77,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir, dataset_outpu
     system_table.to_csv(system_output_file_path)
 
 
-print("Finished!")
+    print("Finished!")
 
 
 if __name__ == "__main__":
