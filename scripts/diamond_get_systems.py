@@ -13,16 +13,20 @@ def main():
 
             initial_model_dir = project_dir / 'processing' / 'analysis' / 'initial_model'
 
-            if model_building_dir.exists():
-                datasets_list = list(model_building_dir.glob('*'))
+            try:
 
-            else:
-                datasets_list = list(initial_model_dir.glob('*'))
+                if model_building_dir.exists():
+                    datasets_list = list(model_building_dir.glob('*'))
 
-            num_datasets = len(datasets_list)
-            dtag = Dtag.from_name(datasets_list[0].name)
+                else:
+                    datasets_list = list(initial_model_dir.glob('*'))
 
-            print(f"{dtag}: {num_datasets}")
+                num_datasets = len(datasets_list)
+                dtag = Dtag.from_name(datasets_list[0].name)
+
+                print(f"{dtag}: {num_datasets}")
+            except Exception as e:
+                print(e)
 
 
 if __name__ == "__main__":
