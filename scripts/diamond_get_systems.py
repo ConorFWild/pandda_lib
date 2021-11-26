@@ -2,7 +2,7 @@ import pathlib
 
 import fire
 
-from pandda_lib.common import Dtag
+from pandda_lib.common import Dtag, SystemName
 
 def main():
     xchem_data_path = pathlib.Path('/dls/labxchem/data')
@@ -23,8 +23,9 @@ def main():
 
                 num_datasets = len(datasets_list)
                 dtag = Dtag.from_name(datasets_list[0].name)
+                system = SystemName.from_dtag(dtag)
 
-                print(f"{dtag.dtag}: {num_datasets}")
+                print(f"{system.system_name}: {num_datasets}")
             except Exception as e:
                 print(e)
 
