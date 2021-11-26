@@ -24,7 +24,7 @@ def main():
                 num_datasets = len(datasets_list)
                 dtag = Dtag.from_name(datasets_list[0].name)
 
-                print(f"{dtag}: {num_datasets}")
+                print(f"{dtag.dtag}: {num_datasets}")
             except Exception as e:
                 print(e)
 
