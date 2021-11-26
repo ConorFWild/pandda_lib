@@ -27,7 +27,8 @@ def main():
 
                 print(f"{system.system_name}: {num_datasets}")
             except Exception as e:
-                print(e)
+                # print(e)
+                continue
 
 
 if __name__ == "__main__":
