@@ -7,6 +7,7 @@ import itertools
 import fire
 import numpy as np
 import pandas as pd
+import joblib
 
 from pandda_lib.fs import PanDDAResult
 from pandda_lib.fs.reference import ReferenceDatasets

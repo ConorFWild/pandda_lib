@@ -21,12 +21,12 @@ def get_records_from_pandda_dir(pandda_dir, reference_datasets, high_confidence_
     system = pandda_dir.name
 
     if not pandda_dir.is_dir():
-        return
+        return []
 
     print(f'PanDDA: {pandda_dir.name}')
     if not (pandda_dir / 'analyses' / 'pandda_analyse_events.csv').exists():
         print(f'\tNO EVENT TABLE! SKIPPING!')
-        return
+        return []
     pandda_result = PanDDAResult.from_dir(pandda_dir)
     # print(f'Got PanDDA model')
 
@@ -205,12 +205,12 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir, output_file_p
         ) for pandda_dir in panddas_dir.glob('*')
     )
 
-        #
-        # # print(pd.DataFrame(records).head())
-        # print(pd.DataFrame(records).tail())
-        #
-        # # except Exception as e:
-        # #     print(e)
+    #
+    # # print(pd.DataFrame(records).head())
+    # print(pd.DataFrame(records).tail())
+    #
+    # # except Exception as e:
+    # #     print(e)
 
     records = [x for l in records_list for x in l]
 
