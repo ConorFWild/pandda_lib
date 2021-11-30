@@ -47,6 +47,11 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir, output_file_p
             if dtag not in pandda_result.processed_datasets:
                 continue
 
+            if dtag.dtag in high_confidence_structures:
+                high_confidence = True,
+            else:
+                high_confidence = False
+
             dataset_result = pandda_result.processed_datasets[dtag]
             dataset_structure_path = dataset_result.structure_path
 
@@ -187,6 +192,7 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir, output_file_p
                 'closest_event': closest_event,
                 'closest_rmsd': closest_rmsd,  # None and num_events>0&num_builds>0 implies broken ligand
                 'best_signal_to_noise': best_signal_to_noise,
+                'high_confidence': high_confidence,
             }
             records.append(record)
 
