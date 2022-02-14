@@ -152,12 +152,7 @@ def get_closest_event(
         for ligand in reference_ligands.structures:
             ligand_centroid = ligand.centroid()
             event_centroid_native = event_result.centroid
-
-            print(dir(sup.transform))
-            print("applying")
             event_centroid = sup.transform.apply(gemmi.Position(*event_centroid_native))
-            print("applied")
-
 
             distance_to_event = np.linalg.norm(
                 (
@@ -194,8 +189,6 @@ def get_rmsds_from_path(path_ref, path_align: Path, path_lig: Path):
         for chain in model:
             ress = chain.get_ligands()
 
-            # print(dir(sup))
-            # sup.apply(ress)
             ress.transform_pos_and_adp(sup.transform)
 
     ligands_ref = Ligands.from_structure(structure_ref)
