@@ -29,8 +29,6 @@ class ReferenceStructure:
         )
 
 
-
-
 @dataclass()
 class ReferenceDataset:
     path: Path

@@ -153,6 +153,7 @@ def get_closest_event(
             ligand_centroid = ligand.centroid()
             event_centroid_native = event_result.centroid
 
+            print(dir(sup.transform))
             event_centroid = sup.transform.apply(gemmi.Position(*event_centroid_native))
 
             distance_to_event = np.linalg.norm(

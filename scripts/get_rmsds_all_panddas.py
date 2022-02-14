@@ -37,7 +37,7 @@ def get_records_from_pandda_dir(pandda_dir, reference_datasets, high_confidence_
             continue
 
         if dtag.dtag in high_confidence_structures:
-            high_confidence = True,
+            high_confidence = True
         else:
             high_confidence = False
 
