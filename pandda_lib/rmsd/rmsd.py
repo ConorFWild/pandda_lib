@@ -194,7 +194,8 @@ def get_rmsds_from_path(path_ref, path_align: Path, path_lig: Path):
         for chain in model:
             ress = chain.get_ligands()
 
-            sup.transform.apply(ress)
+            print(dir(sup))
+            sup.apply(ress)
 
     ligands_ref = Ligands.from_structure(structure_ref)
     ligands_comp = Ligands.from_structure(compatator_structure)
