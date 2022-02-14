@@ -156,6 +156,8 @@ def get_closest_event(
             print(dir(sup.transform))
             print("applying")
             event_centroid = sup.transform.apply(gemmi.Position(*event_centroid_native))
+            print("applied")
+
 
             distance_to_event = np.linalg.norm(
                 (
