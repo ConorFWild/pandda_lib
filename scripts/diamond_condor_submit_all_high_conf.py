@@ -2280,7 +2280,7 @@ def main(container_path: str):
             continue
 
         # TODO: REMOVE
-        if not system_name == "TNCA-x0291":
+        if not system_name == "TNCA":
             continue
 
         # Check if should ignore because not pandda data
