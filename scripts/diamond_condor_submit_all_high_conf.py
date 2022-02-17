@@ -8,43 +8,17 @@ import subprocess
 import fire
 import htcondor
 
-# SINGULARITY_SCRIPT = """#!/bin/bash
-#
-# singularity exec -B /opt,/tmp --writable-tmpfs /opt/clusterdata/pandda/containers/pandda.sif bash {pandda_script}
-# """
 
 SINGULARITY_SCRIPT = """#!/bin/bash
 
 singularity exec -B /opt {personal_container_path} bash {pandda_script}
 """
 
-# SCRIPT = """#!/bin/bash
-#
-# echo "In container!"
-#
-# . /xtal_software/ccp4/ccp4-7.1/bin/ccp4.setup-sh
-# echo "CCP4"
-#
-# . /usr/local/phenix-1.19.2-4158/phenix_env.sh
-# echo "phenix"
-# . /xtal_software/GPhL/BUSTER_snapshot_20210716/setup.sh
-# echo "gph"
-# . /xtal_software/anaconda/bin/activate
-# echo "conda"
-# conda activate pandda2
-# echo "pandda"
-#
-# python /xtal_software/pandda_2_gemmi/pandda_gemmi/analyse.py {data_dirs} {out_dir} --pdb_regex='dimple.pdb'
-# --mtz_regex='dimple.mtz' --structure_factors='("FWT","PHWT")' --autobuild=True --global_processing='serial' --local_cpus=12 --distributed_mem_per_core=10 --distributed_scheduler='HTCONDOR' --distributed_tmp=/opt/clusterdata/pandda/tmp --rank_method=autobuild --comparison_strategy="high_res"
-#
-# echo "done pandda"
-# """
-
 SCRIPT = """#!/bin/bash
 
 echo "In container!" 
 
-. /xtal_software/ccp4/ccp4-7.1/bin/ccp4.setup-sh 
+. /xtal_software/ccp4/ccp4-7.0/bin/ccp4.setup-sh 
 echo "CCP4" 
 
 . /usr/local/phenix-1.19.2-4158/phenix_env.sh 
@@ -56,7 +30,7 @@ echo "conda"
 conda activate pandda2 
 echo "pandda" 
 
-python /dls/science/groups/i04-1/conor_dev/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --autobuild=True --global_processing=\"serial\" --local_cpus=6 --rank_method=autobuild --comparison_strategy=\"cluster\" --min_characterisation_datasets=25 --debug=True --memory_availability=\"low\" --only_datasets=\"{only_datasets}\"
+python /dls/science/groups/i04-1/conor_dev/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --debug=True --only_datasets=\"{only_datasets}\"
 
 echo "done pandda" 
 """
@@ -2304,6 +2278,10 @@ def main(container_path: str):
         if not data_dir.is_dir():
             continue
 
+        # TODO: REMOVE
+        if not system_name == "TNCA-x0291":
+            continue
+
         # Check if should ignore because not pandda data
         if data_dir.name in ignores:
             print(f"\t\tSkipped: {data_dir}: not pandda data")
@@ -2316,7 +2294,9 @@ def main(container_path: str):
             continue
 
         # Check if should ignore because have no high confidence hits
-
+        if system_name not in high_confidence_structure_dict:
+            print("Don't have any high confidence hits for this system! Skipping!")
+            continue
 
         # Check if should ignore because currently running
         pandda_log_file = out_dir / 'pandda_log.json'
@@ -2325,7 +2305,7 @@ def main(container_path: str):
             continue
 
         # Get the datasets that are worth running because they have hits to check
-
+        system_high_confidence_dtags = high_confidence_structure_dict[system_name]
 
         # If not generate job script
         script = SCRIPT.format(
@@ -2343,20 +2323,7 @@ def main(container_path: str):
         os.chmod(str(pandda_script_file), 0o777)
 
         # Generate the args for singularity
-        # personal_container_path = results_dirs / f"{system_name}.sif"
-        # if personal_container_path.exists():
-        #     os.remove(str(personal_container_path))
-        #
-        # shutil.copy(str(container_path), str(personal_container_path))
-
-        # p = subprocess.Popen(
-        #     f"cp {str(container_path)} {str(personal_container_path)}",
-        #     shell=True,)
-        #
-        # p.communicate()
-
         singularity_script = SINGULARITY_SCRIPT.format(
-            # container_path=str(container_path),
             personal_container_path=str(container_path),
             pandda_script=str(pandda_script_file),
         )
@@ -2381,7 +2348,6 @@ def main(container_path: str):
             # this file will contain a record  of what happened to the job
             "request_cpus": "47",  # how many CPU cores we want
             "request_memory": "300GB",  # how much memory we want
-            # "request_disk": "300GB",
         }
         job = htcondor.Submit(job_dict)
 
