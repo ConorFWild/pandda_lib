@@ -11,7 +11,7 @@ import htcondor
 
 SINGULARITY_SCRIPT = """#!/bin/bash
 
-singularity exec -B /opt {personal_container_path} bash {pandda_script}
+singularity exec -B /opt,/var {personal_container_path} bash {pandda_script}
 """
 
 SCRIPT = """#!/bin/bash
