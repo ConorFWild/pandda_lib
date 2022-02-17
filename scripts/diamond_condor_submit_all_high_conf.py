@@ -11,7 +11,7 @@ import htcondor
 
 SINGULARITY_SCRIPT = """#!/bin/bash
 
-singularity exec --writable-tmpfs -B /opt,/var {personal_container_path} bash {pandda_script}
+singularity exec -c -B /opt,/var {personal_container_path} bash {pandda_script}
 """
 
 SCRIPT = """#!/bin/bash
