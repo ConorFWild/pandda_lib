@@ -2256,7 +2256,7 @@ def main(container_path: str):
     # Define data
     container_path = Path(container_path)
     data_dirs = Path('/opt/clusterscratch/pandda/data')
-    results_dirs = Path('/opt/clusterscratch/pandda/output/pandda_results')
+    results_dirs = Path('/opt/clusterscratch/pandda/output/pandda_cluster_results')
     ignores = ['containers', 'pandda_results', 'scripts']
 
     # Get Scheduler
