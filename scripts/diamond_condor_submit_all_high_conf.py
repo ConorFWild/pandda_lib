@@ -30,7 +30,8 @@ echo "conda"
 conda activate pandda2 
 echo "pandda" 
 
-python /dls/science/groups/i04-1/conor_dev/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} -_regex=\"dimple\" --mtz_regex=\"dimple.mtz\" --debug=True --only_datasets=\"{only_datasets}\"
+python -u /dls/science/groups/i04-1/conor_dev/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={
+out_dir} -_regex=\"dimple\" --mtz_regex=\"dimple.mtz\" --debug=True --only_datasets=\"{only_datasets}\"
 
 echo "done pandda" 
 """
