@@ -2268,6 +2268,7 @@ def main(container_path: str):
 
     jobs = {}
 
+
     for data_dir in paths:
         print(f"\tProcessing: {data_dir}")
         system_name = data_dir.name
