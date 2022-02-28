@@ -2364,7 +2364,7 @@ def main(container_path: str):
         # print(query)
 
         num_jobs = len(query)
-        while num_jobs > 10:
+        while num_jobs > 16:
             print(f"\t\t\tToo many jobs: {len(query)} at once, hold on there!")
             status = {_system_name: len(schedd.query(constraint=f"ClusterId == {_submit_result.cluster()}"))
                       for _system_name, _submit_result
