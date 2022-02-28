@@ -2279,9 +2279,9 @@ def main(container_path: str):
         if not data_dir.is_dir():
             continue
 
-        # TODO: REMOVE
-        if not system_name == "TNCA":
-            continue
+        # # TODO: REMOVE
+        # if not system_name == "TNCA":
+        #     continue
 
         # Check if should ignore because not pandda data
         if data_dir.name in ignores:
