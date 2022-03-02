@@ -51,7 +51,8 @@ echo "conda"
 conda activate pandda2 
 echo "pandda" 
 
-python -u /opt/clusterscratch/pandda/code/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --debug=True --only_datasets=\"{only_datasets}\"
+python -u /opt/clusterscratch/pandda/code/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --debug=True --only_datasets=\"{only_datasets}\" 
+--debug=True
 
 echo "done pandda" 
 """
