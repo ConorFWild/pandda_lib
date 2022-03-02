@@ -2330,7 +2330,7 @@ def main(container_path: str):
         system_high_confidence_dtags = high_confidence_structure_dict[system_name]
 
         # If not generate job script
-        script = SCRIPT.format(
+        script = SCRIPT_LOCAL_PANDDA.format(
             data_dirs=str(data_dir),
             out_dir=str(out_dir),
             only_datasets=str(",".join(system_high_confidence_dtags))
