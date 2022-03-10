@@ -200,9 +200,13 @@ def main(reference_data_dir, reference_structure_dir, panddas_dir, output_file_p
     print(f'Got reference datasets model')
 
     records_list = joblib.Parallel(n_jobs=10, verbose=50)(
-        joblib.delayed(get_records_from_pandda_dir)(
+        joblib.delayed(
+            get_records_from_pandda_dir
+)(
             pandda_dir, reference_datasets, high_confidence_structures
-        ) for pandda_dir in panddas_dir.glob('*')
+        )
+        for pandda_dir
+        in panddas_dir.glob('*')
     )
 
     #
