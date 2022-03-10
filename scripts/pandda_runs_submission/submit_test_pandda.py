@@ -2304,8 +2304,8 @@ def main(container_path: str):
             continue
 
         # # TODO: REMOVE
-        if not system_name == "STAG1A":
-            continue
+        # if not system_name == "STAG1A":
+        #     continue
 
         # Check if should ignore because not pandda data
         if data_dir.name in ignores:
