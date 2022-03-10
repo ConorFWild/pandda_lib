@@ -2330,7 +2330,7 @@ def main(container_path: str):
             continue
 
         # Get the datasets that are worth running because they have hits to check
-        system_high_confidence_dtags = high_confidence_structure_dict[system_name]
+        # system_high_confidence_dtags = high_confidence_structure_dict[system_name]
 
         # If not generate job script
         script = SCRIPT_CONTAINER_PANDDA.format(
