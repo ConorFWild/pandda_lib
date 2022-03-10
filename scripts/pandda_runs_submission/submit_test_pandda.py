@@ -2319,9 +2319,9 @@ def main(container_path: str):
             continue
 
         # Check if should ignore because have no high confidence hits
-        if system_name not in high_confidence_structure_dict:
-            print("Don't have any high confidence hits for this system! Skipping!")
-            continue
+        # if system_name not in high_confidence_structure_dict:
+        #     print("Don't have any high confidence hits for this system! Skipping!")
+        #     continue
 
         # Check if should ignore because currently running
         pandda_log_file = out_dir / 'pandda_log.json'
