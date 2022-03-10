@@ -30,7 +30,7 @@ echo "conda"
 conda activate pandda2 
 echo "pandda" 
 
-python -u /xtal_software/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"*.dimple.pdb\" --mtz_regex=\"*.dimple.mtz\" --ligand_cif_regex=\"ligand.cif\"  --ligand_pdb_regex=\"ligand.pdb\" --debug=True
+python -u /xtal_software/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"*.dimple.pdb\" --mtz_regex=\"*.dimple.mtz\" --ligand_cif_regex=\"ligand.cif\"  --ligand_pdb_regex=\"ligand.pdb\" --debug=True --only_datasets=\"{only_datasets}\"
 
 echo "done pandda" 
 """
@@ -2336,6 +2336,7 @@ def main(container_path: str):
         script = SCRIPT_CONTAINER_PANDDA.format(
             data_dirs=str(data_dir),
             out_dir=str(out_dir),
+            only_datasets="BAZ2BA-x583,BAZ2BA-x529"
         )
         print(f"\t\tScript is: {script}")
 
