@@ -40,7 +40,7 @@ echo "conda"
 conda activate pandda2 
 echo "pandda" 
 
-python -u /xtal_software/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"*.dimple.pdb\" --mtz_regex=\"*.dimple.mtz\" --ligand_cif_regex=\"ligand.cif\"  --ligand_pdb_regex=\"ligand.pdb\" --debug=True --only_datasets=\"{only_datasets}\"
+python -u /xtal_software/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"*.dimple.pdb\" --mtz_regex=\"*.dimple.mtz\" --ligand_cif_regex=\"ligand.cif\"  --ligand_pdb_regex=\"ligand.pdb\" --debug=True --only_datasets=\"{only_datasets}\" --local_processing=\"multiprocessing_spawn\"
 
 echo "done pandda" 
 """
