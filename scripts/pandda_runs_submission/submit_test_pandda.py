@@ -64,7 +64,7 @@ echo "pandda"
 conda install -c conda-forge rich
 pip install -e /opt/clusterscratch/pandda/code/pandda_2_gemmi/
 
-python -u /opt/clusterscratch/pandda/code/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --debug=True --only_datasets=\"{only_datasets}\" --debug=True
+python -u /opt/clusterscratch/pandda/code/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --debug=True --only_datasets=\"{only_datasets}\" --debug=True --local_processing=\"multiprocessing_spawn\"
 
 echo "done pandda" 
 """
