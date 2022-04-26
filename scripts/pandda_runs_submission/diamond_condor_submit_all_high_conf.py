@@ -11,7 +11,7 @@ import htcondor
 
 SINGULARITY_SCRIPT = """#!/bin/bash
 
-singularity exec -c -B /opt,/var {personal_container_path} bash {pandda_script}
+singularity exec -B /opt {personal_container_path} bash {pandda_script}
 """
 
 SCRIPT_CONTAINER_PANDDA = """#!/bin/bash
@@ -29,8 +29,8 @@ echo "gph"
 echo "conda" 
 conda activate pandda2 
 echo "pandda" 
-
 python -u /xtal_software/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --debug=True --only_datasets=\"{only_datasets}\" --local_processing=\"multiprocessing_spawn\" --comparison_strategy=\"hybrid\"
+
 
 echo "done pandda" 
 """
