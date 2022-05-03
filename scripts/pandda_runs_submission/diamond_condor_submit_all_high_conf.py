@@ -29,35 +29,35 @@ echo "gph"
 echo "conda" 
 conda activate pandda2 
 echo "pandda" 
-python -u /xtal_software/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --debug=True --only_datasets=\"{only_datasets}\" --local_processing=\"multiprocessing_spawn\" --comparison_strategy=\"hybrid\"
+python -u /xtal_software/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --debug=1 --only_datasets=\"{only_datasets}\" --local_processing=\"multiprocessing_spawn\" --comparison_strategy=\"hybrid\"
 
 
 echo "done pandda" 
 """
 
-SCRIPT_LOCAL_PANDDA = """#!/bin/bash
-
-echo "In container!" 
-
-. /xtal_software/ccp4/ccp4-7.1/bin/ccp4.setup-sh 
-echo "CCP4" 
-
-. /usr/local/phenix-1.19.2-4158/phenix_env.sh 
-echo "phenix" 
-. /xtal_software/GPhL/BUSTER_snapshot_20210716/setup.sh 
-echo "gph" 
-. /xtal_software/anaconda/bin/activate 
-echo "conda" 
-conda activate pandda2 
-echo "pandda" 
-
-conda install -c conda-forge rich
-pip install -e /opt/clusterscratch/pandda/code/pandda_2_gemmi/
-
-python -u /opt/clusterscratch/pandda/code/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --debug=True --only_datasets=\"{only_datasets}\" --debug=1 --local_processing=\"multiprocessing_spawn\"
-
-echo "done pandda" 
-"""
+# SCRIPT_LOCAL_PANDDA = """#!/bin/bash
+#
+# echo "In container!"
+#
+# . /xtal_software/ccp4/ccp4-7.1/bin/ccp4.setup-sh
+# echo "CCP4"
+#
+# . /usr/local/phenix-1.19.2-4158/phenix_env.sh
+# echo "phenix"
+# . /xtal_software/GPhL/BUSTER_snapshot_20210716/setup.sh
+# echo "gph"
+# . /xtal_software/anaconda/bin/activate
+# echo "conda"
+# conda activate pandda2
+# echo "pandda"
+#
+# conda install -c conda-forge rich
+# pip install -e /opt/clusterscratch/pandda/code/pandda_2_gemmi/
+#
+# python -u /opt/clusterscratch/pandda/code/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --debug=True --only_datasets=\"{only_datasets}\" --debug=1 --local_processing=\"multiprocessing_spawn\"
+#
+# echo "done pandda"
+# """
 
 high_confidence_hits = [
     "ATAD2A-x1803",
