@@ -16,6 +16,8 @@ singularity exec -B /opt {personal_container_path} bash {pandda_script}
 
 SCRIPT_CONTAINER_PANDDA = """#!/bin/bash
 
+export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+
 echo "In container!" 
 
 . /xtal_software/ccp4/ccp4-7.1/bin/ccp4.setup-sh 
