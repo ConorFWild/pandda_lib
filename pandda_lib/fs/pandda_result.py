@@ -123,7 +123,7 @@ class DatasetResult:
 
         if processed:
             with open(dataset_log_path, "r") as f:
-                dataset_log = json.load(dataset_log_path)
+                dataset_log = json.load(f)
         else:
             dataset_log = None
 
