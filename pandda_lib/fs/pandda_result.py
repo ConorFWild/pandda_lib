@@ -104,6 +104,8 @@ class DatasetResult:
     structure_path: Path
     events: Dict[str, EventResult]
     processed: bool
+    dataset_log: Optional[Dict]
+
 
     @staticmethod
     def from_dir(processed_dataset_dir, event_table):
@@ -112,12 +114,15 @@ class DatasetResult:
 
         structure_path = processed_dataset_dir / constants.PANDDA_PDB_FILE.format(dtag.dtag)
 
-        dataset_log = processed_dataset_dir / 'log.json'
+        dataset_log_path = processed_dataset_dir / 'log.json'
 
-        if dataset_log.exists():
+        if dataset_log_path.exists():
             processed = True
         else:
             processed = False
+
+        with open(dataset_log_path, "r") as f:
+            dataset_log = json.load(dataset_log_path)
 
         events = {}
         for event_dir in processed_dataset_dir.glob('*'):
@@ -132,7 +137,8 @@ class DatasetResult:
         return DatasetResult(
             structure_path,
             events,
-            processed=processed
+            processed=processed,
+            dataset_log=dataset_log,
         )
 
     def get_event_result(self, key):

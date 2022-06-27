@@ -75,9 +75,8 @@ def get_records_from_pandda_dir(pandda_dir, reference_datasets, high_confidence_
 
                             if _rmsds == "ALIGNMENTERROR":
                                 has_alignment_error = True
+
                             closest = min(_rmsds)
-
-
 
                             record = {
                                 'system': system,
