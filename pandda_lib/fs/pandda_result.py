@@ -121,8 +121,12 @@ class DatasetResult:
         else:
             processed = False
 
-        with open(dataset_log_path, "r") as f:
-            dataset_log = json.load(dataset_log_path)
+        if processed:
+            with open(dataset_log_path, "r") as f:
+                dataset_log = json.load(dataset_log_path)
+        else:
+            processed = None
+
 
         events = {}
         for event_dir in processed_dataset_dir.glob('*'):
