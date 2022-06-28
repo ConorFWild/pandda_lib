@@ -1,11 +1,11 @@
 import pathlib
 
 import fire
-from sqlalchemy.orm import sessionmaker, Base
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
-from pandda_lib.diamond_sqlite.diamond_sqlite import SystemDataDirSQL
+from pandda_lib.diamond_sqlite.diamond_sqlite import Base, SystemDataDirSQL
 
 
 def __main__(sqlite_filepath):
