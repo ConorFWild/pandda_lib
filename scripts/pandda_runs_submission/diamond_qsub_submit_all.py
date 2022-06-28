@@ -72,7 +72,7 @@ def main(
     # Submit jobs
     for system_data_dir in session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id):
         print(f"{system_data_dir.system_name}")
-        output_dir = Path(system_data_dir).parent / output_dir_name
+        output_dir = Path(system_data_dir.path).parent / output_dir_name
 
         # Handle existing runs
         if fresh and output_dir.exists():
@@ -85,7 +85,7 @@ def main(
 
         job = PanDDAJob(
             name=system_data_dir.system_dir,
-            system_data_dir=system_data_dir.path,
+            system_data_dir=Path(system_data_dir).path,
             output_dir=output_dir
         )
         scheduler.submit(job)
