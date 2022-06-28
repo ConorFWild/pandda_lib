@@ -47,31 +47,36 @@ echo "done pandda"
 def main(
         # container_path: str,
         sqlite_filepath: str,
-        output_dir: str,
+        output_dir_name: str,
+        tmp_dir: str
 ):
     print("Starting")
     # Define data
     # container_path = Path(container_path)
     # data_dirs = Path('/opt/clusterscratch/pandda/data')
     # results_dirs = Path('/opt/clusterscratch/pandda/output/pandda_cluster_results')
-    ignores = ['containers', 'pandda_results', 'scripts']
+    # ignores = ['containers', 'pandda_results', 'scripts']
+    tmp_dir = pathlib.Path(tmp_dir).resolve()
+    sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
+
 
     # Get the database
-    sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     os.remove(sqlite_filepath)
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
 
     # Get Scheduler
-    scheduler = QSubScheduler()
+    scheduler = QSubScheduler(tmp_dir)
 
     # Submit jobs
     for system_data_dir in session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id):
-        # print(f"{instance.system_name}: {instance.path}")
+        print(f"{system_data_dir.system_name}: {system_data_dir.path}")
+
 
         job = PanDDAJob(
+            name=system_data_dir.system_dir,
             system_data_dir = system_data_dir.path,
-            output_dir = Path(system_data_dir).parent / output_dir,
+            output_dir = Path(system_data_dir).parent / output_dir_name,
         )
         scheduler.submit(job)
 
