@@ -85,7 +85,7 @@ def main(
 
         job = PanDDAJob(
             name=system_data_dir.system_name,
-            system_data_dir=Path(system_data_dir).path,
+            system_data_dir=Path(system_data_dir.path),
             output_dir=output_dir
         )
         scheduler.submit(job)
