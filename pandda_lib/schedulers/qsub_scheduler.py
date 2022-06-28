@@ -1,6 +1,6 @@
 import subprocess
 
-submit_command = "qsub -pe smp 6 -l m_mem_free=30G -q medium -o {out_path} -e {err_path}.q {job_script_path}"
+submit_command = "qsub -pe smp 6 -l m_mem_free=30G -q medium.q -o {out_path} -e {err_path}.q {job_script_path}"
 
 
 class QSubScheduler:
