@@ -1,4 +1,5 @@
 import pathlib
+import os
 
 import fire
 from sqlalchemy.orm import sessionmaker
@@ -11,6 +12,7 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import Base, SystemDataDirSQL
 def __main__(sqlite_filepath):
 
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
+    os.remove(sqlite_filepath)
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
     Base.metadata.create_all(engine)
