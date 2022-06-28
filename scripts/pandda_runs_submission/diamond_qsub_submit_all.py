@@ -49,7 +49,8 @@ def main(
         sqlite_filepath: str,
         output_dir_name: str,
         tmp_dir: str,
-        fresh=True
+        fresh=True,
+        remove=False,
 ):
     print("Starting")
     # Define data
@@ -77,6 +78,9 @@ def main(
         if fresh and output_dir.exists():
             shutil.rmtree(output_dir)
         if output_dir.exists() and not fresh:
+            continue
+        if remove:
+            shutil.rmtree(output_dir)
             continue
 
         job = PanDDAJob(
