@@ -48,7 +48,8 @@ def main(
         # container_path: str,
         sqlite_filepath: str,
         output_dir_name: str,
-        tmp_dir: str
+        tmp_dir: str,
+        fresh=True
 ):
     print("Starting")
     # Define data
@@ -58,7 +59,6 @@ def main(
     # ignores = ['containers', 'pandda_results', 'scripts']
     tmp_dir = pathlib.Path(tmp_dir).resolve()
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
-
 
     # Get the database
     os.remove(sqlite_filepath)
@@ -70,17 +70,21 @@ def main(
 
     # Submit jobs
     for system_data_dir in session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id):
-        print(f"{system_data_dir.system_name}: {system_data_dir.path}")
+        print(f"{system_data_dir.system_name}")
+        output_dir = Path(system_data_dir).parent / output_dir_name
 
+        # Handle existing runs
+        if fresh and output_dir.exists():
+            shutil.rmtree(output_dir)
+        if output_dir.exists() and not fresh:
+            continue
 
         job = PanDDAJob(
             name=system_data_dir.system_dir,
-            system_data_dir = system_data_dir.path,
-            output_dir = Path(system_data_dir).parent / output_dir_name,
+            system_data_dir=system_data_dir.path,
+            output_dir=output_dir
         )
         scheduler.submit(job)
-
-
 
 
 if __name__ == "__main__":
