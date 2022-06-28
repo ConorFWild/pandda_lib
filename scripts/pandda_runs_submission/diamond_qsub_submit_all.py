@@ -84,7 +84,7 @@ def main(
             continue
 
         job = PanDDAJob(
-            name=system_data_dir.system_dir,
+            name=system_data_dir.system_name,
             system_data_dir=Path(system_data_dir).path,
             output_dir=output_dir
         )
