@@ -62,7 +62,7 @@ def main(
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
 
     # Get the database
-    os.remove(sqlite_filepath)
+    # os.remove(sqlite_filepath)
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
 
