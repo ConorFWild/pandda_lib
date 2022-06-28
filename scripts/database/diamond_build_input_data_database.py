@@ -30,7 +30,7 @@ def __main__(sqlite_filepath):
 
     print("Printing database...")
     for instance in session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id):
-        print(instance.name, instance.fullname)
+        print(instance.path)
 
 
 if __name__ == "__main__":
