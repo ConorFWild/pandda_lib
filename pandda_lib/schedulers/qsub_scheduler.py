@@ -1,6 +1,6 @@
 import subprocess
 
-submit_command = ""
+submit_command = "qsub -pe smp 6 -l m_mem_free=30G -q medium.q {job_script_path}"
 
 
 class QSubScheduler:
@@ -16,7 +16,7 @@ class QSubScheduler:
             f.write(job.script)
 
         # Get submit command
-        _submit_command = submit_command.format(job_script_path)
+        _submit_command = submit_command.format(job_script_path=job_script_path)
 
         # Submit
         p = subprocess.Popen(
