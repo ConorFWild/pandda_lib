@@ -32,4 +32,6 @@ class QSubScheduler:
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
-        p.communicate()
+        stdout, stderr = p.communicate()
+        print(stdout)
+        print(stderr)
