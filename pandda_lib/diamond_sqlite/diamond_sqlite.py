@@ -12,6 +12,7 @@ class SystemDataDirSQL(Base):
     __tablename__ = SYSTEMDATADIRSQLTABLE
 
     id = Column(Integer, primary_key=True)
+    system_name = Column(String)
     path = Column(String)
 
 

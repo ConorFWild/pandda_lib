@@ -22,6 +22,7 @@ def __main__(sqlite_filepath):
     for system in diamond_data_dirs:
         system_data_dir = diamond_data_dirs[system]
         system_data_dir_sql = SystemDataDirSQL(
+            system_name=system.system_name,
             path=str(system_data_dir.path)
         )
         session.add(system_data_dir_sql)
@@ -30,7 +31,7 @@ def __main__(sqlite_filepath):
 
     print("Printing database...")
     for instance in session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id):
-        print(instance.path)
+        print(f"{instance.system_name}: {instance.path})
 
 
 if __name__ == "__main__":
