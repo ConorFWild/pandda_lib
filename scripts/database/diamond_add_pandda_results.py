@@ -48,11 +48,11 @@ def main(sqlite_filepath, output_dir_name):
 
                 for build_id, build in event.build_results.items():
                     event_builds[build_id] = PanDDABuildSQL(
-                        build_path=build.path,
+                        build_path=str(build.path),
                     )
 
                 dataset_events[event_id] = PanDDAEventSQL(
-                    event_map_path=event.event_map_path,
+                    event_map_path=str(event.event_map_path),
                     builds=[
                         _build
                         for _build
