@@ -56,6 +56,7 @@ class DiamondDataDirs:
                     # num_datasets = len(datasets_list)
                     dtag = Dtag.from_name(datasets_list[0].name)
                     system = SystemName.from_dtag(dtag)
+                    print(f"{dtag}: {system}")
                     self.systems[system] = DiamondDataDir(data_dir_path)
 
                 except:
