@@ -111,9 +111,10 @@ def main(sqlite_filepath, output_dir_name):
                         in _dataset.events
                     ]
                 )
+
+                for _dataset
+                in instance.pandda_dataset_results
             ]
-            for _dataset
-            in instance.pandda_dataset_results
         )
         print(f"\t\tNum builds: {num_builds}")
 
