@@ -82,7 +82,6 @@ def main(sqlite_filepath, output_dir_name):
         session.add(pandda_result_sql)
         break
 
-
     session.commit()
     #
     # print("Printing database systems...")
@@ -96,6 +95,14 @@ def main(sqlite_filepath, output_dir_name):
     for instance in session.query(PanDDADirSQL).order_by(PanDDADirSQL.id):
         print(f"\t{instance.path}")
         print(f"\t\tNum datasets: {len(instance.pandda_dataset_results)}")
+        num_events = sum(
+            [
+                len(_dataset.events)
+                for _dataset
+                in instance.pandda_dataset_results
+            ]
+        )
+        print(f"\t\tNum events: {num_events}")
 
     # for instance in session.query(DatasetSQL).order_by(DatasetSQL):
 
