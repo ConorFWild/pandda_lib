@@ -13,7 +13,7 @@ class DatasetSQL(Base):
     __tablename__ = DATASET_SQL_TABLE
 
     id = Column(Integer, primary_key=True)
-    system_id = Column(Integer, ForeignKey("SystemDataDirSQL.id"))
+    system_id = Column(Integer, ForeignKey(f"{SYSTEM_DATA_DIR_SQL_TABLE}.id"))
     dtag = Column(String)
     path = Column(String)
     model_path = Column(String)
