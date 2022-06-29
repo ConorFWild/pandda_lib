@@ -108,7 +108,7 @@ def main(sqlite_filepath, output_dir_name):
                     [
                         len(_event.builds)
                         for _event
-                        in _dataset
+                        in _dataset.events
                     ]
                 )
             ]
