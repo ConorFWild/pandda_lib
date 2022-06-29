@@ -164,6 +164,7 @@ class PanDDAResult:
         analyses_dir = pandda_dir / constants.PANDDA_ANALYSES_DIR
         event_csv = analyses_dir / constants.PANDDA_ANALYSE_EVENTS_FILE
         event_table = pd.read_csv(event_csv)
+        print(event_table.head())
 
         processed_datasets = {}
         for processed_dataset_dir in processed_datasets_dir.glob('*'):
