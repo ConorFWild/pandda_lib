@@ -49,7 +49,7 @@ def main(
         sqlite_filepath: str,
         output_dir_name: str,
         tmp_dir: str,
-        fresh=True,
+        fresh=False,
         remove=False,
 ):
     print("Starting")
