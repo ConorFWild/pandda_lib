@@ -54,7 +54,17 @@ class DiamondDataDirs:
                         data_dir_path = initial_model_dir
 
                     # num_datasets = len(datasets_list)
-                    dtags = [Dtag.from_name(_dataset_dir.name) for _dataset_dir in datasets_list]
+                    dtags = []
+                    for _dataset_dir in datasets_list:
+                        try:
+                            Dtag.from_name(_dataset_dir.name)
+                        except:
+                            continue
+
+                    if len(dtags) == 0:
+                        continue
+
+
                     system = max([
                         SystemName.from_dtag(dtag)
                         for dtag
