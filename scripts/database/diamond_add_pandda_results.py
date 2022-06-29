@@ -80,7 +80,6 @@ def main(sqlite_filepath, output_dir_name):
         )
 
         session.add(pandda_result_sql)
-        break
 
     session.commit()
     #
