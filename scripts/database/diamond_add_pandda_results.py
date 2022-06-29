@@ -92,8 +92,12 @@ def main(sqlite_filepath, output_dir_name):
     #     for dataset in instance.datasets:
     #         print(f"\t{dataset.dtag}")
 
-    # print("Printing database datasets...")
-    # for instance in session.query(DatasetSQL).order_by(S)
+    print("Printing database datasets...")
+    for instance in session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id):
+        print(f"{instance.path}")
+
+
+    # for instance in session.query(DatasetSQL).order_by(DatasetSQL):
 
 
 if __name__ == "__main__":
