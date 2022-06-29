@@ -62,7 +62,7 @@ class DiamondDataDirs:
                         ],
                         key=lambda _system_name: len(_system_name.system_name)
                     )
-                    print(f"{dtags[0]}: {system}")
+                    print(f"{dtags[0]}: {system}: {datasets_list[0]}")
                     self.systems[system] = DiamondDataDir(data_dir_path)
 
                 except Exception as e:
