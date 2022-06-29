@@ -94,8 +94,8 @@ def main(sqlite_filepath, output_dir_name):
 
     print("Printing database datasets...")
     for instance in session.query(PanDDADirSQL).order_by(PanDDADirSQL.id):
-        print(f"{instance.path}")
-
+        print(f"\t{instance.path}")
+        print(f"\t\tNum datasets: {len(instance.datasets)}")
 
     # for instance in session.query(DatasetSQL).order_by(DatasetSQL):
 
