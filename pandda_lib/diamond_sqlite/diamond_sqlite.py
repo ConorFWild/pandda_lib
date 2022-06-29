@@ -56,6 +56,7 @@ class PanDDADatasetSQL(Base):
     __tablename__ = PANDDA_DATASET_SQL_TABLE
 
     id = Column(Integer, primary_key=True)
+    pandda_id = Column(Integer, ForeignKey(f"{PANDDA_DIR_SQL_TABLE}.id"))
 
     dtag = Column(String)
     path = Column(String)
