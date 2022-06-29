@@ -66,7 +66,7 @@ class DiamondDataDirs:
                     self.systems[system] = DiamondDataDir(data_dir_path)
 
                 except Exception as e:
-                    print(e)
+                    # print(e)
                     continue
 
     def __getitem__(self, item):
