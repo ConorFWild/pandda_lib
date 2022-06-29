@@ -13,8 +13,13 @@ class SystemName:
 
     @staticmethod
     def from_dtag(dtag: Dtag) -> SystemName:
-        match = re.match(f"(([^-]+)-.*)", dtag.dtag)
+        # match = re.match(f"(([^-]+)-.*)", dtag.dtag)
         # print(match)
+        match = re.match(
+            f"((.+)-[^0-9]+[0-9]+)",
+            dtag.dtag,
+        )
+
         system_string = match.groups()[1]
         # print(system_string)
         return SystemName(system_string)
