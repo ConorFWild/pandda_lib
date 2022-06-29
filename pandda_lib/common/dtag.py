@@ -14,7 +14,7 @@ class Dtag:
     @staticmethod
     def from_name(string: str) -> Dtag:
         # match = re.search("[^-]+-[^0-9]+[0-9]+", string)
-        match = re.search("[^-]+-[^0-9]+[0-9]+", string)
+        match = re.search("^[^-]+-[^0-9]+[0-9]+", string)
 
         return Dtag(match.group())
 
