@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
-from pandda_lib.diamond_sqlite.diamond_sqlite import Base, SystemDataDirSQL, DatasetSQL
+from pandda_lib.diamond_sqlite.diamond_sqlite import Base, SystemDataDirSQL, DatasetSQL, PanDDADirSQL
 
 
 def main(sqlite_filepath: str):
@@ -32,6 +32,16 @@ def main(sqlite_filepath: str):
         ]
         # print(datasets_with_models)
         print(f"Number of datasets with models: {len(datasets_with_models)}")
+
+    # List key stats for panddas
+    panddas = session.query(PanDDADirSQL).order_by(PanDDADirSQL.id).all()
+    print(f"Number of panddas: {len(panddas)}")
+
+    for pandda in panddas:
+        print(f"# {pandda.path}")
+
+
+
 
 
 if __name__ == "__main__":
