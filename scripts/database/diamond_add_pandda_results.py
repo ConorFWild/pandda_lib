@@ -42,7 +42,7 @@ def main(sqlite_filepath, output_dir_name):
         dataset_results = {}
         for dtag, dataset in pandda_result.processed_datasets.items():
             dataset_events = {}
-            print(len(dataset.events.items()))
+            # print(len(dataset.events.items()))
             for event_id, event in dataset.events.items():
                 event_builds = {}
 
