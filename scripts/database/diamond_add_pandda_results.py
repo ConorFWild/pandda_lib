@@ -15,7 +15,7 @@ def main(sqlite_filepath, output_dir_name):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
-    PanDDADirSQL.drop(engine)
+    PanDDADirSQL.__table__.drop(engine)
     Base.metadata.create_all(engine)
 
     systems = session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id).all()
