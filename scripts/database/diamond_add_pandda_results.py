@@ -93,7 +93,7 @@ def main(sqlite_filepath, output_dir_name):
     #         print(f"\t{dataset.dtag}")
 
     print("Printing database datasets...")
-    for instance in session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id):
+    for instance in session.query(PanDDADirSQL).order_by(PanDDADirSQL.id):
         print(f"{instance.path}")
 
 
