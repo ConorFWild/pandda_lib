@@ -102,6 +102,20 @@ def main(sqlite_filepath, output_dir_name):
             ]
         )
         print(f"\t\tNum events: {num_events}")
+        num_builds = sum(
+            [
+                sum(
+                    [
+                        len(_event.builds)
+                        for _event
+                        in _dataset
+                    ]
+                )
+            ]
+            for _dataset
+            in instance.pandda_dataset_results
+        )
+        print(f"\t\tNum builds: {num_builds}")
 
     # for instance in session.query(DatasetSQL).order_by(DatasetSQL):
 
