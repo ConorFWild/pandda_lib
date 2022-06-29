@@ -63,7 +63,7 @@ class DiamondDataDirs:
                             continue
 
                     if len(dtags) == 0:
-                        print("\tNo dtags for this dir...")
+                        print(f"\tNo dtags for dir: {data_dir_path}...")
                         continue
 
 
