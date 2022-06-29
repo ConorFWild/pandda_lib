@@ -57,7 +57,8 @@ class DiamondDataDirs:
                     dtags = []
                     for _dataset_dir in datasets_list:
                         try:
-                            Dtag.from_name(_dataset_dir.name)
+                            _dtag = Dtag.from_name(_dataset_dir.name)
+                            dtags.append(_dtag)
                         except:
                             continue
 
