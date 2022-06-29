@@ -65,7 +65,8 @@ class DiamondDataDirs:
                     print(f"{dtags[0]}: {system}")
                     self.systems[system] = DiamondDataDir(data_dir_path)
 
-                except:
+                except Exception as e:
+                    print(e)
                     continue
 
     def __getitem__(self, item):
