@@ -18,7 +18,7 @@ def main(sqlite_filepath):
 
     # List the number of systetms
 
-    systems = session.query(DiamondDataDirs).all()
+    systems = session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id)
     print(f"Number of systems: {len(systems)}")
 
     # List key stats for each system
