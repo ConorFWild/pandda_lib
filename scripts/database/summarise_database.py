@@ -23,7 +23,7 @@ def main(sqlite_filepath):
 
     # List key stats for each system
     for system in systems:
-        print(f"# {system.system_name}")
+        print(f"# {system.system_name}: {system.path}")
         print(f"Number of datasets: {len(system.datasets)}")
         datasets_with_models = [_dataset.model_path for _dataset in system.datasets if _dataset.model_path != 'None']
         # print(datasets_with_models)
