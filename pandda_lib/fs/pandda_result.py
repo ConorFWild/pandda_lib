@@ -142,6 +142,7 @@ class DatasetResult:
                     continue
 
         return DatasetResult(
+            path,
             structure_path,
             events,
             processed=processed,
