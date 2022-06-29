@@ -76,13 +76,13 @@ def main(sqlite_filepath, output_dir_name):
         session.add(pandda_result_sql)
 
     session.commit()
-
-    print("Printing database systems...")
-
-    for instance in session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id):
-        print(f"{instance.system_name}: {instance.path}")
-        for dataset in instance.datasets:
-            print(f"\t{dataset.dtag}")
+    #
+    # print("Printing database systems...")
+    #
+    # for instance in session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id):
+    #     print(f"{instance.system_name}: {instance.path}")
+    #     for dataset in instance.datasets:
+    #         print(f"\t{dataset.dtag}")
 
     # print("Printing database datasets...")
     # for instance in session.query(DatasetSQL).order_by(S)
