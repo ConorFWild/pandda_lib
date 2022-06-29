@@ -16,7 +16,7 @@ class SystemName:
         # match = re.match(f"(([^-]+)-.*)", dtag.dtag)
         # print(match)
         match = re.match(
-            f"((.+)-[^0-9]+[0-9]+)",
+            f"(^(.+)-[^0-9]+[0-9]+)",
             dtag.dtag,
         )
 
