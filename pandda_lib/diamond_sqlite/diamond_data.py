@@ -1,11 +1,34 @@
 import pathlib
 
+from pandda_lib import constants
 from pandda_lib.common import Dtag, SystemName
+
+
+class DiamondDataset:
+    def __init__(self, dtag, path):
+        self.dtag = dtag
+        self.path = path
+
+        _model_path = path / constants.PANDDA_EVENT_MODEL.format(dtag.dtag)
+
+        if _model_path.exists():
+            self.model_path = _model_path
+        else:
+            self.model_path = None
 
 
 class DiamondDataDir:
     def __init__(self, path):
         self.path = path
+        self.datasets = {}
+        for _dataset_dir in self.path.glob("*"):
+            if _dataset_dir.is_dir():
+                try:
+                    _dataset_dtag = Dtag.from_name(_dataset_dir.name)
+                    _dataset = DiamondDataset(_dataset_dtag, _dataset_dir)
+                    self.datasets[_dataset_dtag] = _dataset
+                except:
+                    continue
 
 
 class DiamondDataDirs:
