@@ -5,6 +5,7 @@ import fire
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
+from pandda_lib import constants
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
 from pandda_lib.fs.pandda_result import PanDDAResult
 from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, SystemDataDirSQL, DatasetSQL, PanDDADirSQL,
@@ -25,6 +26,8 @@ def main(sqlite_filepath, output_dir_name):
     for system in systems:
         _pandda_dir = pathlib.Path(system.path).parent / output_dir_name
         print(f"\tAnalysing run at: {_pandda_dir}")
+
+        if not (_pandda_dir / constants.PANDDA_ANALYSES_DIR / constants.PANDDA_ANALYSE_EVENTS_FILE).exists():
 
         pandda_result = PanDDAResult.from_dir(_pandda_dir)
 
