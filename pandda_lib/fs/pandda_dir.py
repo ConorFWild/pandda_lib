@@ -39,5 +39,7 @@ class PanDDADir:
             pandda_dir,
             pandda_analyses_dir,
             pandda_analyse_event_file,
-            pandda_processed_datasets_dirs
+            pandda_processed_datasets_dir,
+            pandda_processed_datasets_dirs,
+            pandda_model_paths
         )

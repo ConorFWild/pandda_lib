@@ -9,7 +9,7 @@ from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
 from pandda_lib.diamond_sqlite.diamond_sqlite import Base, SystemDataDirSQL, DatasetSQL
 
 
-def main(sqlite_filepath):
+def main(sqlite_filepath: str):
 
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
@@ -17,7 +17,6 @@ def main(sqlite_filepath):
 
 
     # List the number of systetms
-
     systems = session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id).all()
     print(f"Number of systems: {len(systems)}")
 
@@ -25,7 +24,12 @@ def main(sqlite_filepath):
     for system in systems:
         print(f"# {system.system_name}: {system.path}")
         print(f"Number of datasets: {len(system.datasets)}")
-        datasets_with_models = [_dataset.model_path for _dataset in system.datasets if _dataset.model_path != 'None']
+        datasets_with_models = [
+            _dataset.model_path
+            for _dataset
+            in system.datasets
+            if _dataset.model_path != 'None'
+        ]
         # print(datasets_with_models)
         print(f"Number of datasets with models: {len(datasets_with_models)}")
 

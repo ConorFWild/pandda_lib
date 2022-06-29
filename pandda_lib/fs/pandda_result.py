@@ -101,6 +101,7 @@ class EventResult:
 
 @dataclass()
 class DatasetResult:
+    path: Path
     structure_path: Path
     events: Dict[str, EventResult]
     processed: bool
@@ -109,6 +110,8 @@ class DatasetResult:
 
     @staticmethod
     def from_dir(processed_dataset_dir, event_table):
+
+        path = processed_dataset_dir
 
         dtag = Dtag(processed_dataset_dir.name)
 

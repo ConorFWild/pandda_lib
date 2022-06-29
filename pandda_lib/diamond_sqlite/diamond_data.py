@@ -87,3 +87,5 @@ class DiamondDataDirs:
     def __iter__(self):
         for system in self.systems:
             yield system
+
+# class DiamondPanDDAResult
