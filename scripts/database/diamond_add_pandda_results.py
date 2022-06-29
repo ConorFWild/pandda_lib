@@ -28,6 +28,7 @@ def main(sqlite_filepath, output_dir_name):
         print(f"\tAnalysing run at: {_pandda_dir}")
 
         if not (_pandda_dir / constants.PANDDA_ANALYSES_DIR / constants.PANDDA_ANALYSE_EVENTS_FILE).exists():
+            continue
 
         pandda_result = PanDDAResult.from_dir(_pandda_dir)
 
