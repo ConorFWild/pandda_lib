@@ -26,7 +26,7 @@ def main(sqlite_filepath):
         print(f"# {system.system_name}")
         print(f"Number of datasets: {len(system.datasets)}")
         datasets_with_models = [_dataset.model_path for _dataset in system.datasets if _dataset.model_path != 'None']
-        print(datasets_with_models)
+        # print(datasets_with_models)
         print(f"Number of datasets with models: {len(datasets_with_models)}")
 
 
