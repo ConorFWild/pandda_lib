@@ -17,7 +17,13 @@ def main(sqlite_filepath, output_dir_name):
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
     Base.metadata.create_all(engine)
+
+    # Remove tables
     PanDDADirSQL.__table__.drop(engine)
+    PanDDADatasetSQL.__table__.drop(engine)
+    PanDDAEventSQL.__table__.drop(engine)
+    PanDDABuildSQL.__table__.drop(engine)
+
     Base.metadata.create_all(engine)
 
     systems = session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id).all()
