@@ -51,6 +51,7 @@ def main(
         tmp_dir: str,
         fresh=False,
         remove=False,
+        cores=24,
 ):
     print("Starting")
     # Define data
@@ -86,9 +87,10 @@ def main(
         job = PanDDAJob(
             name=system_data_dir.system_name,
             system_data_dir=Path(system_data_dir.path),
-            output_dir=output_dir
+            output_dir=output_dir,
+            cores=cores,
         )
-        scheduler.submit(job)
+        scheduler.submit(job, cores=cores)
 
 
 if __name__ == "__main__":

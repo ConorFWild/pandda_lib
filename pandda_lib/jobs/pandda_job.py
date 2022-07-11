@@ -16,7 +16,11 @@ pandda_command = (
     "unset __conda_setup \n"
     "export PYTHONPATH=\"\" \n"
     "conda activate pandda2_ray \n"
-    "python -u /dls/science/groups/i04-1/conor_dev/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} --out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --ligand_smiles_regex=\"[0-9a-zA-Z-]+[.]smiles\" --ligand_cif_regex=\"[0-9a-zA-Z-]+[.]cif\" --ligand_pdb_regex=\"[0-9a-zA-Z-]+[.]pdb\" --autobuild=True --global_processing=\"serial\" --local_processing=\"ray\" --local_cpus=6 --rank_method=autobuild --comparison_strategy=\"hybrid\" --min_characterisation_datasets=25 --debug=2 --memory_availability=\"high\""
+    "python -u /dls/science/groups/i04-1/conor_dev/pandda_2_gemmi/pandda_gemmi/analyse.py --data_dirs={data_dirs} "
+    "--out_dir={out_dir} --pdb_regex=\"dimple.pdb\" --mtz_regex=\"dimple.mtz\" --ligand_smiles_regex=\"[0-9a-zA-Z-]+["
+    ".]smiles\" --ligand_cif_regex=\"[0-9a-zA-Z-]+[.]cif\" --ligand_pdb_regex=\"[0-9a-zA-Z-]+[.]pdb\" "
+    "--autobuild=True --global_processing=\"serial\" --local_processing=\"ray\" --local_cpus={cores} "
+    "--rank_method=autobuild --comparison_strategy=\"hybrid\" --min_characterisation_datasets=25 --debug=2 --memory_availability=\"high\""
 
 )
 
@@ -26,11 +30,13 @@ class PanDDAJob:
                  name,
                  system_data_dir,
                  output_dir,
+                 cores=24
                  ):
         self.name = name
         self.system_data_dir = system_data_dir
         self.output_dir = output_dir
         self.script = pandda_command.format(
             data_dirs=self.system_data_dir,
-            out_dir=self.output_dir
+            out_dir=self.output_dir,
+            cores=cores
         )
