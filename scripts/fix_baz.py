@@ -21,14 +21,13 @@ def fix_baz(baz_dir: str):
         # Move the ligand pdb
         ligand_pdb_path = dataset_dir / "ligand.pdb"
         new_ligand_pdb_path = compound_dir
-
         if ligand_pdb_path.exists():
             shutil.move(ligand_pdb_path, new_ligand_pdb_path)
 
         # Move the ligand cif
         ligand_cif_path = dataset_dir / "ligand.cif"
         new_ligand_cif_path = compound_dir / "ligand.cif"
-        if ligand_cif_path:
+        if ligand_cif_path.exists():
             shutil.move(ligand_cif_path, new_ligand_cif_path)
 
 
