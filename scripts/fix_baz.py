@@ -10,7 +10,8 @@ def fix_baz(baz_dir: str):
 
     for dataset_dir in baz_dir.glob("*"):
 
-
+        if not dataset_dir.is_dir():
+            continue
 
         compound_dir = dataset_dir / "compound"
 
