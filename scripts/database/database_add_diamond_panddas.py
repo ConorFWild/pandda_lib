@@ -31,6 +31,7 @@ def main(sqlite_filepath):
 
     # For each system, get the path, then get paths to PanDDA 1 results in the directory above it
     for system in systems:
+        print(f"Looking for panddas for system: {system.system_name}")
         analysis_dir = pathlib.Path(system.path).parent
 
         # Get the possible PanDDA dirs
