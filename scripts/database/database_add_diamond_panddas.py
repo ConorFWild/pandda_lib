@@ -12,6 +12,13 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, SystemDataDirSQL, Da
                                                       PanDDADatasetSQL, PanDDABuildSQL, PanDDAEventSQL)
 
 
+def try_func(func, x):
+    try:
+        func(x)
+
+    except:
+        return False
+
 def main(sqlite_filepath):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
@@ -38,17 +45,25 @@ def main(sqlite_filepath):
         possible_pandda_dirs = analysis_dir.glob("*")
 
         # Filter on being a directory
+
         possible_pandda_dirs = [possible_pandda_dir for possible_pandda_dir in possible_pandda_dirs if
-                                possible_pandda_dir.is_dir()]
+                                try_func(lambda x: x.is_dir(), possible_pandda_dir)]
 
         # Filter on containing an analysis csv
-        possible_pandda_dirs = [possible_pandda_dir for possible_pandda_dir in possible_pandda_dirs if
-                                (possible_pandda_dir / constants.PANDDA_ANALYSES_DIR /
-                                constants.PANDDA_ANALYSE_EVENTS_FILE).exists()]
+        possible_pandda_dirs = [
+            possible_pandda_dir
+            for possible_pandda_dir
+            in possible_pandda_dirs
+            if try_func(lambda x: (x / constants.PANDDA_ANALYSES_DIR / constants.PANDDA_ANALYSE_EVENTS_FILE).exists(),
+                        possible_pandda_dir)
+        ]
 
         # Filter on being PanDDA 1
-        possible_pandda_dirs = [possible_pandda_dir for possible_pandda_dir in possible_pandda_dirs if
-                                (possible_pandda_dir / "pandda.done").exists()]
+        possible_pandda_dirs = [possible_pandda_dir
+                                for possible_pandda_dir
+                                in possible_pandda_dirs
+                                if try_func(lambda x: x / "pandda.done".exists(), possible_pandda_dir)
+        ]
 
         # Add the remaining folders
         for possible_pandda_dir in possible_pandda_dirs:
