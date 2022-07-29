@@ -83,7 +83,7 @@ def main(sqlite_filepath):
         session.commit()
 
     for instance in session.query(PanDDA1DirSQL).order_by(PanDDA1DirSQL.id):
-        print(f"{instance.system.system_name}: {instance.path}")
+        print(f"{instance.system.system_name}: {instance.system_id}: {instance.path}")
         # for dataset in instance.datasets:
         #     print(f"\t{dataset.dtag}")
 
