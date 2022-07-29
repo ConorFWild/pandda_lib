@@ -12,7 +12,7 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, SystemDataDirSQL, Da
                                                       PanDDADatasetSQL, PanDDABuildSQL, PanDDAEventSQL)
 
 
-def main(sqlite_filepath, output_dir_name):
+def main(sqlite_filepath):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
