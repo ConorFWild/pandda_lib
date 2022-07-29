@@ -8,6 +8,7 @@ PANDDA_DIR_SQL_TABLE = "pandda_dir"
 PANDDA_DATASET_SQL_TABLE = "pandda_dataset"
 PANDDA_EVENT_SQL_TABLE = "pandda_event"
 PANDDA_BUILD_SQL_TABLE = "pandda_build"
+PANDDA_1_DIR_SQL_TABLE = "pandda_1_dir"
 
 
 Base = declarative_base()
@@ -72,4 +73,16 @@ class PanDDADirSQL(Base):
 
     path = Column(String)
     pandda_dataset_results = relationship("PanDDADatasetSQL")
+
+
+class PanDDA1DirSQL(Base):
+    __tablename__ = PANDDA_1_DIR_SQL_TABLE
+
+    id = Column(Integer, primary_key=True)
+    system_id = Column(Integer, ForeignKey(f"{SYSTEM_DATA_DIR_SQL_TABLE}.id"))
+
+    path = Column(String)
+    system = relationship("SystemDataDirSQL")
+
+    # pandda_dataset_results = relationship("PanDDADatasetSQL")
 
