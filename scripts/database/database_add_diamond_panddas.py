@@ -16,7 +16,8 @@ def try_func(func, x):
     try:
         func(x)
 
-    except:
+    except Exception as e:
+        print(e)
         return False
 
 def main(sqlite_filepath):
