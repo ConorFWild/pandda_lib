@@ -68,7 +68,8 @@ def main(sqlite_filepath):
         # for dataset in instance.datasets:
         #     print(f"\t{dataset.dtag}")
 
-
+if __name__ == "__main__":
+    fire.Fire(main)
 
 
 
