@@ -67,7 +67,7 @@ def main(sqlite_filepath):
         possible_pandda_dirs = [possible_pandda_dir
                                 for possible_pandda_dir
                                 in possible_pandda_dirs
-                                if try_func(lambda x: x / "pandda.done".exists(), possible_pandda_dir)
+                                if try_func(lambda x: (x / "pandda.done").exists(), possible_pandda_dir)
                                 ]
 
         # Add the remaining folders
