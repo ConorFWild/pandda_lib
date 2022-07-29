@@ -17,7 +17,7 @@ def try_func(func, x):
         return func(x)
 
     except Exception as e:
-        print(e)
+        print(f"{e}: {x}")
         return False
 
 
@@ -48,8 +48,11 @@ def main(sqlite_filepath):
 
         # Filter on being a directory
 
-        possible_pandda_dirs = [possible_pandda_dir for possible_pandda_dir in possible_pandda_dirs if
-                                try_func(lambda x: x.is_dir(), possible_pandda_dir)]
+        possible_pandda_dirs = [
+            possible_pandda_dir
+            for possible_pandda_dir
+            in possible_pandda_dirs
+            if try_func(lambda x: x.is_dir(), possible_pandda_dir)]
 
         # Filter on containing an analysis csv
         possible_pandda_dirs = [
