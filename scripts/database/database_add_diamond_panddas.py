@@ -14,11 +14,12 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, SystemDataDirSQL, Da
 
 def try_func(func, x):
     try:
-        func(x)
+        return func(x)
 
     except Exception as e:
         print(e)
         return False
+
 
 def main(sqlite_filepath):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
@@ -64,7 +65,7 @@ def main(sqlite_filepath):
                                 for possible_pandda_dir
                                 in possible_pandda_dirs
                                 if try_func(lambda x: x / "pandda.done".exists(), possible_pandda_dir)
-        ]
+                                ]
 
         # Add the remaining folders
         for possible_pandda_dir in possible_pandda_dirs:
@@ -78,33 +79,11 @@ def main(sqlite_filepath):
 
         session.commit()
 
-
     for instance in session.query(PanDDA1DirSQL).order_by(PanDDA1DirSQL.id):
         print(f"{instance.system.system_name}: {instance.path}")
         # for dataset in instance.datasets:
         #     print(f"\t{dataset.dtag}")
 
+
 if __name__ == "__main__":
     fire.Fire(main)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
