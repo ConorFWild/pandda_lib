@@ -661,6 +661,8 @@ def process_shell_multiple_models_pandda_analysis(
         print(f"\tTruncating shell datasets")
     shell_working_resolution: ResolutionInterface = Resolution(
         max([datasets[dtag].reflections.get_resolution() for dtag in shell.all_dtags]))
+    shell_working_resolution: ResolutionInterface = Resolution(
+        max([datasets[dtag].reflections.get_resolution() for dtag in shell.all_dtags] + [shell.res,]))
     shell_truncated_datasets: DatasetsInterface = truncate(
         shell_datasets,
         resolution=shell_working_resolution,
