@@ -732,6 +732,7 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
                     record = {
                         "Resolution": shell.res,
                         "Dtag": dtag.dtag,
+                        "Model": model_number,
                         "Electron Density Value": xmap_samples[dtag],
                         "ZMap Value": zmap_samples[dtag],
                         "Map Uncertainty": sigma_i,
