@@ -56,7 +56,7 @@ def get_shells_pandda_analysis(
     # Get the shells: start with the highest res dataset and count up in increments of high_res_increment to the
     # Lowest res dataset
     highest_res_test_dtag = min(test_dtags, key=lambda _dtag: resolutions[_dtag])
-    reses = np.arange(max(lowest_valid_res, highest_res_test_dtag), min_res, high_res_increment)
+    reses = np.arange(max(lowest_valid_res, resolutions[highest_res_test_dtag]), min_res, high_res_increment)
     print(f"Analysing at resolutions: {reses}")
 
     shells_test = {res: set() for res in reses}
