@@ -9,10 +9,11 @@ from pandda_gemmi.analyse_interface import *
 
 @dataclasses.dataclass()
 class PanDDAArgsPanDDAAnalysis:
-    test_dtag: str
-    test_x: float
-    test_y: float
-    test_z: float
+    # test_dtag: str
+    # test_x: float
+    # test_y: float
+    # test_z: float
+    sample_json: str
 
     data_dirs: Path
     out_dir: Path
@@ -108,22 +109,27 @@ class PanDDAArgsPanDDAAnalysis:
         )
 
         # PanDDA Analysis specific
+        # parser.add_argument(
+        #     "--test_dtag",
+        #     type=str,
+        # )
+        # parser.add_argument(
+        #     "--test_x",
+        #     type=float,
+        # )
+        # parser.add_argument(
+        #     "--test_y",
+        #     type=float,
+        # )
+        # parser.add_argument(
+        #     "--test_z",
+        #     type=float,
+        # )
         parser.add_argument(
-            "--test_dtag",
-            type=str,
-        )
-        parser.add_argument(
-            "--test_x",
+            "--sample_json",
             type=float,
         )
-        parser.add_argument(
-            "--test_y",
-            type=float,
-        )
-        parser.add_argument(
-            "--test_z",
-            type=float,
-        )
+
 
         # IO
         parser.add_argument(
@@ -630,10 +636,11 @@ class PanDDAArgsPanDDAAnalysis:
         only_datasets = PanDDAArgsPanDDAAnalysis.parse_only_datasets(args.only_datasets)
 
         return PanDDAArgsPanDDAAnalysis(
-            test_dtag=args.test_dtag,
-            test_x=args.test_x,
-            test_y=args.test_y,
-            test_z=args.test_z,
+            # test_dtag=args.test_dtag,
+            # test_x=args.test_x,
+            # test_y=args.test_y,
+            # test_z=args.test_z,
+            sample_json=args.sample_json,
             data_dirs=args.data_dirs,
             out_dir=args.out_dir,
             pdb_regex=args.pdb_regex,
