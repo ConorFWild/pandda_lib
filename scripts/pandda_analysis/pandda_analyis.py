@@ -589,7 +589,7 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
         initial_sample_points = {
             sample_key: (Dtag(sample[0]), sample[1], sample[2], sample[3])
             for sample_key, sample
-            in sample_json["Sample Points"]
+            in sample_json["Sample Points"].items()
         }
 
         sample_points = {}
