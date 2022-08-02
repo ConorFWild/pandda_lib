@@ -630,6 +630,10 @@ class PanDDAArgsPanDDAAnalysis:
         only_datasets = PanDDAArgsPanDDAAnalysis.parse_only_datasets(args.only_datasets)
 
         return PanDDAArgsPanDDAAnalysis(
+            test_dtag=args.test_dtag,
+            test_x=args.test_x,
+            test_y=args.test_y,
+            test_z=args.test_z,
             data_dirs=args.data_dirs,
             out_dir=args.out_dir,
             pdb_regex=args.pdb_regex,
