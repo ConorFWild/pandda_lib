@@ -44,19 +44,19 @@ def get_shells_pandda_analysis(
 
     # Get the dictionary of resolutions for convenience
     resolutions = {dtag: datasets[dtag].reflections.resolution().resolution for dtag in datasets}
+    print(f"Dtag resolutions are: {resolutions)
 
     # Find the minimum resolutioin with enough training data
     dtags_by_resolution = [ x for x in sorted(resolutions,
            key=lambda _dtag: resolutions[_dtag])]
-    lowest_valid_res = datasets[dtags_by_resolution[min_characterisation_datasets+1]].reflections.resolution(
-
-    ).resolution
+    lowest_valid_res = datasets[dtags_by_resolution[min_characterisation_datasets+1]].reflections.resolution().resolution
     if debug >= Debug.PRINT_SUMMARIES:
         print(f'\tLowest valid resolution is: {lowest_valid_res}')
 
     # Get the shells: start with the highest res dataset and count up in increments of high_res_increment to the
     # Lowest res dataset
     reses = np.arange(max(lowest_valid_res, resolutions[test_dtag]), min_res, high_res_increment)
+    print(f"Analysing at resolutions: {reses}")
 
     shells_test = {res: set() for res in reses}
     shells_train = {res: {} for res in reses}
