@@ -64,12 +64,16 @@ def get_shells_pandda_analysis(
     # Iterate over comparators, getting the resolution range, the lowest res in it, and then including all
     # in the set of the first shell of sufficiently low res
     for res in reses:
-        resolution_shell_dtags = {_dtag: _resolution for _dtag, _resolution in resolutions.items() if _resolution > res}
-        shell_high_res_dtag = min(
-            resolution_shell_dtags,
-            key=lambda _dtag: resolution_shell_dtags[_dtag]
-        )
-        high_res_dtag_comparators = comparators[shell_high_res_dtag]
+        # resolution_shell_dtags = {_dtag: _resolution for _dtag, _resolution in resolutions.items() if _resolution > res}
+        # shell_high_res_dtag = min(
+        #     resolution_shell_dtags,
+        #     key=lambda _dtag: resolution_shell_dtags[_dtag]
+        # )
+        #
+
+        # high_res_dtag_comparators = comparators[shell_high_res_dtag]
+
+        high_res_dtag_comparators = comparators[test_dtag]
         for comparator_num, comparator_dtags in high_res_dtag_comparators.items():
 
             shells_train[res][comparator_num] = comparator_dtags[:min_characterisation_datasets]
