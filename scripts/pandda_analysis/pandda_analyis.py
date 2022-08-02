@@ -586,6 +586,7 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
         with open(pandda_args.sample_json, "r") as f:
             sample_json = json.load(f)
         test_dtags = [Dtag(dtag) for dtag in sample_json["Dtags"]]
+        print(f"Test dtags are: {test_dtags}")
         initial_sample_points = {
             sample_key: (Dtag(sample[0]), sample[1], sample[2], sample[3])
             for sample_key, sample
