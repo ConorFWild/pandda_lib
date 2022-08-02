@@ -627,9 +627,9 @@ class PanDDAArgsPanDDAAnalysis:
 
         args = parser.parse_args()
 
-        only_datasets = PanDDAArgs.parse_only_datasets(args.only_datasets)
+        only_datasets = PanDDAArgsPanDDAAnalysis.parse_only_datasets(args.only_datasets)
 
-        return PanDDAArgs(
+        return PanDDAArgsPanDDAAnalysis(
             data_dirs=args.data_dirs,
             out_dir=args.out_dir,
             pdb_regex=args.pdb_regex,
