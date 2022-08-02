@@ -703,6 +703,10 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
                                 load_xmap_func=load_xmap_func,
                                 analyse_model_func=analyse_model_func,
                                 score_events_func=score_events_func,
+                                test_dtag=test_dtag,
+                                test_x=test_x,
+                                test_y=test_y,
+                                test_z=test_z,
                                 debug=pandda_args.debug,
                             )
                             for res, shell
