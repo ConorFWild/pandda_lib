@@ -722,15 +722,22 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
             shell_result = shell_results[shell_id]
             xmap_samples = shell_result[0]
             zmap_samples = shell_result[1]
+            model_sigma_is = shell_result[2]
+            model_sigma_sms = shell_result[3]
 
             for dtag in xmap_samples:
-                record = {
-                    "Resolution": shell.res,
-                    "Dtag": dtag.dtag,
-                    "Electron Density Value": xmap_samples[dtag],
-                    "ZMap Value": zmap_samples[dtag]
-                }
-                results.append(record)
+                for model_number in model_sigma_is:
+                    sigma_i = model_sigma_is[model_number][dtag]
+                    sigma_sm = model_sigma_sms[model_number]
+                    record = {
+                        "Resolution": shell.res,
+                        "Dtag": dtag.dtag,
+                        "Electron Density Value": xmap_samples[dtag],
+                        "ZMap Value": zmap_samples[dtag],
+                        "Map Uncertainty": sigma_i,
+                        "Sample Uncertainty": sigma_sm
+                    }
+                    results.append(record)
 
         dataframe = pd.DataFrame(results)
 

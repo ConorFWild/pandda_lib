@@ -792,7 +792,25 @@ def process_shell_multiple_models_pandda_analysis(
             sample = zmap_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
             zmap_samples[dtag] = sample
 
-    return xmap_samples, zmap_samples
+    ###################################################################
+    # # Get the sigma_sm at the target point
+    ###################################################################
+    model_sigma_sms = {}
+    for model_number, model in models.items():
+        sigma_sm_grid = grid.new_grid()
+        sigma_sm_grid_array = np.array(sigma_sm_grid, copy=False)
+        sigma_sm_grid_array[:,:,:] = model.sigma_s_m
+        # xmap_grid = xmap.xmap
+        sigma_sm = sigma_sm_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
+        # xmap_samples[dtag] = sample
+        model_sigma_sms[model_number] = sigma_sm
+
+    ###################################################################
+    # # Get the model sigma_is
+    ###################################################################
+    model_sigma_is = {model_num: model.sigma_is for model_num, model in models.items()}
+
+    return xmap_samples, zmap_samples, model_sigma_is, model_sigma_sms
 
     # results = Partial(
     #             process_dataset_multiple_models_pandda_analysis).paramaterise(
