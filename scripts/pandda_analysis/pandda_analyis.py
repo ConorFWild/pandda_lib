@@ -730,6 +730,7 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
                     "Electron Density Value": xmap_samples[dtag],
                     "ZMap Value": zmap_samples[dtag]
                 }
+                results.append(record)
 
         dataframe = pd.DataFrame[results]
 
