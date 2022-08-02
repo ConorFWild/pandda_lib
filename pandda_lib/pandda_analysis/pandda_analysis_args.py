@@ -127,7 +127,7 @@ class PanDDAArgsPanDDAAnalysis:
         # )
         parser.add_argument(
             "--sample_json",
-            type=float,
+            type=str,
         )
 
 
