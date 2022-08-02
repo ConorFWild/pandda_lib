@@ -44,7 +44,7 @@ def get_shells_pandda_analysis(
 
     # Get the dictionary of resolutions for convenience
     resolutions = {dtag: datasets[dtag].reflections.resolution().resolution for dtag in datasets}
-    print(f"Dtag resolutions are: {resolutions)
+    print(f"Dtag resolutions are: {resolutions}")
 
     # Find the minimum resolutioin with enough training data
     dtags_by_resolution = [ x for x in sorted(resolutions,
