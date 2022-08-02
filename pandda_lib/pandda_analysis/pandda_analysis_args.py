@@ -109,19 +109,19 @@ class PanDDAArgsPanDDAAnalysis:
 
         # PanDDA Analysis specific
         parser.add_argument(
-            "test_dtag",
+            "--test_dtag",
             type=str,
         )
         parser.add_argument(
-            "test_x",
+            "--test_x",
             type=float,
         )
         parser.add_argument(
-            "test_y",
+            "--test_y",
             type=float,
         )
         parser.add_argument(
-            "test_z",
+            "--test_z",
             type=float,
         )
 
