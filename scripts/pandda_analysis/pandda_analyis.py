@@ -732,7 +732,7 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
                 }
                 results.append(record)
 
-        dataframe = pd.DataFrame[results]
+        dataframe = pd.DataFrame(results)
 
         dataframe.to_csv(pandda_fs_model.pandda_dir / "samples.csv")
 
