@@ -730,7 +730,7 @@ def process_shell_multiple_models_pandda_analysis(
     xmap_samples = {}
     for dtag, xmap in xmaps.items():
         xmap_grid = xmap.xmap
-        sample = xmap_grid.interpolate_value(gemmi.Pos(test_x, test_y, test_z))
+        sample = xmap_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
         xmap_samples[dtag] = sample
 
     ###################################################################
@@ -787,7 +787,7 @@ def process_shell_multiple_models_pandda_analysis(
             )
             zmap = zmaps[dtag]
             zmap_grid = zmap.zmap
-            sample = zmap_grid.interpolate_value(gemmi.Pos(test_x, test_y, test_z))
+            sample = zmap_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
             zmap_samples[dtag] = sample
 
     return xmap_samples, zmap_samples
