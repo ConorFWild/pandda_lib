@@ -81,10 +81,12 @@ def get_shells_pandda_analysis(
 
     print(f"Train shells are: {shells_train}")
 
+
+
     # Add the test dtag to each shell
     for res in reses:
         shells_test[res] = shells_test[res].union(
-            {_test_dtag for _test_dtag in test_dtags if resolutions[_test_dtag] > res}
+            {_test_dtag for _test_dtag in test_dtags if resolutions[_test_dtag] < res}
         )
     print(f"Test shells are: {shells_test}")
 
