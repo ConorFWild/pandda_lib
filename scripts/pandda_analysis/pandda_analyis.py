@@ -63,7 +63,7 @@ from pandda_gemmi.ranking import (
     GetEventRankingAutobuild,
     GetEventRankingSize,
     GetEventRankingSizeAutobuild,
-GetEventRankingEventScore
+    GetEventRankingEventScore
 )
 from pandda_gemmi.autobuild import (
     merge_ligand_into_structure_from_paths,
@@ -579,16 +579,27 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
         ###################################################################
         # # Getting probe position in reference frame
         ###################################################################
-        moving_test_x = pandda_args.test_x
-        moving_test_y = pandda_args.test_y
-        moving_test_z = pandda_args.test_z
-        test_dtag = Dtag(pandda_args.test_dtag)
+        # moving_test_x = pandda_args.test_x
+        # moving_test_y = pandda_args.test_y
+        # moving_test_z = pandda_args.test_z
+        # test_dtag = Dtag(pandda_args.test_dtag)
+        with open(pandda_args.sample_json, "r") as f:
+            sample_json = json.load(f)
+        test_dtags = [Dtag(dtag) for dtag in sample_json["Dtags"]]
+        initial_sample_points = {
+            sample_key: (Dtag(sample[0]), sample[1], sample[2], sample[3])
+            for sample_key, sample
+            in sample_json["Sample Points"]
+        }
 
-        test_x, test_y, test_z = get_test_pos_in_reference_frame(
-            moving_test_x, moving_test_y, moving_test_z, datasets[test_dtag], alignments[test_dtag],
-        )
-        print(f"Probe point is at {(moving_test_x, moving_test_y, moving_test_z)} in native frame and "
-              f"{(test_x, test_y, test_z)} in reference frame")
+        sample_points = {}
+        for sample_key, sample in initial_sample_points.items():
+            test_x, test_y, test_z = get_test_pos_in_reference_frame(
+                sample[1], sample[2], sample[3], datasets[sample[0]], alignments[sample[0]],
+            )
+            print(f"Probe point is at {(sample[1], sample[2], sample[3])} in native frame and "
+                  f"{(test_x, test_y, test_z)} in reference frame")
+            sample_points[sample_key] = (test_x, test_y, test_z)
 
         ###################################################################
         # # Assign comparison datasets
@@ -638,10 +649,10 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
                 comparators,
                 pandda_args.min_characterisation_datasets,
                 pandda_args.max_shell_datasets,
-                3.0, # min res to analyse to
+                3.0,  # min res to analyse to
                 pandda_args.high_res_increment,
                 pandda_args.only_datasets,
-                test_dtag,
+                test_dtags,
                 debug=pandda_args.debug,
             )
             # if pandda_args.debug >= Debug.PRINT_SUMMARIES:
@@ -703,10 +714,7 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
                                 load_xmap_func=load_xmap_func,
                                 analyse_model_func=analyse_model_func,
                                 score_events_func=score_events_func,
-                                test_dtag=test_dtag,
-                                test_x=test_x,
-                                test_y=test_y,
-                                test_z=test_z,
+                                sample_points=sample_points,
                                 debug=pandda_args.debug,
                             )
                             for res, shell
@@ -716,7 +724,6 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
                 )
             }
 
-
         results = []
         for shell_id, shell in shells.items():
             shell_result = shell_results[shell_id]
@@ -725,20 +732,22 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
             model_sigma_is = shell_result[2]
             model_sigma_sms = shell_result[3]
 
-            for dtag in xmap_samples:
-                for model_number in model_sigma_is:
-                    sigma_i = model_sigma_is[model_number][dtag]
-                    sigma_sm = model_sigma_sms[model_number]
-                    record = {
-                        "Resolution": shell.res,
-                        "Dtag": dtag.dtag,
-                        "Model": model_number,
-                        "Electron Density Value": xmap_samples[dtag],
-                        "ZMap Value": zmap_samples[dtag],
-                        "Map Uncertainty": sigma_i,
-                        "Sample Uncertainty": sigma_sm
-                    }
-                    results.append(record)
+            for sample_key in sample_points:
+                for dtag in xmap_samples[sample_key]:
+                    for model_number in model_sigma_is:
+                        sigma_i = model_sigma_is[model_number][dtag]
+                        sigma_sm = model_sigma_sms[sample_key][model_number]
+                        record = {
+                            "Resolution": shell.res,
+                            "Dtag": dtag.dtag,
+                            "Model": model_number,
+                            "Sample Point": sample_key,
+                            "Electron Density Value": xmap_samples[sample_key][dtag],
+                            "ZMap Value": zmap_samples[sample_key][dtag],
+                            "Map Uncertainty": sigma_i,
+                            "Sample Uncertainty": sigma_sm
+                        }
+                        results.append(record)
 
         dataframe = pd.DataFrame(results)
 
@@ -816,5 +825,3 @@ if __name__ == '__main__':
         console.summarise_arguments(args)
 
     process_pandda(args)
-
-

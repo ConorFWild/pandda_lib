@@ -611,10 +611,7 @@ def process_shell_multiple_models_pandda_analysis(
         load_xmap_func: LoadXMapInterface,
         analyse_model_func: AnalyseModelInterface,
         score_events_func: GetEventScoreInterface,
-        test_dtag: Dtag,
-        test_x: float,
-        test_y: float,
-        test_z: float,
+        sample_points,
         debug: Debug = Debug.DEFAULT,
 ):
     if debug >= Debug.PRINT_SUMMARIES:
@@ -730,10 +727,14 @@ def process_shell_multiple_models_pandda_analysis(
     # # Get the distribution of ED values at the target point
     ###################################################################
     xmap_samples = {}
-    for dtag, xmap in xmaps.items():
-        xmap_grid = xmap.xmap
-        sample = xmap_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
-        xmap_samples[dtag] = sample
+    for sample_key, sample_point in sample_points.items():
+        xmap_samples[sample_key] = {}
+        test_x, test_y, test_z = sample_point
+
+        for dtag, xmap in xmaps.items():
+            xmap_grid = xmap.xmap
+            sample = xmap_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
+            xmap_samples[sample_key][dtag] = sample
 
     ###################################################################
     # # Get the models to test
@@ -779,31 +780,39 @@ def process_shell_multiple_models_pandda_analysis(
 
     # Iterate over every dtag, getting the zmap, and interpolating at the sample point
     zmap_samples = {}
-    for dtag, xmap in xmaps.items():
-        for model_number, model in models.items():
-            zmaps: ZmapsInterface = Zmaps.from_xmaps(
-                model=model,
-                xmaps={dtag: xmap, },
-                model_number=model_number,
-                debug=debug,
-            )
-            zmap = zmaps[dtag]
-            zmap_grid = zmap.zmap
-            sample = zmap_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
-            zmap_samples[dtag] = sample
+    for sample_key, sample_point in sample_points.items():
+        zmap_samples[sample_key] = {}
+        test_x, test_y, test_z = sample_point
+
+        for dtag, xmap in xmaps.items():
+            for model_number, model in models.items():
+                zmaps: ZmapsInterface = Zmaps.from_xmaps(
+                    model=model,
+                    xmaps={dtag: xmap, },
+                    model_number=model_number,
+                    debug=debug,
+                )
+                zmap = zmaps[dtag]
+                zmap_grid = zmap.zmap
+
+                sample = zmap_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
+                zmap_samples[sample_key][dtag] = sample
 
     ###################################################################
     # # Get the sigma_sm at the target point
     ###################################################################
     model_sigma_sms = {}
-    for model_number, model in models.items():
-        sigma_sm_grid = grid.new_grid()
-        sigma_sm_grid_array = np.array(sigma_sm_grid, copy=False)
-        sigma_sm_grid_array[:,:,:] = model.sigma_s_m
-        # xmap_grid = xmap.xmap
-        sigma_sm = sigma_sm_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
-        # xmap_samples[dtag] = sample
-        model_sigma_sms[model_number] = sigma_sm
+    for sample_key, sample_point in sample_points.items():
+        model_sigma_sms[sample_key] = {}
+        test_x, test_y, test_z = sample_point
+        for model_number, model in models.items():
+            sigma_sm_grid = grid.new_grid()
+            sigma_sm_grid_array = np.array(sigma_sm_grid, copy=False)
+            sigma_sm_grid_array[:,:,:] = model.sigma_s_m
+            # xmap_grid = xmap.xmap
+            sigma_sm = sigma_sm_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
+            # xmap_samples[dtag] = sample
+            model_sigma_sms[sample_key][model_number] = sigma_sm
 
     ###################################################################
     # # Get the model sigma_is

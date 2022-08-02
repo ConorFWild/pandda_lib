@@ -36,7 +36,7 @@ def get_shells_pandda_analysis(
         min_res,
         high_res_increment,
         only_datasets: Optional[List[str]],
-        test_dtag,
+        test_dtags,
         debug: Debug=Debug.DEFAULT
 ):
     # For each dataset + set of comparators, include all of these to be loaded in the set of the shell of their highest
@@ -55,7 +55,8 @@ def get_shells_pandda_analysis(
 
     # Get the shells: start with the highest res dataset and count up in increments of high_res_increment to the
     # Lowest res dataset
-    reses = np.arange(max(lowest_valid_res, resolutions[test_dtag]), min_res, high_res_increment)
+    highest_res_test_dtag = min(test_dtags, key=lambda _dtag: resolutions[_dtag])
+    reses = np.arange(max(lowest_valid_res, highest_res_test_dtag), min_res, high_res_increment)
     print(f"Analysing at resolutions: {reses}")
 
     shells_test = {res: set() for res in reses}
@@ -73,14 +74,16 @@ def get_shells_pandda_analysis(
 
         # high_res_dtag_comparators = comparators[shell_high_res_dtag]
 
-        high_res_dtag_comparators = comparators[test_dtag]
+        high_res_dtag_comparators = comparators[highest_res_test_dtag]
         for comparator_num, comparator_dtags in high_res_dtag_comparators.items():
 
             shells_train[res][comparator_num] = comparator_dtags[:min_characterisation_datasets]
 
     # Add the test dtag to each shell
     for res in reses:
-        shells_test[res] = shells_test[res].union({test_dtag, })
+        shells_test[res] = shells_test[res].union(
+            {_test_dtag for _test_dtag in test_dtags if resolutions[_test_dtag] > res}
+        )
 
     # Create shells
     shells = {}
