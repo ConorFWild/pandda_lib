@@ -20,7 +20,7 @@ def get_test_pos_in_reference_frame(x, y, z, dataset, alignment):
     transform = alignment[closest_res_id]
 
     # Perform alignment
-    transformed_pos = transform.apply_moving_to_reference({(0,0,0): gemmi.Pos(x, y, z),})[(0,0,0)]
+    transformed_pos = transform.apply_moving_to_reference({(0,0,0): gemmi.Position(x, y, z),})[(0,0,0)]
 
     # return as tuple
     return transformed_pos.x, transformed_pos.y, transformed_pos.z
