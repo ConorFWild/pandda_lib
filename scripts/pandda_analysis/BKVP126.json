@@ -1,0 +1,7 @@
+{
+  "Dtags": ["BKVP126-x0692", "NSP16-x0422"],
+  "Sample Points": {
+    "BKVP126-x0692 missing hit": ["BKVP126-x0692", -10.97, 19.75, -31.04],
+    "NSP16-x0422 partial ligand": ["NSP16-x0422", 80.61, -81.09, -0.65]
+  }
+}
