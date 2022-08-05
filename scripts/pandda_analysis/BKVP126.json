@@ -1,8 +1,8 @@
 {
-  "Dtags": ["BKVP126-x0692", "BKVP123-x0556", "BKVP123-x0714"],
+  "Dtags": ["BKVP126-x0692", "BKVP126-x0556", "BKVP126-x0714"],
   "Sample Points": {
     "BKVP126-x0692 missing hit": ["BKVP126-x0692", -10.97, 19.75, -31.04],
-    "BKVP126-x0556 tail conformation": ["BKVP123-x0556", 15.17, -16.40, 6.61],
-        "BKVP126-x0714 tail conformation": ["BKVP123-x0714", 16.50, -15.01, 2.63]
+    "BKVP126-x0556 tail conformation": ["BKVP126-x0556", 15.17, -16.40, 6.61],
+        "BKVP126-x0714 tail conformation": ["BKVP126-x0714", 16.50, -15.01, 2.63]
   }
 }
