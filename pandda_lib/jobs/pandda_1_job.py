@@ -5,8 +5,8 @@ pandda_command = (
     "pandda.analyse "
     "data_dirs='{data_dirs}/*' "
     "out_dir={out_dir} "
-    "pdb_style='*.dimple.pdb' "
-    "mtz_style='*.dimple.mtz' "
+    "pdb_style='{pdb_style}' "
+    "mtz_style='{mtz_style}' "
     "cpus={cores} "
 
 )
@@ -17,6 +17,8 @@ class PanDDAJob:
                  name,
                  system_data_dir,
                  output_dir,
+                 pdb_style="dimple.pdb",
+                 mtz_style="dimple.mtz",
                  cores=24
                  ):
         self.name = name
@@ -25,5 +27,7 @@ class PanDDAJob:
         self.script = pandda_command.format(
             data_dirs=self.system_data_dir,
             out_dir=self.output_dir,
+            pdb_style=pdb_style,
+            mtz_style=mtz_style,
             cores=cores
         )
