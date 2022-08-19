@@ -41,7 +41,7 @@ def main(
             continue
 
         job = PanDDAJob(
-            name=str(cores),
+            name=f"pandda_str(cores)",
             system_data_dir=data_dir,
             output_dir=pandda_output_dir,
             cores=cores,
