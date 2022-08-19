@@ -1,6 +1,7 @@
 import subprocess
 
-submit_command = "qsub -pe smp {cores} -l m_mem_free=8G -q medium.q -o {out_path} -e {err_path}.q {job_script_path}"
+submit_command = "qsub -pe smp {cores} -l m_mem_free={mem_per_core}G -q medium.q -o {out_path} -e {err_path}.q {" \
+                 "job_script_path}"
 
 
 class QSubScheduler:
@@ -9,7 +10,7 @@ class QSubScheduler:
                  ):
         self.tmp_dir = tmp_dir
 
-    def submit(self, job, cores=24):
+    def submit(self, job, cores=24, mem_per_core=8):
         # Write job to file
         job_script_path = self.tmp_dir / job.name
         with open(job_script_path, 'w') as f:
@@ -21,6 +22,7 @@ class QSubScheduler:
         # Get submit command
         _submit_command = submit_command.format(
             cores=cores,
+            mem_per_core=mem_per_core,
             job_script_path=job_script_path,
             out_path=out_path,
             err_path=err_path
