@@ -1257,12 +1257,20 @@ def process_shell_multiple_models_mean_maps(
     # # Write the mean maps
     ###################################################################
 
-    if debug >= Debug.PRINT_SUMMARIES:
-        for model_key, model in models.items():
-            save_array_to_map_file(
-                model.mean,
-                grid.grid,
-                pandda_fs_model.pandda_dir / f"{shell.res}_{model_key}_mean.ccp4"
+    for model_key, model in models.items():
+        save_array_to_map_file(
+            model.mean,
+            grid.grid,
+            pandda_fs_model.pandda_dir / f"{shell.res}_{model_key}_mean.ccp4"
             )
 
 
+    ###################################################################
+    # # Write the sigma maps
+    ###################################################################
+    for model_key, model in models.items():
+        save_array_to_map_file(
+            model.sigma_s_m,
+            grid.grid,
+            pandda_fs_model.pandda_dir / f"{shell.res}_{model_key}_sigma_m.ccp4"
+        )
