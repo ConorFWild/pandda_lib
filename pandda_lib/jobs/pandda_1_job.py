@@ -8,6 +8,7 @@ pandda_command = (
     "pdb_style='{pdb_style}' "
     "mtz_style='{mtz_style}' "
     "cpus={cores} "
+    "max_new_datasets=5000 "
 
 )
 
