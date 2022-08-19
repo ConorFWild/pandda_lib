@@ -4,7 +4,7 @@ import shutil
 import fire
 
 from pandda_lib.schedulers.qsub_scheduler import QSubScheduler
-from pandda_lib.jobs.pandda_job import PanDDAJob
+from pandda_lib.jobs.pandda_1_job import PanDDAJob
 
 
 def main(
