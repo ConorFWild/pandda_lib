@@ -1,0 +1,9 @@
+{
+  "Dtags": ["NSP16-x0415", "NSP16-x0422", "NSP16-x0314", "NSP16-x0171", "NSP16-x0357", "NSP16-x0448", "NSP16-x0557", "NSP16-x0617", "NSP16-x0211"],
+  "Sample Points": {
+    "NSP16-x0415 conformational dep": ["NSP16-x0415", 41.31, -58.02, -27.54],
+    "NSP16-x0415 conformational change": ["NSP16-x0415", 41.73, -59.21, -29.09],
+    "NSP16-x0422 partial ligand": ["NSP16-x0422", 80.61, -81.09, -0.65],
+    "NSP16-x0557 conformational change": ["NSP16-x0557", 27.21, -48.18, -19.52]
+  }
+}
