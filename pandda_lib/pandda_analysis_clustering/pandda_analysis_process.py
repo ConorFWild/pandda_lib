@@ -726,12 +726,13 @@ def process_shell_multiple_models_pandda_analysis_clustering(
     ###################################################################
     # # Get the distribution of ED values at the target point
     ###################################################################
+
     xmap_samples = {}
     for sample_key, sample_point in sample_points.items():
         xmap_samples[sample_key] = {}
         test_x, test_y, test_z = sample_point
 
-        for model_number, model_dtags in shell.train_dtags:
+        for model_number, model_dtags in shell.train_dtags.items():
             xmap_samples[sample_key][model_number] = {}
 
             for dtag, xmap in xmaps.items():
