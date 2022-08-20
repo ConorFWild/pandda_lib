@@ -791,7 +791,7 @@ def process_shell_multiple_models_pandda_analysis_clustering(
         zmap_samples[sample_key] = {}
         test_x, test_y, test_z = sample_point
 
-        for model_number, model_dtags in shell.train_dtags:
+        for model_number, model_dtags in shell.train_dtags.items():
             zmap_samples[sample_key][model_number] = {}
 
             model = models[model_number]
