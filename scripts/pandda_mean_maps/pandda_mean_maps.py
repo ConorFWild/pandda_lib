@@ -723,7 +723,7 @@ def process_pandda(pandda_args: PanDDAArgs, ):
 
 if __name__ == '__main__':
     with STDOUTManager('Parsing command line args', '\tParsed command line arguments!'):
-        args = PanDDAArgsPanDDAAnalysis.from_command_line()
+        args = PanDDAArgs.from_command_line()
         print(args)
         print(args.only_datasets)
         console.summarise_arguments(args)
