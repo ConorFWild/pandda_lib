@@ -54,7 +54,7 @@ def main(
 
         # Define the job
         job = PanDDAJob(
-            name=f"pandda_{cores}.sh",
+            name=f"pandda_{target}.sh",
             system_data_dir=data_dir,
             output_dir=out_dir,
             pdb_regex=target_info[PDB_REGEX_KEY],
