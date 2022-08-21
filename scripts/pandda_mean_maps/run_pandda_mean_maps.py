@@ -7,6 +7,7 @@ import fire
 
 TARGET_KEY = "target"
 WORKING_DIR_KEY = "working_dir"
+DATA_DIR_KEY = "data_dir"
 PDB_REGEX_KEY = "pdb_regex"
 MTZ_REGEX_KEY = "mtz_regex"
 OUT_DIR_FORMAT = "output_{target}"
@@ -63,7 +64,7 @@ def run_pandda_mean_maps(targets_json_path: str):
     pandda_jobs_dict = {}
     for target, target_info in targets_dict[TARGET_KEY].items():
         print(f"\tTarget is: {target}")
-        data_dir = working_dir / target
+        data_dir = working_dir / target_info[DATA_DIR_KEY]
         out_dir = working_dir / OUT_DIR_FORMAT.format(target=target)
 
         pandda_job_script = PANDDA_JOB_TEMPLATE.format(
