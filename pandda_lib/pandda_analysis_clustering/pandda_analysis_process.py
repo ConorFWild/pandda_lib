@@ -724,6 +724,22 @@ def process_shell_multiple_models_pandda_analysis_clustering(
             # )
 
     ###################################################################
+    # # Get the role of each dtag in each model
+    ###################################################################
+    dtag_class_dict = {}
+    for model_number, model_dtags in shell.train_dtags.items():
+        dtag_class_dict[model_number] = {}
+        for dtag in model_dtags:
+            if dtag in shell.test_dtags:
+                dtag_class_dict[model_number][dtag] = "Train/Test"
+            else:
+                dtag_class_dict[model_number][dtag] = "Train"
+
+        for dtag in shell.test_dtags:
+            if dtag not in dtag_class_dict[model_number]:
+                dtag_class_dict[model_number][dtag] = "Test"
+
+    ###################################################################
     # # Get the distribution of ED values at the target point
     ###################################################################
 
@@ -736,8 +752,8 @@ def process_shell_multiple_models_pandda_analysis_clustering(
             xmap_samples[sample_key][model_number] = {}
 
             for dtag, xmap in xmaps.items():
-                if dtag not in model_dtags:
-                    continue
+                # if dtag not in model_dtags:
+                #     continue
 
                 xmap_grid = xmap.xmap
                 sample = xmap_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
@@ -797,8 +813,8 @@ def process_shell_multiple_models_pandda_analysis_clustering(
             model = models[model_number]
 
             for dtag, xmap in xmaps.items():
-                if dtag not in shell.train_dtags:
-                    continue
+                # if dtag not in shell.train_dtags:
+                #     continue
 
                 zmaps: ZmapsInterface = Zmaps.from_xmaps(
                     model=model,
@@ -833,7 +849,7 @@ def process_shell_multiple_models_pandda_analysis_clustering(
     ###################################################################
     model_sigma_is = {model_num: model.sigma_is for model_num, model in models.items()}
 
-    return xmap_samples, zmap_samples, model_sigma_is, model_sigma_sms
+    return xmap_samples, zmap_samples, model_sigma_is, model_sigma_sms, dtag_class_dict
 
     # results = Partial(
     #             process_dataset_multiple_models_pandda_analysis).paramaterise(

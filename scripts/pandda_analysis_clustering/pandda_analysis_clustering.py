@@ -740,6 +740,7 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
             zmap_samples = shell_result[1]
             model_sigma_is = shell_result[2]
             model_sigma_sms = shell_result[3]
+            dtag_class_dict = shell_result[4]
 
             for sample_key in sample_points:
                 for model_number in model_sigma_is:
@@ -755,7 +756,8 @@ def process_pandda(pandda_args: PanDDAArgsPanDDAAnalysis, ):
                             "Electron Density Value": xmap_samples[sample_key][model_number][dtag],
                             "ZMap Value": zmap_samples[sample_key][model_number][dtag],
                             "Map Uncertainty": sigma_i,
-                            "Sample Uncertainty": sigma_sm
+                            "Sample Uncertainty": sigma_sm,
+                            "Dtag Class": dtag_class_dict[model_number][dtag]
                         }
                         results.append(record)
 
