@@ -1,5 +1,5 @@
 {
-  "working_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/mean_maps",
+  "working_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x",
   "target": {
     "JMJD2D": {
       "data_dir": "data_JMJD2D",
