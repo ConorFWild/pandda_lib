@@ -1,0 +1,22 @@
+{
+  "working_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/mean_maps",
+  "target": {
+    "JMJD2D": {
+      "data_dir": "data_JMJD2D",
+      "pdb_regex": "*.dimple.pdb",
+      "mtz_regex": "*.dimple.mtz"
+    },
+    "BRD1": {
+            "data_dir": "data_BRD1",
+
+      "pdb_regex": "*.dimple.pdb",
+      "mtz_regex": "*.dimple.mtz"
+    },
+    "PTP1B": {
+            "data_dir": "data_PTP1B",
+
+      "pdb_regex": "dimple.pdb",
+      "mtz_regex": "dimple.mtz"
+    }
+  }
+}
