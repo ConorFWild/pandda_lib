@@ -46,8 +46,6 @@ PANDDA_JOB_TEMPLATE = (
     "--local_processing=\"multiprocessing_spawn\" "
     "--local_cpus=3 --debug=2 --memory_availability=\"low\" \n"
 
-    "chmod 777 \"submit_${@}.sh\" "
-
 )
 
 
