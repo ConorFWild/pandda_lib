@@ -739,6 +739,7 @@ def process_shell_multiple_models_pandda_analysis_clustering(
             if dtag not in dtag_class_dict[model_number]:
                 dtag_class_dict[model_number][dtag] = "Test"
 
+    print(dtag_class_dict)
     ###################################################################
     # # Get the distribution of ED values at the target point
     ###################################################################
