@@ -40,7 +40,7 @@ def main(
     scheduler = QSubScheduler(working_dir)
 
     # Submit jobs
-    for target, target_info in targets_dict.items():
+    for target, target_info in targets_dict[TARGET_KEY].items():
         print(f"Target: {target}")
 
         data_dir = working_dir / target_info[DATA_DIR_KEY]
