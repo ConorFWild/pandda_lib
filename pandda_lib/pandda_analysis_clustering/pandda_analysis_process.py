@@ -813,8 +813,8 @@ def process_shell_multiple_models_pandda_analysis_clustering(
             model = models[model_number]
 
             for dtag, xmap in xmaps.items():
-                # if dtag not in shell.train_dtags:
-                #     continue
+                if dtag not in dtag_class_dict[model_number]:
+                    continue
 
                 zmaps: ZmapsInterface = Zmaps.from_xmaps(
                     model=model,
