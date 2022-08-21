@@ -755,6 +755,8 @@ def process_shell_multiple_models_pandda_analysis_clustering(
             for dtag, xmap in xmaps.items():
                 # if dtag not in model_dtags:
                 #     continue
+                if dtag not in dtag_class_dict[model_number]:
+                    continue
 
                 xmap_grid = xmap.xmap
                 sample = xmap_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
