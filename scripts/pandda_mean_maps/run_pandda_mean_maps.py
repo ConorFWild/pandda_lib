@@ -44,7 +44,7 @@ PANDDA_JOB_TEMPLATE = (
     "--ligand_cif_regex=\"ligand.cif\" "
     "--ligand_pdb_regex=\"ligand.pdb\" "
     "--local_processing=\"multiprocessing_spawn\" "
-    "--local_cpus=3 --debug=2 --memory_availability=\"low\" > \"submit_${@}.sh\" \n"
+    "--local_cpus=3 --debug=2 --memory_availability=\"low\" \n"
 
     "chmod 777 \"submit_${@}.sh\" "
 
