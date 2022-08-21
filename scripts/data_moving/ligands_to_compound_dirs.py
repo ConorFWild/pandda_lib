@@ -5,7 +5,7 @@ import shutil
 import fire
 
 def ligands_to_compound_dir(data_dir: str):
-    data_dir = pathlib.Path(data_dir)
+    data_dir = pathlib.Path(data_dir).resolve()
 
     for dataset_dir in data_dir.glob("*"):
         # Make the compound dir
