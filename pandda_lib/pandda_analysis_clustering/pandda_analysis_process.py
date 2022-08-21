@@ -810,7 +810,7 @@ def process_shell_multiple_models_pandda_analysis_clustering(
                 zmap_grid = zmap.zmap
 
                 sample = zmap_grid.interpolate_value(gemmi.Position(test_x, test_y, test_z))
-                zmap_samples[sample_key][dtag] = sample
+                zmap_samples[sample_key][model_number][dtag] = sample
 
     ###################################################################
     # # Get the sigma_sm at the target point
