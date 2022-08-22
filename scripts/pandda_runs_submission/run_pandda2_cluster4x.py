@@ -34,6 +34,7 @@ def main(
         targets_dict = json.load(f)
 
     # Get the working dir
+    data_working_dir = Path(targets_dict[WORKING_DIR_KEY]).resolve()
     working_dir = Path(targets_dict[WORKING_DIR_KEY]).resolve() / "pandda_2"
 
     # Get Scheduler
@@ -43,7 +44,7 @@ def main(
     for target, target_info in targets_dict[TARGET_KEY].items():
         print(f"Target: {target}")
 
-        data_dir = working_dir / target_info[DATA_DIR_KEY]
+        data_dir = data_working_dir / target_info[DATA_DIR_KEY]
         out_dir = working_dir / OUT_DIR_FORMAT.format(target=target)
 
         # Cleanup possible old runs
