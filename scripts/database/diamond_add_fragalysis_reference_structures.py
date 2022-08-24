@@ -13,7 +13,7 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, SystemDataDirSQL, Da
                                                       PanDDADatasetSQL, PanDDABuildSQL, PanDDAEventSQL,
                                                       ReferenceStructureSQL)
 
-reference_structure_regex = "([^\-])-([^\.])\.pdb"
+reference_structure_regex = "([^\-]+)-([^\.]+)\.pdb"
 
 
 def diamond_add_fragalysis_reference_structures(sqlite_filepath, reference_structure_dir):
