@@ -15,11 +15,12 @@ def diamond_build_input_data_database(sqlite_filepath):
     os.remove(sqlite_filepath)
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
-    Base.metadata.create_all(engine)
 
     DatasetSQL.__table__.drop(engine)
     ProjectDirSQL.__table__.drop(engine)
     SystemSQL.__table__.drop(engine)
+
+    Base.metadata.create_all(engine)
 
     print("Getting diamond data dirs...")
     diamond_data_dirs = DiamondDataDirs()
