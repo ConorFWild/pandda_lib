@@ -66,7 +66,7 @@ def diamond_build_input_data_database(sqlite_filepath):
     print("Printing database systems...")
 
     for instance in session.query(SystemSQL).order_by(SystemSQL.id):
-        print(f"{instance.system_name}: {instance.systems}")
+        print(f"{instance.system_name}: {[project.project_name for project in instance.projects]}")
         for dataset in instance.datasets:
             print(f"\t{dataset.dtag}")
 
