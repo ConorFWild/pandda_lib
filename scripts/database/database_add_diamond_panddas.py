@@ -21,7 +21,7 @@ def try_func(func, x):
         return False
 
 
-def main(sqlite_filepath):
+def database_add_diamond_panddas(sqlite_filepath):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()

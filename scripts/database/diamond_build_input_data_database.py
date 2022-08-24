@@ -9,7 +9,7 @@ from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
 from pandda_lib.diamond_sqlite.diamond_sqlite import Base, ProjectDirSQL, DatasetSQL, SystemSQL
 
 
-def __main__(sqlite_filepath):
+def diamond_build_input_data_database(sqlite_filepath):
 
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     os.remove(sqlite_filepath)
