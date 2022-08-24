@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 DATASET_SQL_TABLE = "dataset"
 PROJECT_DIR_SQL_TABLE = "project_dir"
-SYSTEM_SQL_TABLE = "system_data_dir"
+SYSTEM_SQL_TABLE = "system"
 PANDDA_DIR_SQL_TABLE = "pandda_dir"
 PANDDA_DATASET_SQL_TABLE = "pandda_dataset"
 PANDDA_EVENT_SQL_TABLE = "pandda_event"
