@@ -65,7 +65,18 @@ def diamond_add_fragalysis_reference_structures(sqlite_filepath, reference_struc
     session.commit()
 
     for instance in session.query(ReferenceStructureSQL).order_by(ReferenceStructureSQL.id):
-        print(f"{instance.system.system_name}: {instance.dataset.dtag}: {instance.path}")
+
+        if instance.system:
+            system_name = instance.system.system_name
+        else:
+            system_name = None
+
+        if instance.dataset:
+            dtag = instance.dataset.dtag
+        else:
+            dtag = None
+
+        print(f"{system_name}: {dtag}: {instance.path}")
 
 if __name__ == "__main__":
     fire.Fire(diamond_add_fragalysis_reference_structures)
