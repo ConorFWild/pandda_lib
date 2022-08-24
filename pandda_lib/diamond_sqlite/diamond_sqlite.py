@@ -29,6 +29,9 @@ class ProjectDirSQL(Base):
     __tablename__ = PROJECT_DIR_SQL_TABLE
 
     id = Column(Integer, primary_key=True)
+
+    system_id = Column(Integer, ForeignKey(f"{SYSTEM_SQL_TABLE}.id"))
+
     project_name = Column(String)
     path = Column(String)
     datasets = relationship("DatasetSQL")
