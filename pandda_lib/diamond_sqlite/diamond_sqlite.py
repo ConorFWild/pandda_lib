@@ -96,4 +96,4 @@ class ReferenceStructureSQL(Base):
 
     path = Column(String)
     system = relationship("SystemDataDirSQL")
-    dataset = relationship("PanDDADatasetSQL")
+    dataset = relationship("DatasetSQL")
