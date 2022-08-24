@@ -20,6 +20,8 @@ class DatasetSQL(Base):
 
     id = Column(Integer, primary_key=True)
     system_id = Column(Integer, ForeignKey(f"{SYSTEM_SQL_TABLE}.id"))
+    project_id = Column(Integer, ForeignKey(f"{PROJECT_DIR_SQL_TABLE}.id"))
+
     dtag = Column(String)
     path = Column(String)
     model_path = Column(String)
@@ -43,6 +45,7 @@ class SystemSQL(Base):
     id = Column(Integer, primary_key=True)
     system_name = Column(String)
     projects=relationship("ProjectDirSQL")
+    datasets = relationship("DatasetSQL")
 
 
 class PanDDABuildSQL(Base):
