@@ -45,7 +45,7 @@ def diamond_build_input_data_database(sqlite_filepath):
                 ]
             system_datasets = system_datasets + project_datasets
             project_data_dir_sql = ProjectDirSQL(
-                project_name=system.system_name,
+                project_name=project_name,
                 path=str(project_data_dir.path),
                 datasets=project_datasets
             )
@@ -55,7 +55,7 @@ def diamond_build_input_data_database(sqlite_filepath):
             # system_project_sqls[project_name] = project_data_dir_sql
 
         system_sql = SystemSQL(
-            system_name=system,
+            system_name=system.system_name,
             projects=system_project_sqls,
             datasets = system_datasets
         )
