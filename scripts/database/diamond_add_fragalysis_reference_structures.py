@@ -39,11 +39,14 @@ def diamond_add_fragalysis_reference_structures(sqlite_filepath, reference_struc
 
     # Go voer the reference structures
     for reference_stucture_path in reference_structure_dir.glob("*"):
-        print(reference_stucture_path.name)
+        # print(reference_stucture_path.name)
         match = re.match(reference_structure_regex, reference_stucture_path.name, )
         system = match.groups()[0]
         dtag_number = match.groups()[1]
+        if system == "Mpro":
+            dtag_number = dtag_number[:-1]
         dtag = f"{system}-{dtag_number}"
+
 
         if system in systems:
             system_sql = systems[system]
