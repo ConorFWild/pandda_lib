@@ -3,7 +3,8 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
 DATASET_SQL_TABLE = "dataset"
-SYSTEM_DATA_DIR_SQL_TABLE = "system_data_dir"
+PROJECT_DIR_SQL_TABLE = "project_dir"
+SYSTEM_SQL_TABLE = "system_data_dir"
 PANDDA_DIR_SQL_TABLE = "pandda_dir"
 PANDDA_DATASET_SQL_TABLE = "pandda_dataset"
 PANDDA_EVENT_SQL_TABLE = "pandda_event"
@@ -18,19 +19,27 @@ class DatasetSQL(Base):
     __tablename__ = DATASET_SQL_TABLE
 
     id = Column(Integer, primary_key=True)
-    system_id = Column(Integer, ForeignKey(f"{SYSTEM_DATA_DIR_SQL_TABLE}.id"))
+    system_id = Column(Integer, ForeignKey(f"{SYSTEM_SQL_TABLE}.id"))
     dtag = Column(String)
     path = Column(String)
     model_path = Column(String)
 
 
-class SystemDataDirSQL(Base):
-    __tablename__ = SYSTEM_DATA_DIR_SQL_TABLE
+class ProjectDirSQL(Base):
+    __tablename__ = PROJECT_DIR_SQL_TABLE
+
+    id = Column(Integer, primary_key=True)
+    project_name = Column(String)
+    path = Column(String)
+    datasets = relationship("DatasetSQL")
+
+
+class SystemSQL(Base):
+    __tablename__ = SYSTEM_SQL_TABLE
 
     id = Column(Integer, primary_key=True)
     system_name = Column(String)
-    path = Column(String)
-    datasets = relationship("DatasetSQL")
+    projects=relationship("ProjectDirSQL")
 
 
 class PanDDABuildSQL(Base):
@@ -79,10 +88,10 @@ class PanDDA1DirSQL(Base):
     __tablename__ = PANDDA_1_DIR_SQL_TABLE
 
     id = Column(Integer, primary_key=True)
-    system_id = Column(Integer, ForeignKey(f"{SYSTEM_DATA_DIR_SQL_TABLE}.id"))
+    system_id = Column(Integer, ForeignKey(f"{SYSTEM_SQL_TABLE}.id"))
 
     path = Column(String)
-    system = relationship("SystemDataDirSQL")
+    system = relationship("ProjectDirSQL")
 
     # pandda_dataset_results = relationship("PanDDADatasetSQL")
 
@@ -91,9 +100,9 @@ class ReferenceStructureSQL(Base):
     __tablename__ = REFERENCE_STRUCTURE_SQL_TABLE
 
     id = Column(Integer, primary_key=True)
-    system_id = Column(Integer, ForeignKey(f"{SYSTEM_DATA_DIR_SQL_TABLE}.id"))
+    system_id = Column(Integer, ForeignKey(f"{SYSTEM_SQL_TABLE}.id"))
     dataset_id = Column(Integer, ForeignKey(f"{DATASET_SQL_TABLE}.id"))
 
     path = Column(String)
-    system = relationship("SystemDataDirSQL")
+    system = relationship("ProjectDirSQL")
     dataset = relationship("DatasetSQL")

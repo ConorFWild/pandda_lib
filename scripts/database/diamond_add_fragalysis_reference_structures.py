@@ -9,9 +9,9 @@ from sqlalchemy import create_engine
 from pandda_lib import constants
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
 from pandda_lib.fs.pandda_result import PanDDAResult
-from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, SystemDataDirSQL, DatasetSQL, PanDDADirSQL,
+from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, ProjectDirSQL, DatasetSQL, PanDDADirSQL,
                                                       PanDDADatasetSQL, PanDDABuildSQL, PanDDAEventSQL,
-                                                      ReferenceStructureSQL)
+                                                      ReferenceStructureSQL, SystemSQL)
 
 reference_structure_regex = "([^\-]+)-([^\.]+)\.pdb"
 
@@ -29,8 +29,8 @@ def diamond_add_fragalysis_reference_structures(sqlite_filepath, reference_struc
     Base.metadata.create_all(engine)
 
     # Get the systems
-    systems = {instance.system_name: instance for instance in session.query(SystemDataDirSQL).order_by(
-        SystemDataDirSQL.id).all()}
+    systems = {instance.system_name: instance for instance in session.query(SystemSQL).order_by(
+        SystemSQL.id).all()}
 
     # Get the datasets
     datasets = {

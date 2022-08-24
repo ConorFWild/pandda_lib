@@ -43,6 +43,8 @@ class DiamondDataDirs:
 
                 initial_model_dir = project_dir / 'processing' / 'analysis' / 'initial_model'
 
+                project = project_dir.name
+
                 try:
 
                     if model_building_dir.exists():
@@ -75,7 +77,11 @@ class DiamondDataDirs:
                         key=lambda _system_name: len(_system_name.system_name)
                     )
                     print(f"{dtags[0]}: {system}: {datasets_list[0]}")
-                    self.systems[system] = DiamondDataDir(data_dir_path)
+
+                    if system not in self.systems:
+                        self.systems[system] = {}
+
+                    self.systems[system][project] = DiamondDataDir(data_dir_path)
 
                 except Exception as e:
                     # print(e)

@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
-from pandda_lib.diamond_sqlite.diamond_sqlite import Base, SystemDataDirSQL, DatasetSQL, PanDDADirSQL
+from pandda_lib.diamond_sqlite.diamond_sqlite import Base, ProjectDirSQL, DatasetSQL, PanDDADirSQL, SystemSQL
 
 
 def main(sqlite_filepath: str):
@@ -17,21 +17,22 @@ def main(sqlite_filepath: str):
 
 
     # List the number of systetms
-    systems = session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id).all()
+    systems = session.query(SystemSQL).order_by(SystemSQL.id).all()
     print(f"Number of systems: {len(systems)}")
 
     # List key stats for each system
     for system in systems:
-        print(f"# {system.system_name}: {system.path}")
-        print(f"Number of datasets: {len(system.datasets)}")
-        datasets_with_models = [
-            _dataset.model_path
-            for _dataset
-            in system.datasets
-            if _dataset.model_path != 'None'
-        ]
-        # print(datasets_with_models)
-        print(f"Number of datasets with models: {len(datasets_with_models)}")
+        for project in system.projects:
+            print(f"# {system.system_name}: {project.path}")
+            print(f"Number of datasets: {len(project.datasets)}")
+            datasets_with_models = [
+                _dataset.model_path
+                for _dataset
+                in project.datasets
+                if _dataset.model_path != 'None'
+            ]
+            # print(datasets_with_models)
+            print(f"Number of datasets with models: {len(datasets_with_models)}")
 
     # List key stats for panddas
     panddas = session.query(PanDDADirSQL).order_by(PanDDADirSQL.id).all()

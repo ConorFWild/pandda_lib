@@ -11,7 +11,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
-from pandda_lib.diamond_sqlite.diamond_sqlite import Base, SystemDataDirSQL
+from pandda_lib.diamond_sqlite.diamond_sqlite import Base, ProjectDirSQL, SystemSQL
 from pandda_lib.schedulers.qsub_scheduler import QSubScheduler
 from pandda_lib.jobs.pandda_job import PanDDAJob
 
@@ -71,26 +71,27 @@ def main(
     scheduler = QSubScheduler(tmp_dir)
 
     # Submit jobs
-    for system_data_dir in session.query(SystemDataDirSQL).order_by(SystemDataDirSQL.id):
-        print(f"{system_data_dir.system_name}")
-        output_dir = Path(system_data_dir.path).parent / output_dir_name
+    for system in session.query(SystemSQL).order_by(SystemSQL.id):
+        for project in system.projects:
+            print(f"{system.system_name}")
+            output_dir = Path(project.path).parent / output_dir_name
 
-        # Handle existing runs
-        if fresh and output_dir.exists():
-            shutil.rmtree(output_dir)
-        if output_dir.exists() and not fresh:
-            continue
-        if remove:
-            shutil.rmtree(output_dir)
-            continue
+            # Handle existing runs
+            if fresh and output_dir.exists():
+                shutil.rmtree(output_dir)
+            if output_dir.exists() and not fresh:
+                continue
+            if remove:
+                shutil.rmtree(output_dir)
+                continue
 
-        job = PanDDAJob(
-            name=system_data_dir.system_name,
-            system_data_dir=Path(system_data_dir.path),
-            output_dir=output_dir,
-            cores=cores,
-        )
-        scheduler.submit(job, cores=cores)
+            job = PanDDAJob(
+                name=system.system_name,
+                system_data_dir=Path(project.path),
+                output_dir=output_dir,
+                cores=cores,
+            )
+            scheduler.submit(job, cores=cores)
 
 
 if __name__ == "__main__":
