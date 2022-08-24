@@ -54,7 +54,7 @@ def diamond_build_input_data_database(sqlite_filepath):
 
         system_sql = SystemSQL(
             system_name=system,
-            project_dirs=system_project_sqls,
+            projects=system_project_sqls,
         )
         session.add(system_sql)
 
