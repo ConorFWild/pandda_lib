@@ -45,10 +45,20 @@ def diamond_add_fragalysis_reference_structures(sqlite_filepath, reference_struc
         dtag_number = match.groups()[1]
         dtag = f"{system}-{dtag_number}"
 
+        if system in systems:
+            system_sql = systems[system]
+        else:
+            system_sql = None
+
+        if dtag in datasets:
+            dataset_sql = datasets[dtag]
+        else:
+            dataset_sql = None
+
         reference_structure_sql = ReferenceStructureSQL(
             path=str(reference_stucture_path),
-            system=systems[system],
-            dataset = datasets[dtag]
+            system=system_sql,
+            dataset = dataset_sql
         )
         session.add(reference_structure_sql)
 
