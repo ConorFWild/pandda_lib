@@ -97,7 +97,7 @@ class PanDDA1DirSQL(Base):
     system_id = Column(Integer, ForeignKey(f"{SYSTEM_SQL_TABLE}.id"))
 
     path = Column(String)
-    system = relationship("ProjectDirSQL")
+    system = relationship("SystemSQL")
 
     # pandda_dataset_results = relationship("PanDDADatasetSQL")
 
@@ -110,5 +110,5 @@ class ReferenceStructureSQL(Base):
     dataset_id = Column(Integer, ForeignKey(f"{DATASET_SQL_TABLE}.id"))
 
     path = Column(String)
-    system = relationship("ProjectDirSQL")
+    system = relationship("SystemSQL")
     dataset = relationship("DatasetSQL")
