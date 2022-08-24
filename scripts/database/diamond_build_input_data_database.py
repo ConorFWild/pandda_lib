@@ -50,7 +50,7 @@ def diamond_build_input_data_database(sqlite_filepath):
             session.add(project_data_dir_sql)
             system_project_sqls.append(project_data_dir_sql)
 
-            system_project_sqls[project_name] = project_data_dir_sql
+            # system_project_sqls[project_name] = project_data_dir_sql
 
         system_sql = SystemSQL(
             system_name=system,
@@ -71,4 +71,4 @@ def diamond_build_input_data_database(sqlite_filepath):
     # for instance in session.query(DatasetSQL).order_by(S)
 
 if __name__ == "__main__":
-    fire.Fire(__main__)
+    fire.Fire(diamond_build_input_data_database)
