@@ -23,7 +23,7 @@ def main(
     scheduler = QSubScheduler(output_dir)
 
     # Submit jobs
-    for cores in [1, 3, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60]:
+    for cores in [1, 3, 6, 12, 18, 24, 30, 36,]:
         print(f"\tcores: {cores}")
 
         mem_per_core = int(total_mem / cores)
