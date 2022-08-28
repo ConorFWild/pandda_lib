@@ -26,6 +26,9 @@ def get_dataset_rsccs(dataset, tmp_dir):
     dataset_path = pathlib.Path(dataset.path)
     dataset_bound_state_model_path = pathlib.Path(dataset.model_path)
 
+    if not tmp_dir.exists():
+        os.mkdir(tmp_dir)
+
     event_maps = dataset.event_maps
     resolution = gemmi.read_mtz_file(dataset.mtz_path).resolution_high()
 
@@ -62,6 +65,7 @@ def get_dataset_rsccs(dataset, tmp_dir):
 
 def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
+    tmp_dir = pathlib.Path(sqlite_filepath).resolve(tmp_dir)
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
     Base.metadata.create_all(engine)
@@ -81,7 +85,8 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
                 datasets.append(dataset)
                 # selected_custom_score = custom_scores[selected_rscc_id]
 
-    selected_rsccs = Parallel(n_jobs=30)(delayed(get_dataset_rsccs)(dataset) for dataset in datasets)
+    selected_rsccs = Parallel(n_jobs=30)(delayed(get_dataset_rsccs)(dataset, tmp_dir / dataset.dtag) for dataset in
+                                         datasets)
 
     for dataset, selected_rscc in zip(datasets, selected_rsccs):
         bound_state_model = BoundStateModelSQL(
