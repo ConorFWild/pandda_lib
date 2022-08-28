@@ -10,8 +10,10 @@ from pandda_lib import constants
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
 from pandda_lib.fs.pandda_result import PanDDAResult
 from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, ProjectDirSQL, DatasetSQL, PanDDADirSQL,
-                                                      PanDDADatasetSQL, PanDDABuildSQL, PanDDAEventSQL, SystemSQL, BoundStateModelSQL)
+                                                      PanDDADatasetSQL, PanDDABuildSQL, PanDDAEventSQL, SystemSQL,
+                                                      BoundStateModelSQL)
 from pandda_lib.rscc import get_rscc
+
 
 def test_rscc(input_json):
     with open(input_json, "r") as f:
@@ -30,6 +32,7 @@ def test_rscc(input_json):
     )
 
     print(rscc)
+
 
 if __name__ == "__main__":
     fire.Fire(test_rscc)

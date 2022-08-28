@@ -43,7 +43,7 @@ def diamond_build_input_data_database(sqlite_filepath):
                         pandda_model_path=str(_dataset.model_path),
                         event_maps=[
                             SystemEventMapSQL(
-                                path=event_map.path,
+                                path=str(event_map.path),
                                 event_idx = event_map.event_idx,
                                 bdc=event_map.bdc,
                             )
