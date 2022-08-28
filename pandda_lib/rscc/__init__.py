@@ -47,4 +47,4 @@ def get_rscc(
             rscc = float(match.groups()[2])
             results[(chain, res)] = rscc
 
-    return rscc
+    return results
