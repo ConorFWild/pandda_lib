@@ -53,26 +53,26 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
                         # rsccs.append(_rscc)
                         rsccs[(event_map.path, chain_res[0], chain_res[1])] = _rscc
 
-                # Get the custom scores
-                custom_scores = {}
-                for event_map in event_maps:
-                    custom_score = get_custom_score(
-                        dataset_bound_state_model_path,
-                        event_map.path,
-                        resolution,
-                    )
-                    for chain_res, _custom_score in custom_score:
-                    #     custom_scores.append(_custom_score)
-                        custom_scores[(event_map.path, chain_res[0], chain_res[1])] = _custom_score
+                # # Get the custom scores
+                # custom_scores = {}
+                # for event_map in event_maps:
+                #     custom_score = get_custom_score(
+                #         dataset_bound_state_model_path,
+                #         event_map.path,
+                #         resolution,
+                #     )
+                #     for chain_res, _custom_score in custom_score:
+                #     #     custom_scores.append(_custom_score)
+                #         custom_scores[(event_map.path, chain_res[0], chain_res[1])] = _custom_score
 
                 # selected_rscc_index = np.argmax(rsccs)
                 selected_rscc_id = max(rsccs, key=lambda _key: rsccs[_key])
                 selected_rscc = rsccs[selected_rscc_id]
-                selected_custom_score = custom_scores[selected_rscc_id]
+                # selected_custom_score = custom_scores[selected_rscc_id]
 
                 bound_state_model = BoundStateModelSQL(
                     rscc=selected_rscc,
-                    custom_score=selected_custom_score,
+                    custom_score=None,
                 )
                 dataset.bound_state_model = bound_state_model
 
@@ -113,4 +113,4 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
 
 
 if __name__ == "__main__":
-    fire.Fire(main)
+    fire.Fire(diamond_add_model_stats)
