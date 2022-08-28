@@ -75,7 +75,7 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     BoundStateModelSQL.__table__.drop(engine)
     Base.metadata.create_all(engine)
 
-    initial_datasets = session.query(DatasetSQL).join(DatasetSQL.bound_state_model).order_by(DatasetSQL.id).all()
+    initial_datasets = session.query(DatasetSQL).order_by(DatasetSQL.id).all()
     print(len(initial_datasets))
 
     print("Updating database...")
@@ -83,7 +83,7 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     # for system in systems:
     #     for project in system.projects:
     for dataset in initial_datasets:
-        if dataset.bound_state_model:
+        if dataset.model_path:
             datasets.append(dataset)
                 # selected_custom_score = custom_scores[selected_rscc_id]
     print(f"\tNumber of datasets to score: {len(datasets) }")
