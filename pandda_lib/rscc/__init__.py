@@ -8,7 +8,7 @@ PHENIX_MODEL_MAP_CC_SCRIPT = (
     "module load phenix; "
     "phenix.model_map_cc "
     "{model_path} "
-    "{map_path}"
+    "{map_path} "
     "resolution={resolution}")
 
 
