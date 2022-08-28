@@ -82,7 +82,8 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     for system in systems:
         for project in system.projects:
             for dataset in project.datasets:
-                datasets.append(dataset)
+                if dataset.bound_state_model:
+                    datasets.append(dataset)
                 # selected_custom_score = custom_scores[selected_rscc_id]
 
     print("Getting RSCCs...")
