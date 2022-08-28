@@ -85,9 +85,11 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
                 datasets.append(dataset)
                 # selected_custom_score = custom_scores[selected_rscc_id]
 
+    print("Getting RSCCs...")
     selected_rsccs = Parallel(n_jobs=30)(delayed(get_dataset_rsccs)(dataset, tmp_dir / dataset.dtag) for dataset in
                                          datasets)
 
+    print("Inserting to database...")
     for dataset, selected_rscc in zip(datasets, selected_rsccs):
         bound_state_model = BoundStateModelSQL(
             rscc=selected_rscc,
