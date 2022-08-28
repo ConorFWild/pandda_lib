@@ -48,8 +48,8 @@ class DatasetSQL(Base):
 
     dtag = Column(String)
     path = Column(String)
-    model_path = Column(str)
-    mtz_path= Column(str)
+    model_path = Column(String)
+    mtz_path= Column(String)
     pandda_model_path = Column(String)
     event_maps = relationship("SystemEventMapSQL")
     bound_state_model = relationship("BoundStateModelSQL")
