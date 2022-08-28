@@ -1,0 +1,6 @@
+{
+  "tmp_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/rsccs",
+  "event_map_path": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/initial_model/XX02KALRNA-x5427/XX02KALRNA-x5427-event_1_1-BDC_0.42_map.native.ccp4",
+  "pandda_model_path": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/initial_model/XX02KALRNA-x5427/XX02KALRNA-x5427-pandda-model.pdb",
+  "resolution": 3.0
+}
