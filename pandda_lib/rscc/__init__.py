@@ -1,5 +1,6 @@
 import re
 import subprocess
+import pathlib
 
 MATCH_REGEX = "([^\s]+)\s+LIG\s+([\s]+)\s+(^[\s]+)"
 
@@ -35,7 +36,7 @@ def get_rscc(
 
     # parse results
     results = {}
-    with open(tmp_dir / "cc_per_residue.log", "r") as f:
+    with open(pathlib.Path(tmp_dir) / "cc_per_residue.log", "r") as f:
         for line in f.readlines():
             match = re.match(MATCH_REGEX, str(line))
             chain = match.groups()[0]
