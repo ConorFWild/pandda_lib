@@ -75,7 +75,7 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     BoundStateModelSQL.__table__.drop(engine)
     Base.metadata.create_all(engine)
 
-    initial_datasets = session.query(DatasetSQL).order_by(DatasetSQL.id).all()
+    initial_datasets = session.query(DatasetSQL).join(DatasetSQL.bound_state_model).order_by(DatasetSQL.id).all()
 
     print("Updating database...")
     datasets = []
