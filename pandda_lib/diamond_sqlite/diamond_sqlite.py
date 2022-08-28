@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Table
+from sqlalchemy import Column, Integer, String, ForeignKey, Table, Float
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -11,8 +11,32 @@ PANDDA_EVENT_SQL_TABLE = "pandda_event"
 PANDDA_BUILD_SQL_TABLE = "pandda_build"
 PANDDA_1_DIR_SQL_TABLE = "pandda_1_dir"
 REFERENCE_STRUCTURE_SQL_TABLE = "reference_structure"
+BOUND_STATE_MODEL_SQL_TABLE = "bound_state_model"
+SYSTEM_EVENT_MAP_SQL_TABLE = "system_event_map"
 
 Base = declarative_base()
+
+
+class SystemEventMapSQL(Base):
+    __tablename__ = SYSTEM_EVENT_MAP_SQL_TABLE
+
+    id = Column(Integer, primary_key=True)
+    dataset_id = Column(Integer, ForeignKey(f"{DATASET_SQL_TABLE}.id"))
+
+    path = Column(String)
+    event_idx = Column(Integer)
+    bdc = Column(Float)
+
+
+class BoundStateModelSQL(Base):
+    __tablename__ = BOUND_STATE_MODEL_SQL_TABLE
+
+    id = Column(Integer, primary_key=True)
+    dataset_id = Column(Integer, ForeignKey(f"{DATASET_SQL_TABLE}.id"))
+    # project_id = Column(Integer, ForeignKey(f"{PROJECT_DIR_SQL_TABLE}.id"))
+
+    rscc = Column(Float)
+    custom_score = Column(Float)
 
 
 class DatasetSQL(Base):
@@ -24,7 +48,11 @@ class DatasetSQL(Base):
 
     dtag = Column(String)
     path = Column(String)
-    model_path = Column(String)
+    model_path = Column(str)
+    mtz_path= Column(str)
+    pandda_model_path = Column(String)
+    event_maps = relationship("SystemEventMapSQL")
+    bound_state_model = relationship("BoundStateModelSQL")
 
 
 class ProjectDirSQL(Base):

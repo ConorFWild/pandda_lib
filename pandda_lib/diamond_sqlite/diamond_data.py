@@ -1,7 +1,20 @@
 import pathlib
+import re
+
+import gemmi
 
 from pandda_lib import constants
 from pandda_lib.common import Dtag, SystemName
+
+
+class SystemEventMap:
+    def __init__(self, path):
+
+        self.path = path
+        matches = re.findall("event_([^_]+)_", path.name)
+        self.event_idx = int(matches[0])
+        matches = re.findall("BDC_([^_]+)_", path.name)
+        self.bdc = float(matches[0])
 
 
 class DiamondDataset:
@@ -9,12 +22,43 @@ class DiamondDataset:
         self.dtag = dtag
         self.path = path
 
-        _model_path = path / constants.PANDDA_EVENT_MODEL.format(dtag.dtag)
-
-        if _model_path.exists():
-            self.model_path = _model_path
+        model_path = path / "dimple.pdb"
+        mtz_path = path / "dimple.mtz"
+        if model_path.exists():
+            self.model_path = model_path
         else:
             self.model_path = None
+
+        if mtz_path.exists():
+            self.mtz_path = mtz_path
+        else:
+            self.mtz_path = None
+
+        pandda_model_path = path / constants.PANDDA_EVENT_MODEL.format(dtag.dtag)
+
+        if pandda_model_path.exists():
+            st = gemmi.read_structure(str(pandda_model_path))
+            sel = gemmi.Selection("///(LIG)")
+            num_ligs = 0
+            for model in sel.models(st):
+                # print('Model', model.name)
+                for chain in sel.chains(model):
+                    # print('-', chain.name)
+                    for residue in sel.residues(chain):
+                        num_ligs += 1
+
+            if num_ligs == 0:
+                self.pandda_model_path = None
+            else:
+                self.pandda_model_path = pandda_model_path
+        else:
+            self.pandda_model_path = None
+
+        self.event_maps = []
+        for event_map_path in path.glob("*event*.ccp4"):
+            self.event_maps.append(
+                SystemEventMap(event_map_path)
+            )
 
 
 class DiamondDataDir:

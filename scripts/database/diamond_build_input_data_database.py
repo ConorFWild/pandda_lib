@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
-from pandda_lib.diamond_sqlite.diamond_sqlite import Base, ProjectDirSQL, DatasetSQL, SystemSQL
+from pandda_lib.diamond_sqlite.diamond_sqlite import Base, ProjectDirSQL, DatasetSQL, SystemSQL, SystemEventMapSQL
 
 
 def diamond_build_input_data_database(sqlite_filepath):
@@ -38,7 +38,19 @@ def diamond_build_input_data_database(sqlite_filepath):
                     DatasetSQL(
                         dtag=_dataset.dtag.dtag,
                         path=str(_dataset.path),
-                        model_path=str(_dataset.model_path)
+                        model_path=str(_dataset.model_path),
+                        mtz_path=str(_dataset.mtz_path),
+                        pandda_model_path=str(_dataset.model_path),
+                        event_maps=[
+                            SystemEventMapSQL(
+                                path=event_map.path,
+                                event_idx = event_map.event_idx,
+                                bdc=event_map.bdc,
+                            )
+                            for event_map
+                            in _dataset.event_maps
+
+                        ],
                     )
                     for _dtag, _dataset
                     in project_data_dir.datasets.items()
