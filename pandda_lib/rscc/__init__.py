@@ -2,7 +2,7 @@ import re
 import subprocess
 import pathlib
 
-MATCH_REGEX = "([^\s]+)\s+LIG\s+([\s]+)\s+(^[\s]+)"
+MATCH_REGEX = "([^\s]+)\s+LIG\s+([^\s]+)\s+([^\s]+)"
 
 PHENIX_MODEL_MAP_CC_SCRIPT = (
     "cd {tmp_dir}; "
