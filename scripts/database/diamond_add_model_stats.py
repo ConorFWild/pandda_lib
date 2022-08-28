@@ -80,13 +80,16 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
 
     print("Updating database...")
     datasets = []
+    datasets_without_pandda_models = []
     # for system in systems:
     #     for project in system.projects:
     for dataset in initial_datasets:
         if dataset.pandda_model_path:
             datasets.append(dataset)
+        else:
+            datasets_without_pandda_models.append(dataset)
                 # selected_custom_score = custom_scores[selected_rscc_id]
-    print(f"\tNumber of datasets to score: {len(datasets) }")
+    print(f"\tNumber of datasets to score: {len(datasets) }; number not to: {len(datasets_without_pandda_models)}")
 
     print("Getting RSCCs...")
     selected_rsccs = Parallel(n_jobs=30,
