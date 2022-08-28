@@ -65,7 +65,7 @@ def get_dataset_rsccs(dataset, tmp_dir):
 
 def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
-    tmp_dir = pathlib.Path(sqlite_filepath).resolve(tmp_dir)
+    tmp_dir = pathlib.Path(tmp_dir).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
     Base.metadata.create_all(engine)
