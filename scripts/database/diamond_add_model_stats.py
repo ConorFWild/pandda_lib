@@ -83,7 +83,7 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     # for system in systems:
     #     for project in system.projects:
     for dataset in initial_datasets:
-        if dataset.model_path:
+        if dataset.pandda_model_path:
             datasets.append(dataset)
                 # selected_custom_score = custom_scores[selected_rscc_id]
     print(f"\tNumber of datasets to score: {len(datasets) }")
