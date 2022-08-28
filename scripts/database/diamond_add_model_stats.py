@@ -84,6 +84,7 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     # for system in systems:
     #     for project in system.projects:
     for dataset in initial_datasets:
+        print(dataset.pandda_model_path)
         if dataset.pandda_model_path:
             datasets.append(dataset)
         else:
