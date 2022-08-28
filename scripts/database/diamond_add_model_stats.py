@@ -86,7 +86,8 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
                 # selected_custom_score = custom_scores[selected_rscc_id]
 
     print("Getting RSCCs...")
-    selected_rsccs = Parallel(n_jobs=30)(delayed(get_dataset_rsccs)(dataset, tmp_dir / dataset.dtag) for dataset in
+    selected_rsccs = Parallel(n_jobs=30,
+                              verbose=50)(delayed(get_dataset_rsccs)(dataset, tmp_dir / dataset.dtag) for dataset in
                                          datasets)
 
     print("Inserting to database...")
