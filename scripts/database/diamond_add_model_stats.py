@@ -9,13 +9,15 @@ from sqlalchemy import create_engine
 import joblib
 from joblib import Parallel, delayed
 
-
 from pandda_lib import constants
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
 from pandda_lib.fs.pandda_result import PanDDAResult
 from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, ProjectDirSQL, DatasetSQL, PanDDADirSQL,
-                                                      PanDDADatasetSQL, PanDDABuildSQL, PanDDAEventSQL, SystemSQL, BoundStateModelSQL)
+                                                      PanDDADatasetSQL, PanDDABuildSQL, PanDDAEventSQL, SystemSQL,
+                                                      BoundStateModelSQL)
 from pandda_lib.rscc import get_rscc
+
+
 # from pandda_lib.custom_score import get_custom_score
 
 
@@ -57,6 +59,7 @@ def get_dataset_rsccs(dataset, tmp_dir):
 
     return selected_rscc
 
+
 def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
@@ -78,11 +81,9 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
                 datasets.append(dataset)
                 # selected_custom_score = custom_scores[selected_rscc_id]
 
-
     selected_rsccs = Parallel(n_jobs=30)(delayed(get_dataset_rsccs)(dataset) for dataset in datasets)
 
     for dataset, selected_rscc in zip(datasets, selected_rsccs):
-
         bound_state_model = BoundStateModelSQL(
             rscc=selected_rscc,
             custom_score=None,
@@ -92,7 +93,6 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
         session.add(bound_state_model)
 
     session.commit()
-
 
     print("Printing database datasets...")
     for instance in session.query(DatasetSQL).order_by(DatasetSQL.id):
