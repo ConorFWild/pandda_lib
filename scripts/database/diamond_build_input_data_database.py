@@ -73,7 +73,7 @@ def diamond_build_input_data_database(sqlite_filepath):
         )
         session.add(system_sql)
 
-    session.commit()
+        session.commit()
 
     print("Printing database systems...")
 
