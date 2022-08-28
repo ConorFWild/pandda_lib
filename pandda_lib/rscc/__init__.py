@@ -38,8 +38,10 @@ def get_rscc(
     results = {}
     with open(pathlib.Path(tmp_dir) / "cc_per_residue.log", "r") as f:
         for line in f.readlines():
-            print(line)
+            # print(line)
             match = re.match(MATCH_REGEX, str(line))
+            if not match:
+                continue
             chain = match.groups()[0]
             res = int(match.groups()[1])
             rscc = float(match.groups()[2])
