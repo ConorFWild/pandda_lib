@@ -29,7 +29,7 @@ pandda_command = (
     "--local_processing=\"multiprocessing_spawn\" "
     "--local_cpus={cores} "
     "--rank_method=autobuild "
-    "--comparison_strategy=\"hybrid\" "
+    "--comparison_strategy=\"{comparison_strategy}\" "
     "--min_characterisation_datasets=25 "
     "--debug=2 "
     "--memory_availability=\"low\""
@@ -44,7 +44,8 @@ class PanDDAJob:
                  output_dir,
                  cores=6,
                  pdb_regex="dimple.pdb",
-                 mtz_regex="dimple.mtz"
+                 mtz_regex="dimple.mtz",
+                 comparison_strategy="hybrid"
                  ):
         self.name = name
         self.system_data_dir = system_data_dir
@@ -55,4 +56,5 @@ class PanDDAJob:
             cores=cores,
             pdb_regex=pdb_regex,
             mtz_regex=mtz_regex,
+            comparison_strategy=comparison_strategy
         )

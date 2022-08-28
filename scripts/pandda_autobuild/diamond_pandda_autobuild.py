@@ -1,0 +1,70 @@
+import os
+from pathlib import Path
+import time
+import shutil
+import pickle
+import subprocess
+import pathlib
+
+import fire
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+
+from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
+from pandda_lib.diamond_sqlite.diamond_sqlite import Base, ProjectDirSQL, SystemSQL
+from pandda_lib.schedulers.qsub_scheduler import QSubScheduler
+from pandda_lib.jobs.pandda_job import PanDDAJob
+
+
+def main(
+        # container_path: str,
+        sqlite_filepath: str,
+        output_dir_name: str,
+        tmp_dir: str,
+        fresh=False,
+        remove=False,
+        cores=24,
+):
+    print("Starting")
+    # Define data
+    # container_path = Path(container_path)
+    # data_dirs = Path('/opt/clusterscratch/pandda/data')
+    # results_dirs = Path('/opt/clusterscratch/pandda/output/pandda_cluster_results')
+    # ignores = ['containers', 'pandda_results', 'scripts']
+    tmp_dir = pathlib.Path(tmp_dir).resolve()
+    sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
+
+    # Get the database
+    # os.remove(sqlite_filepath)
+    engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
+    session = sessionmaker(bind=engine)()
+
+    # Get Scheduler
+    scheduler = QSubScheduler(tmp_dir)
+
+    # Submit jobs
+    for system in session.query(SystemSQL).order_by(SystemSQL.id):
+        for project in system.projects:
+            print(f"{system.system_name}")
+            output_dir = Path(project.path).parent / output_dir_name
+
+            # Handle existing runs
+            if fresh and output_dir.exists():
+                shutil.rmtree(output_dir)
+            if output_dir.exists() and not fresh:
+                continue
+            if remove:
+                shutil.rmtree(output_dir)
+                continue
+
+            job = PanDDAJob(
+                name=system.system_name,
+                system_data_dir=Path(project.path),
+                output_dir=output_dir,
+                cores=cores,
+            )
+            scheduler.submit(job, cores=cores)
+
+
+if __name__ == "__main__":
+    fire.Fire(main)
