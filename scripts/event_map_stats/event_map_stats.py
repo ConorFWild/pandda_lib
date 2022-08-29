@@ -52,6 +52,7 @@ def diamond_add_model_stats(sqlite_filepath, ):
             event_map = gemmi.read_ccp4_map(event_map.path, setup=True)
             event_map_grid = event_map
             event_map_grid_array = np.array(event_map_grid)
+            print(event_map_grid_array)
             event_map_grid_array_positive = event_map_grid_array[event_map_grid_array > 0]
             event_map_mean = np.mean(event_map_grid_array_positive)
             event_map_std = np.std(event_map_grid_array_positive)
