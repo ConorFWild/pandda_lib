@@ -4,7 +4,7 @@ import os
 import numpy as np
 import gemmi
 import fire
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, subqueryload
 from sqlalchemy import create_engine
 import joblib
 from joblib import Parallel, delayed
@@ -26,7 +26,7 @@ def diamond_add_model_stats(sqlite_filepath, ):
     Base.metadata.create_all(engine)
 
     # Get datasets
-    initial_datasets = session.query(DatasetSQL).order_by(DatasetSQL.id).all()
+    initial_datasets = session.query(DatasetSQL).options(subqueryload(DatasetSQL.event_maps)).order_by(DatasetSQL.id).all()
 
     # For dataset, get 2Fo-Fc>0 mean and scale, then for event map>0 mean and scale
     for dataset in initial_datasets:
