@@ -37,7 +37,7 @@ def diamond_add_model_stats(sqlite_filepath, ):
         print(f"\t{mtz_path}")
         mtz = gemmi.read_mtz_file(mtz_path)
         grid = mtz.transform_f_phi_to_map(
-            "2FOFWT",
+            "2FOFCWT",
             "PH2FOFCWT",
             sample_rate=3,
         )
