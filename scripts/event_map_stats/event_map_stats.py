@@ -26,16 +26,18 @@ def diamond_add_model_stats(sqlite_filepath, ):
     Base.metadata.create_all(engine)
 
     # Get datasets
-    initial_datasets = session.query(DatasetSQL).options(subqueryload(DatasetSQL.event_maps)).order_by(DatasetSQL.id).all()
+    initial_datasets = session.query(DatasetSQL).options(subqueryload(DatasetSQL.event_maps)).order_by(
+        DatasetSQL.id).all()
 
     # For dataset, get 2Fo-Fc>0 mean and scale, then for event map>0 mean and scale
     for dataset in initial_datasets:
         mtz_path = dataset.mtz_path
         mtz = gemmi.read_mtz_file(mtz_path)
-        grid = mtz.transform_f_phi_to_map("FWT",
-                                      "PHFWT",
-                                      sample_rate=3,
-                                                                                     )
+        grid = mtz.transform_f_phi_to_map(
+            "FWT",
+            "PHWT",
+            sample_rate=3,
+        )
         grid_array = np.array(grid)
         grid_array_positive = grid_array[grid_array > 0]
         grid_mean = np.mean(grid_array_positive)
@@ -53,7 +55,7 @@ def diamond_add_model_stats(sqlite_filepath, ):
 
             event_map_stats[int(event_map_idx)] = {
                 "mean": event_map_mean,
-            "std": event_map_std,
+                "std": event_map_std,
             }
 
         print(f"Grid Mean: {grid_mean}; Grid std: {grid_std}")
