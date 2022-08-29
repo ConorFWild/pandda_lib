@@ -16,7 +16,7 @@ from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
 from pandda_lib.fs.pandda_result import PanDDAResult
 from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, ProjectDirSQL, DatasetSQL, PanDDADirSQL,
                                                       PanDDADatasetSQL, PanDDABuildSQL, PanDDAEventSQL, SystemSQL,
-                                                      BoundStateModelSQL)
+                                                      BoundStateModelSQL, SystemEventMapSQL)
 from pandda_lib.rscc import get_rscc
 
 
@@ -109,7 +109,7 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     BoundStateModelSQL.__table__.drop(engine)
     Base.metadata.create_all(engine)
 
-    initial_datasets = session.query(DatasetSQL).order_by(DatasetSQL.id).all()
+    initial_datasets = session.query(DatasetSQL).join(SystemEventMapSQL).order_by(DatasetSQL.id).all()
     print(len(initial_datasets))
 
     print("Updating database...")
@@ -153,7 +153,9 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
                                dataset.pandda_model_path,
                                dataset.event_maps,
                                dataset.mtz_path,
-                               tmp_dir / dataset.dtag) for dataset in datasets
+                               tmp_dir / dataset.dtag)
+                for dataset
+                in datasets
             ]
         )
 

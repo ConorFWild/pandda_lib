@@ -18,9 +18,9 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, ProjectDirSQL, Datas
 from pandda_lib.rscc import get_rscc
 
 
-def diamond_add_model_stats(sqlite_filepath, tmp_dir):
+def diamond_add_model_stats(sqlite_filepath, ):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
-    tmp_dir = pathlib.Path(tmp_dir).resolve()
+    # tmp_dir = pathlib.Path(tmp_dir).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
     Base.metadata.create_all(engine)
