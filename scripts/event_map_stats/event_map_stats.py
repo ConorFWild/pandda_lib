@@ -78,6 +78,8 @@ def diamond_add_model_stats(sqlite_filepath, ):
             event_map_grid_array = np.array(event_map_grid)
             # print(event_map_grid_array)
             event_map_grid_array_positive = event_map_grid_array[event_map_grid_array > 1.0]
+            if event_map_grid_array_positive.size <3:
+                continue
             event_map_mean = np.mean(event_map_grid_array_positive)
             event_map_std = np.std(event_map_grid_array_positive)
             event_map_quantiles = np.quantile(event_map_grid_array_positive, [0.5, 0.75, 0.9]).round(
