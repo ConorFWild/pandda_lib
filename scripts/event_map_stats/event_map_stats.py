@@ -49,7 +49,7 @@ def diamond_add_model_stats(sqlite_filepath, ):
                 "PH2FOFCWT",
                 sample_rate=3,
             )
-            print(e)
+            # print(e)
 
         grid_array = np.array(grid)
         grid_array_positive = grid_array[grid_array > 0]
