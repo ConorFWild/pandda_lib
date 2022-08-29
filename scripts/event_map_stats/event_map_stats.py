@@ -36,11 +36,20 @@ def diamond_add_model_stats(sqlite_filepath, ):
         mtz_path = dataset.mtz_path
         print(f"\t{mtz_path}")
         mtz = gemmi.read_mtz_file(mtz_path)
-        grid = mtz.transform_f_phi_to_map(
-            "2FOFCWT",
-            "PH2FOFCWT",
-            sample_rate=3,
-        )
+        try:
+            grid = mtz.transform_f_phi_to_map(
+                "FWT",
+                "PHWT",
+                sample_rate=3,
+            )
+
+        except Exception as e:
+            print(e)
+        grid= mtz.transform_f_phi_to_map(
+                "2FOFCWT",
+                "PH2FOFCWT",
+                sample_rate=3,
+            )
         grid_array = np.array(grid)
         grid_array_positive = grid_array[grid_array > 0]
         grid_mean = np.mean(grid_array_positive)
