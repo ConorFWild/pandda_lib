@@ -6,8 +6,11 @@ import gemmi
 import fire
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-import joblib
-from joblib import Parallel, delayed
+# import joblib
+# from joblib import Parallel, delayed
+import multiprocessing as mp
+
+mp.set_start_method('spawn')
 
 from pandda_lib import constants
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
@@ -19,6 +22,26 @@ from pandda_lib.rscc import get_rscc
 
 
 # from pandda_lib.custom_score import get_custom_score
+
+class Runner:
+    def __call__(self, f):
+        return f()
+
+
+class GetDatasetRSCC:
+    def __init__(self, dataset_dtag, dataset_path, dataset_bound_state_model_path, event_maps, mtz_path, tmp_dir):
+        self.dataset_dtag = dataset_dtag
+        self.dataset_path = dataset_path
+        self.dataset_bound_state_model_path = dataset_bound_state_model_path
+        self.event_maps = event_maps
+        self.mtz_path = mtz_path
+        self.tmp_dir = tmp_dir
+
+    def __call__(self, ):
+        return get_dataset_rsccs(
+            self.dataset_dtag, self.dataset_path, self.dataset_bound_state_model_path, self.event_maps, self.mtz_path,
+            self.tmp_dir
+        )
 
 
 def get_dataset_rsccs(dataset_dtag, dataset_path, dataset_bound_state_model_path, event_maps, mtz_path, tmp_dir):
@@ -120,6 +143,13 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
         for dataset
         in datasets
     )
+    with Pool(30) as p:
+        selected_rsccs = p.map(Runner, [GetDatasetRSCC(dataset.dtag,
+                                      dataset.path,
+                                      dataset.pandda_model_path,
+                                      dataset.event_maps,
+                                      dataset.mtz_path,
+                                      tmp_dir / dataset.dtag) for dataset in datasets])
 
     print("Inserting to database...")
     for dataset, selected_rscc in zip(datasets, selected_rsccs):
@@ -136,6 +166,7 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     print("Printing database datasets...")
     for instance in session.query(DatasetSQL).order_by(DatasetSQL.id):
         print(f"{instance.dtag}")
+
         print(f"\t{instance.bound_state_model.rscc}")
 
     # for instance in session.query(DatasetSQL).order_by(DatasetSQL):
