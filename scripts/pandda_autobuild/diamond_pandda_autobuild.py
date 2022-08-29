@@ -51,7 +51,7 @@ def main(
     for system in session.query(SystemSQL).order_by(SystemSQL.id):
         for project in system.projects:
             print(f"{system.system_name}")
-            output_dir = Path(project.path).parent / output_dir_name
+            output_dir = tmp_dir / f"{system.system_name}_{project.project_name}"
 
             # Handle existing runs
             if fresh and output_dir.exists():
@@ -69,7 +69,7 @@ def main(
                 cores=cores,
                 comparison_strategy="high_res_first"
             )
-            scheduler.submit(job, cores=cores, mem_per_core=int(220/cores))
+            scheduler.submit(job, cores=cores, mem_per_core=int(220 / cores))
 
 
 if __name__ == "__main__":
