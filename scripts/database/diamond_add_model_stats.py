@@ -61,6 +61,9 @@ def get_dataset_rsccs(dataset_dtag, dataset_path, dataset_bound_state_model_path
         #     #     custom_scores.append(_custom_score)
         #         custom_scores[(event_map.path, chain_res[0], chain_res[1])] = _custom_score
 
+        if len(rsccs) == 0:
+            return None
+
         # selected_rscc_index = np.argmax(rsccs)
         selected_rscc_id = max(rsccs, key=lambda _key: rsccs[_key])
         selected_rscc = rsccs[selected_rscc_id]
