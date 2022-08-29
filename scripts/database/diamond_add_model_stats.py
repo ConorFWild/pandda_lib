@@ -21,16 +21,16 @@ from pandda_lib.rscc import get_rscc
 # from pandda_lib.custom_score import get_custom_score
 
 
-def get_dataset_rsccs(dataset, tmp_dir):
-    dataset_dtag = dataset.dtag
-    dataset_path = pathlib.Path(dataset.path)
-    dataset_bound_state_model_path = pathlib.Path(dataset.model_path)
+def get_dataset_rsccs(dataset_dtag, dataset_path, dataset_bound_state_model_path, event_maps, mtz_path, tmp_dir):
+    dataset_dtag = dataset_dtag
+    dataset_path = pathlib.Path(dataset_path)
+    dataset_bound_state_model_path = pathlib.Path(dataset_bound_state_model_path)
 
     if not tmp_dir.exists():
         os.mkdir(tmp_dir)
 
-    event_maps = dataset.event_maps
-    resolution = gemmi.read_mtz_file(dataset.mtz_path).resolution_high()
+    # event_maps = dataset.event_maps
+    resolution = gemmi.read_mtz_file(mtz_path).resolution_high()
 
     rsccs = {}
     for event_map in event_maps:
@@ -94,7 +94,13 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
 
     print("Getting RSCCs...")
     selected_rsccs = Parallel(n_jobs=30,
-                              verbose=50)(delayed(get_dataset_rsccs)(dataset, tmp_dir / dataset.dtag) for dataset in
+                              verbose=50)(delayed(get_dataset_rsccs)(
+        dataset.dtag,
+        dataset.path,
+        dataset.pandda_model_path,
+        dataset.event_maps,
+        dataset.mtz_path, tmp_dir / dataset.dtag
+    ) for dataset in
                                          datasets)
 
     print("Inserting to database...")
