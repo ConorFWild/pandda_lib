@@ -146,7 +146,7 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
 
     with mp.Pool(30) as p:
         selected_rsccs = p.map(
-            Runner,
+            Runner(),
             [
                 GetDatasetRSCC(dataset.dtag,
                                dataset.path,
