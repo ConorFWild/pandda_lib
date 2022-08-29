@@ -71,7 +71,7 @@ def diamond_add_model_stats(sqlite_filepath, ):
             event_map_grid_array_positive = event_map_grid_array[event_map_grid_array > 0]
             event_map_mean = np.mean(event_map_grid_array_positive)
             event_map_std = np.std(event_map_grid_array_positive)
-            event_map_quantiles = np.quantile(grid_array, [0.5, 0.75, 0.9])
+            event_map_quantiles = np.quantile(event_map_grid_array, [0.5, 0.75, 0.9])
 
             event_map_stats[int(event_map_idx)] = {
                 "1-BDC": event_map_sql.bdc,
