@@ -37,7 +37,7 @@ class DiamondDataset:
         pandda_model_path = path / constants.PANDDA_EVENT_MODEL.format(dtag.dtag)
 
         if pandda_model_path.exists():
-            print(f"\tDataset {dtag} has model, checking for ligs")
+            print(f"\tDataset {dtag} has model {pandda_model_path}, checking for ligs")
             st = gemmi.read_structure(str(pandda_model_path))
             sel = gemmi.Selection("(LIG)")
             num_ligs = 0
