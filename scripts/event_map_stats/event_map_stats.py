@@ -47,9 +47,9 @@ def diamond_add_model_stats(sqlite_filepath, ):
         grid_std = np.std(grid_array_positive)
 
         event_map_stats = {}
-        for event_map in dataset.event_maps:
-            event_map_idx = event_map.event_idx
-            event_map = gemmi.read_ccp4_map(event_map.path, setup=True)
+        for event_map_sql in dataset.event_maps:
+            event_map_idx = event_map_sql.event_idx
+            event_map = gemmi.read_ccp4_map(event_map_sql.path, setup=True)
             event_map_grid = event_map.grid
             event_map_grid_array = np.array(event_map_grid)
             # print(event_map_grid_array)
@@ -58,7 +58,7 @@ def diamond_add_model_stats(sqlite_filepath, ):
             event_map_std = np.std(event_map_grid_array_positive)
 
             event_map_stats[int(event_map_idx)] = {
-                "bdc": event_map.bdc,
+                "bdc": event_map_sql.bdc,
                 "mean": event_map_mean,
                 "std": event_map_std,
             }
