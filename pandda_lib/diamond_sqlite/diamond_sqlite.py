@@ -13,8 +13,24 @@ PANDDA_1_DIR_SQL_TABLE = "pandda_1_dir"
 REFERENCE_STRUCTURE_SQL_TABLE = "reference_structure"
 BOUND_STATE_MODEL_SQL_TABLE = "bound_state_model"
 SYSTEM_EVENT_MAP_SQL_TABLE = "system_event_map"
+EVENT_MAP_QUANTILES_SQL_TABLE = "event_map_quantiles"
 
 Base = declarative_base()
+
+
+class EventMapQualtiles(Base):
+    __tablename__ = EVENT_MAP_QUANTILES_SQL_TABLE
+
+    id = Column(Integer, primary_key=True)
+    event_map_id = Column(Integer, ForeignKey(f"{SYSTEM_EVENT_MAP_SQL_TABLE}.id"))
+
+    base_50 =  Column(Float)
+    base_75 =  Column(Float)
+    base_90 =  Column(Float)
+
+    event_50 =  Column(Float)
+    event_75 =  Column(Float)
+    event_90 = Column(Float)
 
 
 class SystemEventMapSQL(Base):
@@ -26,6 +42,8 @@ class SystemEventMapSQL(Base):
     path = Column(String)
     event_idx = Column(Integer)
     bdc = Column(Float)
+
+    event_map_quantiles = relationship("EventMapQualtiles", uselist=False)
 
 
 class BoundStateModelSQL(Base):
