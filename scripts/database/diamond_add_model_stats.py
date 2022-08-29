@@ -41,11 +41,12 @@ def get_dataset_rsccs(dataset_dtag, dataset_path, dataset_bound_state_model_path
                 resolution,
                 tmp_dir
             )
+            print(rscc)
 
             if not rscc:
                 continue
 
-            for chain_res, _rscc in rscc:
+            for chain_res, _rscc in rscc.items():
                 # rsccs.append(_rscc)
                 rsccs[(event_map.path, chain_res[0], chain_res[1])] = _rscc
 
