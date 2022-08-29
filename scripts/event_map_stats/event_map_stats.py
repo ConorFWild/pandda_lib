@@ -59,7 +59,11 @@ def diamond_add_model_stats(sqlite_filepath, ):
         event_map_stats = {}
         for event_map_sql in dataset.event_maps:
             event_map_idx = event_map_sql.event_idx
-            event_map = gemmi.read_ccp4_map(event_map_sql.path, setup=True)
+            try:
+                event_map = gemmi.read_ccp4_map(event_map_sql.path, setup=True)
+            except Exception as e:
+                print(e)
+                continue
             event_map_grid = event_map.grid
             event_map_grid_array = np.array(event_map_grid)
             # print(event_map_grid_array)
