@@ -106,7 +106,7 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
 
     print("Getting RSCCs...")
     selected_rsccs = Parallel(
-        n_jobs=30,
+        n_jobs=24,
         verbose=50,
     )(
         delayed(get_dataset_rsccs)(
@@ -114,7 +114,8 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
             dataset.path,
             dataset.pandda_model_path,
             dataset.event_maps,
-            dataset.mtz_path, tmp_dir / dataset.dtag
+            dataset.mtz_path,
+            tmp_dir / dataset.dtag
         )
         for dataset
         in datasets
