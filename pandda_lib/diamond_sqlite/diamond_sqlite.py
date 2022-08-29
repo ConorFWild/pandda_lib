@@ -52,7 +52,7 @@ class DatasetSQL(Base):
     mtz_path= Column(String)
     pandda_model_path = Column(String)
     event_maps = relationship("SystemEventMapSQL")
-    bound_state_model = relationship("BoundStateModelSQL")
+    bound_state_model = relationship("BoundStateModelSQL", uselist=False)
 
 
 class ProjectDirSQL(Base):
