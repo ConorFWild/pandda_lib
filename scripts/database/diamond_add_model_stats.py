@@ -4,7 +4,7 @@ import os
 import numpy as np
 import gemmi
 import fire
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, subqueryload
 from sqlalchemy import create_engine
 # import joblib
 # from joblib import Parallel, delayed
@@ -109,7 +109,8 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     BoundStateModelSQL.__table__.drop(engine)
     Base.metadata.create_all(engine)
 
-    initial_datasets = session.query(DatasetSQL).join(SystemEventMapSQL).order_by(DatasetSQL.id).all()
+    initial_datasets = session.query(DatasetSQL).options(subqueryload(DatasetSQL.event_maps)).order_by(
+        DatasetSQL.id).all()
     print(len(initial_datasets))
 
     print("Updating database...")
