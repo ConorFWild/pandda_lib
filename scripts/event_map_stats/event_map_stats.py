@@ -55,7 +55,10 @@ def diamond_add_model_stats(sqlite_filepath, ):
         grid_array_positive = grid_array[grid_array > 0]
         grid_mean = np.mean(grid_array_positive)
         grid_std = np.std(grid_array_positive)
-        grid_quantiles = np.quantile(grid_array[grid_array!=0], [0.5, 0.75, 0.9])
+        grid_quantiles = np.quantile(
+            grid_array[grid_array!=0],
+            [0.5, 0.75, 0.9],
+        )
 
         event_map_stats = {}
         for event_map_sql in dataset.event_maps:
