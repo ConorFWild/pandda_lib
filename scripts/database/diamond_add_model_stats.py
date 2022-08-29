@@ -128,28 +128,33 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     print(f"\tNumber of datasets to score: {len(datasets)}; number not to: {len(datasets_without_pandda_models)}")
 
     print("Getting RSCCs...")
-    selected_rsccs = Parallel(
-        n_jobs=24,
-        verbose=50,
-    )(
-        delayed(get_dataset_rsccs)(
-            dataset.dtag,
-            dataset.path,
-            dataset.pandda_model_path,
-            dataset.event_maps,
-            dataset.mtz_path,
-            tmp_dir / dataset.dtag
+    # selected_rsccs = Parallel(
+    #     n_jobs=24,
+    #     verbose=50,
+    # )(
+    #     delayed(get_dataset_rsccs)(
+    #         dataset.dtag,
+    #         dataset.path,
+    #         dataset.pandda_model_path,
+    #         dataset.event_maps,
+    #         dataset.mtz_path,
+    #         tmp_dir / dataset.dtag
+    #     )
+    #     for dataset
+    #     in datasets
+    # )
+    with mp.Pool(30) as p:
+        selected_rsccs = p.map(
+            Runner,
+            [
+                GetDatasetRSCC(dataset.dtag,
+                               dataset.path,
+                               dataset.pandda_model_path,
+                               dataset.event_maps,
+                               dataset.mtz_path,
+                               tmp_dir / dataset.dtag) for dataset in datasets
+            ]
         )
-        for dataset
-        in datasets
-    )
-    with Pool(30) as p:
-        selected_rsccs = p.map(Runner, [GetDatasetRSCC(dataset.dtag,
-                                      dataset.path,
-                                      dataset.pandda_model_path,
-                                      dataset.event_maps,
-                                      dataset.mtz_path,
-                                      tmp_dir / dataset.dtag) for dataset in datasets])
 
     print("Inserting to database...")
     for dataset, selected_rscc in zip(datasets, selected_rsccs):
