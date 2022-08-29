@@ -171,8 +171,8 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     print("Printing database datasets...")
     for instance in session.query(DatasetSQL).order_by(DatasetSQL.id):
         print(f"{instance.dtag}")
-
-        print(f"\t{instance.bound_state_model.rscc}")
+        if instance.bound_state_model:
+            print(f"\t{instance.bound_state_model.rscc}")
 
     # for instance in session.query(DatasetSQL).order_by(DatasetSQL):
 
