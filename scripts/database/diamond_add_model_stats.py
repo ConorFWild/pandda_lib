@@ -101,19 +101,24 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
             datasets.append(dataset)
         else:
             datasets_without_pandda_models.append(dataset)
-                # selected_custom_score = custom_scores[selected_rscc_id]
-    print(f"\tNumber of datasets to score: {len(datasets) }; number not to: {len(datasets_without_pandda_models)}")
+            # selected_custom_score = custom_scores[selected_rscc_id]
+    print(f"\tNumber of datasets to score: {len(datasets)}; number not to: {len(datasets_without_pandda_models)}")
 
     print("Getting RSCCs...")
-    selected_rsccs = Parallel(n_jobs=30,
-                              verbose=50)(delayed(get_dataset_rsccs)(
-        dataset.dtag,
-        dataset.path,
-        dataset.pandda_model_path,
-        dataset.event_maps,
-        dataset.mtz_path, tmp_dir / dataset.dtag
-    ) for dataset in
-                                         datasets)
+    selected_rsccs = Parallel(
+        n_jobs=30,
+        verbose=50,
+    )(
+        delayed(get_dataset_rsccs)(
+            dataset.dtag,
+            dataset.path,
+            dataset.pandda_model_path,
+            dataset.event_maps,
+            dataset.mtz_path, tmp_dir / dataset.dtag
+        )
+        for dataset
+        in datasets
+    )
 
     print("Inserting to database...")
     for dataset, selected_rscc in zip(datasets, selected_rsccs):
