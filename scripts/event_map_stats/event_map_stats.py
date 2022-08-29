@@ -44,12 +44,13 @@ def diamond_add_model_stats(sqlite_filepath, ):
             )
 
         except Exception as e:
-            print(e)
-        grid= mtz.transform_f_phi_to_map(
+            grid= mtz.transform_f_phi_to_map(
                 "2FOFCWT",
                 "PH2FOFCWT",
                 sample_rate=3,
             )
+            print(e)
+
         grid_array = np.array(grid)
         grid_array_positive = grid_array[grid_array > 0]
         grid_mean = np.mean(grid_array_positive)
