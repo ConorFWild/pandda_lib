@@ -145,18 +145,21 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     mp.set_start_method('spawn')
 
     with mp.Pool(30) as p:
+        print("Getting run set")
+        run_set = [
+            GetDatasetRSCC(dataset.dtag,
+                           dataset.path,
+                           dataset.pandda_model_path,
+                           dataset.event_maps,
+                           dataset.mtz_path,
+                           tmp_dir / dataset.dtag)
+            for dataset
+            in datasets
+        ]
+        print("Running")
         selected_rsccs = p.map(
             Runner(),
-            [
-                GetDatasetRSCC(dataset.dtag,
-                               dataset.path,
-                               dataset.pandda_model_path,
-                               dataset.event_maps,
-                               dataset.mtz_path,
-                               tmp_dir / dataset.dtag)
-                for dataset
-                in datasets
-            ]
+            run_set
         )
 
     print("Inserting to database...")
