@@ -80,7 +80,7 @@ def diamond_add_model_stats(sqlite_filepath, ):
                 "quantiles": event_map_quantiles
             }
 
-        print(f"Grid Mean: {grid_mean}; Grid std: {grid_std}")
+        print(f"Grid Mean: {grid_mean}; Grid std: {grid_std}; Quantiles: {grid_quantiles}")
         print(event_map_stats)
         print("#########################################")
 
