@@ -10,7 +10,6 @@ from sqlalchemy import create_engine
 # from joblib import Parallel, delayed
 import multiprocessing as mp
 
-mp.set_start_method('spawn')
 
 from pandda_lib import constants
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
@@ -143,6 +142,8 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     #     for dataset
     #     in datasets
     # )
+    mp.set_start_method('spawn')
+
     with mp.Pool(30) as p:
         selected_rsccs = p.map(
             Runner,
