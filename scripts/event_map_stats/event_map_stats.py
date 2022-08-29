@@ -31,7 +31,10 @@ def diamond_add_model_stats(sqlite_filepath, ):
 
     # For dataset, get 2Fo-Fc>0 mean and scale, then for event map>0 mean and scale
     for dataset in initial_datasets:
+        if len(dataset.event_maps) == 0:
+            continue
         mtz_path = dataset.mtz_path
+        print(f"\t{mtz_path}")
         mtz = gemmi.read_mtz_file(mtz_path)
         grid = mtz.transform_f_phi_to_map(
             "FWT",
