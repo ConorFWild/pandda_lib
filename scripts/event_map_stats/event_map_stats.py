@@ -100,12 +100,12 @@ def diamond_add_model_stats(sqlite_filepath, ):
 
             session.add(event_map_quantiles)
 
-        session.commit()
 
         print(f"Grid Mean: {grid_mean}; Grid std: {grid_std}; Quantiles: {grid_quantiles}")
         print(event_map_stats)
         print("#########################################")
 
+    session.commit()
 
 if __name__ == "__main__":
     fire.Fire(diamond_add_model_stats)
