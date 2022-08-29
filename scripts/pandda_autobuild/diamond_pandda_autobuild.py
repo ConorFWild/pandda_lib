@@ -1,3 +1,4 @@
+import json
 import os
 from pathlib import Path
 import time
@@ -17,14 +18,18 @@ from pandda_lib.jobs.pandda_job import PanDDAJob
 
 
 def main(
-        # container_path: str,
-        sqlite_filepath: str,
-        output_dir_name: str,
-        tmp_dir: str,
-        fresh=False,
-        remove=False,
-        cores=24,
+        options_json="diamond_pandda_autobuild.json"
 ):
+    with open(options_json, "r") as f:
+        options = json.load(f)
+
+    tmp_dir = options["tmp_dir"]
+    sqlite_filepath = options["sqlite_filepath"]
+    output_dir_name = options["output_dir_name"]
+    fresh = options["fresh"]
+    remove = options["remove"]
+    cores = options["cores"]
+
     print("Starting")
     # Define data
     # container_path = Path(container_path)
@@ -62,8 +67,9 @@ def main(
                 system_data_dir=Path(project.path),
                 output_dir=output_dir,
                 cores=cores,
+                comparison_strategy="high_res_first"
             )
-            scheduler.submit(job, cores=cores)
+            scheduler.submit(job, cores=cores, mem_per_core=int(220/cores))
 
 
 if __name__ == "__main__":

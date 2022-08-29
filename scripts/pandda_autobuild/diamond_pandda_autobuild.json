@@ -1,0 +1,8 @@
+{
+        "sqlite_filepath": "/dls/science/groups/i04-1/conor_dev/diamond.db",
+        "output_dir_name": "pandda_2_autobuild_pandda_1_compatability",
+        "tmp_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_autobuild_pandda_1_compatability_tmp_dir",
+        "fresh": false,
+        "remove": false,
+        "cores": 6
+}
