@@ -35,16 +35,22 @@ def get_rscc(
     p.communicate()
 
     # parse results
-    results = {}
-    with open(pathlib.Path(tmp_dir) / "cc_per_residue.log", "r") as f:
-        for line in f.readlines():
-            # print(line)
-            match = re.match(MATCH_REGEX, str(line))
-            if not match:
-                continue
-            chain = match.groups()[0]
-            res = int(match.groups()[1])
-            rscc = float(match.groups()[2])
-            results[(chain, res)] = rscc
+    results_path = pathlib.Path(tmp_dir) / "cc_per_residue.log"
 
-    return results
+    results = {}
+    if results_path.exists():
+        with open(results_path, "r") as f:
+            for line in f.readlines():
+                # print(line)
+                match = re.match(MATCH_REGEX, str(line))
+                if not match:
+                    continue
+                chain = match.groups()[0]
+                res = int(match.groups()[1])
+                rscc = float(match.groups()[2])
+                results[(chain, res)] = rscc
+
+        return results
+
+    else:
+        return None
