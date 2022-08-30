@@ -55,7 +55,7 @@ def main(
             continue
         for project in system.projects:
             print(f"{system.system_name}")
-            output_dir = tmp_dir / f"{system.system_name}_{project.project_name}"
+            output_dir = tmp_dir / f"system_{system.system_name}_project_{project.project_name}"
 
             # Handle existing runs
             if fresh and output_dir.exists():
