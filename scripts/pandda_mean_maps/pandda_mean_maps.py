@@ -455,6 +455,9 @@ def process_pandda(pandda_args: PanDDAArgs, ):
                 structure_factors: StructureFactorsInterface = StructureFactors(pandda_args.structure_factors[0],
                                                                                 pandda_args.structure_factors[1])
 
+        print(f"Struccture factors are: {structure_factors}")
+
+
         ###################################################################
         # # Data Quality filters
         ###################################################################
