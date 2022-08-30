@@ -1,5 +1,6 @@
 import pathlib
 import os
+from typing import *
 
 import fire
 from sqlalchemy.orm import sessionmaker
@@ -11,6 +12,55 @@ from pandda_lib.fs.pandda_result import PanDDAResult
 from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, ProjectDirSQL, DatasetSQL, PanDDADirSQL,
                                                       PanDDADatasetSQL, PanDDABuildSQL, PanDDAEventSQL, SystemSQL)
 
+
+def get_pandda_2_result(pandda_path) -> Optional[PanDDADirSQL]:
+    if not (pandda_path / constants.PANDDA_ANALYSES_DIR / constants.PANDDA_ANALYSE_EVENTS_FILE).exists():
+        print(f"\t\tNo PanDDA event table!")
+        return None
+
+    pandda_result = PanDDAResult.from_dir(pandda_path)
+
+    dataset_results = {}
+    for dtag, dataset in pandda_result.processed_datasets.items():
+        dataset_events = {}
+        # print(len(dataset.events.items()))
+        for event_id, event in dataset.events.items():
+            event_builds = {}
+
+            for build_id, build in event.build_results.items():
+                event_builds[build_id] = PanDDABuildSQL(
+                    build_path=str(build.path),
+                )
+
+            dataset_events[event_id] = PanDDAEventSQL(
+                event_map_path=str(event.event_map_path),
+                builds=[
+                    _build
+                    for _build
+                    in event_builds.values()
+                ],
+            )
+
+        dataset_results[dtag] = PanDDADatasetSQL(
+            dtag=dtag.dtag,
+            path=str(dataset.path),
+            events=[
+                _event
+                for _event
+                in dataset_events.values()
+            ],
+        )
+
+    pandda_result_sql = PanDDADirSQL(
+        path=str(pandda_path),
+        pandda_dataset_results=[
+            _dataset_sql
+            for _dataset_sql
+            in dataset_results.values()
+        ]
+    )
+
+    return pandda_result_sql
 
 def diamond_add_pandda_results(sqlite_filepath, output_dir_name):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()

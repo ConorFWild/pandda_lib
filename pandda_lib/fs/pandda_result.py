@@ -51,6 +51,8 @@ class EventResult:
     event_map_path: Path
     build_results: Dict[str, BuildResult]
     centroid: Tuple[float, float, float]
+    bdc: float
+    size: int
 
     @staticmethod
     def from_dir(event_dir: Path, event_table):
@@ -88,6 +90,9 @@ class EventResult:
             if row['dtag'] == dtag:
                 if row['event_idx'] == event_idx:
                     centroid = (row['x'], row['y'], row['z'])
+                    bdc = row["1-BDC"]
+                    size = row[""]
+
 
         return EventResult(
             event_map_path,

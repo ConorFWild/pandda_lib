@@ -110,6 +110,11 @@ class PanDDAEventSQL(Base):
     dataset_id = Column(Integer, ForeignKey(f"{PANDDA_DATASET_SQL_TABLE}.id"))
 
     event_map_path = Column(String)
+    x = Column(Float)
+    y =  Column(Float)
+    z =  Column(Float)
+    size =  Column(Float)
+    bdc =  Column(Float)
 
     builds = relationship("PanDDABuildSQL")
 
