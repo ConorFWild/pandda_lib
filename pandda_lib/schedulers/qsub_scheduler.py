@@ -12,7 +12,7 @@ class QSubScheduler:
 
     def submit(self, job, cores=24, mem_per_core=8):
         # Write job to file
-        job_script_path = self.tmp_dir / job.name
+        job_script_path = self.tmp_dir / f"{job.name}.sh"
         with open(job_script_path, 'w') as f:
             f.write(job.script)
 
