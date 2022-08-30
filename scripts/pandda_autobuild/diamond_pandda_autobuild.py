@@ -27,7 +27,9 @@ def main(
     sqlite_filepath = options["sqlite_filepath"]
     output_dir_name = options["output_dir_name"]
     fresh = options["fresh"]
+    print(f"Frest: {fresh}")
     remove = options["remove"]
+    print(f"remove: {remove}")
     cores = options["cores"]
 
     print("Starting")
