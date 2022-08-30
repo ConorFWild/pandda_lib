@@ -39,6 +39,10 @@ def diamond_add_model_stats(sqlite_filepath, ):
             continue
         mtz_path = dataset.mtz_path
         print(f"\t{mtz_path}")
+
+        if not pathlib.Path(mtz_path).exists():
+            continue
+
         mtz = gemmi.read_mtz_file(mtz_path)
         try:
             grid = mtz.transform_f_phi_to_map(
