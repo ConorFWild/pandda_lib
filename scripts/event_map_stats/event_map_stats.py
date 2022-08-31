@@ -59,6 +59,11 @@ def diamond_add_model_stats(sqlite_filepath, ):
             )
             # print(e)
 
+
+        # Get the dataset
+
+        # Get the mask for the mtz
+
         grid_array_initial = np.array(grid)
         grid_array_initial = grid_array_initial[grid_array_initial != 0.0]
         grid_array = (grid_array_initial - grid_array_initial.mean()) / (grid_array_initial.std())
