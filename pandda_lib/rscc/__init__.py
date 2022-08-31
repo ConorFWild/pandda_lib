@@ -10,7 +10,9 @@ PHENIX_MODEL_MAP_CC_SCRIPT = (
     "phenix.model_map_cc "
     "{model_path} "
     "{map_path} "
-    "resolution={resolution}")
+    "resolution={resolution} "
+    "ignore_symmetry_conflicts=True "
+    "wrapping=True ")
 
 
 def get_rscc(

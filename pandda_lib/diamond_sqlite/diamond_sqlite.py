@@ -148,6 +148,7 @@ class PanDDADirSQL(Base):
 
     path = Column(String)
     pandda_dataset_results = relationship("PanDDADatasetSQL")
+    tag = Column(String)
 
 
 class PanDDA1DirSQL(Base):
