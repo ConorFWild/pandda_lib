@@ -59,7 +59,8 @@ def diamond_add_model_stats(sqlite_filepath, ):
             )
             # print(e)
 
-        grid_array = np.array(grid)
+        grid_array_initial = np.array(grid)
+        grid_array = (grid_array_initial - grid_array_initial.mean()) / (grid_array_initial.std())
         grid_array_positive = grid_array[grid_array > 1.0]
         grid_mean = np.mean(grid_array_positive)
         grid_std = np.std(grid_array_positive)
