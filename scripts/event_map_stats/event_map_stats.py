@@ -67,7 +67,7 @@ def diamond_add_model_stats(sqlite_filepath, ):
         grid_array_initial = np.array(grid)
         grid_array_initial = grid_array_initial[grid_array_initial != 0.0]
         grid_array = (grid_array_initial - grid_array_initial.mean()) / (grid_array_initial.std())
-        grid_array_positive = grid_array[grid_array > 0.5]
+        grid_array_positive = grid_array[grid_array > 1.0]
         grid_mean = np.mean(grid_array_positive)
         grid_std = np.std(grid_array_positive)
         if not grid_array_positive.size > 3:
@@ -91,7 +91,7 @@ def diamond_add_model_stats(sqlite_filepath, ):
             event_map_grid_array = (event_map_grid_array_initial - np.mean(event_map_grid_array_initial) )/ np.std(
             event_map_grid_array_initial)
             # print(event_map_grid_array)
-            event_map_grid_array_positive = event_map_grid_array[event_map_grid_array > 0.5]
+            event_map_grid_array_positive = event_map_grid_array[event_map_grid_array > 1.0]
             if event_map_grid_array_positive.size <3:
                 continue
             event_map_mean = np.mean(event_map_grid_array_positive)
