@@ -51,8 +51,8 @@ def main(
 
     # Submit jobs
     for system in session.query(SystemSQL).order_by(SystemSQL.id):
-        if system.system_name != "PDE5":
-            continue
+        # if system.system_name != "PDE5":
+        #     continue
         for project in system.projects:
             print(f"{system.system_name}")
             output_dir = tmp_dir / f"system_{system.system_name}_project_{project.project_name}"
