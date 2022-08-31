@@ -94,7 +94,8 @@ def diamond_add_model_stats(sqlite_filepath, ):
                 "1-BDC": event_map_sql.bdc,
                 "mean": event_map_mean,
                 "std": event_map_std,
-                "quantiles": event_map_quantiles
+                "quantiles": event_map_quantiles,
+                "max": np.max(event_map_grid)
             }
 
             event_map_quantiles = EventMapQualtiles(
@@ -110,7 +111,7 @@ def diamond_add_model_stats(sqlite_filepath, ):
             session.add(event_map_quantiles)
 
 
-        print(f"Grid Mean: {grid_mean}; Grid std: {grid_std}; Quantiles: {grid_quantiles}")
+        print(f"Grid Mean: {grid_mean}; Grid std: {grid_std}; Quantiles: {grid_quantiles}; Max {grid_array.max()}")
         print(event_map_stats)
         print("#########################################")
 
