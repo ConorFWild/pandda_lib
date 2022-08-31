@@ -99,7 +99,7 @@ def diamond_add_model_stats(sqlite_filepath, ):
                 "mean": event_map_mean,
                 "std": event_map_std,
                 "quantiles": event_map_quantiles,
-                "max": np.max(event_map_grid)
+                "max": np.max(event_map_grid_array)
             }
 
             event_map_quantiles = EventMapQualtiles(
