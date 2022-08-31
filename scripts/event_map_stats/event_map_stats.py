@@ -117,6 +117,14 @@ def diamond_add_model_stats(sqlite_filepath, ):
                 event_50=event_map_quantiles[0],
                 event_75=event_map_quantiles[1],
                 event_90=event_map_quantiles[2],
+                base_greater_than_1=grid_array_positive[grid_array_positive > 1.0].size / grid_array_positive.size,
+                base_greater_than_2=grid_array_positive[grid_array_positive > 2.0].size / grid_array_positive.size,
+            base_greater_than_3=grid_array_positive[grid_array_positive > 3.0].size / grid_array_positive.size,
+            event_greater_than_1=event_map_grid_array_positive[event_map_grid_array_positive > 1.0].size / event_map_grid_array_positive.size,
+            event_greater_than_2=event_map_grid_array_positive[event_map_grid_array_positive > 2.0].size /
+                                 event_map_grid_array_positive.size,
+            event_greater_than_3 =event_map_grid_array_positive[event_map_grid_array_positive > 3.0].size /
+                                  event_map_grid_array_positive.size,
             )
             event_map_sql.event_map_quantiles = event_map_quantiles
 

@@ -32,6 +32,15 @@ class EventMapQualtiles(Base):
     event_75 =  Column(Float)
     event_90 = Column(Float)
 
+    base_greater_than_1 =  Column(Float)
+    base_greater_than_2 =  Column(Float)
+
+
+    base_greater_than_3 =  Column(Float)
+    event_greater_than_1 =  Column(Float)
+    event_greater_than_2 =  Column(Float)
+    event_greater_than_3 =  Column(Float)
+
 
 class SystemEventMapSQL(Base):
     __tablename__ = SYSTEM_EVENT_MAP_SQL_TABLE
