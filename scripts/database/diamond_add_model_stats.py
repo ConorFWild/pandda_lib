@@ -53,6 +53,8 @@ def get_dataset_rsccs(dataset_dtag, dataset_path, dataset_bound_state_model_path
             os.mkdir(tmp_dir)
 
         # event_maps = dataset.event_maps
+        if not pathlib.Path(mtz_path).exists():
+            return None
         resolution = gemmi.read_mtz_file(mtz_path).resolution_high()
 
         rsccs = {}
