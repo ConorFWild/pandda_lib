@@ -135,56 +135,58 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
     }
     print(f"Matched {len(reference_structures)} refernces to datasets")
 
-    for system in session.query(SystemSQL).options(
-            subqueryload("*")).order_by(SystemSQL.id).all():
-        for project in system.projects:
-            for pandda_2 in project.pandda_2s:
-                for pandda_dataset in pandda_2.pandda_dataset_results:
-                    high_confidence = False
-                    if pandda_dataset.dtag in reference_structures:
-                        reference_structure_path = reference_structures[pandda_dataset.dtag].path
-                        high_confidence = True
+    for pandda_2 in session.query(PanDDADirSQL).options(
+            subqueryload("*")).order_by(PanDDADirSQL.id).all():
+        # for project in system.projects:
+        #     for pandda_2 in project.pandda_2s:
+        system = pandda_2.system
+        project = pandda_2.project
+        for pandda_dataset in pandda_2.pandda_dataset_results:
+            high_confidence = False
+            if pandda_dataset.dtag in reference_structures:
+                reference_structure_path = reference_structures[pandda_dataset.dtag].path
+                high_confidence = True
+            else:
+                if pandda_dataset.dataset:
+                    dataset = pandda_dataset.dataset
+                    if dataset.pandda_model_path:
+                        reference_structure_path = dataset.pandda_model_path
                     else:
-                        if pandda_dataset.dataset:
-                            dataset = pandda_dataset.dataset
-                            if dataset.pandda_model_path:
-                                reference_structure_path = dataset.pandda_model_path
-                            else:
-                                continue
-                        else:
-                            continue
+                        continue
+                else:
+                    continue
 
-                    for event in pandda_dataset.events:
-                        if event.builds:
-                            print(f"\tGetting RMSDS for {system.system_name} {project.project_name} "
-                                  f"{pandda_dataset.dtag} {event.idx}")
-                        for build in event.builds:
-                            build_to_run = GetBuildRMSD(
-                                dataset_structure_path=pandda_dataset.input_pdb_path,
-                                reference_structure_path=reference_structure_path,
-                                build_path=build.build_path,
-                                events={
-                                    _event.idx: [
-                                        _event.centroid[0],
-                                        _event.centroid[1],
-                                        _event.centroid[2],
-                                    ]
-                                    for _event in pandda_dataset.events
-                                },
-                                high_confidence=high_confidence,
-                            )
+            for event in pandda_dataset.events:
+                if event.builds:
+                    print(f"\tGetting RMSDS for {system.system_name} {project.project_name} "
+                          f"{pandda_dataset.dtag} {event.idx}")
+                for build in event.builds:
+                    build_to_run = GetBuildRMSD(
+                        dataset_structure_path=pandda_dataset.input_pdb_path,
+                        reference_structure_path=reference_structure_path,
+                        build_path=build.build_path,
+                        events={
+                            _event.idx: [
+                                _event.centroid[0],
+                                _event.centroid[1],
+                                _event.centroid[2],
+                            ]
+                            for _event in pandda_dataset.events
+                        },
+                        high_confidence=high_confidence,
+                    )
 
-                            run_set[(system.system_name, project.project_name, pandda_dataset.dtag,
-                                     event.event_idx, build.id)] = build_to_run
-                            sqls[(system.system_name, project.project_name, pandda_dataset.dtag,
-                                  event.event_idx, build.id)] = {
-                                "System": system,
-                                "Project": project,
-                                "PanDDA": pandda_2,
-                                "Dataset": pandda_dataset,
-                                "Event": event,
-                                "Build": build
-                            }
+                    run_set[(system.system_name, project.project_name, pandda_dataset.dtag,
+                             event.event_idx, build.id)] = build_to_run
+                    sqls[(system.system_name, project.project_name, pandda_dataset.dtag,
+                          event.event_idx, build.id)] = {
+                        "System": system,
+                        "Project": project,
+                        "PanDDA": pandda_2,
+                        "Dataset": pandda_dataset,
+                        "Event": event,
+                        "Build": build
+                    }
 
     print(f"\tNumber of builds to score: {len(run_set)};")
 
