@@ -96,13 +96,13 @@ class DiamondDataDirs:
                 datasets_list = None
                 data_dir_path = None
                 # try:
-                if os.access(model_building_dir):
+                if os.access(model_building_dir, os.R_OK):
                     if model_building_dir.exists():
                         datasets_list = list(model_building_dir.glob('*'))
                         data_dir_path = model_building_dir
 
 
-                if os.access(model_building_dir):
+                if os.access(model_building_dir, os.R_OK):
                     if initial_model_dir.exists():
                         datasets_list = list(initial_model_dir.glob('*'))
                         data_dir_path = initial_model_dir
