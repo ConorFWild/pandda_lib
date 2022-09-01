@@ -67,35 +67,34 @@ class GetBuildRMSD:
 
             else:
 
-                try:
-                    _rmsds = get_rmsds_from_path(
-                        reference_structure_path,
-                        dataset_structure_path,
-                        build_path,
-                    )
+                # try:
+                _rmsds = get_rmsds_from_path(
+                    reference_structure_path,
+                    dataset_structure_path,
+                    build_path,
+                )
 
-                    if _rmsds == "BROKENLIGAND":
-                        broken_ligand = True
-                        # closest_rmsd = None
-                    else:
-                        broken_ligand = True
+                if _rmsds == "BROKENLIGAND":
+                    broken_ligand = True
+                    # closest_rmsd = None
+                else:
+                    broken_ligand = True
 
+                if _rmsds == "ALIGNMENTERROR":
+                    alignment_error = True
+                else:
+                    alignment_error = False
 
-                    if _rmsds == "ALIGNMENTERROR":
-                        alignment_error = True
-                    else:
-                        alignment_error = False
-
-                    if (len(_rmsds) != 0) & (_rmsds != "BROKENLIGAND") & (_rmsds != "ALIGNMENTERROR"):
-                        closest_rmsd=min(_rmsds)
-                    else:
-                        closest_rmsd = None
-
-                except Exception as e:
-                    broken_ligand = is_ligand_broken
-                    alignment_error = has_alignment_error
+                if (len(_rmsds) != 0) & (_rmsds != "BROKENLIGAND") & (_rmsds != "ALIGNMENTERROR"):
+                    closest_rmsd = min(_rmsds)
+                else:
                     closest_rmsd = None
-                    print(e)
+
+                # except Exception as e:
+                #     broken_ligand = is_ligand_broken
+                #     alignment_error = has_alignment_error
+                #     closest_rmsd = None
+                #     print(e)
 
         else:
 
@@ -176,7 +175,6 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
                 print(f"\t\tevent {event.idx} num builds: {len(event.builds)}")
 
                 for build in event.builds:
-
                     build_to_run = GetBuildRMSD(
                         dataset_structure_path=pandda_dataset.input_pdb_path,
                         reference_structure_path=reference_structure_path,
