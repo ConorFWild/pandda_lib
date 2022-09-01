@@ -45,7 +45,7 @@ def get_pandda_2_result(pandda_path, system=None, project=None) -> Optional[PanD
                 x=float(event.centroid[0]),
                 y=float(event.centroid[1]),
                 z=float(event.centroid[2]),
-                size=float(event.soze),
+                size=float(event.size),
                 bdc=float(event.bdc),
                 builds=[
                     _build
