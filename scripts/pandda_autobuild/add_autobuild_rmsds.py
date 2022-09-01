@@ -78,7 +78,7 @@ class GetBuildRMSD:
                     broken_ligand = True
                     # closest_rmsd = None
                 else:
-                    broken_ligand = True
+                    broken_ligand = False
 
                 if _rmsds == "ALIGNMENTERROR":
                     alignment_error = True
