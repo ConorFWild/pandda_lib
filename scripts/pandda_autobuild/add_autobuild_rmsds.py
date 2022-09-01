@@ -131,6 +131,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
         reference_structure_sql.dataset.dtag: reference_structure_sql
         for reference_structure_sql in
         session.query(ReferenceStructureSQL).options(subqueryload("*")).order_by(ReferenceStructureSQL.id).all()
+        if reference_structure_sql.dataset
     }
 
     for system in session.query(SystemSQL).options(
