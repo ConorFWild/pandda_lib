@@ -12,10 +12,19 @@ class SystemEventMap:
     def __init__(self, path):
 
         self.path = path
+
         matches = re.findall("event_([^_]+)_", path.name)
-        self.event_idx = int(matches[0])
+        if matches:
+            self.event_idx = int(matches[0])
+        else:
+            self.event_idx = None
+
+
         matches = re.findall("BDC_([^_]+)_", path.name)
-        self.bdc = float(matches[0])
+        if matches:
+            self.bdc = float(matches[0])
+        else:
+            self.bdc = None
 
 
 class DiamondDataset:
@@ -60,9 +69,11 @@ class DiamondDataset:
 
         self.event_maps = []
         for event_map_path in path.glob("*event*.ccp4"):
-            self.event_maps.append(
-                SystemEventMap(event_map_path)
-            )
+            system_event_map = SystemEventMap(event_map_path)
+            if system_event_map.bdc & system_event_map.event_idx:
+                self.event_maps.append(
+                    system_event_map
+                )
 
 
 class DiamondDataDir:
