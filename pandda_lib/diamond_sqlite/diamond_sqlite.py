@@ -167,11 +167,16 @@ class PanDDADirSQL(Base):
     __tablename__ = PANDDA_DIR_SQL_TABLE
 
     id = Column(Integer, primary_key=True)
-    # system_id = Column(Integer, ForeignKey(f"{SYSTEM_DATA_DIR_SQL_TABLE}.id"))
+    system_id = Column(Integer, ForeignKey(f"{SYSTEM_SQL_TABLE}.id"))
+    project_id = Column(Integer, ForeignKey(f"{PROJECT_DIR_SQL_TABLE}.id"))
+
 
     path = Column(String)
     pandda_dataset_results = relationship("PanDDADatasetSQL")
     tag = Column(String)
+
+    system = relationship("SystemSQL")
+    project = relationship("ProjectDirSQL")
 
 
 class PanDDA1DirSQL(Base):

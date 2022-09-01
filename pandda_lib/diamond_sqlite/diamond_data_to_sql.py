@@ -13,7 +13,7 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, ProjectDirSQL, Datas
                                                       PanDDADatasetSQL, PanDDABuildSQL, PanDDAEventSQL, SystemSQL)
 
 
-def get_pandda_2_result(pandda_path) -> Optional[PanDDADirSQL]:
+def get_pandda_2_result(pandda_path, system=None, project=None) -> Optional[PanDDADirSQL]:
     if not (pandda_path / constants.PANDDA_ANALYSES_DIR / constants.PANDDA_ANALYSE_EVENTS_FILE).exists():
         print(f"\t\tNo PanDDA event table!")
         return None
@@ -70,7 +70,9 @@ def get_pandda_2_result(pandda_path) -> Optional[PanDDADirSQL]:
             _dataset_sql
             for _dataset_sql
             in dataset_results.values()
-        ]
+        ],
+        system=system,
+        project=project,
     )
 
     return pandda_result_sql

@@ -42,7 +42,7 @@ def database_add_diamond_panddas(sqlite_filepath, pandda_autobuilds_dir):
         for project in system.projects:
             system_project_dir = pandda_autobuilds_dir / f"system_{system.system_name}_project_{project.project_name}"
             try:
-                pandda_dir_sql = get_pandda_2_result(system_project_dir)
+                pandda_dir_sql = get_pandda_2_result(system_project_dir, system, project)
                 session.add(pandda_dir_sql)
             except Exception as e:
                 print(f"\tCouldn't get PanDDA for {system_project_dir}")
