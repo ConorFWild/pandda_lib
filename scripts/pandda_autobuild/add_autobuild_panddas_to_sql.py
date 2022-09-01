@@ -3,7 +3,7 @@ import os
 import re
 
 import fire
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, subqueryload
 from sqlalchemy import create_engine
 
 from pandda_lib import constants
@@ -24,14 +24,14 @@ def database_add_diamond_panddas(sqlite_filepath, pandda_autobuilds_dir):
 
     # Remove tables
     PanDDADirSQL.__table__.drop(engine)
-    # PanDDADatasetSQL.__table__.drop(engine)
-    # PanDDAEventSQL.__table__.drop(engine)
-    # PanDDABuildSQL.__table__.drop(engine)
+    PanDDADatasetSQL.__table__.drop(engine)
+    PanDDAEventSQL.__table__.drop(engine)
+    PanDDABuildSQL.__table__.drop(engine)
 
     Base.metadata.create_all(engine)
 
     # Get systems
-    systems = session.query(SystemSQL).order_by(SystemSQL.id).all()
+    systems = session.query(SystemSQL)..options(subqueryload(SystemSQL.projects)).order_by(SystemSQL.id).all()
 
     # For each system, get the path, then get paths to PanDDA 1 results in the directory above it
     # for system in systems:

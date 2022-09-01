@@ -59,7 +59,6 @@ def diamond_add_model_stats(sqlite_filepath, ):
             )
             # print(e)
 
-
         # Get the dataset
 
         # Get the mask for the mtz
@@ -88,11 +87,11 @@ def diamond_add_model_stats(sqlite_filepath, ):
             event_map_grid = event_map.grid
             event_map_grid_array_initial = np.array(event_map_grid)
             event_map_grid_array_initial = event_map_grid_array_initial[event_map_grid_array_initial != 0.0]
-            event_map_grid_array = (event_map_grid_array_initial - np.mean(event_map_grid_array_initial) )/ np.std(
-            event_map_grid_array_initial)
+            event_map_grid_array = (event_map_grid_array_initial - np.mean(event_map_grid_array_initial)) / np.std(
+                event_map_grid_array_initial)
             # print(event_map_grid_array)
             event_map_grid_array_positive = event_map_grid_array[event_map_grid_array > 1.0]
-            if event_map_grid_array_positive.size <3:
+            if event_map_grid_array_positive.size < 3:
                 continue
             event_map_mean = np.mean(event_map_grid_array_positive)
             event_map_std = np.std(event_map_grid_array_positive)
@@ -105,9 +104,12 @@ def diamond_add_model_stats(sqlite_filepath, ):
                 "std": event_map_std,
                 "quantiles": event_map_quantiles,
                 "max": np.max(event_map_grid_array),
-                "Percent > 1": event_map_grid_array_positive[event_map_grid_array_positive > 1.0].size / event_map_grid_array_positive.size,
-                "Percent > 2": event_map_grid_array_positive[event_map_grid_array_positive > 2.0].size / event_map_grid_array_positive.size,
-                "Percent > 3": event_map_grid_array_positive[event_map_grid_array_positive > 3.0].size / event_map_grid_array_positive.size
+                "Percent > 1": event_map_grid_array_positive[
+                                   event_map_grid_array_positive > 1.0].size / event_map_grid_array_positive.size,
+                "Percent > 2": event_map_grid_array_positive[
+                                   event_map_grid_array_positive > 2.0].size / event_map_grid_array_positive.size,
+                "Percent > 3": event_map_grid_array_positive[
+                                   event_map_grid_array_positive > 3.0].size / event_map_grid_array_positive.size
             }
 
             event_map_quantiles = EventMapQualtiles(
@@ -119,30 +121,31 @@ def diamond_add_model_stats(sqlite_filepath, ):
                 event_90=event_map_quantiles[2],
                 base_greater_than_1=grid_array_positive[grid_array_positive > 1.0].size / grid_array_positive.size,
                 base_greater_than_2=grid_array_positive[grid_array_positive > 2.0].size / grid_array_positive.size,
-            base_greater_than_3=grid_array_positive[grid_array_positive > 3.0].size / grid_array_positive.size,
-            event_greater_than_1=event_map_grid_array_positive[event_map_grid_array_positive > 1.0].size / event_map_grid_array_positive.size,
-            event_greater_than_2=event_map_grid_array_positive[event_map_grid_array_positive > 2.0].size /
-                                 event_map_grid_array_positive.size,
-            event_greater_than_3 =event_map_grid_array_positive[event_map_grid_array_positive > 3.0].size /
-                                  event_map_grid_array_positive.size,
+                base_greater_than_3=grid_array_positive[grid_array_positive > 3.0].size / grid_array_positive.size,
+                event_greater_than_1=event_map_grid_array_positive[
+                                         event_map_grid_array_positive > 1.0].size / event_map_grid_array_positive.size,
+                event_greater_than_2=event_map_grid_array_positive[event_map_grid_array_positive > 2.0].size /
+                                     event_map_grid_array_positive.size,
+                event_greater_than_3=event_map_grid_array_positive[event_map_grid_array_positive > 3.0].size /
+                                     event_map_grid_array_positive.size,
             )
             event_map_sql.event_map_quantiles = event_map_quantiles
 
             session.add(event_map_quantiles)
 
-
         print(
             (
                 f"Grid Mean: {grid_mean}; Grid std: {grid_std}; Quantiles: {grid_quantiles}; Max {grid_array.max()}; "
-             f">1 {grid_array_positive[grid_array_positive > 1.0].size / grid_array_positive.size} "
-             f">2 {grid_array_positive[grid_array_positive > 2.0].size / grid_array_positive.size} "
-             f">3 {grid_array_positive[grid_array_positive > 3.0].size / grid_array_positive.size} "
-             )
+                f">1 {grid_array_positive[grid_array_positive > 1.0].size / grid_array_positive.size} "
+                f">2 {grid_array_positive[grid_array_positive > 2.0].size / grid_array_positive.size} "
+                f">3 {grid_array_positive[grid_array_positive > 3.0].size / grid_array_positive.size} "
+            )
         )
         print(event_map_stats)
         print("#########################################")
 
     session.commit()
+
 
 if __name__ == "__main__":
     fire.Fire(diamond_add_model_stats)

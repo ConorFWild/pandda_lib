@@ -21,9 +21,10 @@ class BuildResult:
     total_noise_samples: int
     percentage_signal: float
     percentage_noise: float
+    score: float
 
     @staticmethod
-    def from_file(file: Path, build_log):
+    def from_file(file: Path, build_log, score):
         signal_log = build_log['signal_log']
         noise_log = build_log['noise_log']
         signal_samples = signal_log['signal_samples_signal']
@@ -43,6 +44,7 @@ class BuildResult:
                            noise_log['total_valid_samples'],
                            percentage_signal,
                            percentage_noise,
+                           score,
                            )
 
 
@@ -53,15 +55,22 @@ class EventResult:
     centroid: Tuple[float, float, float]
     bdc: float
     size: int
+    bdc: float
+    size: float
 
     @staticmethod
     def from_dir(event_dir: Path, event_table):
         rhofit_dir = event_dir / 'rhofit'
 
         dataset_dir = event_dir.parent
+        event_map_file = None
         for file in dataset_dir.glob('*'):
             if re.match(f"{dataset_dir.name}-event_{event_dir.name}.+", file.name):
                 event_map_path = file
+        if not event_map_file:
+            raise Exception("Should be an event map file!")
+
+        # Get the score log
 
         # Get build log
         build_log_file = event_dir / 'log.json'
@@ -71,11 +80,16 @@ class EventResult:
 
             rescoring_log = build_log['rescoring_log']
 
+            score_log_file = event_dir / "scores.json"
+            with open(score_log_file, 'r') as f:
+                score_log = json.load(f)
+
             build_results = {}
             for file in rhofit_dir.glob("*"):
                 if re.match('Hit.+\.pdb', file.name):
                     build_log = rescoring_log[str(file)]
-                    build_result = BuildResult.from_file(file, build_log)
+                    score = float(score_log[str(file)])
+                    build_result = BuildResult.from_file(file, build_log, score)
                     build_results[file.name] = build_result
 
         else:
@@ -91,13 +105,14 @@ class EventResult:
                 if row['event_idx'] == event_idx:
                     centroid = (row['x'], row['y'], row['z'])
                     bdc = row["1-BDC"]
-                    size = row[""]
-
+                    size = row["cluster_size"]
 
         return EventResult(
             event_map_path,
             build_results,
             centroid,
+            bdc,
+            size
         )
 
     def get_build_result(self, key):
@@ -111,7 +126,6 @@ class DatasetResult:
     events: Dict[str, EventResult]
     processed: bool
     dataset_log: Optional[Dict]
-
 
     @staticmethod
     def from_dir(processed_dataset_dir, event_table):
@@ -134,7 +148,6 @@ class DatasetResult:
                 dataset_log = json.load(f)
         else:
             dataset_log = None
-
 
         events = {}
         for event_dir in processed_dataset_dir.glob('*'):

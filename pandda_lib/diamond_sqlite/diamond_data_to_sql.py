@@ -30,10 +30,22 @@ def get_pandda_2_result(pandda_path) -> Optional[PanDDADirSQL]:
             for build_id, build in event.build_results.items():
                 event_builds[build_id] = PanDDABuildSQL(
                     build_path=str(build.path),
+                    signal_samples=float(build.signal_samples),
+                    total_signal_samples=float(build.total_signal_samples),
+                    noise_samples=float(build.noise_samples),
+                    total_noise_samples=float(build.total_noise_samples),
+                    percentage_signal=float(build.percentage_signal),
+                    percentage_noise=float(build.percentage_noise),
+                    score=float(build.score),
                 )
 
             dataset_events[event_id] = PanDDAEventSQL(
                 event_map_path=str(event.event_map_path),
+                x=float(event.centroid[0]),
+                y=float(event.centroid[1]),
+                z=float(event.centroid[2]),
+                size=float(event.soze),
+                bdc=float(event.bdc),
                 builds=[
                     _build
                     for _build
