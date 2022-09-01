@@ -1,5 +1,6 @@
 import pathlib
 import re
+import os
 
 import gemmi
 
@@ -92,15 +93,22 @@ class DiamondDataDirs:
 
                 project = project_dir.name
 
+                datasets_list = None
+                data_dir_path = None
                 # try:
+                if os.access(model_building_dir):
+                    if model_building_dir.exists():
+                        datasets_list = list(model_building_dir.glob('*'))
+                        data_dir_path = model_building_dir
 
-                if model_building_dir.exists():
-                    datasets_list = list(model_building_dir.glob('*'))
-                    data_dir_path = model_building_dir
 
-                else:
-                    datasets_list = list(initial_model_dir.glob('*'))
-                    data_dir_path = initial_model_dir
+                if os.access(model_building_dir):
+                    if initial_model_dir.exists():
+                        datasets_list = list(initial_model_dir.glob('*'))
+                        data_dir_path = initial_model_dir
+
+                if not datasets_list:
+                    continue
 
                 # num_datasets = len(datasets_list)
                 dtags = []
