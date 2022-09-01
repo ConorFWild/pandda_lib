@@ -207,7 +207,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
         build_rmsd_sql = BuildRMSDSQL(
             broken_ligand=selected_rmsd['broken_ligand'],
             alignment_error=selected_rmsd['alignment_error'],
-            closest_event=selected_rmsd['closest_event'],
+            # closest_event=selected_rmsd['closest_event'],
             closest_rmsd=selected_rmsd['closest_rmsd'],  # None and num_events>0&num_builds>0 implies broken ligand
             high_confidence=selected_rmsd['high_confidence']
         )
