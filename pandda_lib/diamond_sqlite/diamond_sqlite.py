@@ -65,6 +65,11 @@ class BuildScoreSQL(Base):
     rscc = Column(Float)
     custom_score = Column(Float)
 
+class BuildRMSDSQL(Base):
+
+
+
+
 
 class BoundStateModelSQL(Base):
     __tablename__ = BOUND_STATE_MODEL_SQL_TABLE

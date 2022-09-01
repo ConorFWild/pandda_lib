@@ -18,10 +18,98 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, ProjectDirSQL, Datas
                                                       BoundStateModelSQL, SystemEventMapSQL)
 from pandda_lib.rscc import get_rscc
 from pandda_lib.rscc.rscc import GetDatasetRSCC, Runner
-
+from pandda_lib.rmsd.rmsd import _get_closest_event, get_rmsds_from_path
 
 # from pandda_lib.custom_score import get_custom_score
 
+class GetBuildRMSD:
+    def __init__(self,
+                 dataset_structure_path,
+                 reference_structure_path,
+                 build_path,
+                 events,
+                 high_confidence,):
+        self.dataset_structure_path = dataset_structure_path
+        self.reference_structure_path = reference_structure_path
+        self.build_path = build_path
+        self.events = events
+        self.high_confidence = high_confidence
+
+
+    def __call__(self, ):
+
+        high_confidence = self.high_confidence
+        dataset_structure_path = self.dataset_structure_path
+        reference_structure_path = self.reference_structure_path
+        build_path = self.build_path
+        events = self.events
+
+
+        if len(events) != 0:
+
+            # event_distances = []
+            is_ligand_broken = False
+            has_alignment_error = False
+
+            has_closest_event = _get_closest_event(
+                reference_structure_path,
+                dataset_structure_path,
+                events,
+            )
+            closest_event = has_closest_event
+
+            if has_closest_event == "ALIGNMENTERROR":
+                has_alignment_error = True
+                alignment_error = has_alignment_error
+                broken_ligand = False
+                closest_event = None
+                closest_rmsd = None
+
+            else:
+
+                try:
+                    _rmsds = get_rmsds_from_path(
+                        reference_structure_path,
+                        dataset_structure_path,
+                        build_path,
+                    )
+
+                    if _rmsds == "BROKENLIGAND":
+                        is_ligand_broken = True
+
+                    if _rmsds == "ALIGNMENTERROR":
+                        has_alignment_error = True
+
+                    if len(_rmsds) == 0:
+                        broken_ligand = is_ligand_broken
+                        alignment_error = has_alignment_error
+                        closest_rmsd = None
+                    else:
+                        broken_ligand = is_ligand_broken
+                        alignment_error = has_alignment_error
+                        closest_rmsd = min(_rmsds)
+                except Exception as e:
+                    broken_ligand = is_ligand_broken
+                    alignment_error = has_alignment_error
+                    closest_rmsd = None
+                    print(e)
+
+        else:
+
+            alignment_error = False
+            broken_ligand = False
+            closest_event = None
+            closest_rmsd = None
+
+        record = {
+            'broken_ligand': broken_ligand,
+            'alignment_error': alignment_error,
+            'closest_event': closest_event,
+            'closest_rmsd': closest_rmsd,  # None and num_events>0&num_builds>0 implies broken ligand
+            'high_confidence': high_confidence,
+        }
+
+        return record
 
 def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
@@ -41,21 +129,13 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     }
     sqls = {}
     for system in session.query(SystemSQL).options(
-            subqueryload(
-                SystemSQL.projects
-            ).subqueryload(
-                ProjectDirSQL.datasets
-            ).subqueryload(
-                DatasetSQL.event_maps
-            ).subqueryload(
-                SystemEventMapSQL.event_map_quantiles
-            )).order_by(SystemSQL.id).all():
+            subqueryload("*")).order_by(SystemSQL.id).all():
         for project in system.projects:
             for pandda_2 in project.pandda_2s:
                 for pandda_dataset in pandda_2.pandda_dataset_results:
                     for event in pandda_dataset.events:
                         for build in event.builds:
-                            build_to_run = GetDatasetRSCC(
+                            build_to_run = GetBuildRMSD(
                                 pandda_dataset.dtag,
                                 pandda_dataset.path,
                                 build.path,
@@ -67,8 +147,13 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
                             run_set[(system.system_name, project.project_name, pandda_dataset.dtag,
                                      event.event_idx, build.id)] = build_to_run
                             sqls[(system.system_name, project.project_name, pandda_dataset.dtag,
-                                     event.event_idx, build.id)] = {
-                                "build": build
+                                  event.event_idx, build.id)] = {
+                                "System": system,
+                                "Project": project,
+                                "PanDDA": pandda_2,
+                                "Dataset": pandda_dataset,
+                                "Event": event,
+                                "Build": build
                             }
 
     print(f"\tNumber of builds to score: {len(run_set)};")

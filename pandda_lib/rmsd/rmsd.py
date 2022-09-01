@@ -122,7 +122,18 @@ class RMSD:
         return RMSD(np.mean(closest_distances))
 
 
-def get_closest_event(
+def get_closest_event(reference_structure_path,
+        dataset_structure_path,
+        events):
+
+    return _get_closest_event(reference_structure_path,
+                              dataset_structure_path,
+                              {
+                                  event_id: event.centroid for event_id, event in events.items()
+                               })
+
+
+def _get_closest_event(
         reference_structure_path,
         dataset_structure_path,
         events,
@@ -151,7 +162,7 @@ def get_closest_event(
         reference_structure_ligand_distance_to_events = []
         for ligand in reference_ligands.structures:
             ligand_centroid = ligand.centroid()
-            event_centroid_native = event_result.centroid
+            event_centroid_native = event_result
             event_centroid = sup.transform.apply(gemmi.Position(*event_centroid_native))
 
             distance_to_event = np.linalg.norm(
