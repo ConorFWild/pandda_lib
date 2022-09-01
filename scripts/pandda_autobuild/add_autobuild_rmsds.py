@@ -234,7 +234,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
 
     print("Printing database datasets...")
     for instance in session.query(BuildRMSDSQL).order_by(BuildRMSDSQL.id):
-        print(f"{instance.closest_rmsd}")
+        print(f"{instance.closest_rmsd} {instance.high_confidence} {instance.broken_ligand} {instance.alignment_error}")
         # if instance.bound_state_model:
         #     print(f"\t{instance.bound_state_model.rscc}")
 
