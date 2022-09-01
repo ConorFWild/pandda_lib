@@ -133,7 +133,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
         session.query(ReferenceStructureSQL).options(subqueryload("*")).order_by(ReferenceStructureSQL.id).all()
         if reference_structure_sql.dataset
     }
-    print(reference_structures)
+    print(f"Matched {len(reference_structures)} refernces to datasets")
 
     for system in session.query(SystemSQL).options(
             subqueryload("*")).order_by(SystemSQL.id).all():
