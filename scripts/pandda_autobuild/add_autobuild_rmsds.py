@@ -195,7 +195,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
                         "Build": build
                     }
 
-    print(f"\tNumber of builds to score: {len(run_set)};")
+    print(f"Number of builds to score: {len(run_set)};")
 
     print("Getting RMSDs...")
     mp.set_start_method('spawn')
