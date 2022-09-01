@@ -163,10 +163,10 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
                     if dataset.pandda_model_path != "None":
                         reference_structure_path = dataset.pandda_model_path
                     else:
-                        print(pandda_dataset.dtag)
+                        print(f"PanDDA dataset has no matched model: {pandda_dataset.dtag}")
                         continue
                 else:
-                    print(pandda_dataset.dtag)
+                    print(f"PanDDA dataset has no matched dataset: {pandda_dataset.dtag}")
                     continue
 
 
