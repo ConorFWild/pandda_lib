@@ -41,6 +41,9 @@ class GetBuildRMSD:
         reference_structure_path = self.reference_structure_path
         build_path = self.build_path
         events = self.events
+        print(f"struc: {dataset_structure_path}")
+        print(f"Ref: {reference_structure_path}")
+        print(f"Build: {build_path}")
 
         if len(events) != 0:
 
