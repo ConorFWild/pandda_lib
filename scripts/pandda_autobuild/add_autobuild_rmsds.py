@@ -158,7 +158,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
             else:
                 if pandda_dataset.dataset:
                     dataset = pandda_dataset.dataset
-                    if dataset.pandda_model_path:
+                    if dataset.pandda_model_path != "None":
                         reference_structure_path = dataset.pandda_model_path
                     else:
                         continue
