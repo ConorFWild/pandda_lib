@@ -25,6 +25,7 @@ class BuildResult:
 
     @staticmethod
     def from_file(file: Path, build_log, score):
+        print(build_log)
         signal_log = build_log['signal_log']
         noise_log = build_log['noise_log']
         signal_samples = signal_log['signal_samples_signal']
