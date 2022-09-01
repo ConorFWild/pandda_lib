@@ -136,7 +136,7 @@ class PanDDAEventSQL(Base):
     id = Column(Integer, primary_key=True)
     dataset_id = Column(Integer, ForeignKey(f"{PANDDA_DATASET_SQL_TABLE}.id"))
 
-    idx = Column(int)
+    idx = Column(Integer)
     event_map_path = Column(String)
     x = Column(Float)
     y = Column(Float)
