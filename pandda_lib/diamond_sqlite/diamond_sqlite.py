@@ -70,8 +70,8 @@ class BuildRMSDSQL(Base):
     __tablename__ = BUILD_RMSD_SQL_TABLE
 
     id = Column(Integer, primary_key=True)
-    broken_ligand = Column(String)
-    alignment_error = Column(String)
+    broken_ligand = Column(Boolean)
+    alignment_error = Column(Boolean)
     # closest_event = selected_rmsd['closest_event'],
     closest_rmsd = Column(Float)  # None and num_events>0&num_builds>0 implies broken ligand
     high_confidence = Column(Boolean)
