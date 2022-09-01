@@ -41,9 +41,9 @@ class GetBuildRMSD:
         reference_structure_path = self.reference_structure_path
         build_path = self.build_path
         events = self.events
-        print(f"struc: {dataset_structure_path}")
-        print(f"Ref: {reference_structure_path}")
-        print(f"Build: {build_path}")
+        # print(f"struc: {dataset_structure_path}")
+        # print(f"Ref: {reference_structure_path}")
+        # print(f"Build: {build_path}")
 
         if len(events) != 0:
 
@@ -77,10 +77,10 @@ class GetBuildRMSD:
                     if _rmsds == "BROKENLIGAND":
                         is_ligand_broken = True
 
-                    if _rmsds == "ALIGNMENTERROR":
+                    elif _rmsds == "ALIGNMENTERROR":
                         has_alignment_error = True
 
-                    if len(_rmsds) == 0:
+                    elif len(_rmsds) == 0:
                         broken_ligand = is_ligand_broken
                         alignment_error = has_alignment_error
                         closest_rmsd = None
