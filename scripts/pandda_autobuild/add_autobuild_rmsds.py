@@ -184,9 +184,9 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
                     )
 
                     run_set[(system.system_name, project.project_name, pandda_dataset.dtag,
-                             event.event_idx, build.id)] = build_to_run
+                             event.idx, build.id)] = build_to_run
                     sqls[(system.system_name, project.project_name, pandda_dataset.dtag,
-                          event.event_idx, build.id)] = {
+                          event.idx, build.id)] = {
                         "System": system,
                         "Project": project,
                         "PanDDA": pandda_2,
