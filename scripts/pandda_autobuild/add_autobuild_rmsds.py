@@ -144,7 +144,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
 
         print(f"\t{len(pandda_2.pandda_dataset_results)}")
         for pandda_dataset in pandda_2.pandda_dataset_results:
-            print(f"\t{len(pandda_dataset.events)}")
+            print(f"\tdataset {pandda_dataset.dtag} events: {len(pandda_dataset.events)}")
 
             high_confidence = False
             if pandda_dataset.dtag in reference_structures:
@@ -165,7 +165,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
                     print(f"\tGetting RMSDS for {system.system_name} {project.project_name} "
                           f"{pandda_dataset.dtag} {event.idx}")
 
-                print(f"\t{len(event.builds)}")
+                print(f"\t\tevent{event.idx} num builds: {len(event.builds)}")
 
                 for build in event.builds:
                     build_to_run = GetBuildRMSD(
