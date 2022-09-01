@@ -163,16 +163,18 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
                     if dataset.pandda_model_path != "None":
                         reference_structure_path = dataset.pandda_model_path
                     else:
+                        print(pandda_dataset.dtag)
                         continue
                 else:
+                    print(pandda_dataset.dtag)
                     continue
 
             for event in pandda_dataset.events:
                 if event.builds:
-                    print(f"\tGetting RMSDS for {system.system_name} {project.project_name} "
-                          f"{pandda_dataset.dtag} {event.idx}")
-
-                print(f"\t\tevent {event.idx} num builds: {len(event.builds)}")
+                #     print(f"\tGetting RMSDS for {system.system_name} {project.project_name} "
+                #           f"{pandda_dataset.dtag} {event.idx}")
+                #
+                # print(f"\t\tevent {event.idx} num builds: {len(event.builds)}")
 
                 for build in event.builds:
                     build_to_run = GetBuildRMSD(
