@@ -31,7 +31,7 @@ def database_add_diamond_panddas(sqlite_filepath, pandda_autobuilds_dir):
     Base.metadata.create_all(engine)
 
     # Get systems
-    systems = session.query(SystemSQL)..options(subqueryload(SystemSQL.projects)).order_by(SystemSQL.id).all()
+    systems = session.query(SystemSQL).options(subqueryload(SystemSQL.projects)).order_by(SystemSQL.id).all()
 
     # For each system, get the path, then get paths to PanDDA 1 results in the directory above it
     # for system in systems:
