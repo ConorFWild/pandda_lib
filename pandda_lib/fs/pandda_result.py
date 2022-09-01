@@ -157,7 +157,7 @@ class DatasetResult:
 
         events = {}
         for event_dir in processed_dataset_dir.glob('*'):
-            if re.match('[0-9]+', event_dir.name):
+            if re.match('[0-9]+$', event_dir.name):
                 # try:
                 event_result = EventResult.from_dir(event_dir, event_table)
                 events[event_dir.name] = event_result
