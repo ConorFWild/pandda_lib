@@ -109,9 +109,9 @@ class GetBuildRMSD:
         return record
 
 
-def diamond_add_model_stats(sqlite_filepath, tmp_dir):
+def diamond_add_autobuild_rmsds(sqlite_filepath, ):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
-    tmp_dir = pathlib.Path(tmp_dir).resolve()
+    # tmp_dir = pathlib.Path(tmp_dir).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
     Base.metadata.create_all(engine)
@@ -224,4 +224,4 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
 
 
 if __name__ == "__main__":
-    fire.Fire(diamond_add_model_stats)
+    fire.Fire(diamond_add_autobuild_rmsds)
