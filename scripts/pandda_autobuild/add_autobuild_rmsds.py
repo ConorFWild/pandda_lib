@@ -13,12 +13,11 @@ import multiprocessing as mp
 from pandda_lib import constants
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
 from pandda_lib.fs.pandda_result import PanDDAResult
-from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, ProjectDirSQL, DatasetSQL, PanDDADirSQL,
-                                                      PanDDADatasetSQL, PanDDABuildSQL, PanDDAEventSQL, SystemSQL,
-                                                      BoundStateModelSQL, SystemEventMapSQL)
+from pandda_lib.diamond_sqlite.diamond_sqlite import *
 from pandda_lib.rscc import get_rscc
 from pandda_lib.rscc.rscc import GetDatasetRSCC, Runner
 from pandda_lib.rmsd.rmsd import _get_closest_event, get_rmsds_from_path
+
 
 # from pandda_lib.custom_score import get_custom_score
 
@@ -28,13 +27,12 @@ class GetBuildRMSD:
                  reference_structure_path,
                  build_path,
                  events,
-                 high_confidence,):
+                 high_confidence, ):
         self.dataset_structure_path = dataset_structure_path
         self.reference_structure_path = reference_structure_path
         self.build_path = build_path
         self.events = events
         self.high_confidence = high_confidence
-
 
     def __call__(self, ):
 
@@ -43,7 +41,6 @@ class GetBuildRMSD:
         reference_structure_path = self.reference_structure_path
         build_path = self.build_path
         events = self.events
-
 
         if len(events) != 0:
 
@@ -111,6 +108,7 @@ class GetBuildRMSD:
 
         return record
 
+
 def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     tmp_dir = pathlib.Path(tmp_dir).resolve()
@@ -128,20 +126,50 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
 
     }
     sqls = {}
+
+    reference_structures = {
+        reference_structure_sql.dataset.dtag: reference_structure_sql
+        for reference_structure_sql in
+        session.query(ReferenceStructureSQL).options(subqueryload("*")).order_by(ReferenceStructureSQL.id).all()
+    }
+
     for system in session.query(SystemSQL).options(
             subqueryload("*")).order_by(SystemSQL.id).all():
         for project in system.projects:
             for pandda_2 in project.pandda_2s:
                 for pandda_dataset in pandda_2.pandda_dataset_results:
+                    high_confidence = False
+                    if pandda_dataset.dtag in reference_structures:
+                        reference_structure_path = reference_structures[pandda_dataset.dtag].path
+                        high_confidence = True
+                    else:
+                        if pandda_dataset.dataset:
+                            dataset = pandda_dataset.dataset
+                            if dataset.pandda_model_path:
+                                reference_structure_path = dataset.pandda_model_path
+                            else:
+                                continue
+                        else:
+                            continue
+
                     for event in pandda_dataset.events:
+                        if event.builds:
+                            print(f"\tGetting RMSDS for {system.system_name} {project.project_name} "
+                                  f"{pandda_dataset.dtag} {event.idx}")
                         for build in event.builds:
                             build_to_run = GetBuildRMSD(
-                                pandda_dataset.dtag,
-                                pandda_dataset.path,
-                                build.path,
-                                event.event_map_path,
-                                pandda_dataset.input_mtz_path,
-                                tmp_dir / f"{pandda_dataset.dtag}_{event.idx}_{build.id}",
+                                dataset_structure_path=pandda_dataset.input_pdb_path,
+                                reference_structure_path=reference_structure_path,
+                                build_path=build.build_path,
+                                events={
+                                    _event.idx: [
+                                        _event.centroid[0],
+                                        _event.centroid[1],
+                                        _event.centroid[2],
+                                    ]
+                                    for _event in pandda_dataset.events
+                                },
+                                high_confidence=high_confidence,
                             )
 
                             run_set[(system.system_name, project.project_name, pandda_dataset.dtag,
@@ -158,51 +186,39 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
 
     print(f"\tNumber of builds to score: {len(run_set)};")
 
-    print("Getting RSCCs...")
-    # selected_rsccs = Parallel(
-    #     n_jobs=24,
-    #     verbose=50,
-    # )(
-    #     delayed(get_dataset_rsccs)(
-    #         dataset.dtag,
-    #         dataset.path,
-    #         dataset.pandda_model_path,
-    #         dataset.event_maps,
-    #         dataset.mtz_path,
-    #         tmp_dir / dataset.dtag
-    #     )
-    #     for dataset
-    #     in datasets
-    # )
+    print("Getting RMSDs...")
     mp.set_start_method('spawn')
 
-    with mp.Pool(30) as p:
+    with mp.Pool(1) as p:
         print("Getting run set")
 
         print("Running")
-        selected_rsccs = p.map(
+        selected_rmsds = p.map(
             Runner(),
             run_set.values()
         )
 
     print("Inserting to database...")
-    for run_key, selected_rscc in zip(run_set, selected_rsccs):
-        bound_state_model = BuildScoreSQL(
-            rscc=selected_rscc,
-            custom_score=None,
+    for run_key, selected_rmsd in zip(run_set, selected_rmsds):
+        build_rmsd_sql = BuildRMSDSQL(
+            broken_ligand=selected_rmsd['broken_ligand'],
+            alignment_error=selected_rmsd['alignment_error'],
+            closest_event=selected_rmsd['closest_event'],
+            closest_rmsd=selected_rmsd['closest_rmsd'],  # None and num_events>0&num_builds>0 implies broken ligand
+            high_confidence=selected_rmsd['high_confidence']
         )
-        sqls[]
-        dataset.bound_state_model = bound_state_model
+        build_sql = sqls[run_key]["Build"]
+        build_sql.rmsd = build_rmsd_sql
 
-        session.add(bound_state_model)
+        session.add(build_rmsd_sql)
 
     session.commit()
 
     print("Printing database datasets...")
-    for instance in session.query(DatasetSQL).order_by(DatasetSQL.id):
-        print(f"{instance.dtag}")
-        if instance.bound_state_model:
-            print(f"\t{instance.bound_state_model.rscc}")
+    for instance in session.query(BuildRMSDSQL).order_by(BuildRMSDSQL.id):
+        print(f"{instance.closest_rmsd}")
+        # if instance.bound_state_model:
+        #     print(f"\t{instance.bound_state_model.rscc}")
 
     # for instance in session.query(DatasetSQL).order_by(DatasetSQL):
 

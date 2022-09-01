@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Table, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Table, Float, Bool
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -15,6 +15,7 @@ BOUND_STATE_MODEL_SQL_TABLE = "bound_state_model"
 SYSTEM_EVENT_MAP_SQL_TABLE = "system_event_map"
 EVENT_MAP_QUANTILES_SQL_TABLE = "event_map_quantiles"
 BUILD_SCORE_SQL_TABLE = "build_score"
+BUILD_RMSD_SQL_TABLE = "build_rmsd"
 
 Base = declarative_base()
 
@@ -66,7 +67,14 @@ class BuildScoreSQL(Base):
     custom_score = Column(Float)
 
 class BuildRMSDSQL(Base):
+    __tablename__ = BUILD_RMSD_SQL_TABLE
 
+    id = Column(Integer, primary_key=True)
+    broken_ligand = Column(String)
+    alignment_error = Column(String)
+    # closest_event = selected_rmsd['closest_event'],
+    closest_rmsd = Column(Float),  # None and num_events>0&num_builds>0 implies broken ligand
+    high_confidence = Column(Bool)
 
 
 
@@ -124,6 +132,7 @@ class PanDDABuildSQL(Base):
 
     id = Column(Integer, primary_key=True)
     event_id = Column(Integer, ForeignKey(f"{PANDDA_EVENT_SQL_TABLE}.id"))
+    build_rmsd_id =  Column(Integer, ForeignKey(f"{BUILD_RMSD_SQL_TABLE}.id"))
 
     build_path = Column(String)
     # signal_samples = Column(Float)
@@ -133,6 +142,7 @@ class PanDDABuildSQL(Base):
     # percentage_signal = Column(Float)
     # percentage_noise = Column(Float)
     score = Column(Float)
+    rmsd = relationship("BuildRMSDSQL", uselist=False)
 
 
 class PanDDAEventSQL(Base):
@@ -157,7 +167,7 @@ class PanDDADatasetSQL(Base):
 
     id = Column(Integer, primary_key=True)
     pandda_id = Column(Integer, ForeignKey(f"{PANDDA_DIR_SQL_TABLE}.id"))
-    # dataset_id = Column(Integer, ForeignKey(f"{DATASET_SQL_TABLE}.id"))
+    dataset_id = Column(Integer, ForeignKey(f"{DATASET_SQL_TABLE}.id"))
 
     dtag = Column(String)
     path = Column(String)
@@ -166,6 +176,7 @@ class PanDDADatasetSQL(Base):
     input_mtz_path = Column(String)
 
     events = relationship("PanDDAEventSQL")
+    dataset = relationship("DatasetSQL", uselist=False)
 
 
 class PanDDADirSQL(Base):

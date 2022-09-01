@@ -3,7 +3,7 @@ import os
 from typing import *
 
 import fire
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, subqueryload
 from sqlalchemy import create_engine
 
 from pandda_lib import constants
@@ -76,7 +76,12 @@ def diamond_add_pandda_results(sqlite_filepath, output_dir_name):
 
     Base.metadata.create_all(engine)
 
-    systems = session.query(SystemSQL).order_by(SystemSQL.id).all()
+    systems = session.query(SystemSQL).options(subqueryload("*")).order_by(SystemSQL.id).all()
+    dtag_to_dataset_sql = {}
+    for system in systems:
+        for project in system.projects:
+            for dataset in project.datasets:
+                dtag_to_dataset_sql[dataset.dtag] = dataset
 
     print("Updating database...")
     for system in systems:
@@ -110,7 +115,10 @@ def diamond_add_pandda_results(sqlite_filepath, output_dir_name):
                             in event_builds.values()
                         ],
                     )
-
+                if dtag.dtag in dtag_to_dataset_sql:
+                    dataset_sql = dtag_to_dataset_sql[dtag.dtag]
+                else:
+                    dataset_sql = None
                 dataset_results[dtag] = PanDDADatasetSQL(
                     dtag=dtag.dtag,
                     path=str(dataset.path),
@@ -119,6 +127,8 @@ def diamond_add_pandda_results(sqlite_filepath, output_dir_name):
                         for _event
                         in dataset_events.values()
                     ],
+                    dataset_sql=dataset_sql
+
                 )
 
             pandda_result_sql = PanDDADirSQL(
