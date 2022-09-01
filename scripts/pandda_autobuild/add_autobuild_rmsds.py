@@ -145,7 +145,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
         #     for pandda_2 in project.pandda_2s:
         system = pandda_2.system
         project = pandda_2.project
-        print(f"PanDDA 2: {system.system_name}: {project.project_name}")
+        print(f"PanDDA 2: {system.system_name}: {project.project_name}: {project.path}")
 
         print(f"\t{len(pandda_2.pandda_dataset_results)}")
         for pandda_dataset in pandda_2.pandda_dataset_results:
