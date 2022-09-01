@@ -75,19 +75,19 @@ class GetBuildRMSD:
                     )
 
                     if _rmsds == "BROKENLIGAND":
-                        is_ligand_broken = True
+                        broken_ligand = True
+                        # closest_rmsd = None
 
-                    elif _rmsds == "ALIGNMENTERROR":
-                        has_alignment_error = True
 
-                    elif len(_rmsds) == 0:
-                        broken_ligand = is_ligand_broken
-                        alignment_error = has_alignment_error
-                        closest_rmsd = None
+                    if _rmsds == "ALIGNMENTERROR":
+                        alignment_error = True
+                        # closest_rmsd = None
+
+                    if len(_rmsds) != 0:
+                        closest_rmsd=min(_rmsds)
                     else:
-                        broken_ligand = is_ligand_broken
-                        alignment_error = has_alignment_error
-                        closest_rmsd = min(_rmsds)
+                        closest_rmsd = None
+
                 except Exception as e:
                     broken_ligand = is_ligand_broken
                     alignment_error = has_alignment_error
