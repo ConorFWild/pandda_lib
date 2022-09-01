@@ -118,8 +118,8 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
 
     # Remove tables
     Base.metadata.create_all(engine)
-    # BoundStateModelSQL.__table__.drop(engine)
-    # Base.metadata.create_all(engine)
+    BuildRMSDSQL.__table__.drop(engine)
+    Base.metadata.create_all(engine)
 
     # Get Autobuild PanDDA sqls
     run_set = {
