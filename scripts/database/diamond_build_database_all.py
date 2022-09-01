@@ -14,6 +14,12 @@ from diamond_add_model_stats import diamond_add_model_stats
 
 
 def diamond_build_database_all(sqlite_filepath, reference_structure_dir, tmp_dir):
+    engine = create_engine("postgres://localhost/mydb")
+    if not database_exists(engine.url):
+        create_database(engine.url)
+    if not pathlib.Path(sqlite_filepath).exists():
+
+
     diamond_build_input_data_database(sqlite_filepath)
     database_add_diamond_panddas(sqlite_filepath)
     diamond_add_fragalysis_reference_structures(sqlite_filepath, reference_structure_dir)

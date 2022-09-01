@@ -4,6 +4,8 @@ import os
 import fire
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
+from sqlalchemy_utils import database_exists, create_database
+
 
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
 from pandda_lib.diamond_sqlite.diamond_sqlite import Base, ProjectDirSQL, DatasetSQL, SystemSQL, SystemEventMapSQL
@@ -14,6 +16,8 @@ def diamond_build_input_data_database(sqlite_filepath):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     os.remove(sqlite_filepath)
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
+    if not sqlite_filepath.exists():
+        create_database(str(sqlite_filepath))
     session = sessionmaker(bind=engine)()
     Base.metadata.create_all(engine)
 
