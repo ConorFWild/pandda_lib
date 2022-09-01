@@ -64,9 +64,9 @@ class EventResult:
         dataset_dir = event_dir.parent
         event_map_file = None
         regex = f"{dataset_dir.name}-event_{event_dir.name}.+"
-        print(f"Regex is: {regex}")
+        # print(f"Regex is: {regex}")
         for file in dataset_dir.glob('*'):
-            print(file)
+            # print(file)
             if re.match(regex, file.name):
                 # print()
                 event_map_path = file
