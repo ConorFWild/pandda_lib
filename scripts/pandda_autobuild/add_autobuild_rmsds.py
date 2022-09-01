@@ -170,7 +170,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
                     continue
 
             for event in pandda_dataset.events:
-                if event.builds:
+                # if event.builds:
                 #     print(f"\tGetting RMSDS for {system.system_name} {project.project_name} "
                 #           f"{pandda_dataset.dtag} {event.idx}")
                 #
