@@ -146,6 +146,8 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
         for pandda_dataset in pandda_2.pandda_dataset_results:
             print(f"\tdataset {pandda_dataset.dtag} events: {len(pandda_dataset.events)}")
 
+            if not pandda_dataset.input_pdb_path:
+                continue
             high_confidence = False
             if pandda_dataset.dtag in reference_structures:
                 reference_structure_path = reference_structures[pandda_dataset.dtag].path
