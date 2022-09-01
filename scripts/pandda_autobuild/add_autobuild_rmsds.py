@@ -86,7 +86,7 @@ class GetBuildRMSD:
                     else:
                         alignment_error = False
 
-                    if len(_rmsds) != 0:
+                    if (len(_rmsds) != 0) & (_rmsds != "BROKENLIGAND") & (_rmsds != "ALIGNMENTERROR"):
                         closest_rmsd=min(_rmsds)
                     else:
                         closest_rmsd = None
