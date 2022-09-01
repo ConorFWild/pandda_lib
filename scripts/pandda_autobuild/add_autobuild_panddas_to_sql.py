@@ -38,11 +38,20 @@ def database_add_diamond_panddas(sqlite_filepath, pandda_autobuilds_dir):
     #     print(f"Looking for panddas for system: {system.system_name}")
     #     for project in system.projects:
 
+    systems = session.query(SystemSQL).options(subqueryload("*")).order_by(SystemSQL.id).all()
+    dtag_to_dataset_sql = {}
+    for system in systems:
+        for project in system.projects:
+            for dataset in project.datasets:
+                dtag_to_dataset_sql[dataset.dtag] = dataset
+
     for system in systems:
         for project in system.projects:
             system_project_dir = pandda_autobuilds_dir / f"system_{system.system_name}_project_{project.project_name}"
             # try:
-            pandda_dir_sql = get_pandda_2_result(system_project_dir, system, project)
+
+
+            pandda_dir_sql = get_pandda_2_result(system_project_dir, dtag_to_dataset_sql, system, project)
             if pandda_dir_sql:
                 session.add(pandda_dir_sql)
             # except Exception as e:
