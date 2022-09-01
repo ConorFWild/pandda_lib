@@ -70,7 +70,7 @@ class DiamondDataset:
         self.event_maps = []
         for event_map_path in path.glob("*event*.ccp4"):
             system_event_map = SystemEventMap(event_map_path)
-            if bool(system_event_map.bdc) & bool(system_event_map.event_idx):
+            if (system_event_map.bdc is not None) & (system_event_map.event_idx is not None):
                 self.event_maps.append(
                     system_event_map
                 )
