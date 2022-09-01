@@ -149,7 +149,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
 
         print(f"\t{len(pandda_2.pandda_dataset_results)}")
         for pandda_dataset in pandda_2.pandda_dataset_results:
-            print(f"\tdataset {pandda_dataset.dtag} events: {len(pandda_dataset.events)}")
+            # print(f"\tdataset {pandda_dataset.dtag} events: {len(pandda_dataset.events)}")
 
             if not pandda_dataset.input_pdb_path:
                 continue
