@@ -41,6 +41,7 @@ def get_pandda_2_result(pandda_path) -> Optional[PanDDADirSQL]:
 
             dataset_events[event_id] = PanDDAEventSQL(
                 event_map_path=str(event.event_map_path),
+                idx = int(event.idx),
                 x=float(event.centroid[0]),
                 y=float(event.centroid[1]),
                 z=float(event.centroid[2]),

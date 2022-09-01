@@ -50,6 +50,7 @@ class BuildResult:
 
 @dataclass()
 class EventResult:
+    idx: int
     event_map_path: Path
     build_results: Dict[str, BuildResult]
     centroid: Tuple[float, float, float]
@@ -108,6 +109,7 @@ class EventResult:
                     size = row["cluster_size"]
 
         return EventResult(
+            event_idx,
             event_map_path,
             build_results,
             centroid,
