@@ -15,8 +15,11 @@ class Dtag:
     def from_name(string: str) -> Dtag:
         # match = re.search("[^-]+-[^0-9]+[0-9]+", string)
         match = re.search("^.+-[^0-9]+[0-9]+", string)
+        if match:
 
-        return Dtag(match.group())
+            return Dtag(match.group())
+        else:
+            return None
 
     def __hash__(self):
         return hash(self.dtag)

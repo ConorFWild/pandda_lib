@@ -73,6 +73,8 @@ class DiamondDataDir:
             if _dataset_dir.is_dir():
                 # try:
                 _dataset_dtag = Dtag.from_name(_dataset_dir.name)
+                if not _dataset_dtag:
+                    continue
                 _dataset = DiamondDataset(_dataset_dtag, _dataset_dir)
                 self.datasets[_dataset_dtag] = _dataset
                 # except:
@@ -113,11 +115,12 @@ class DiamondDataDirs:
                 # num_datasets = len(datasets_list)
                 dtags = []
                 for _dataset_dir in datasets_list:
-                    try:
-                        _dtag = Dtag.from_name(_dataset_dir.name)
+                    # try:
+                    _dtag = Dtag.from_name(_dataset_dir.name)
+                    if _dtag:
                         dtags.append(_dtag)
-                    except:
-                        continue
+                    # except:
+                    #     continue
 
                 if len(dtags) == 0:
                     print(f"\tNo dtags for dir: {data_dir_path}...")
