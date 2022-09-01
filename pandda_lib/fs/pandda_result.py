@@ -63,11 +63,17 @@ class EventResult:
 
         dataset_dir = event_dir.parent
         event_map_file = None
+        regex = f"{dataset_dir.name}-event_{event_dir.name}.+"
+        print(f"Regex is: {regex}")
         for file in dataset_dir.glob('*'):
-            if re.match(f"{dataset_dir.name}-event_{event_dir.name}.+", file.name):
+            print(file)
+            if re.match(regex, file.name):
+                # print()
                 event_map_path = file
-        if not event_map_file:
-            raise Exception("Should be an event map file!")
+
+
+        # if not event_map_file:
+        #     raise Exception("Should be an event map file!")
 
         # Get the score log
 
