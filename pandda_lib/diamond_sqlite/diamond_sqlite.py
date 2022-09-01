@@ -121,12 +121,12 @@ class PanDDABuildSQL(Base):
     event_id = Column(Integer, ForeignKey(f"{PANDDA_EVENT_SQL_TABLE}.id"))
 
     build_path = Column(String)
-    signal_samples = Column(Float)
-    total_signal_samples = Column(Float)
-    noise_samples = Column(Float)
-    total_noise_samples = Column(Float)
-    percentage_signal = Column(Float)
-    percentage_noise = Column(Float)
+    # signal_samples = Column(Float)
+    # total_signal_samples = Column(Float)
+    # noise_samples = Column(Float)
+    # total_noise_samples = Column(Float)
+    # percentage_signal = Column(Float)
+    # percentage_noise = Column(Float)
     score = Column(Float)
 
 

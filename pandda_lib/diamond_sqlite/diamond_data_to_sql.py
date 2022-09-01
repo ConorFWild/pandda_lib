@@ -30,12 +30,12 @@ def get_pandda_2_result(pandda_path, system=None, project=None) -> Optional[PanD
             for build_id, build in event.build_results.items():
                 event_builds[build_id] = PanDDABuildSQL(
                     build_path=str(build.path),
-                    signal_samples=float(build.signal_samples),
-                    total_signal_samples=float(build.total_signal_samples),
-                    noise_samples=float(build.noise_samples),
-                    total_noise_samples=float(build.total_noise_samples),
-                    percentage_signal=float(build.percentage_signal),
-                    percentage_noise=float(build.percentage_noise),
+                    # signal_samples=float(build.signal_samples),
+                    # total_signal_samples=float(build.total_signal_samples),
+                    # noise_samples=float(build.noise_samples),
+                    # total_noise_samples=float(build.total_noise_samples),
+                    # percentage_signal=float(build.percentage_signal),
+                    # percentage_noise=float(build.percentage_noise),
                     score=float(build.score),
                 )
 
