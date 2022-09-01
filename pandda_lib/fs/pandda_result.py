@@ -56,8 +56,6 @@ class EventResult:
     centroid: Tuple[float, float, float]
     bdc: float
     size: int
-    bdc: float
-    size: float
 
     @staticmethod
     def from_dir(event_dir: Path, event_table):
