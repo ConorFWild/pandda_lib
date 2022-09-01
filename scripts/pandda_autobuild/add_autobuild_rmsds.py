@@ -135,8 +135,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
     }
     print(f"Matched {len(reference_structures)} refernces to datasets")
 
-    for pandda_2 in session.query(PanDDADirSQL).options(
-            subqueryload("*")).order_by(PanDDADirSQL.id).all():
+    for pandda_2 in session.query(PanDDADirSQL).options(subqueryload("*")).order_by(PanDDADirSQL.id).all():
         # for project in system.projects:
         #     for pandda_2 in project.pandda_2s:
         system = pandda_2.system
