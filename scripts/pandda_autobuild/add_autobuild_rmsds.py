@@ -170,6 +170,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
                 print(f"\t\tevent {event.idx} num builds: {len(event.builds)}")
 
                 for build in event.builds:
+
                     build_to_run = GetBuildRMSD(
                         dataset_structure_path=pandda_dataset.input_pdb_path,
                         reference_structure_path=reference_structure_path,

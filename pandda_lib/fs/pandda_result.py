@@ -130,6 +130,7 @@ class EventResult:
 class DatasetResult:
     path: Path
     structure_path: Path
+    mtz_path: Path
     events: Dict[str, EventResult]
     processed: bool
     dataset_log: Optional[Dict]
@@ -142,6 +143,8 @@ class DatasetResult:
         dtag = Dtag(processed_dataset_dir.name)
 
         structure_path = processed_dataset_dir / constants.PANDDA_PDB_FILE.format(dtag.dtag)
+
+        mtz_path = processed_dataset_dir / constants.PANDDA_MTZ_FILE.format(dtag.dtag)
 
         dataset_log_path = processed_dataset_dir / 'log.json'
 
@@ -169,6 +172,7 @@ class DatasetResult:
         return DatasetResult(
             path,
             structure_path,
+            mtz_path,
             events,
             processed=processed,
             dataset_log=dataset_log,
