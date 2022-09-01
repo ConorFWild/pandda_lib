@@ -60,8 +60,8 @@ def get_pandda_2_result(pandda_path, dtag_to_dataset_sql, system=None, project=N
         dataset_results[dtag] = PanDDADatasetSQL(
             dtag=dtag.dtag,
             path=str(dataset.path),
-            input_pdb_path=dataset.structure_path,
-            input_mtz_path = dataset.mtz_path,
+            input_pdb_path=str(dataset.structure_path),
+            input_mtz_path = str(dataset.mtz_path),
             events=[
                 _event
                 for _event
