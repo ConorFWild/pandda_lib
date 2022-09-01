@@ -70,12 +70,12 @@ class DiamondDataDir:
         self.datasets = {}
         for _dataset_dir in self.path.glob("*"):
             if _dataset_dir.is_dir():
-                try:
-                    _dataset_dtag = Dtag.from_name(_dataset_dir.name)
-                    _dataset = DiamondDataset(_dataset_dtag, _dataset_dir)
-                    self.datasets[_dataset_dtag] = _dataset
-                except:
-                    continue
+                # try:
+                _dataset_dtag = Dtag.from_name(_dataset_dir.name)
+                _dataset = DiamondDataset(_dataset_dtag, _dataset_dir)
+                self.datasets[_dataset_dtag] = _dataset
+                # except:
+                #     continue
 
 
 class DiamondDataDirs:
@@ -92,47 +92,47 @@ class DiamondDataDirs:
 
                 project = project_dir.name
 
-                try:
+                # try:
 
-                    if model_building_dir.exists():
-                        datasets_list = list(model_building_dir.glob('*'))
-                        data_dir_path = model_building_dir
+                if model_building_dir.exists():
+                    datasets_list = list(model_building_dir.glob('*'))
+                    data_dir_path = model_building_dir
 
-                    else:
-                        datasets_list = list(initial_model_dir.glob('*'))
-                        data_dir_path = initial_model_dir
+                else:
+                    datasets_list = list(initial_model_dir.glob('*'))
+                    data_dir_path = initial_model_dir
 
-                    # num_datasets = len(datasets_list)
-                    dtags = []
-                    for _dataset_dir in datasets_list:
-                        try:
-                            _dtag = Dtag.from_name(_dataset_dir.name)
-                            dtags.append(_dtag)
-                        except:
-                            continue
-
-                    if len(dtags) == 0:
-                        print(f"\tNo dtags for dir: {data_dir_path}...")
+                # num_datasets = len(datasets_list)
+                dtags = []
+                for _dataset_dir in datasets_list:
+                    try:
+                        _dtag = Dtag.from_name(_dataset_dir.name)
+                        dtags.append(_dtag)
+                    except:
                         continue
 
-
-                    system = max([
-                        SystemName.from_dtag(dtag)
-                        for dtag
-                        in dtags
-                        ],
-                        key=lambda _system_name: len(_system_name.system_name)
-                    )
-                    print(f"{dtags[0]}: {system}: {datasets_list[0]}")
-
-                    if system not in self.systems:
-                        self.systems[system] = {}
-
-                    self.systems[system][project] = DiamondDataDir(data_dir_path)
-
-                except Exception as e:
-                    # print(e)
+                if len(dtags) == 0:
+                    print(f"\tNo dtags for dir: {data_dir_path}...")
                     continue
+
+
+                system = max([
+                    SystemName.from_dtag(dtag)
+                    for dtag
+                    in dtags
+                    ],
+                    key=lambda _system_name: len(_system_name.system_name)
+                )
+                print(f"{dtags[0]}: {system}: {datasets_list[0]}")
+
+                if system not in self.systems:
+                    self.systems[system] = {}
+
+                self.systems[system][project] = DiamondDataDir(data_dir_path)
+
+                # except Exception as e:
+                #     # print(e)
+                #     continue
 
     def __getitem__(self, item):
         return self.systems[item]
