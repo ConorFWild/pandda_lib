@@ -14,6 +14,7 @@ from diamond_add_fragalysis_reference_structures import diamond_add_fragalysis_r
 from diamond_add_model_stats import diamond_add_model_stats
 from add_autobuild_panddas_to_sql import database_add_autobuild_panddas
 from add_autobuild_rmsds import diamond_add_autobuild_rmsds
+from event_map_stats import diamond_add_event_stats
 
 
 def diamond_build_database_all(options_json="database_options.json", step=0, cpus=3):
@@ -42,6 +43,8 @@ def diamond_build_database_all(options_json="database_options.json", step=0, cpu
         database_add_autobuild_panddas(sqlite_filepath, pandda_autobuilds_dir)
     if step <= 6:
         diamond_add_autobuild_rmsds(sqlite_filepath, cpus=3)
+    if step <= 7:
+        diamond_add_event_stats(sqlite_filepath)
 
 
 if __name__ == "__main__":

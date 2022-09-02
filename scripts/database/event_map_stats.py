@@ -35,7 +35,7 @@ def mask_grid(st, grid, mask_radius=3.0):
 
     return new_grid
 
-def diamond_add_model_stats(sqlite_filepath, ):
+def diamond_add_event_stats(sqlite_filepath, ):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     # tmp_dir = pathlib.Path(tmp_dir).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
@@ -184,4 +184,4 @@ def diamond_add_model_stats(sqlite_filepath, ):
 
 
 if __name__ == "__main__":
-    fire.Fire(diamond_add_model_stats)
+    fire.Fire(diamond_add_event_stats)
