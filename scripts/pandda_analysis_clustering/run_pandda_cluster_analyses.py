@@ -17,7 +17,7 @@ QSUB_COMMAND = "qsub -pe smp 3 -l m_mem_free=30G -q medium.q -o {log_file} -e {e
 LOG_FILE_FORMAT = "{target}.log"
 ERR_FILE_FORMAT = "{target}.err"
 SAMPLE_JSON_KEY = "sample_json"
-SAMPLE_JSON_DIR = "/dls/science/groups/i04-1/conor_dev/pandda_lib/scripts/pandda_analysis_clustering"
+SAMPLE_JSON_DIR = "sample_dir"
 OUTPUT_DIR_KEY = "output_dir"
 
 PANDDA_JOB_TEMPLATE = (
