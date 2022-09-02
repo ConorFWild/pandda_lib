@@ -15,7 +15,7 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import (Base, ProjectDirSQL, Datas
                                                       PanDDADirSQL)
 
 
-def database_add_diamond_panddas(sqlite_filepath, pandda_autobuilds_dir):
+def database_add_autobuild_panddas(sqlite_filepath, pandda_autobuilds_dir):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     pandda_autobuilds_dir = pathlib.Path(pandda_autobuilds_dir).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
@@ -67,4 +67,4 @@ def database_add_diamond_panddas(sqlite_filepath, pandda_autobuilds_dir):
 
 
 if __name__ == "__main__":
-    fire.Fire(database_add_diamond_panddas)
+    fire.Fire(database_add_autobuild_panddas)
