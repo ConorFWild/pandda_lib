@@ -208,8 +208,10 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
     print(f"Number of builds to score: {len(run_set)};")
 
     print("Getting RMSDs...")
-    mp.set_start_method('spawn')
-
+    try:
+        mp.set_start_method('spawn')
+    except Exception as e:
+        print(e)
     with mp.Pool(1) as p:
         print("Getting run set")
 

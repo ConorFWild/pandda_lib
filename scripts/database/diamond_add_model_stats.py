@@ -145,7 +145,10 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     #     for dataset
     #     in datasets
     # )
-    mp.set_start_method('spawn')
+    try:
+        mp.set_start_method('spawn')
+    except Exception as e:
+        print(e)
 
     with mp.Pool(30) as p:
         print("Getting run set")
