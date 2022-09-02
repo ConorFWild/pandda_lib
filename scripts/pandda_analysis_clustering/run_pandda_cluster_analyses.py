@@ -79,7 +79,7 @@ def run_pandda_mean_maps(targets_json_path: str):
             out_dir=out_dir,
             pdb_regex=target_info[PDB_REGEX_KEY],
             mtz_regex=target_info[MTZ_REGEX_KEY],
-            sample_json=targets_dict[SAMPLE_JSON_DIR] / target_info[SAMPLE_JSON_KEY]
+            sample_json=pathlib.Path(targets_dict[SAMPLE_JSON_DIR]) / target_info[SAMPLE_JSON_KEY]
         )
         pandda_jobs_dict[target] = pandda_job_script
 
