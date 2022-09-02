@@ -1,6 +1,7 @@
 {
   "working_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x",
   "sample_dir": "/dls/science/groups/i04-1/conor_dev/pandda_lib/scripts/pandda_analysis_clustering",
+  "output_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/pandda_clustering_analysis",
   "target": {
     "JMJD2D": {
       "data_dir": "data_JMJD2D",

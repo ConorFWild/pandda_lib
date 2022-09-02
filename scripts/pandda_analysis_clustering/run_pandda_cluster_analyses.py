@@ -18,6 +18,7 @@ LOG_FILE_FORMAT = "{target}.log"
 ERR_FILE_FORMAT = "{target}.err"
 SAMPLE_JSON_KEY = "sample_json"
 SAMPLE_JSON_DIR = "/dls/science/groups/i04-1/conor_dev/pandda_lib/scripts/pandda_analysis_clustering"
+OUTPUT_DIR_KEY = "output_dir"
 
 PANDDA_JOB_TEMPLATE = (
     "#/bin/sh  \n "
@@ -64,13 +65,14 @@ def run_pandda_mean_maps(targets_json_path: str):
 
     # Get the working dir
     working_dir = pathlib.Path(targets_dict[WORKING_DIR_KEY]).resolve()
+    output_dir = pathlib.Path(targets_dict[OUTPUT_DIR_KEY]).resolve()
 
     # construct the PanDDAs
     pandda_jobs_dict = {}
     for target, target_info in targets_dict[TARGET_KEY].items():
         print(f"\tTarget is: {target}")
         data_dir = working_dir / target_info[DATA_DIR_KEY]
-        out_dir = working_dir / OUT_DIR_FORMAT.format(target=target)
+        out_dir = output_dir / OUT_DIR_FORMAT.format(target=target)
 
         pandda_job_script = PANDDA_JOB_TEMPLATE.format(
             data_dirs=data_dir,
