@@ -212,7 +212,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
         mp.set_start_method('spawn')
     except Exception as e:
         print(e)
-    with mp.Pool(1) as p:
+    with mp.Pool(30) as p:
         print("Getting run set")
 
         print("Running")
