@@ -25,6 +25,11 @@ def diamond_build_database_all(options_json="database_options.json", step=0):
     tmp_dir = options["tmp_dir"]
     pandda_autobuilds_dir = options["pandda_autobuilds_dir"]
 
+    print(f"Database: {sqlite_filepath}")
+    print(f"Reference Structures: {sqlite_filepath}")
+    print(f"RSCC Temporary Dir: {tmp_dir}")
+    print(f"PanDDA Autobuilds Dir: {pandda_autobuilds_dir}")
+
     if step <= 1:
         diamond_build_input_data_database(sqlite_filepath)
     if step <= 2:
