@@ -14,4 +14,4 @@ unset __conda_setup
 export PYTHONPATH=""
 conda activate lab
 
-python diamond_build_database_all.py step=4
+python diamond_build_database_all.py --step=4
