@@ -16,7 +16,7 @@ from add_autobuild_panddas_to_sql import database_add_autobuild_panddas
 from add_autobuild_rmsds import diamond_add_autobuild_rmsds
 
 
-def diamond_build_database_all(options_json="database_options.json", step=0):
+def diamond_build_database_all(options_json="database_options.json", step=0, cpus=3):
     with open(options_json, "r") as f:
         options = json.load(f)
 
@@ -37,11 +37,11 @@ def diamond_build_database_all(options_json="database_options.json", step=0):
     if step <= 3:
         diamond_add_fragalysis_reference_structures(sqlite_filepath, reference_structure_dir)
     if step <= 4:
-        diamond_add_model_stats(sqlite_filepath, tmp_dir)
+        diamond_add_model_stats(sqlite_filepath, tmp_dir, cpus=3)
     if step <= 5:
         database_add_autobuild_panddas(sqlite_filepath, pandda_autobuilds_dir)
     if step <= 6:
-        diamond_add_autobuild_rmsds(sqlite_filepath)
+        diamond_add_autobuild_rmsds(sqlite_filepath, cpus=3)
 
 
 if __name__ == "__main__":

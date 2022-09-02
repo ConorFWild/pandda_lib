@@ -114,7 +114,7 @@ class GetBuildRMSD:
         return record
 
 
-def diamond_add_autobuild_rmsds(sqlite_filepath, ):
+def diamond_add_autobuild_rmsds(sqlite_filepath, cpus=3):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     # tmp_dir = pathlib.Path(tmp_dir).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
@@ -212,7 +212,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, ):
         mp.set_start_method('spawn')
     except Exception as e:
         print(e)
-    with mp.Pool(30) as p:
+    with mp.Pool(cpus) as p:
         print("Getting run set")
 
         print("Running")

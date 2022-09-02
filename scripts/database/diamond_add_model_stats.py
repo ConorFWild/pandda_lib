@@ -99,7 +99,7 @@ def get_dataset_rsccs(dataset_dtag, dataset_path, dataset_bound_state_model_path
         raise Exception(f"Exception occured for dtag {dataset_dtag} model {dataset_bound_state_model_path}:\n{str(e)}")
 
 
-def diamond_add_model_stats(sqlite_filepath, tmp_dir):
+def diamond_add_model_stats(sqlite_filepath, tmp_dir, cpus=3):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     tmp_dir = pathlib.Path(tmp_dir).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
@@ -150,7 +150,7 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir):
     except Exception as e:
         print(e)
 
-    with mp.Pool(30) as p:
+    with mp.Pool(cpus) as p:
         print("Getting run set")
         run_set = [
             GetDatasetRSCC(dataset.dtag,
