@@ -84,7 +84,7 @@ def run_pandda_mean_maps(targets_json_path: str):
         pandda_jobs_dict[target] = pandda_job_script
 
         # Write and chmod the script
-        job_script_path = working_dir / JOB_SCRIPT_FORMAT.format(target=target)
+        job_script_path = output_dir / JOB_SCRIPT_FORMAT.format(target=target)
         print(f"\t\tJob script file is: {job_script_path}")
 
         with open(job_script_path, "w") as f:
