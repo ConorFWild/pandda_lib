@@ -33,7 +33,7 @@ pandda_command = (
     "--min_characterisation_datasets=25 "
     "--debug=2 "
     "--event_score=\"{event_score}\" "
-    "--memory_availability=\"{memory_availability}\""
+    "--memory_availability=\"{memory_availability}\" "
 
 )
 
