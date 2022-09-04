@@ -54,6 +54,7 @@ def database_add_autobuild_panddas(sqlite_filepath, pandda_autobuilds_dir):
 
             pandda_dir_sql = get_pandda_2_result(system_project_dir, dtag_to_dataset_sql, system, project)
             if pandda_dir_sql:
+                print(f"\tGot pandda dir!")
                 session.add(pandda_dir_sql)
             # except Exception as e:
             #     print(f"\tCouldn't get PanDDA for {system_project_dir}")
