@@ -33,7 +33,7 @@ pandda_command = (
     "--min_characterisation_datasets=25 "
     "--debug=2 "
     "--event_score=\"{event_score}\" "
-    "--memory_availability=\"low\""
+    "--memory_availability=\"{memory_availability}\""
 
 )
 
@@ -47,7 +47,8 @@ class PanDDAJob:
                  pdb_regex="dimple.pdb",
                  mtz_regex="dimple.mtz",
                  comparison_strategy="hybrid",
-                 event_score="inbuilt"
+                 event_score="inbuilt",
+                 memory_availability="low"
                  ):
         self.name = name
         self.system_data_dir = system_data_dir
@@ -59,5 +60,6 @@ class PanDDAJob:
             pdb_regex=pdb_regex,
             mtz_regex=mtz_regex,
             comparison_strategy=comparison_strategy,
-            event_score=event_score
+            event_score=event_score,
+            memory_availability=memory_availability,
         )

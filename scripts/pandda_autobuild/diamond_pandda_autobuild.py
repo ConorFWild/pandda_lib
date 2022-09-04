@@ -75,7 +75,8 @@ def main(
                 output_dir=output_dir,
                 cores=cores,
                 comparison_strategy="high_res_first",
-                event_score="size"
+                event_score="size",
+                memory_availability="memory_availability",
             )
             scheduler.submit(job, cores=cores, mem_per_core=int(220 / cores))
 
