@@ -98,7 +98,7 @@ class DiamondDataDirs:
         self.systems = {}
 
         for year_dir in xchem_data_path.glob('*'):
-            print(f"System: {year_dir.name}")
+            print(f"Year: {year_dir.name}")
             for project_dir in year_dir.glob('*'):
                 print(f"\tProject: {project_dir.name}")
                 model_building_dir = project_dir / 'processing' / 'analysis' / 'model_building'
@@ -150,6 +150,8 @@ class DiamondDataDirs:
 
                 if system not in self.systems:
                     self.systems[system] = {}
+
+                print(f"\t\tSystem: {system.system_name}")
 
                 data_dir = DiamondDataDir(data_dir_path)
 
