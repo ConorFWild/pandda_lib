@@ -46,7 +46,7 @@ class DiamondDataset:
         pandda_model_path = path / constants.PANDDA_EVENT_MODEL.format(dtag.dtag)
 
         if pandda_model_path.exists():
-            print(f"\tDataset {dtag} has model {pandda_model_path}, checking for ligs")
+            # print(f"\tDataset {dtag} has model {pandda_model_path}, checking for ligs")
             st = gemmi.read_structure(str(pandda_model_path))
             sel = gemmi.Selection("(LIG)")
             num_ligs = 0
@@ -57,7 +57,7 @@ class DiamondDataset:
                     for residue in sel.residues(chain):
                         num_ligs += 1
 
-            print(f"\t\tDataset num ligs: {num_ligs}")
+            # print(f"\t\tDataset num ligs: {num_ligs}")
 
             if num_ligs == 0:
                 self.pandda_model_path = None
@@ -142,12 +142,19 @@ class DiamondDataDirs:
                 ],
                     key=lambda _system_name: len(_system_name.system_name)
                 )
-                print(f"{dtags[0]}: {system}: {datasets_list[0]}")
+                # print(f"{dtags[0]}: {system}: {datasets_list[0]}")
 
                 if system not in self.systems:
                     self.systems[system] = {}
 
-                self.systems[system][project] = DiamondDataDir(data_dir_path)
+                data_dir = DiamondDataDir(data_dir_path)
+
+                self.systems[system][project] = data_dir
+
+                num_models = len([dataset for dataset in data_dir.datasets.values() if dataset.pandda_model_path])
+
+                print(f"\tNum datasets is: {len(data_dir.datasets)}")
+                print(f"\tNum models is: {num_models}")
 
                 # except Exception as e:
                 #     # print(e)
