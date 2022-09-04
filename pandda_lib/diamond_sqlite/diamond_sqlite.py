@@ -16,6 +16,7 @@ SYSTEM_EVENT_MAP_SQL_TABLE = "system_event_map"
 EVENT_MAP_QUANTILES_SQL_TABLE = "event_map_quantiles"
 BUILD_SCORE_SQL_TABLE = "build_score"
 BUILD_RMSD_SQL_TABLE = "build_rmsd"
+BUILD_RSCC_SQL_TABLE = "builds_rscc"
 
 Base = declarative_base()
 
@@ -65,6 +66,7 @@ class BuildScoreSQL(Base):
 
     rscc = Column(Float)
     custom_score = Column(Float)
+
 
 class BuildRMSDSQL(Base):
     __tablename__ = BUILD_RMSD_SQL_TABLE
@@ -125,12 +127,21 @@ class SystemSQL(Base):
     datasets = relationship("DatasetSQL")
 
 
+class BuildRSCCSQL(Base):
+    __tablename__ = BUILD_RSCC_SQL_TABLE
+
+    id = Column(Integer, primary_key=True)
+
+    score = Column(Float)
+
+
 class PanDDABuildSQL(Base):
     __tablename__ = PANDDA_BUILD_SQL_TABLE
 
     id = Column(Integer, primary_key=True)
     event_id = Column(Integer, ForeignKey(f"{PANDDA_EVENT_SQL_TABLE}.id"))
-    build_rmsd_id =  Column(Integer, ForeignKey(f"{BUILD_RMSD_SQL_TABLE}.id"))
+    build_rmsd_id = Column(Integer, ForeignKey(f"{BUILD_RMSD_SQL_TABLE}.id"))
+    build_rscc_id = Column(Integer, ForeignKey(f"{BUILD_RSCC_SQL_TABLE}.id"))
 
     build_path = Column(String)
     # signal_samples = Column(Float)
@@ -141,6 +152,7 @@ class PanDDABuildSQL(Base):
     # percentage_noise = Column(Float)
     score = Column(Float)
     rmsd = relationship("BuildRMSDSQL", uselist=False)
+    rscc = relationship("BuildRSCCSQL", uselist=False)
 
 
 class PanDDAEventSQL(Base):
@@ -183,7 +195,6 @@ class PanDDADirSQL(Base):
     id = Column(Integer, primary_key=True)
     system_id = Column(Integer, ForeignKey(f"{SYSTEM_SQL_TABLE}.id"))
     project_id = Column(Integer, ForeignKey(f"{PROJECT_DIR_SQL_TABLE}.id"))
-
 
     path = Column(String)
     pandda_dataset_results = relationship("PanDDADatasetSQL")
