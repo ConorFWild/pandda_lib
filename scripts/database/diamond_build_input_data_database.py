@@ -12,7 +12,6 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import Base, ProjectDirSQL, Datase
 
 
 def diamond_build_input_data_database(sqlite_filepath):
-
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     os.remove(sqlite_filepath)
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
@@ -32,33 +31,34 @@ def diamond_build_input_data_database(sqlite_filepath):
 
     print("Updating database...")
     for system, system_project_dirs in diamond_data_dirs.systems.items():
-
+        print(f"System: {system.system_name}")
         system_project_sqls = []
         system_datasets = []
 
         for project_name, project_data_dir in system_project_dirs.items():
+            print(f"Project: {project_name}")
             # project_data_dir = diamond_data_dirs[system]
             project_datasets = [
-                    DatasetSQL(
-                        dtag=_dataset.dtag.dtag,
-                        path=str(_dataset.path),
-                        model_path=str(_dataset.model_path),
-                        mtz_path=str(_dataset.mtz_path),
-                        pandda_model_path=str(_dataset.pandda_model_path),
-                        event_maps=[
-                            SystemEventMapSQL(
-                                path=str(event_map.path),
-                                event_idx = event_map.event_idx,
-                                bdc=event_map.bdc,
-                            )
-                            for event_map
-                            in _dataset.event_maps
+                DatasetSQL(
+                    dtag=_dataset.dtag.dtag,
+                    path=str(_dataset.path),
+                    model_path=str(_dataset.model_path),
+                    mtz_path=str(_dataset.mtz_path),
+                    pandda_model_path=str(_dataset.pandda_model_path),
+                    event_maps=[
+                        SystemEventMapSQL(
+                            path=str(event_map.path),
+                            event_idx=event_map.event_idx,
+                            bdc=event_map.bdc,
+                        )
+                        for event_map
+                        in _dataset.event_maps
 
-                        ],
-                    )
-                    for _dtag, _dataset
-                    in project_data_dir.datasets.items()
-                ]
+                    ],
+                )
+                for _dtag, _dataset
+                in project_data_dir.datasets.items()
+            ]
             system_datasets = system_datasets + project_datasets
             project_data_dir_sql = ProjectDirSQL(
                 project_name=project_name,
@@ -73,7 +73,7 @@ def diamond_build_input_data_database(sqlite_filepath):
         system_sql = SystemSQL(
             system_name=system.system_name,
             projects=system_project_sqls,
-            datasets = system_datasets
+            datasets=system_datasets
         )
         session.add(system_sql)
 
@@ -88,6 +88,7 @@ def diamond_build_input_data_database(sqlite_filepath):
 
     # print("Printing database datasets...")
     # for instance in session.query(DatasetSQL).order_by(S)
+
 
 if __name__ == "__main__":
     fire.Fire(diamond_build_input_data_database)
