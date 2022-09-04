@@ -33,20 +33,21 @@ class DiamondDataset:
 
         model_path = path / "dimple.pdb"
         mtz_path = path / "dimple.mtz"
-        if model_path.exists():
+        if model_path.exists() & os.access(model_path, os.R_OK):
             self.model_path = model_path
         else:
             self.model_path = None
 
-        if mtz_path.exists():
+        if mtz_path.exists() & os.access(mtz_path, os.R_OK):
             self.mtz_path = mtz_path
         else:
             self.mtz_path = None
 
         pandda_model_path = path / constants.PANDDA_EVENT_MODEL.format(dtag.dtag)
 
-        if pandda_model_path.exists():
+        if pandda_model_path.exists() & os.access(pandda_model_path, os.R_OK):
             # print(f"\tDataset {dtag} has model {pandda_model_path}, checking for ligs")
+
             st = gemmi.read_structure(str(pandda_model_path))
             sel = gemmi.Selection("(LIG)")
             num_ligs = 0
