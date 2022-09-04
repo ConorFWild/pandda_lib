@@ -19,7 +19,6 @@ class SystemEventMap:
         else:
             self.event_idx = None
 
-
         matches = re.findall("BDC_([^_]+)_", path.name)
         if matches:
             self.bdc = float(matches[0])
@@ -114,8 +113,7 @@ class DiamondDataDirs:
                         datasets_list = list(model_building_dir.glob('*'))
                         data_dir_path = model_building_dir
 
-
-                if os.access(model_building_dir, os.R_OK):
+                if os.access(initial_model_dir, os.R_OK):
                     if initial_model_dir.exists():
                         datasets_list = list(initial_model_dir.glob('*'))
                         data_dir_path = initial_model_dir
@@ -137,12 +135,11 @@ class DiamondDataDirs:
                     print(f"\tNo dtags for dir: {data_dir_path}...")
                     continue
 
-
                 system = max([
                     SystemName.from_dtag(dtag)
                     for dtag
                     in dtags
-                    ],
+                ],
                     key=lambda _system_name: len(_system_name.system_name)
                 )
                 print(f"{dtags[0]}: {system}: {datasets_list[0]}")
