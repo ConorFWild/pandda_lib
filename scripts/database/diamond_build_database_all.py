@@ -40,9 +40,9 @@ def diamond_build_database_all(options_json="database_options.json", step=0, cpu
     if step <= 4:
         diamond_add_model_stats(sqlite_filepath, tmp_dir, cpus=3)
     if step <= 5:
-        database_add_autobuild_panddas(sqlite_filepath, pandda_autobuilds_dir)
-    if step <= 6:
         diamond_add_event_stats(sqlite_filepath)
+    if step <= 6:
+        database_add_autobuild_panddas(sqlite_filepath, pandda_autobuilds_dir)
     if step <= 7:
         diamond_add_autobuild_rmsds(sqlite_filepath, cpus=3)
 
