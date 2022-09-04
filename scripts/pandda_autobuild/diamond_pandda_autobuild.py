@@ -56,6 +56,8 @@ def main(
         for project in system.projects:
             print(f"{system.system_name}")
             output_dir = tmp_dir / f"system_{system.system_name}_project_{project.project_name}"
+            if (output_dir / "analyses" / "pandda_analyse_events.csv").exists():
+                continue
 
             # Handle existing runs
             if fresh and output_dir.exists():
