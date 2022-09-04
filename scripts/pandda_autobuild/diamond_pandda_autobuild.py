@@ -59,7 +59,8 @@ def main(
 
             # Handle existing runs
             if fresh and output_dir.exists():
-                shutil.rmtree(output_dir)
+                if not (output_dir / "analyses" / "pandda_analyse_events.csv").exists():
+                    shutil.rmtree(output_dir)
             if output_dir.exists() and not fresh:
                 continue
             if remove:
