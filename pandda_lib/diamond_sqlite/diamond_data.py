@@ -98,7 +98,9 @@ class DiamondDataDirs:
         self.systems = {}
 
         for year_dir in xchem_data_path.glob('*'):
+            print(f"System: {year_dir.name}")
             for project_dir in year_dir.glob('*'):
+                print(f"\tProject: {project_dir.name}")
                 model_building_dir = project_dir / 'processing' / 'analysis' / 'model_building'
 
                 initial_model_dir = project_dir / 'processing' / 'analysis' / 'initial_model'
@@ -119,6 +121,8 @@ class DiamondDataDirs:
                         data_dir_path = initial_model_dir
 
                 if not datasets_list:
+                    print(f"\t\tNo dtags for dir: {data_dir_path}...")
+
                     continue
 
                 # num_datasets = len(datasets_list)
@@ -132,7 +136,7 @@ class DiamondDataDirs:
                     #     continue
 
                 if len(dtags) == 0:
-                    print(f"\tNo dtags for dir: {data_dir_path}...")
+                    print(f"\t\tNo dtags for dir: {data_dir_path}...")
                     continue
 
                 system = max([
@@ -153,8 +157,8 @@ class DiamondDataDirs:
 
                 num_models = len([dataset for dataset in data_dir.datasets.values() if dataset.pandda_model_path])
 
-                print(f"\tNum datasets is: {len(data_dir.datasets)}")
-                print(f"\tNum models is: {num_models}")
+                print(f"\t\tNum datasets is: {len(data_dir.datasets)}")
+                print(f"\t\tNum models is: {num_models}")
 
                 # except Exception as e:
                 #     # print(e)
