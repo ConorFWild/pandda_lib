@@ -1,5 +1,5 @@
 {
-    "sqlite_filepath": "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond_2.db",
+    "sqlite_filepath": "/dls/science/groups/i04-1/conor_dev/diamond_2.db",
     "reference_structure_dir": "/dls/science/groups/i04-1/conor_dev/pandda_lib/reference/reference_structures",
     "tmp_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/rsccs",
     "pandda_autobuilds_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_autobuilding/"
