@@ -71,7 +71,8 @@ def main(
                 system_data_dir=Path(project.path),
                 output_dir=output_dir,
                 cores=cores,
-                comparison_strategy="high_res_first"
+                comparison_strategy="high_res_first",
+                event_score="size"
             )
             scheduler.submit(job, cores=cores, mem_per_core=int(220 / cores))
 
