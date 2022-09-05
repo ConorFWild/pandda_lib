@@ -84,14 +84,15 @@ def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
         print("Getting run set")
 
         print("Running")
-        selected_rmsds = p.map(
+        selected_rsccs = p.map(
             Runner(),
             run_set.values()
         )
 
     print("Inserting to database...")
-    for run_key, selected_rscc in zip(run_set, selected_rmsds):
+    for run_key, selected_rscc in zip(run_set, selected_rsccs):
         build_rscc_sql = BuildRSCCSQL(
+            score=selected_rscc,
             # broken_ligand=selected_rmsd['broken_ligand'],
             # alignment_error=selected_rmsd['alignment_error'],
             # # closest_event=selected_rmsd['closest_event'],
