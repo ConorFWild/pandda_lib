@@ -4,22 +4,34 @@
   "output_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/pandda_clustering_analysis",
   "target": {
     "JMJD2D": {
-      "data_dir": "data_JMJD2D",
+      "data_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/data_JMJD2D",
       "pdb_regex": "*.dimple.pdb",
       "mtz_regex": "*.dimple.mtz",
       "sample_json": "JMJD2D.json"
     },
     "BRD1": {
-      "data_dir": "data_BRD1",
+      "data_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/data_BRD1",
       "pdb_regex": "*.dimple.pdb",
       "mtz_regex": "*.dimple.mtz",
       "sample_json": "BRD1.json"
     },
     "PTP1B": {
-      "data_dir": "data_PTP1B",
+      "data_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/data_PTP1B",
       "pdb_regex": "dimple.pdb",
       "mtz_regex": "dimple.mtz",
       "sample_json": "PTP1B.json"
+    },
+    "BAZ2BA": {
+      "data_dir": "/dls/science/groups/i04-1/conor_dev/baz2b_test/data",
+      "pdb_regex": "*.dimple.pdb",
+      "mtz_regex": "*.dimple.mtz",
+      "sample_json": "BAZ2BA.json"
+    },
+    "NSP16": {
+      "data_dir": "/dls/labxchem/data/2020/lb26998-2/processing/analysis/model_building",
+      "pdb_regex": "dimple.pdb",
+      "mtz_regex": "dimple.mtz",
+      "sample_json": "NSP16.json"
     }
   }
 }

@@ -64,14 +64,15 @@ def run_pandda_mean_maps(targets_json_path: str):
         targets_dict = json.load(f)
 
     # Get the working dir
-    working_dir = pathlib.Path(targets_dict[WORKING_DIR_KEY]).resolve()
+    # working_dir = pathlib.Path(targets_dict[WORKING_DIR_KEY]).resolve()
     output_dir = pathlib.Path(targets_dict[OUTPUT_DIR_KEY]).resolve()
 
     # construct the PanDDAs
     pandda_jobs_dict = {}
     for target, target_info in targets_dict[TARGET_KEY].items():
         print(f"\tTarget is: {target}")
-        data_dir = working_dir / target_info[DATA_DIR_KEY]
+        # data_dir = working_dir / target_info[DATA_DIR_KEY]
+        data_dir = pathlib.Path(target_info[DATA_DIR_KEY])
         out_dir = output_dir / OUT_DIR_FORMAT.format(target=target)
 
         pandda_job_script = PANDDA_JOB_TEMPLATE.format(
