@@ -1,5 +1,5 @@
 {
-  "Dtags": ["BAZ2BA-x447", "BAZ2BA-x475", "BAZ2BA-x583"],
+  "Dtags": ["BAZ2BA-x447", "BAZ2BA-x475", "BAZ2BA-x583", "BAZ2BA-x557"],
   "Sample Points": {
     "BAZ2BA-x447 fragment hit": ["BAZ2BA-x447", 20.65, 11.64, 19.62],
     "BAZ2BA-x475 fragment hit": ["BAZ2BA-x475", 13.88, 38.61, 29.27],
@@ -7,6 +7,9 @@
     "BAZ2BA-x583 active site sidechain": ["BAZ2BA-x583", 18.12, 40.73, 26.25],
     "BAZ2BA-x583 active site CA": ["BAZ2BA-x583", 17.40, 45.47, 24.88],
     "BAZ2BA-x583 ordered water": ["BAZ2BA-x583", 11.22, 35.84, 25.87],
-    "BAZ2BA-x583 bulk solvent": ["BAZ2BA-x583", 7.61, 44.75, 19.16]
+    "BAZ2BA-x583 bulk solvent": ["BAZ2BA-x583", 7.61, 44.75, 19.16],
+    "BAZ2BA-x557 Missing Hit Central C": ["BAZ2BA-x557", 14.09, 39.91, 29.72],
+    "BAZ2BA-x557 Missing Hit Peripheral C": ["BAZ2BA-x557", 11.60, 41.11, 29.70]
+
   }
 }
