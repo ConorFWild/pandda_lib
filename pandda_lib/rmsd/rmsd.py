@@ -162,7 +162,7 @@ class RMSD:
 
                     symmetry_distances = []
                     atom_1_pos = atom_1_node["pos"]
-                    atom_1_pos_unit = unit_cell.fractionalize(atom_1_pos).wrap_to_unit()
+                    atom_1_pos_unit = unit_cell.orthogonalize(unit_cell.fractionalize(atom_1_pos).wrap_to_unit())
                     atom_2_pos = atom_2_node["pos"]
                     for dx, dy, dz in itertools.product(ds, ds, ds):
                         for op in ops:
