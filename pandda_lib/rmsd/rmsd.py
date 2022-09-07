@@ -312,6 +312,7 @@ def get_rmsds_from_path(path_ref, path_align: Path, path_lig: Path):
                     rmsd = RMSD.from_structures_iso(ligand_ref.structure, ligand_comp_symmetry_image)
                     rmsds.append(rmsd.rmsd)
     except Exception as e:
+        print(e)
         return "BROKENLIGAND"
 
     return rmsds
