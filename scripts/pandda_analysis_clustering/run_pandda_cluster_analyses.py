@@ -49,8 +49,11 @@ PANDDA_JOB_TEMPLATE = (
     "--ligand_cif_regex=\"ligand.cif\" "
     "--ligand_pdb_regex=\"ligand.pdb\" "
     "--local_processing=\"multiprocessing_spawn\" "
-    "--local_cpus=3 --debug=2 --memory_availability=\"low\" "
-    "--sample_json={sample_json}"
+    "--local_cpus=3 "
+    "--debug=2 "
+    "--memory_availability=\"low\" "
+    "--sample_json={sample_json} "
+    "--comparison_strategy=\"{comparison_strategy}\" " 
     " \n"
 
 )
@@ -80,7 +83,8 @@ def run_pandda_mean_maps(targets_json_path: str):
             out_dir=out_dir,
             pdb_regex=target_info[PDB_REGEX_KEY],
             mtz_regex=target_info[MTZ_REGEX_KEY],
-            sample_json=pathlib.Path(targets_dict[SAMPLE_JSON_DIR]) / target_info[SAMPLE_JSON_KEY]
+            sample_json=pathlib.Path(targets_dict[SAMPLE_JSON_DIR]) / target_info[SAMPLE_JSON_KEY],
+            comparison_strategy="hybrid"
         )
         pandda_jobs_dict[target] = pandda_job_script
 
