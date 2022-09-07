@@ -54,6 +54,7 @@ class RMSD:
         # print(graph_1.nodes)
         graph_2 = RMSD.graph_from_res(res_2)
         # print(graph_2.nodes)
+        print("\t\t\tGot graphs!")
 
         # Match!
         node_match = isomorphism.categorical_node_match('Z', 0)
@@ -308,7 +309,9 @@ def get_rmsds_from_path(path_ref, path_align: Path, path_lig: Path):
     try:
         for ligand_ref in ligands_ref.structures:
             for ligand_comp in ligands_comp.structures:
-                for ligand_comp_symmetry_image in get_symmetry_images(ligand_comp.structure, structure_ref):
+                ligand_comp_symmetry_images = get_symmetry_images(ligand_comp.structure, structure_ref)
+                print(f"\t\t\tGot ligand_comp_symmetry_images")
+                for ligand_comp_symmetry_image in ligand_comp_symmetry_images:
                     rmsd = RMSD.from_structures_iso(ligand_ref.structure, ligand_comp_symmetry_image)
                     rmsds.append(rmsd.rmsd)
     except Exception as e:
