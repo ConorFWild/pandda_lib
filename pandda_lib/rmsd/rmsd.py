@@ -356,7 +356,7 @@ def get_rmsds_from_path(path_ref, path_align: Path, path_lig: Path):
                 # for ligand_comp_symmetry_image in ligand_comp_symmetry_images:
                 rmsd = RMSD.from_symmetry_structures_iso(
                     ligand_ref.structure,
-                    ligand_comp,
+                    ligand_comp.structure,
                     structure_ref.structure,
                 )
                 rmsds.append(rmsd.rmsd)
