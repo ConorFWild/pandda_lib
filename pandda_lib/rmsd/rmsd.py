@@ -110,65 +110,97 @@ class RMSD:
                             f"Graph 2: {graph_2.nodes}; {[graph_2.nodes[j]['Z'] for j in graph_2.nodes]}; "
                             f"{len(graph_2.edges)}; ")
 
-    # @staticmethod
-    # def from_symmetry_structures_iso(res_1, res_2s):
-    #     graph_1 = RMSD.graph_from_res(res_1)
-    #     # print(graph_1.nodes)
-    #     graph_2 = RMSD.graph_from_res(res_2)
-    #     # print(graph_2.nodes)
-    #
-    #     # Match!
-    #     node_match = isomorphism.categorical_node_match('Z', 0)
-    #     gm = isomorphism.GraphMatcher(graph_1, graph_2, node_match=node_match)
-    #
-    #     # Get shortest iso
-    #     if gm.is_isomorphic():
-    #         # print(cc1.name, 'is isomorphic')
-    #         # we could use GM.match(), but here we try to find the shortest diff
-    #
-    #         mean_distances = []
-    #         # short_diff = None
-    #         for n, mapping in enumerate(gm.isomorphisms_iter()):
-    #             # diff = {k: v for k, v in mapping.items() if k != v}
-    #             # if short_diff is None or len(diff) < len(short_diff):
-    #             #     short_diff = diff
-    #             if n == 10000:  # don't spend too much here
-    #                 print(' (it may not be the simplest isomorphism)')
-    #
-    #             #     break
-    #             # print(short_diff)
-    #
-    #             # Get Distance between points
-    #             distances = []
-    #
-    #             for j in graph_1.nodes:
-    #                 atom_1_node = graph_1.nodes[j]
-    #                 # print(atom_1_node)
-    #
-    #                 atom_2_id = mapping[j]
-    #                 atom_2_node = graph_2.nodes[atom_2_id]
-    #
-    #                 assert atom_1_node["Z"] == atom_2_node["Z"]
-    #
-    #                 distance = atom_1_node["pos"].dist(atom_2_node["pos"])
-    #                 distances.append(distance)
-    #             mean_distance = np.mean(distances)
-    #             mean_distances.append(mean_distance)
-    #
-    #         # print(mean_distances)
-    #         min_mean_distance = min(mean_distances)
-    #
-    #         return RMSD(min_mean_distance)
-    #
-    #     # Ottherwise something has gone terribly wrong
-    #     else:
-    #         raise Exception(f"{res_1} and {res_2} are NOT isomorphic, wtf? "
-    #                         f"res 1 len: {len([atom for atom in res_1])}; "
-    #                         f"res 2 len: {len([atom for atom in res_2])}; "
-    #                         f"Graph 1: {graph_1.nodes}; {[graph_1.nodes[j]['Z'] for j in graph_1.nodes]}; "
-    #                         f"{len(graph_1.edges)}; "
-    #                         f"Graph 2: {graph_2.nodes}; {[graph_2.nodes[j]['Z'] for j in graph_2.nodes]}; "
-    #                         f"{len(graph_2.edges)}; ")
+    @staticmethod
+    def from_symmetry_structures_iso(res_1, res_2, ref):
+        #
+        unit_cell = ref.cell
+        spacegroup = ref.find_spacegroup()
+
+        ds = [-1.0, 0.0, 1.0]
+        ops = spacegroup.operations()
+        # symmetry_images = []
+
+
+        #
+        graph_1 = RMSD.graph_from_res(res_1)
+        # print(graph_1.nodes)
+        graph_2 = RMSD.graph_from_res(res_2)
+        # print(graph_2.nodes)
+
+        # Match!
+        node_match = isomorphism.categorical_node_match('Z', 0)
+        gm = isomorphism.GraphMatcher(graph_1, graph_2, node_match=node_match)
+
+        # Get shortest iso
+        if gm.is_isomorphic():
+            # print(cc1.name, 'is isomorphic')
+            # we could use GM.match(), but here we try to find the shortest diff
+
+            mean_distances = []
+            # short_diff = None
+            for n, mapping in enumerate(gm.isomorphisms_iter()):
+                # diff = {k: v for k, v in mapping.items() if k != v}
+                # if short_diff is None or len(diff) < len(short_diff):
+                #     short_diff = diff
+                if n == 10000:  # don't spend too much here
+                    print(' (it may not be the simplest isomorphism)')
+
+                #     break
+                # print(short_diff)
+
+                # Get Distance between points
+                distances = []
+
+                for j in graph_1.nodes:
+                    atom_1_node = graph_1.nodes[j]
+                    # print(atom_1_node)
+
+                    atom_2_id = mapping[j]
+                    atom_2_node = graph_2.nodes[atom_2_id]
+
+                    assert atom_1_node["Z"] == atom_2_node["Z"]
+
+                    symmetry_distances = []
+                    atom_1_pos = atom_1_node["pos"]
+                    atom_1_pos_unit = unit_cell.fractionalize(atom_1_pos).wrap_to_unit()
+                    atom_2_pos = atom_2_node["pos"]
+                    for dx, dy, dz in itertools.product(ds, ds, ds):
+                        for op in ops:
+                            fractional_pos_unit = unit_cell.fractionalize(atom_2_pos).wrap_to_unit()
+                            symmetry_fractional_pos = gemmi.Fractional(
+                                *op.apply_to_xyz(
+                                    [
+                                        fractional_pos_unit.x,
+                                        fractional_pos_unit.y,
+                                        fractional_pos_unit.z
+                                    ]
+                                )
+                            )
+                            translated_symmetry_fractional_pos = symmetry_fractional_pos + gemmi.Fractional(dx, dy, dz)
+                            new_pos = unit_cell.orthogonalize(translated_symmetry_fractional_pos)
+                            symmetry_distance = atom_1_pos_unit.dist(new_pos)
+                            symmetry_distances.append(symmetry_distance)
+
+                    distance = min(symmetry_distances)
+                    # distance = atom_1_node["pos"].dist(atom_2_node["pos"])
+                    distances.append(distance)
+                mean_distance = np.mean(distances)
+                mean_distances.append(mean_distance)
+
+            # print(mean_distances)
+            min_mean_distance = min(mean_distances)
+
+            return RMSD(min_mean_distance)
+
+        # Ottherwise something has gone terribly wrong
+        else:
+            raise Exception(f"{res_1} and {res_2} are NOT isomorphic, wtf? "
+                            f"res 1 len: {len([atom for atom in res_1])}; "
+                            f"res 2 len: {len([atom for atom in res_2])}; "
+                            f"Graph 1: {graph_1.nodes}; {[graph_1.nodes[j]['Z'] for j in graph_1.nodes]}; "
+                            f"{len(graph_1.edges)}; "
+                            f"Graph 2: {graph_2.nodes}; {[graph_2.nodes[j]['Z'] for j in graph_2.nodes]}; "
+                            f"{len(graph_2.edges)}; ")
 
     @staticmethod
     def from_structures(res_1, res_2):
@@ -255,12 +287,13 @@ def get_symmetry_images(ligand_comp, structure_ref):
             for atom in ligand_comp:
                 pos = atom.pos
                 fractional_pos = unit_cell.fractionalize(pos)
+                fractional_pos_unit = unit_cell.fractionalize(pos).wrap_to_unit()
                 symmetry_fractional_pos = gemmi.Fractional(
                     *op.apply_to_xyz(
                         [
-                            fractional_pos.x,
-                            fractional_pos.y,
-                            fractional_pos.z
+                            fractional_pos_unit.x,
+                            fractional_pos_unit.y,
+                            fractional_pos_unit.z
                         ]
                                      )
                 )
@@ -316,12 +349,17 @@ def get_rmsds_from_path(path_ref, path_align: Path, path_lig: Path):
     rmsds = []
     try:
         for ligand_ref in ligands_ref.structures:
+            # ligand_ref_unit_cell = get_unit_cell_ligand(ligand_ref, structure_ref)
             for ligand_comp in ligands_comp.structures:
-                ligand_comp_symmetry_images = get_symmetry_images(ligand_comp.structure, structure_ref)
+                # ligand_comp_symmetry_images = get_symmetry_images(ligand_comp.structure, structure_ref)
                 # print(f"\t\t\tGot ligand_comp_symmetry_images")
-                for ligand_comp_symmetry_image in ligand_comp_symmetry_images:
-                    rmsd = RMSD.from_structures_iso(ligand_ref.structure, ligand_comp_symmetry_image)
-                    rmsds.append(rmsd.rmsd)
+                # for ligand_comp_symmetry_image in ligand_comp_symmetry_images:
+                rmsd = RMSD.from_symmetry_structures_iso(
+                    ligand_ref.structure,
+                    ligand_comp,
+                    structure_ref.structure,
+                )
+                rmsds.append(rmsd.rmsd)
     except Exception as e:
         print(e)
         return "BROKENLIGAND"
