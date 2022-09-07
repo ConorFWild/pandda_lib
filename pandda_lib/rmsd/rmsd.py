@@ -255,7 +255,15 @@ def get_symmetry_images(ligand_comp, structure_ref):
             for atom in ligand_comp:
                 pos = atom.pos
                 fractional_pos = unit_cell.fractionalize(pos)
-                symmetry_fractional_pos = op.apply_to_xyz(fractional_pos)
+                symmetry_fractional_pos = gemmi.Fractional(
+                    *op.apply_to_xyz(
+                        [
+                            fractional_pos.x,
+                            fractional_pos.y,
+                            fractional_pos.z
+                        ]
+                                     )
+                )
                 translated_symmetry_fractional_pos = symmetry_fractional_pos + gemmi.Fractional(dx, dy, dz)
                 new_pos = unit_cell.orthogonalize(translated_symmetry_fractional_pos)
 
