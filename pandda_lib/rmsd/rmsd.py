@@ -268,15 +268,15 @@ def get_symmetry_images(ligand_comp, structure_ref):
                 new_pos = unit_cell.orthogonalize(translated_symmetry_fractional_pos)
 
                 # Get the atomic symbol
-                atom_symbol: str = atom.GetSymbol()
-                gemmi_element: gemmi.Element = gemmi.Element(atom_symbol)
+                # atom_symbol: str = atom.GetSymbol()
+                # gemmi_element: gemmi.Element = gemmi.Element(atom_symbol)
 
 
                 # Get the
                 gemmi_atom: gemmi.Atom = gemmi.Atom()
-                gemmi_atom.name = atom_symbol
+                # gemmi_atom.name = atom_symbol
                 gemmi_atom.pos = new_pos
-                gemmi_atom.element = gemmi_element
+                # gemmi_atom.element = gemmi_element
 
                 # Add atom to residue
                 res.add_atom(gemmi_atom)
