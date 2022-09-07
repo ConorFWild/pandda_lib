@@ -103,6 +103,8 @@ class GetBuildRMSD:
             closest_event = None
             closest_rmsd = None
 
+        print(f"Closest RMSD is: {closest_rmsd}")
+
         record = {
             'broken_ligand': broken_ligand,
             'alignment_error': alignment_error,
