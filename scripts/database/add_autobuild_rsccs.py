@@ -1,3 +1,4 @@
+import dataclasses
 import pathlib
 import os
 
@@ -16,6 +17,10 @@ from pandda_lib.fs.pandda_result import PanDDAResult
 from pandda_lib.diamond_sqlite.diamond_sqlite import *
 from pandda_lib.rscc import get_rscc
 from pandda_lib.rscc.rscc import GetDatasetRSCC, Runner
+
+@dataclasses.dataclass
+class EventMap:
+    path: str
 
 
 def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
@@ -49,7 +54,7 @@ def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
                     dataset_dtag = pandda_dataset.dtag
                     dataset_path = pandda_dataset.path
                     dataset_bound_state_model_path = build.build_path
-                    event_maps = [event.event_map_path, ]  # Only need the one that the build came from
+                    event_maps = [EventMap(event.event_map_path), ]  # Only need the one that the build came from
                     mtz_path = pandda_dataset.input_mtz_path
                     tmp_dir = tmp_dir
                     build_to_run = GetDatasetRSCC(
