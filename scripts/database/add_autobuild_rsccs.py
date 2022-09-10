@@ -56,7 +56,8 @@ def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
                     dataset_bound_state_model_path = build.build_path
                     event_maps = [EventMap(event.event_map_path), ]  # Only need the one that the build came from
                     mtz_path = pandda_dataset.input_mtz_path
-                    tmp_dir = tmp_dir
+                    tmp_dir = tmp_dir / f"{system.system_name}_{project.project_name}_{pandda_dataset.dtag}_" \
+                                        f"{event.idx}_{build.id}"
                     build_to_run = GetDatasetRSCC(
                         dataset_dtag,
                         dataset_path,
