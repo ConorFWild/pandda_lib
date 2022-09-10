@@ -50,5 +50,6 @@ def diamond_build_database_all(options_json="database_options.json", step=0, cpu
     if step <= 8:
         diamond_add_autobuild_rsccs(sqlite_filepath, build_tmp_dir, cpus=cpus)
 
+
 if __name__ == "__main__":
     fire.Fire(diamond_build_database_all)
