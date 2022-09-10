@@ -105,7 +105,7 @@ def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
             # high_confidence=selected_rmsd['high_confidence']
         )
         build_sql = sqls[run_key]["Build"]
-        build_sql.rmsd = build_rscc_sql
+        build_sql.rscc = build_rscc_sql
 
         session.add(build_rscc_sql)
 
