@@ -91,7 +91,7 @@ def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
         print("Running")
         selected_rsccs = p.map(
             Runner(),
-            run_set.values()
+            list(run_set.values())[:30]
         )
 
     print("Inserting to database...")
