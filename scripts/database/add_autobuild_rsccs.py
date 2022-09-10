@@ -113,7 +113,7 @@ def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
 
     print("Printing database datasets...")
     for instance in session.query(BuildRSCCSQL).order_by(BuildRSCCSQL.id):
-        print(f"{instance.closest_rmsd} {instance.high_confidence} {instance.broken_ligand} {instance.alignment_error}")
+        print(f"{instance.score}")
 
 
 if __name__ == "__main__":
