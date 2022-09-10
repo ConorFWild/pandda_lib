@@ -1,5 +1,6 @@
 import pathlib
 import os
+import shutil
 
 import numpy as np
 import gemmi
@@ -92,6 +93,8 @@ def get_dataset_rsccs(dataset_dtag, dataset_path, dataset_bound_state_model_path
         # selected_rscc_index = np.argmax(rsccs)
         selected_rscc_id = max(rsccs, key=lambda _key: rsccs[_key])
         selected_rscc = rsccs[selected_rscc_id]
+
+        shutil.rmtree(tmp_dir)
 
         return selected_rscc
 
