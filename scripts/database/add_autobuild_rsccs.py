@@ -24,69 +24,70 @@ class EventMap:
 
 
 def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
-    sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
-    tmp_dir = pathlib.Path(tmp_dir).resolve()
-    # tmp_dir = pathlib.Path(tmp_dir).resolve()
-    engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
-    session = sessionmaker(bind=engine)()
-    Base.metadata.create_all(engine)
-
-    # Remove tables
-    Base.metadata.create_all(engine)
-    BuildRMSDSQL.__table__.drop(engine)
-    Base.metadata.create_all(engine)
-
-    # Get Autobuild PanDDA sqls
-    run_set = {}
-    sqls = {}
-
-    # Construct the jobs
-    for pandda_2 in session.query(PanDDADirSQL).options(subqueryload("*")).order_by(PanDDADirSQL.id).all():
-        system = pandda_2.system
-        project = pandda_2.project
-        print(f"PanDDA 2: {system.system_name}: {project.project_name}: {project.path}")
-
-        print(f"\t{len(pandda_2.pandda_dataset_results)}")
-        for pandda_dataset in pandda_2.pandda_dataset_results:
-
-            for event in pandda_dataset.events:
-                for build in event.builds:
-                    dataset_dtag = pandda_dataset.dtag
-                    dataset_path = pandda_dataset.path
-                    dataset_bound_state_model_path = build.build_path
-                    event_maps = [EventMap(event.event_map_path), ]  # Only need the one that the build came from
-                    mtz_path = pandda_dataset.input_mtz_path
-                    tmp_dir = tmp_dir / f"{system.system_name}_{project.project_name}_{pandda_dataset.dtag}_" \
-                                        f"{event.idx}_{build.id}"
-                    build_to_run = GetDatasetRSCC(
-                        dataset_dtag,
-                        dataset_path,
-                        dataset_bound_state_model_path,
-                        event_maps,
-                        mtz_path,
-                        tmp_dir,
-                    )
-
-                    run_set[(system.system_name, project.project_name, pandda_dataset.dtag,
-                             event.idx, build.id)] = build_to_run
-                    sqls[(system.system_name, project.project_name, pandda_dataset.dtag,
-                          event.idx, build.id)] = {
-                        "System": system,
-                        "Project": project,
-                        "PanDDA": pandda_2,
-                        "Dataset": pandda_dataset,
-                        "Event": event,
-                        "Build": build
-                    }
-
-    print(f"Number of builds to score: {len(run_set)};")
-
-    print("Getting RSCCs...")
     try:
         mp.set_start_method('spawn')
     except Exception as e:
         print(e)
     with mp.Pool(cpus) as p:
+        sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
+        tmp_dir = pathlib.Path(tmp_dir).resolve()
+        # tmp_dir = pathlib.Path(tmp_dir).resolve()
+        engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
+        session = sessionmaker(bind=engine)()
+        Base.metadata.create_all(engine)
+
+        # Remove tables
+        Base.metadata.create_all(engine)
+        BuildRMSDSQL.__table__.drop(engine)
+        Base.metadata.create_all(engine)
+
+        # Get Autobuild PanDDA sqls
+        run_set = {}
+        sqls = {}
+
+        # Construct the jobs
+        for pandda_2 in session.query(PanDDADirSQL).options(subqueryload("*")).order_by(PanDDADirSQL.id).all():
+            system = pandda_2.system
+            project = pandda_2.project
+            print(f"PanDDA 2: {system.system_name}: {project.project_name}: {project.path}")
+
+            print(f"\t{len(pandda_2.pandda_dataset_results)}")
+            for pandda_dataset in pandda_2.pandda_dataset_results:
+
+                for event in pandda_dataset.events:
+                    for build in event.builds:
+                        dataset_dtag = pandda_dataset.dtag
+                        dataset_path = pandda_dataset.path
+                        dataset_bound_state_model_path = build.build_path
+                        event_maps = [EventMap(event.event_map_path), ]  # Only need the one that the build came from
+                        mtz_path = pandda_dataset.input_mtz_path
+                        tmp_dir = tmp_dir / f"{system.system_name}_{project.project_name}_{pandda_dataset.dtag}_" \
+                                            f"{event.idx}_{build.id}"
+                        build_to_run = GetDatasetRSCC(
+                            dataset_dtag,
+                            dataset_path,
+                            dataset_bound_state_model_path,
+                            event_maps,
+                            mtz_path,
+                            tmp_dir,
+                        )
+
+                        run_set[(system.system_name, project.project_name, pandda_dataset.dtag,
+                                 event.idx, build.id)] = build_to_run
+                        sqls[(system.system_name, project.project_name, pandda_dataset.dtag,
+                              event.idx, build.id)] = {
+                            "System": system,
+                            "Project": project,
+                            "PanDDA": pandda_2,
+                            "Dataset": pandda_dataset,
+                            "Event": event,
+                            "Build": build
+                        }
+
+        print(f"Number of builds to score: {len(run_set)};")
+
+        print("Getting RSCCs...")
+
         print("Getting run set")
 
         print("Running")
