@@ -36,6 +36,7 @@ class GetDatasetRSCC:
         self.event_maps = event_maps
         self.mtz_path = mtz_path
         self.tmp_dir = tmp_dir
+        # self.build_sql = build_sql
 
     def __call__(self, ):
         return get_dataset_rsccs(
