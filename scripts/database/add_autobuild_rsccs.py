@@ -18,6 +18,7 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import *
 from pandda_lib.rscc import get_rscc
 from pandda_lib.rscc.rscc import GetDatasetRSCC, Runner
 
+
 @dataclasses.dataclass
 class EventMap:
     path: str
@@ -63,7 +64,7 @@ def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
                         mtz_path = pandda_dataset.input_mtz_path
                         build_tmp_dir = tmp_dir / f"{system.system_name}_{project.project_name}" \
                                                   f"_{pandda_dataset.dtag}_" \
-                                            f"{event.idx}_{build.id}"
+                                                  f"{event.idx}_{build.id}"
                         build_to_run = GetDatasetRSCC(
                             dataset_dtag,
                             dataset_path,
@@ -92,7 +93,7 @@ def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
         print("Getting run set")
 
         print("Running")
-        selected_rsccs = p.imap(
+        selected_rsccs = p.map(
             Runner(),
             run_set.values(),
             chunksize=10
