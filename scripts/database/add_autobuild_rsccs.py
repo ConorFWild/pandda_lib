@@ -76,11 +76,11 @@ def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
                                  event.idx, build.id)] = build_to_run
                         sqls[(system.system_name, project.project_name, pandda_dataset.dtag,
                               event.idx, build.id)] = {
-                            "System": system,
-                            "Project": project,
-                            "PanDDA": pandda_2,
-                            "Dataset": pandda_dataset,
-                            "Event": event,
+                            # "System": system,
+                            # "Project": project,
+                            # "PanDDA": pandda_2,
+                            # "Dataset": pandda_dataset,
+                            # "Event": event,
                             "Build": build
                         }
 
