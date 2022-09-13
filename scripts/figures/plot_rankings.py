@@ -170,6 +170,7 @@ def plot_rankings():
 
             if len(build_score_rank_table) == 0:
                 print(f"\tNO RSCCS FOR {inspect_table_path}! SKIPPING!")
+                continue
 
             figure_path = output_path / f"{pandda.system.system_name}_{pandda.project.project_name}_{inspect_table_path.parent.parent.name}.png"
             sns.lineplot(
