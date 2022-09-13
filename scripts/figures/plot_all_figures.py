@@ -26,6 +26,7 @@ sns.set_palette("crest")
 from plot_rscc_vs_rmsd import plot_rscc_vs_rmsd
 from plot_rankings import plot_rankings
 
+
 def plot_all_figures(only=None):
     plots = {
         "plot_rscc_vs_rmsd": lambda: plot_rscc_vs_rmsd,
