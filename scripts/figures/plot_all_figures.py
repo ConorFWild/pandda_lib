@@ -29,8 +29,8 @@ from plot_rankings import plot_rankings
 
 def plot_all_figures(only=None):
     plots = {
-        "plot_rscc_vs_rmsd": lambda: plot_rscc_vs_rmsd,
-        "plot_rankings": lambda: plot_rankings,
+        "plot_rscc_vs_rmsd":  plot_rscc_vs_rmsd,
+        "plot_rankings":  plot_rankings,
     }
 
     print(f"only is {only}")
