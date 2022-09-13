@@ -31,6 +31,8 @@ def plot_all_figures():
     plot_rscc_vs_rmsd()
 
 
+    print("Finished!")
+
 if __name__ == "__main__":
     fire.Fire(plot_all_figures())
 

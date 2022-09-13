@@ -34,8 +34,10 @@ def plot_rscc_vs_rmsd():
     session = sessionmaker(bind=engine)()
     Base.metadata.create_all(engine)
 
+    print("\tGetting SQL data")
     panddas = session.query(PanDDADirSQL).options(subqueryload("*")).order_by(PanDDADirSQL.id).all()
 
+    print("\tMaking table...")
     records = []
     for pandda in panddas:
         for dataset in pandda.pandda_dataset_results:
@@ -76,8 +78,14 @@ def plot_rscc_vs_rmsd():
 
     build_rsccs_table = pd.DataFrame(records)
 
-    graph = sns.scatterplot(data=build_rsccs_table, x="RMSD", y="RSCC")
+    print("\tMaking graph...")
+    graph = sns.scatterplot(
+        data=build_rsccs_table,
+        x="RMSD",
+        y="RSCC",
+    )
 
+    print("\tSaving graph...")
     graph.get_figure().savefig(output_path)
 
 
