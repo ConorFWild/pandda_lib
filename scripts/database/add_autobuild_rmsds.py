@@ -119,6 +119,8 @@ class GetBuildRMSD:
 def diamond_add_autobuild_rmsds(sqlite_filepath, cpus=3):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     # tmp_dir = pathlib.Path(tmp_dir).resolve()
+    print(f"\tSQLite filepath is: {sqlite_filepath}")
+    print(f"\tNumber of cpus to use is: {cpus}")
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
     Base.metadata.create_all(engine)
@@ -129,9 +131,7 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, cpus=3):
     Base.metadata.create_all(engine)
 
     # Get Autobuild PanDDA sqls
-    run_set = {
-
-    }
+    run_set = {}
     sqls = {}
 
     reference_structures = {
@@ -170,7 +170,6 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, cpus=3):
                 else:
                     print(f"PanDDA dataset has no matched dataset: {pandda_dataset.dtag}")
                     continue
-
 
             for event in pandda_dataset.events:
                 # if event.builds:
