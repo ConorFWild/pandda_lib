@@ -39,7 +39,7 @@ def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
 
         # Remove tables
         Base.metadata.create_all(engine)
-        BuildRMSDSQL.__table__.drop(engine)
+        BuildRSCCSQL.__table__.drop(engine)
         Base.metadata.create_all(engine)
 
         # Get Autobuild PanDDA sqls
