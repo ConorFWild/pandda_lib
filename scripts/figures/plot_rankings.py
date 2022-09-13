@@ -167,6 +167,10 @@ def plot_rankings():
             default_rank_table["hue"] = "Size ranking"
             build_score_rank_table = rank_table_from_pandda_rsccs(test_pandda, inspect_table)
             build_score_rank_table["hue"] = "Build Ranking"
+
+            if len(build_score_rank_table) == 0:
+                print(f"\tNO RSCCS FOR {inspect_table_path}! SKIPPING!")
+
             figure_path = output_path / f"{pandda.system.system_name}_{pandda.project.project_name}_{inspect_table_path.parent.parent.name}.png"
             sns.lineplot(
                 data=pd.concat(
