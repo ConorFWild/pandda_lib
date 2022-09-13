@@ -33,6 +33,8 @@ def plot_all_figures(only=None):
         "plot_rankings": lambda: plot_rankings,
     }
 
+    print(only)
+
     if only is not None:
 
         print(only)
