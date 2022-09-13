@@ -177,7 +177,7 @@ def plot_rankings():
                     ignore_index=True,
                 ),
                 y="Cumulative Hits",
-                x="Cumulative Non-Hits",
+                x="Rank",
                 hue="hue",
                 palette="tab10"
             ).get_figure().savefig(figure_path)
