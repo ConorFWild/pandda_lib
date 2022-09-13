@@ -27,8 +27,7 @@ sns.set_palette("crest")
 def plot_rscc_vs_rmsd():
     sqlite_filepath = "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond_2.db"
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
-    output_path = pathlib.Path("/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_autobuilding"
-                               "/figures/rscc_vs_rmsd.png")
+    output_path = pathlib.Path("/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/thesis_figures/rscc_vs_rmsd.png")
 
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
