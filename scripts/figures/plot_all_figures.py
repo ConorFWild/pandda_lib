@@ -27,6 +27,7 @@ from plot_rscc_vs_rmsd import plot_rscc_vs_rmsd
 
 
 def plot_all_figures():
+    print(f"Plotting RSCC vs RMSD...")
     plot_rscc_vs_rmsd()
 
 
