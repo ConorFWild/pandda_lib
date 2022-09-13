@@ -1,0 +1,14 @@
+{
+  "working_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x",
+  "sample_dir": "/dls/science/groups/i04-1/conor_dev/pandda_lib/scripts/pandda_analysis_clustering",
+  "output_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/pandda_clustering_analysis",
+  "target": {
+
+    "PTP1B": {
+      "data_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/data_PTP1B",
+      "pdb_regex": "dimple.pdb",
+      "mtz_regex": "dimple.mtz",
+      "sample_json": "PTP1B.json"
+    }
+  }
+}
