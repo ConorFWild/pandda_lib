@@ -33,3 +33,5 @@ def plot_all_figures():
 
 if __name__ == "__main__":
     fire.Fire(plot_all_figures())
+
+
