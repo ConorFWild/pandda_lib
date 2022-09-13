@@ -3,6 +3,7 @@ import os
 
 import numpy as np
 import pandas as pd
+from matplotlib import pyplot as plt
 
 import fire
 from sqlalchemy.orm import sessionmaker, subqueryload
@@ -95,6 +96,9 @@ def plot_rscc_vs_rmsd():
         x="RSCC",
     )
     graph.get_figure().savefig(output_dir / "rscc_for_low_rmsd.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
 
     # Graph for low rmsd
     graph = sns.ecdfplot(
