@@ -52,4 +52,4 @@ def plot_all_figures(only=None):
 
 
 if __name__ == "__main__":
-    fire.Fire(plot_all_figures())
+    fire.Fire(plot_all_figures)
