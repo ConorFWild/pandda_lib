@@ -4,7 +4,7 @@
   "output_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/pandda_clustering_analysis",
   "target": {
     "JMJD2D": {
-      "data_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/NSP16.jsondata_JMJD2D",
+      "data_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/data_JMJD2D",
       "pdb_regex": "*.dimple.pdb",
       "mtz_regex": "*.dimple.mtz",
       "sample_json": "JMJD2D.json"
