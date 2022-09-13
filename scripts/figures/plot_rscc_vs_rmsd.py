@@ -76,16 +76,22 @@ def plot_rscc_vs_rmsd():
                     )
 
     build_rsccs_table = pd.DataFrame(records)
+    build_rscc_valid = build_rsccs_table.query("(RSCC > 0) & (RMSD > 0)")
+    print(f"\tGot {len(build_rscc_valid)} dataswets with RMSD and RSCC ")
 
     print("\tMaking graph...")
     graph = sns.scatterplot(
-        data=build_rsccs_table,
+        data=build_rsccs_table.query("(RSCC > 0) & (RMSD > 0)"),
         x="RMSD",
         y="RSCC",
     )
 
     print("\tSaving graph...")
     graph.get_figure().savefig(output_path)
+
+    # Graph for
+
+    # Graph for
 
 
 if __name__ == "__main__":
