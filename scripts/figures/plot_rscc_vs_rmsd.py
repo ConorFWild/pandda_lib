@@ -89,6 +89,9 @@ def plot_rscc_vs_rmsd():
 
     print("\tSaving graph...")
     graph.get_figure().savefig(output_dir / "rscc_vs_rmsd.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
 
     # Graph for very low RMSD
     graph = sns.ecdfplot(
@@ -106,6 +109,9 @@ def plot_rscc_vs_rmsd():
         x="RSCC",
     )
     graph.get_figure().savefig(output_dir / "rscc_for_moderate_rmsd.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
 
     # Graph for high rmsd
     graph = sns.ecdfplot(
@@ -113,6 +119,9 @@ def plot_rscc_vs_rmsd():
         x="RSCC",
     )
     graph.get_figure().savefig(output_dir / "rscc_for_high_rmsd.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
 
 
 if __name__ == "__main__":
