@@ -1,0 +1,9 @@
+{
+  "Dtags": ["JMJD2DA-x390", "JMJD2DA-x427", "JMJD2DA-x533", "JMJD2DA-x620"],
+  "Sample Points": {
+    "JMJD2DA-x390 Missing Hit C": ["JMJD2DA-x390", -3.58, -16.46, 13.62],
+    "JMJD2DA-x427 Missing Hit C": ["JMJD2DA-x427", 6.91, -5.09, 24.43],
+    "JMJD2DA-x533 Missing Hit C": ["JMJD2DA-x533", 2.34, -9.15, 29.88],
+    "JMJD2DA-x620 Missing Hit C": ["JMJD2DA-x620", 3.06, -9.12, 29.91]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "Dtags": ["BRD1A-x118"],
+  "Sample Points": {
+    "BRD1A-x118 Missing Hit Tail C": ["BRD1A-x118", -7.26, 7.54, 3.72],
+    "BRD1A-x118 Missing Hit Ring C": ["BRD1A-x118", -7.09, 10.36, 0.67]
+  }
+}
