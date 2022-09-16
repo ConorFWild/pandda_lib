@@ -221,6 +221,11 @@ def rank_table_from_pandda_rsccs_first_dtag_hit(pandda_2_sql, inspect_table):
     for index, row in table.iterrows():
         dtag = row["Dtag"]
         event_idx = row["Event IDX"]
+
+        # Skip any events not in inspect tavle
+        if not dtag in inspect_table["dtag"].unique():
+            continue
+
         rank += 1
 
         # Check if it is a hit
@@ -228,9 +233,7 @@ def rank_table_from_pandda_rsccs_first_dtag_hit(pandda_2_sql, inspect_table):
             cumulative_hits += 1
             used_dtags.append(dtag)
 
-        # Skip any events not in inspect tavle
-        if not dtag in inspect_table["dtag"].unique():
-            continue
+
 
         rank_records.append({"Rank": rank, "Cumulative Hits": cumulative_hits, "Dtag": dtag, "Event IDX": event_idx,
                              "RSCC": row["RSCC"], "RMSD": row["RMSD"], "Has Builds?": row["Has Builds?"],
