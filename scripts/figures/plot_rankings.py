@@ -66,7 +66,6 @@ def rank_table_from_pandda_rsccs(pandda_2_sql, inspect_table):
                         rsccs[build.id] = rscc
                         build_paths[build.id] = build.build_path
 
-
             if len(rmsds) == 0:
                 rmsd = None
             else:
@@ -121,7 +120,10 @@ def rank_table_from_pandda_rsccs(pandda_2_sql, inspect_table):
         event_idx = row["Event IDX"]
         rank += 1
         rank_records.append({"Rank": rank, "Cumulative Hits": cumulative_hits, "Dtag": dtag, "Event IDX": event_idx,
-                             "RSCC": row["RSCC"], "Has Builds?": row["Has Builds?"]})
+                             "RSCC": row["RSCC"], "Has Builds?": row["Has Builds?"],
+                             "Build Path": row["Build Path"],
+                             "Event Map Path": row["Event Map Path"]
+                             })
 
     return pd.DataFrame(rank_records)
 
@@ -186,19 +188,15 @@ def plot_rankings():
             default_rank_table["hue"] = "Size ranking"
             build_score_rank_table = rank_table_from_pandda_rsccs(test_pandda, inspect_table)
             build_rank_table_path = table_output_path / f"{pandda.system.system_name}_" \
-                                                          f"{pandda.project.project_name}_" \
-                                                          f"{inspect_table_path.parent.parent.name}_" \
-                                                          f"build.csv"
+                                                        f"{pandda.project.project_name}_" \
+                                                        f"{inspect_table_path.parent.parent.name}_" \
+                                                        f"build.csv"
             build_score_rank_table.to_csv(build_rank_table_path)
             build_score_rank_table["hue"] = "Build Ranking"
-
-
 
             if len(build_score_rank_table) == 0:
                 print(f"\tNO RSCCS FOR {inspect_table_path}! SKIPPING!")
                 continue
-
-
 
             figure_path = output_path / f"{pandda.system.system_name}_{pandda.project.project_name}_{inspect_table_path.parent.parent.name}.png"
             sns.lineplot(
@@ -220,6 +218,7 @@ def plot_rankings():
             plt.cla()
             plt.clf()
             plt.close("all")
+
 
 if __name__ == "__main__":
     fire.Fire(plot_rankings)
