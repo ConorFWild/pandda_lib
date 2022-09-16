@@ -163,10 +163,14 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir, cpus=3):
             in datasets
         ]
         print("Running")
-        selected_rsccs = p.map(
+        selected_rsccs_iterable = p.imap(
             Runner(),
-            run_set
+            run_set,
+            chunksize=10,
         )
+
+        print(f"Getting results...")
+        selected_rsccs = [rscc for rscc in selected_rsccs_iterable]
 
     print("Inserting to database...")
     for dataset, selected_rscc in zip(datasets, selected_rsccs):
