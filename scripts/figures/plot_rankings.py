@@ -58,13 +58,14 @@ def rank_table_from_pandda_rsccs(pandda_2_sql, inspect_table):
                     if build.rmsd.closest_rmsd:
                         rmsd = build.rmsd.closest_rmsd
                         rmsds[build.id] = rmsd
-                        build_paths[build.id] = build.path
 
                 # RSCC
                 if build.rscc:
                     if build.rscc.score:
                         rscc = build.rscc.score
                         rsccs[build.id] = rscc
+                        build_paths[build.id] = build.path
+
 
             if len(rmsds) == 0:
                 rmsd = None
