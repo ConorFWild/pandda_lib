@@ -51,12 +51,14 @@ def rank_table_from_pandda_rsccs(pandda_2_sql, inspect_table):
             # RMSD
             rmsds = {}
             rsccs = {}
+            build_paths = {}
 
             for build in event.builds:
                 if build.rmsd:
                     if build.rmsd.closest_rmsd:
                         rmsd = build.rmsd.closest_rmsd
                         rmsds[build.id] = rmsd
+                        build_paths[build.id] = build.path
 
                 # RSCC
                 if build.rscc:
@@ -74,6 +76,11 @@ def rank_table_from_pandda_rsccs(pandda_2_sql, inspect_table):
             else:
                 rscc = max(rsccs.values())
 
+            build_path = None
+            if len(rsccs) != 0:
+                highest_rscc_build_id = max(rsccs, key=lambda _key: rsccs[_key])
+                build_path = build_paths[highest_rscc_build_id]
+
             # Determine if it is a hit
             _hit = False
             if rmsd:
@@ -90,7 +97,8 @@ def rank_table_from_pandda_rsccs(pandda_2_sql, inspect_table):
                 # "Score": event_scores[event_idx],
                 "RSCC": rscc,
                 "Hit?": _hit,
-                "Has Builds?": has_builds
+                "Has Builds?": has_builds,
+                "Build Path": build_path
             }
             records.append(record)
     table = pd.DataFrame(records).sort_values("RSCC", ascending=False)
