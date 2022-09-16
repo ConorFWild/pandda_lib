@@ -219,7 +219,8 @@ def diamond_add_autobuild_rmsds(sqlite_filepath, cpus=3):
         print("Running")
         selected_rmsds = p.map(
             Runner(),
-            run_set.values()
+            run_set.values(),
+            chunksize=10
         )
 
     print("Inserting to database...")
