@@ -233,7 +233,7 @@ def rank_table_from_pandda_rsccs_first_dtag_hit(pandda_2_sql, inspect_table):
             continue
 
         rank_records.append({"Rank": rank, "Cumulative Hits": cumulative_hits, "Dtag": dtag, "Event IDX": event_idx,
-                             "RSCC": row["RSCC"], "Has Builds?": row["Has Builds?"],
+                             "RSCC": row["RSCC"], "RMSD": row["RMSD"], "Has Builds?": row["Has Builds?"],
                              "Build Path": row["Build Path"],
                              "Event Map Path": row["Event Map Path"]
                              })
