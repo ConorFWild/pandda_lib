@@ -99,6 +99,16 @@ def get_dataset_rsccs(dataset_dtag, dataset_path, dataset_bound_state_model_path
         raise Exception(f"Exception occured for dtag {dataset_dtag} model {dataset_bound_state_model_path}:\n{str(e)}")
 
 
+def get_run_set(datasets, tmp_dir):
+    for dataset in datasets:
+        yield GetDatasetRSCC(dataset.dtag,
+                       dataset.path,
+                       dataset.pandda_model_path,
+                       dataset.event_maps,
+                       dataset.mtz_path,
+                       tmp_dir / dataset.dtag)
+
+
 def diamond_add_model_stats(sqlite_filepath, tmp_dir, cpus=3):
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     tmp_dir = pathlib.Path(tmp_dir).resolve()
@@ -152,20 +162,20 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir, cpus=3):
 
     with mp.Pool(cpus) as p:
         print("Getting run set")
-        run_set = [
-            GetDatasetRSCC(dataset.dtag,
-                           dataset.path,
-                           dataset.pandda_model_path,
-                           dataset.event_maps,
-                           dataset.mtz_path,
-                           tmp_dir / dataset.dtag)
-            for dataset
-            in datasets
-        ]
+        # run_set = [
+        #     GetDatasetRSCC(dataset.dtag,
+        #                    dataset.path,
+        #                    dataset.pandda_model_path,
+        #                    dataset.event_maps,
+        #                    dataset.mtz_path,
+        #                    tmp_dir / dataset.dtag)
+        #     for dataset
+        #     in datasets
+        # ]
         print("Running")
         selected_rsccs_iterable = p.imap(
             Runner(),
-            run_set,
+            get_run_set(datasets, tmp_dir),
             chunksize=10,
         )
 
