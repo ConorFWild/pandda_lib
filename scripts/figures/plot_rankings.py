@@ -317,7 +317,7 @@ def rank_table_from_pandda_rsccs_first_dtag_hit_shared(pandda_2_sql, inspect_tab
                 build_path = build_paths[highest_rscc_build_id]
 
             # Determine if it is a hit event
-            # _hit = False
+            _hit = False
             # if rmsd:
             #     if rmsd < 6:
             #         _hit = True
