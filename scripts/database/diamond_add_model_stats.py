@@ -9,6 +9,7 @@ from sqlalchemy import create_engine
 # import joblib
 # from joblib import Parallel, delayed
 import multiprocessing as mp
+import concurrent.futures
 
 from pandda_lib import constants
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
@@ -114,7 +115,9 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir, cpus=3):
     except Exception as e:
         print(e)
 
-    with mp.Pool(cpus) as p:
+    # with mp.Pool(cpus) as p:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=cpus) as executor:
+
         sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
         tmp_dir = pathlib.Path(tmp_dir).resolve()
         engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
@@ -173,7 +176,16 @@ def diamond_add_model_stats(sqlite_filepath, tmp_dir, cpus=3):
         #     in datasets
         # ]
         print("Running")
-        selected_rsccs_iterable = p.imap(
+        # selected_rsccs_iterable = p.imap(
+        #     Runner(),
+        #     get_run_set(
+        #         datasets,
+        #         tmp_dir,
+        #     ),
+        #     chunksize=1,
+        # )
+
+        selected_rsccs_iterable = executor.map(
             Runner(),
             get_run_set(
                 datasets,
