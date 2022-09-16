@@ -98,7 +98,8 @@ def rank_table_from_pandda_rsccs(pandda_2_sql, inspect_table):
                 "RSCC": rscc,
                 "Hit?": _hit,
                 "Has Builds?": has_builds,
-                "Build Path": build_path
+                "Build Path": build_path,
+                "Event Map Path": event.event_map_path
             }
             records.append(record)
     table = pd.DataFrame(records).sort_values("RSCC", ascending=False)
