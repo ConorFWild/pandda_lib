@@ -10,6 +10,7 @@ from sqlalchemy import create_engine
 # import joblib
 # from joblib import Parallel, delayed
 import multiprocessing as mp
+import concurrent.futures
 
 from pandda_lib import constants
 from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
@@ -25,11 +26,13 @@ class EventMap:
 
 
 def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
-    try:
-        mp.set_start_method('spawn')
-    except Exception as e:
-        print(e)
-    with mp.Pool(cpus) as p:
+    # try:
+    #     mp.set_start_method('spawn')
+    # except Exception as e:
+    #     print(e)
+    # with mp.Pool(cpus) as p:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=cpus) as executor:
+
         sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
         tmp_dir = pathlib.Path(tmp_dir).resolve()
         # tmp_dir = pathlib.Path(tmp_dir).resolve()
@@ -93,7 +96,12 @@ def diamond_add_autobuild_rsccs(sqlite_filepath, tmp_dir, cpus=3):
         print("Getting run set")
 
         print("Running")
-        selected_rsccs = p.map(
+        # selected_rsccs = p.map(
+        #     Runner(),
+        #     run_set.values(),
+        #     chunksize=10
+        # )
+        selected_rsccs = executor.map(
             Runner(),
             run_set.values(),
             chunksize=10
