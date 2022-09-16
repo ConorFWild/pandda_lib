@@ -423,7 +423,7 @@ def plot_rankings():
             continue
         pandda_inspect_tables = inspect_tables[(test_pandda.system.system_name, test_pandda.project.project_name)]
         for inspect_table_path, inspect_table in pandda_inspect_tables.items():  # = list(inspect_tables[(test_pandda.system.system_name, test_pandda.project.project_name)].values())[0]
-            default_rank_table = inspect_table_cumulative_hits_table_first_dtag_hit(inspect_table)
+            default_rank_table = inspect_table_cumulative_hits_table_first_dtag_hit_shared(inspect_table)
 
             default_rank_table_path = table_output_path / f"{pandda.system.system_name}_" \
                                                           f"{pandda.project.project_name}_" \
@@ -432,7 +432,7 @@ def plot_rankings():
             default_rank_table.to_csv(default_rank_table_path)
 
             default_rank_table["hue"] = "Size ranking"
-            build_score_rank_table = rank_table_from_pandda_rsccs_first_dtag_hit(test_pandda, inspect_table)
+            build_score_rank_table = rank_table_from_pandda_rsccs_first_dtag_hit_shared(test_pandda, inspect_table)
             build_rank_table_path = table_output_path / f"{pandda.system.system_name}_" \
                                                         f"{pandda.project.project_name}_" \
                                                         f"{inspect_table_path.parent.parent.name}_" \
