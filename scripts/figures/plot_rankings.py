@@ -189,7 +189,7 @@ def rank_table_from_pandda_rsccs_first_dtag_hit(pandda_2_sql, inspect_table):
                 highest_rscc_build_id = max(rsccs, key=lambda _key: rsccs[_key])
                 build_path = build_paths[highest_rscc_build_id]
 
-            # Determine if it is a hit
+            # Determine if it is a hit event
             _hit = False
             if rmsd:
                 if rmsd < 6:
@@ -204,6 +204,7 @@ def rank_table_from_pandda_rsccs_first_dtag_hit(pandda_2_sql, inspect_table):
                 "Event IDX": event.idx,
                 # "Score": event_scores[event_idx],
                 "RSCC": rscc,
+                "RMSD": rmsd,
                 "Hit?": _hit,
                 "Has Builds?": has_builds,
                 "Build Path": build_path,
