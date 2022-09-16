@@ -244,6 +244,136 @@ def rank_table_from_pandda_rsccs_first_dtag_hit(pandda_2_sql, inspect_table):
     return pd.DataFrame(rank_records)
 
 
+def inspect_table_cumulative_hits_table_first_dtag_hit_shared(inspect_table, pandda_2_sql):
+    rank_records = []
+    cumulative_hits = 0
+    sorted_inspect_table = inspect_table.sort_values("cluster_size", ascending=False)
+    rank = 1
+
+    pandda_2_dtags = [dataset.dtag for dataset in pandda_2_sql.pandda_dataset_results]
+
+    used_dtags = []
+
+    for index, row in sorted_inspect_table.iterrows():
+        # rank = index
+        dtag = row["dtag"]
+        event_idx = row["event_idx"]
+
+        if dtag not in pandda_2_dtags:
+            continue
+
+        rank += 1
+
+        if (row["Ligand Confidence"] != "Low") & (row["Ligand Confidence"] != "low") & (dtag not in used_dtags):
+            cumulative_hits += 1
+            used_dtags.append(dtag)
+
+        rank_records.append({"Rank": rank, "Cumulative Hits": cumulative_hits, "Dtag": dtag, "Event IDX": event_idx})
+
+    return pd.DataFrame(rank_records)
+
+
+def rank_table_from_pandda_rsccs_first_dtag_hit_shared(pandda_2_sql, inspect_table):
+    inspect_table_hit_dtags = []
+    for index, row in inspect_table.iterrows():
+        if (row["Ligand Confidence"] != "Low") & (row["Ligand Confidence"] != "low"):
+            inspect_table_hit_dtags.append(row["dtag"])
+
+    records = []
+    for pandda_dataset in pandda_2_sql.pandda_dataset_results:
+
+        for event in pandda_dataset.events:
+            # RMSD
+            rmsds = {}
+            rsccs = {}
+            build_paths = {}
+
+            for build in event.builds:
+                if build.rmsd:
+                    if build.rmsd.closest_rmsd:
+                        rmsd = build.rmsd.closest_rmsd
+                        rmsds[build.id] = rmsd
+
+                # RSCC
+                if build.rscc:
+                    if build.rscc.score:
+                        rscc = build.rscc.score
+                        rsccs[build.id] = rscc
+                        build_paths[build.id] = build.build_path
+
+            if len(rmsds) == 0:
+                rmsd = None
+            else:
+                rmsd = min(rmsds.values())
+
+            if len(rsccs) == 0:
+                rscc = None
+            else:
+                rscc = max(rsccs.values())
+
+            build_path = None
+            if len(rsccs) != 0:
+                highest_rscc_build_id = max(rsccs, key=lambda _key: rsccs[_key])
+                build_path = build_paths[highest_rscc_build_id]
+
+            # Determine if it is a hit event
+            # _hit = False
+            # if rmsd:
+            #     if rmsd < 6:
+            #         _hit = True
+
+            if pandda_dataset.dtag in inspect_table_hit_dtags:
+                _hit = True
+
+            has_builds = False
+            if len(event.builds) != 0:
+                has_builds = True
+
+            record = {
+                "Dtag": pandda_dataset.dtag,
+                "Event IDX": event.idx,
+                # "Score": event_scores[event_idx],
+                "RSCC": rscc,
+                "RMSD": rmsd,
+                "Hit?": _hit,
+                "Has Builds?": has_builds,
+                "Build Path": build_path,
+                "Event Map Path": event.event_map_path
+            }
+            records.append(record)
+    table = pd.DataFrame(records).sort_values("RSCC", ascending=False)
+
+    rank_records = []
+    cumulative_hits = 0
+    rank = 1
+    used_dtags = []
+
+    for index, row in table.iterrows():
+        dtag = row["Dtag"]
+        event_idx = row["Event IDX"]
+
+        # Skip any events not in inspect tavle
+        if not dtag in inspect_table["dtag"].unique():
+            continue
+
+        rank += 1
+
+        # Check if it is a hit
+        if row["Hit?"] & (dtag not in used_dtags):
+            cumulative_hits += 1
+            used_dtags.append(dtag)
+
+
+
+        rank_records.append({"Rank": rank, "Cumulative Hits": cumulative_hits, "Dtag": dtag, "Event IDX": event_idx,
+                             "RSCC": row["RSCC"], "RMSD": row["RMSD"], "Has Builds?": row["Has Builds?"],
+                             "Build Path": row["Build Path"],
+                             "Event Map Path": row["Event Map Path"]
+                             })
+
+    return pd.DataFrame(rank_records)
+
+
 def plot_rankings():
     # Get the table
     sqlite_filepath = "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond_2.db"
