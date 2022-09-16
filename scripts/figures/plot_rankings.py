@@ -210,3 +210,6 @@ def plot_rankings():
             plt.cla()
             plt.clf()
             plt.close("all")
+
+if __name__ == "__main__":
+    fire.Fire(plot_rankings)
