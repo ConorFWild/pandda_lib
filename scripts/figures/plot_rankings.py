@@ -666,7 +666,7 @@ def plot_rankings():
         "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_autobuilding"
         "/ranking_tables_size_vs_rscc")
     if not table_output_path.exists():
-        os.mkdir(output_path)
+        os.mkdir(table_output_path)
 
     for pandda in panddas:
         print(f"PanDDA: {pandda.system.system_name}: {pandda.project.project_name}")
