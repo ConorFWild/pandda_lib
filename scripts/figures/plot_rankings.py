@@ -677,7 +677,7 @@ def plot_rankings():
 
         default_rank_table_path = table_output_path / f"{pandda.system.system_name}_" \
                                                       f"{pandda.project.project_name}_" \
-                                                      f"default.csv"
+                                                      f"size.csv"
         default_rank_table.to_csv(default_rank_table_path)
 
         default_rank_table["hue"] = "Size ranking"
