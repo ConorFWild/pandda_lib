@@ -657,6 +657,7 @@ def plot_rankings():
     #         plt.close("all")
 
     # Make the self comparison figures
+    print("Making output dirs...")
     output_path = pathlib.Path(
         "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_autobuilding"
         "/ranking_figures_size_vs_rscc")
@@ -668,6 +669,7 @@ def plot_rankings():
     if not table_output_path.exists():
         os.mkdir(table_output_path)
 
+    print("Outputting tables and figures...")
     for pandda in panddas:
         print(f"PanDDA: {pandda.system.system_name}: {pandda.project.project_name}")
         test_pandda = pandda
@@ -714,6 +716,8 @@ def plot_rankings():
         plt.cla()
         plt.clf()
         plt.close("all")
+
+    print("Done!")
 
 
 if __name__ == "__main__":
