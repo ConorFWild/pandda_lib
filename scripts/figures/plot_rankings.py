@@ -317,13 +317,21 @@ def rank_table_from_pandda_rsccs_first_dtag_hit_shared(pandda_2_sql, inspect_tab
                 build_path = build_paths[highest_rscc_build_id]
 
             # Determine if it is a hit event
-            _hit = False
+            _inspect_hit = False
             # if rmsd:
             #     if rmsd < 6:
             #         _hit = True
 
             if pandda_dataset.dtag in inspect_table_hit_dtags:
-                _hit = True
+                _inspect_hit = True
+
+            #
+            _database_hit = False
+            if pandda_dataset.dataset:
+                if pandda_dataset.dataset.pandda_model_path != "None":
+                    _database_hit = True
+
+            #
 
             has_builds = False
             if len(event.builds) != 0:
@@ -335,7 +343,8 @@ def rank_table_from_pandda_rsccs_first_dtag_hit_shared(pandda_2_sql, inspect_tab
                 # "Score": event_scores[event_idx],
                 "RSCC": rscc,
                 "RMSD": rmsd,
-                "Hit?": _hit,
+                "Inspect Hit?": _inspect_hit,
+                "Database Dataset?": _database_hit,
                 "Has Builds?": has_builds,
                 "Build Path": build_path,
                 "Event Map Path": event.event_map_path
@@ -356,10 +365,15 @@ def rank_table_from_pandda_rsccs_first_dtag_hit_shared(pandda_2_sql, inspect_tab
         if not dtag in inspect_table["dtag"].unique():
             continue
 
+        # Skip any known hit datasets not annotated as such in the inspect table
+        if row["Database Hit?"]:
+            if not row["Inspect Hit?"]:
+                continue
+
         rank += 1
 
         # Check if it is a hit
-        if row["Hit?"] & (dtag not in used_dtags):
+        if row["Inspect Hit?"] & (dtag not in used_dtags):
             cumulative_hits += 1
             used_dtags.append(dtag)
 
