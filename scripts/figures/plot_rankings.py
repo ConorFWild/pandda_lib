@@ -233,8 +233,6 @@ def rank_table_from_pandda_rsccs_first_dtag_hit(pandda_2_sql, inspect_table):
             cumulative_hits += 1
             used_dtags.append(dtag)
 
-
-
         rank_records.append({"Rank": rank, "Cumulative Hits": cumulative_hits, "Dtag": dtag, "Event IDX": event_idx,
                              "RSCC": row["RSCC"], "RMSD": row["RMSD"], "Has Builds?": row["Has Builds?"],
                              "Build Path": row["Build Path"],
@@ -344,7 +342,7 @@ def rank_table_from_pandda_rsccs_first_dtag_hit_shared(pandda_2_sql, inspect_tab
                 "RSCC": rscc,
                 "RMSD": rmsd,
                 "Inspect Hit?": _inspect_hit,
-                "Database Dataset?": _database_hit,
+                "Database Hit?": _database_hit,
                 "Has Builds?": has_builds,
                 "Build Path": build_path,
                 "Event Map Path": event.event_map_path
@@ -376,8 +374,6 @@ def rank_table_from_pandda_rsccs_first_dtag_hit_shared(pandda_2_sql, inspect_tab
         if row["Inspect Hit?"] & (dtag not in used_dtags):
             cumulative_hits += 1
             used_dtags.append(dtag)
-
-
 
         rank_records.append({"Rank": rank, "Cumulative Hits": cumulative_hits, "Dtag": dtag, "Event IDX": event_idx,
                              "RSCC": row["RSCC"], "RMSD": row["RMSD"], "Has Builds?": row["Has Builds?"],
