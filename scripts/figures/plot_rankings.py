@@ -600,59 +600,59 @@ def plot_rankings():
         inspect_tables[(instance.system.system_name, project.project_name)][inspect_table_path] = inspect_table
 
     # Make the figures
-    panddas = session.query(PanDDADirSQL).options(subqueryload("*")).order_by(PanDDADirSQL.id).all()
-    output_path = pathlib.Path(
-        "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_autobuilding/ranking_figures_rscc")
-    table_output_path = pathlib.Path(
-        "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_autobuilding/ranking_tables_rscc")
-    for pandda in panddas:
-        print(f"PanDDA: {pandda.system.system_name}: {pandda.project.project_name}")
-        test_pandda = pandda
-        if not (test_pandda.system.system_name, test_pandda.project.project_name) in inspect_tables:
-            continue
-        pandda_inspect_tables = inspect_tables[(test_pandda.system.system_name, test_pandda.project.project_name)]
-        for inspect_table_path, inspect_table in pandda_inspect_tables.items():  # = list(inspect_tables[(test_pandda.system.system_name, test_pandda.project.project_name)].values())[0]
-            default_rank_table = inspect_table_cumulative_hits_table_first_dtag_hit_shared(inspect_table, test_pandda)
-
-            default_rank_table_path = table_output_path / f"{pandda.system.system_name}_" \
-                                                          f"{pandda.project.project_name}_" \
-                                                          f"{inspect_table_path.parent.parent.name}_" \
-                                                          f"default.csv"
-            default_rank_table.to_csv(default_rank_table_path)
-
-            default_rank_table["hue"] = "Size ranking"
-            build_score_rank_table = rank_table_from_pandda_rsccs_first_dtag_hit_shared(test_pandda, inspect_table)
-            build_rank_table_path = table_output_path / f"{pandda.system.system_name}_" \
-                                                        f"{pandda.project.project_name}_" \
-                                                        f"{inspect_table_path.parent.parent.name}_" \
-                                                        f"build.csv"
-            build_score_rank_table.to_csv(build_rank_table_path)
-            build_score_rank_table["hue"] = "Build Ranking"
-
-            if len(build_score_rank_table) == 0:
-                print(f"\tNO RSCCS FOR {inspect_table_path}! SKIPPING!")
-                continue
-
-            figure_path = output_path / f"{pandda.system.system_name}_{pandda.project.project_name}_{inspect_table_path.parent.parent.name}.png"
-            sns.lineplot(
-                data=pd.concat(
-                    [
-                        build_score_rank_table.query("RSCC > 0"),
-                        default_rank_table
-                    ],
-                    ignore_index=True,
-                ),
-                y="Cumulative Hits",
-                x="Rank",
-                hue="hue",
-                palette="tab10"
-            ).get_figure().savefig(figure_path)
-
-            # raise Exception()
-
-            plt.cla()
-            plt.clf()
-            plt.close("all")
+    # panddas = session.query(PanDDADirSQL).options(subqueryload("*")).order_by(PanDDADirSQL.id).all()
+    # output_path = pathlib.Path(
+    #     "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_autobuilding/ranking_figures_rscc")
+    # table_output_path = pathlib.Path(
+    #     "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_autobuilding/ranking_tables_rscc")
+    # for pandda in panddas:
+    #     print(f"PanDDA: {pandda.system.system_name}: {pandda.project.project_name}")
+    #     test_pandda = pandda
+    #     if not (test_pandda.system.system_name, test_pandda.project.project_name) in inspect_tables:
+    #         continue
+    #     pandda_inspect_tables = inspect_tables[(test_pandda.system.system_name, test_pandda.project.project_name)]
+    #     for inspect_table_path, inspect_table in pandda_inspect_tables.items():  # = list(inspect_tables[(test_pandda.system.system_name, test_pandda.project.project_name)].values())[0]
+    #         default_rank_table = inspect_table_cumulative_hits_table_first_dtag_hit_shared(inspect_table, test_pandda)
+    #
+    #         default_rank_table_path = table_output_path / f"{pandda.system.system_name}_" \
+    #                                                       f"{pandda.project.project_name}_" \
+    #                                                       f"{inspect_table_path.parent.parent.name}_" \
+    #                                                       f"default.csv"
+    #         default_rank_table.to_csv(default_rank_table_path)
+    #
+    #         default_rank_table["hue"] = "Size ranking"
+    #         build_score_rank_table = rank_table_from_pandda_rsccs_first_dtag_hit_shared(test_pandda, inspect_table)
+    #         build_rank_table_path = table_output_path / f"{pandda.system.system_name}_" \
+    #                                                     f"{pandda.project.project_name}_" \
+    #                                                     f"{inspect_table_path.parent.parent.name}_" \
+    #                                                     f"build.csv"
+    #         build_score_rank_table.to_csv(build_rank_table_path)
+    #         build_score_rank_table["hue"] = "Build Ranking"
+    #
+    #         if len(build_score_rank_table) == 0:
+    #             print(f"\tNO RSCCS FOR {inspect_table_path}! SKIPPING!")
+    #             continue
+    #
+    #         figure_path = output_path / f"{pandda.system.system_name}_{pandda.project.project_name}_{inspect_table_path.parent.parent.name}.png"
+    #         sns.lineplot(
+    #             data=pd.concat(
+    #                 [
+    #                     build_score_rank_table.query("RSCC > 0"),
+    #                     default_rank_table
+    #                 ],
+    #                 ignore_index=True,
+    #             ),
+    #             y="Cumulative Hits",
+    #             x="Rank",
+    #             hue="hue",
+    #             palette="tab10"
+    #         ).get_figure().savefig(figure_path)
+    #
+    #         # raise Exception()
+    #
+    #         plt.cla()
+    #         plt.clf()
+    #         plt.close("all")
 
     # Make the self comparison figures
     output_path = pathlib.Path(
