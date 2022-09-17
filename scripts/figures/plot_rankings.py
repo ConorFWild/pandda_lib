@@ -599,8 +599,11 @@ def plot_rankings():
 
         inspect_tables[(instance.system.system_name, project.project_name)][inspect_table_path] = inspect_table
 
+    # Get the PanDDAs
+    panddas = session.query(PanDDADirSQL).options(subqueryload("*")).order_by(PanDDADirSQL.id).all()
+
+
     # Make the figures
-    # panddas = session.query(PanDDADirSQL).options(subqueryload("*")).order_by(PanDDADirSQL.id).all()
     # output_path = pathlib.Path(
     #     "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_autobuilding/ranking_figures_rscc")
     # table_output_path = pathlib.Path(
