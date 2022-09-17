@@ -449,7 +449,7 @@ def rank_table_from_pandda_rsccs_first_dtag(pandda_2_sql):
 
     rank_records = []
     cumulative_hits = 0
-    rank = 1
+    rank = 0
     used_dtags = []
 
     for index, row in table.iterrows():
@@ -540,7 +540,7 @@ def rank_table_from_pandda_sizes_first_dtag(pandda_2_sql):
 
     rank_records = []
     cumulative_hits = 0
-    rank = 1
+    rank = 0
     used_dtags = []
 
     for index, row in table.iterrows():
@@ -601,7 +601,6 @@ def plot_rankings():
 
     # Get the PanDDAs
     panddas = session.query(PanDDADirSQL).options(subqueryload("*")).order_by(PanDDADirSQL.id).all()
-
 
     # Make the figures
     # output_path = pathlib.Path(
