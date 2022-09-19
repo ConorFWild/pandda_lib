@@ -71,18 +71,18 @@ def plot_rscc_vs_rmsd():
                             "Event": event.idx,
                             "Build ID": build.id,
                             "Score": build.score,
-                            "RMSD": build_rmsd,
+                            "MAD": build_rmsd,
                             "RSCC": build_rscc
                         }
                     )
 
     build_rsccs_table = pd.DataFrame(records)
-    build_rscc_valid = build_rsccs_table.query("(RSCC > 0) & (RMSD > 0)")
+    build_rscc_valid = build_rsccs_table.query("(RSCC > 0) & (MAD > 0)")
     print(f"\tGot {len(build_rscc_valid)} dataswets with RMSD and RSCC ")
 
     print("\tMaking graph...")
     graph = sns.scatterplot(
-        data=build_rsccs_table.query("(RSCC > 0) & (RMSD > 0)"),
+        data=build_rsccs_table.query("(RSCC > 0) & (MAD > 0)"),
         x="RMSD",
         y="RSCC",
     )
@@ -95,7 +95,7 @@ def plot_rscc_vs_rmsd():
 
     # Graph for very low RMSD
     graph = sns.ecdfplot(
-        data=build_rsccs_table.query("(RSCC > 0) & (RMSD < 1)"),
+        data=build_rsccs_table.query("(RSCC > 0) & (MAD < 1)"),
         x="RSCC",
     )
     graph.get_figure().savefig(output_dir / "rscc_for_low_rmsd.png")
@@ -105,7 +105,7 @@ def plot_rscc_vs_rmsd():
 
     # Graph for low rmsd
     graph = sns.ecdfplot(
-        data=build_rsccs_table.query("(RSCC > 0) & (RMSD < 2)"),
+        data=build_rsccs_table.query("(RSCC > 0) & (MAD < 2)"),
         x="RSCC",
     )
     graph.get_figure().savefig(output_dir / "rscc_for_moderate_rmsd.png")
@@ -115,7 +115,7 @@ def plot_rscc_vs_rmsd():
 
     # Graph for high rmsd
     graph = sns.ecdfplot(
-        data=build_rsccs_table.query("(RSCC > 0) & (RMSD > 2)"),
+        data=build_rsccs_table.query("(RSCC > 0) & (MAD > 2)"),
         x="RSCC",
     )
     graph.get_figure().savefig(output_dir / "rscc_for_high_rmsd.png")
