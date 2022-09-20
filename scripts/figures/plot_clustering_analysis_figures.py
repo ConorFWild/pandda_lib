@@ -179,3 +179,6 @@ def plot_clustering_analysis_figures():
                 plt.close("all")
             gc.collect()
             plt.close()
+
+if __name__ == "__main__":
+    fire.Fire(plot_clustering_analysis_figures)
