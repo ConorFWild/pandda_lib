@@ -26,19 +26,25 @@ def main(
 
     # Set the parameters
     tmp_dir = options["tmp_dir"]
+
     sqlite_filepath = options["sqlite_filepath"]
-    fresh = options["fresh"]
-    print(f"Frest: {fresh}")
-    remove = options["remove"]
-    print(f"remove: {remove}")
+    # fresh = options["fresh"]
+    # print(f"Frest: {fresh}")
+    # remove = options["remove"]
+    # print(f"remove: {remove}")
     cores = options["cores"]
 
     print("Starting")
 
     # Define data
     tmp_dir = pathlib.Path(tmp_dir).resolve()
+    print(f"Tmp Dir is: {tmp_dir}")
+
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     output_dir = pathlib.Path(options["output_dir"]).resolve()
+
+    print(f"Output Dir is: {output_dir}")
+
 
     # Get the database
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
@@ -57,8 +63,11 @@ def main(
             # Define the output dir
             project_output_dir = tmp_dir / f"system_{system.system_name}_project_{project.project_name}"
 
+            if not project_output_dir.exists():
+                os.mkdir(project_output_dir)
+
             # Skip existing runs
-            if (output_dir / "analyses" / "pandda_analyse_events.csv").exists():
+            if (project_output_dir / "analyses" / "pandda_analyse_events.csv").exists():
                 continue
 
             # # Handle existing runs
@@ -74,6 +83,11 @@ def main(
             # Make the job
             name = f"system_{system.system_name}_project_{project.project_name}"
             system_data_dir = Path(project.path)
+
+            print(f"\t\tJob Name: {name}")
+            print(f"\t\tSystem Data Dir: {system_data_dir}")
+            print(f"\t\tOutput Dir: {project_output_dir}")
+            # print(f"\t\tJob Name: {name}")
 
             job = PanDDAJob(
                 name=name,
