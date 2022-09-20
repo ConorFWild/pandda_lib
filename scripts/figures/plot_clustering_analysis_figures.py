@@ -64,6 +64,12 @@ def get_graph(dataframe_model_0, dataframe_model_changed, sample_point_dtag):
     # Get axis
     fig, (ax1, ax2,) = plt.subplots(ncols=2, figsize=(30, 15))  # sharey=True)
 
+    #
+    if len(dataframe_model_0_characterization_test ) == 0:
+        return None
+    if len(dataframe_model_changed_characterization_test) == 0:
+        return None
+
     # Get the ED QQ plot
     qq_dataframe, key_1, key_2 = get_qq_dataframe(dataframe_model_0_characterization,
                                                   dataframe_model_changed_characterization, "Electron Density Value")
@@ -173,6 +179,9 @@ def plot_clustering_analysis_figures():
                 output_path = system_output_dir / f"{sample_point}_{model}_qq.png"
                 dataframe_model_changed = sample_point_dataframe[sample_point_dataframe["Model"] == model]
                 fig = get_graph(dataframe_model_0, dataframe_model_changed, sample_point_dtag)
+                if fig is None:
+                    print(f"\t\tERROR: No Z-Value for sample???")
+
                 fig.savefig(output_path, bbox_inches='tight')
                 plt.cla()
                 plt.clf()
