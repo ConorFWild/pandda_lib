@@ -61,7 +61,7 @@ def main(
             print(f"\t{project.project_name}")
 
             # Define the output dir
-            project_output_dir = tmp_dir / f"system_{system.system_name}_project_{project.project_name}"
+            project_output_dir = output_dir / f"system_{system.system_name}_project_{project.project_name}"
 
             if not project_output_dir.exists():
                 os.mkdir(project_output_dir)
