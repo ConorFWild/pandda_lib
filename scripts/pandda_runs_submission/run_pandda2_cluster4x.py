@@ -48,10 +48,12 @@ def main(
         out_dir = working_dir / OUT_DIR_FORMAT.format(target=target)
 
         # Cleanup possible old runs
-        try:
-            shutil.rmtree(out_dir)
-        except Exception as e:
-            print(e)
+        # try:
+        #     shutil.rmtree(out_dir)
+        # except Exception as e:
+        #     print(e)
+        if out_dir.exists():
+            continue
 
         # Define the job
         job = PanDDAJob(
