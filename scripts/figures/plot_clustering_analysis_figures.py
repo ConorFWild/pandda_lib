@@ -71,7 +71,7 @@ def get_graph(dataframe_model_0, dataframe_model_changed, sample_point_dtag):
     # plt.axis('equal')
     # test_zmap_value = dataframe_model_0_characterization_test["ZMap Value"].iloc[0]
     ax1.scatter(dataframe_model_0_characterization_test["Electron Density Value"],
-                dataframe_model_changed_characterization_test["Electron Density Value"], c="purple")
+                dataframe_model_changed_characterization_test["Electron Density Value"], c="purple", s=20)
 
     dataframe_model_0_characterization_test_for_print = dataframe_model_0_characterization_test[
         ["Dtag",
@@ -97,7 +97,7 @@ def get_graph(dataframe_model_0, dataframe_model_changed, sample_point_dtag):
     z_qq_plot = sns.regplot(ax=ax2, data=qq_dataframe, x=key_1, y=key_2, )
     # plt.axis('equal')
     ax2.scatter(dataframe_model_0_characterization_test["ZMap Value"],
-                dataframe_model_changed_characterization_test["ZMap Value"], c="purple")
+                dataframe_model_changed_characterization_test["ZMap Value"], c="purple", s=20)
     dataframe_model_changed_characterization_test_for_print = dataframe_model_changed_characterization_test[
         ["Dtag",
          "Electron Density Value",
