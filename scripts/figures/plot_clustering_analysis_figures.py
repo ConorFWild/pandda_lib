@@ -181,6 +181,7 @@ def plot_clustering_analysis_figures():
                 fig = get_graph(dataframe_model_0, dataframe_model_changed, sample_point_dtag)
                 if fig is None:
                     print(f"\t\tERROR: No Z-Value for sample???")
+                    continue
 
                 fig.savefig(output_path, bbox_inches='tight')
                 plt.cla()
