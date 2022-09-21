@@ -15,11 +15,11 @@
       "data_dir": "data_PTP1B",
       "pdb_regex": "dimple.pdb",
       "mtz_regex": "dimple.mtz"
-    }
-  },
-      "BAZ2BA": {
+    },
+    "BAZ2BA": {
       "data_dir": "/dls/science/groups/i04-1/conor_dev/baz2b_test/data",
       "pdb_regex": "*.dimple.pdb",
       "mtz_regex": "*.dimple.mtz"
     }
+  }
 }
