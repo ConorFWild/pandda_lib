@@ -98,11 +98,12 @@ def get_mean_maps_stats_table():
 
         match = get_pandda_system_project(pandda_dir)
         if not match:
-            print(f"\t Was unable to match {pandda_dir.name} to a system and project. Skipping...")
+            print(f"\tWas unable to match {pandda_dir.name} to a system and project. Skipping...")
             continue
 
         system, project = match
         print(f"\tSystem: {system}; Project: {project}")
+        print(f"\t\tGot {len(mean_maps)} resolution shells")
 
         for shell in mean_maps:
             for model in mean_maps[shell]:
