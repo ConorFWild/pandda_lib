@@ -73,7 +73,9 @@ def get_mean_maps(pandda_dir):
         (float(match.groups()[0]), int(match.groups()[1]), path)
         for match, path
         in [
-            (re.match("([^_]+)_([^_]+)_mean.ccp4", str(path)), path)
+            (
+                re.match("([^_]+)_([^_]+)_mean.ccp4", str(path.name)),
+                path)
                 for path in pandda_dir_paths
         ]
         if match
