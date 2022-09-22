@@ -54,6 +54,7 @@ def get_mean_map_stats(mean_map_path, reference_map_path):
 
 def get_mean_maps_from_matches(mean_map_matches):
     resolutions = np.unique([resolution for resolution, model, path in mean_map_matches])
+    print(resolutions)
 
     mean_maps = {}
     for resolution in resolutions:
