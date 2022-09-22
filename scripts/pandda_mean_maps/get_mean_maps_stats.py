@@ -36,8 +36,8 @@ def get_mean_map_stats(mean_map_path, reference_map_path):
     mean_map = gemmi.read_ccp4_map(str(mean_map_path))
     reference_map = gemmi.read_ccp4_map(str(reference_map_path))
 
-    mean_map_array = np.array(mean_map)
-    reference_map_array = np.array(reference_map)
+    mean_map_array = np.array(mean_map.grid)
+    reference_map_array = np.array(reference_map.grid)
 
     delta_array = reference_map_array - mean_map_array
 
