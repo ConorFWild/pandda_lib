@@ -60,7 +60,7 @@ def get_mean_maps_from_matches(mean_map_matches):
         mean_maps[resolution] = {
             model: path
             for _resolution, model, path
-            in mean_maps
+            in mean_map_matches
             if _resolution == resolutions
         }
 
