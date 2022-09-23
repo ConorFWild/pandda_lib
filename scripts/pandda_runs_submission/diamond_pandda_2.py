@@ -97,7 +97,11 @@ def main(
             )
 
             # Submit the job
-            scheduler.submit(job, cores=cores, mem_per_core=int(120 / cores))
+            scheduler.submit(
+                job,
+                cores=cores,
+                mem_per_core=int(120 / cores),
+            )
 
 
 if __name__ == "__main__":
