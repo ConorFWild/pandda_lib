@@ -68,6 +68,7 @@ def main(
 
             # Skip existing runs
             if (project_output_dir / "analyses" / "pandda_analyse_events.csv").exists():
+                print("\t\tPanDDA already finished! Skipping")
                 continue
 
             # # Handle existing runs
