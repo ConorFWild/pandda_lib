@@ -92,7 +92,7 @@ def main(
 
     print(f"running_jobs are {running_job_names}")
 
-    exit()
+    # exit()
 
     # Submit jobs
     for system in session.query(SystemSQL).order_by(SystemSQL.id):
