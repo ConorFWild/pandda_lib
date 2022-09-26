@@ -53,6 +53,8 @@ def main(
     # Get Scheduler
     scheduler = QSubScheduler(tmp_dir)
 
+    jobs = []
+
     # Submit jobs
     for system in session.query(SystemSQL).order_by(SystemSQL.id):
         print(f"{system.system_name}")
@@ -97,12 +99,15 @@ def main(
                 cores=cores,
             )
 
-            # Submit the job
-            scheduler.submit(
-                job,
-                cores=cores,
-                mem_per_core=int(120 / cores),
-            )
+            jobs.append(job)
+
+    # Submit the job
+    for job in reversed(jobs):
+        scheduler.submit(
+            job,
+            cores=cores,
+            mem_per_core=int(120 / cores),
+        )
 
 
 if __name__ == "__main__":
