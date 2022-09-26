@@ -113,7 +113,9 @@ def main(
                 continue
 
             # Skip currently running runs
-
+            if f"system_{system.system_name}_project_{project.project_name}.sh" is in running_job_names:
+                print("\t\tPanDDA is currently running! Skipping")
+                continue
 
             # # Handle existing runs
             # if fresh and output_dir.exists():
