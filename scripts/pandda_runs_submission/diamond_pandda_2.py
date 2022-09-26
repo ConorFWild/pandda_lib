@@ -146,7 +146,7 @@ def main(
             jobs.append(job)
 
     # Submit the job
-    for job in reversed(jobs):
+    for job in jobs:
         scheduler.submit(
             job,
             cores=cores,
