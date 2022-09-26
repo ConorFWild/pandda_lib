@@ -5,5 +5,5 @@
         "tmp_dir": "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_diamond_data/tmp",
         "fresh": true,
         "remove": false,
-        "cores": 6
+        "cores": 12
 }
