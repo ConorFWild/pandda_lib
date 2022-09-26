@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from pathlib import Path
 import time
 import shutil
@@ -15,6 +16,37 @@ from pandda_lib.diamond_sqlite.diamond_data import DiamondDataDirs
 from pandda_lib.diamond_sqlite.diamond_sqlite import Base, ProjectDirSQL, SystemSQL
 from pandda_lib.schedulers.qsub_scheduler import QSubScheduler
 from pandda_lib.jobs.pandda_job import PanDDAJob
+
+
+def get_running_job_names():
+
+    script = (
+        "export SGE_LONG_JOB_NAMES=-1 \n"
+        "qstat"
+    )
+
+    p = subprocess.Popen(
+        script,
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
+
+    stdout, stderr = p.communicate()
+
+    stdout = str(stdout)
+    stderr= str(stderr)
+
+    matches = re.findall(
+        r"system_[^_]+_project_[^.]+\.sh",
+        stdout
+    )
+
+    job_names = [match for match in matches]
+
+    return job_names
+
+
 
 
 def main(
@@ -55,6 +87,13 @@ def main(
 
     jobs = []
 
+    # Get the running job names
+    running_job_names = get_running_job_names()
+
+    print(f"running_jobs are {running_job_names}")
+
+    exit()
+
     # Submit jobs
     for system in session.query(SystemSQL).order_by(SystemSQL.id):
         print(f"{system.system_name}")
@@ -72,6 +111,9 @@ def main(
             if (project_output_dir / "analyses" / "pandda_analyse_events.csv").exists():
                 print("\t\tPanDDA already finished! Skipping")
                 continue
+
+            # Skip currently running runs
+
 
             # # Handle existing runs
             # if fresh and output_dir.exists():
