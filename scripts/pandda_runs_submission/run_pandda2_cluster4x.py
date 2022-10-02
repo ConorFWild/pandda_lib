@@ -60,7 +60,7 @@ def main(
             name=f"pandda_{target}.sh",
             system_data_dir=data_dir,
             output_dir=out_dir,
-            cores=6,
+            cores=cores,
             pdb_regex=target_info[PDB_REGEX_KEY],
             mtz_regex=target_info[MTZ_REGEX_KEY],
         )
