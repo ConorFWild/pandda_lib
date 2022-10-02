@@ -54,6 +54,8 @@ def main(
         #     print(e)
         if out_dir.exists():
             continue
+        else:
+            print(f"Skipping! Done!")
 
         # Define the job
         job = PanDDAJob(
