@@ -15,7 +15,7 @@ MTZ_REGEX_KEY = "mtz_regex"
 OUT_DIR_FORMAT = "output_{target}"
 JOB_SCRIPT_FORMAT = "{target}.sh"
 CHMOD_COMMAND_FORMAT = "chmod 777 {script_path}"
-QSUB_COMMAND = "qsub -pe smp 3 -l m_mem_free=30G -q medium.q -o {log_file} -e {err_file} {script_file}"
+QSUB_COMMAND = "qsub -pe smp 12 -l m_mem_free=30G -q medium.q -o {log_file} -e {err_file} {script_file}"
 LOG_FILE_FORMAT = "{target}.log"
 ERR_FILE_FORMAT = "{target}.err"
 
@@ -60,6 +60,7 @@ def main(
             name=f"pandda_{target}.sh",
             system_data_dir=data_dir,
             output_dir=out_dir,
+            cores=6,
             pdb_regex=target_info[PDB_REGEX_KEY],
             mtz_regex=target_info[MTZ_REGEX_KEY],
         )
