@@ -23,7 +23,7 @@ ERR_FILE_FORMAT = "{target}.err"
 def main(
         targets_json_path: str,
         total_mem: int = 220,
-        cores: int = 6,
+        cores: int = 12,
 ):
     print("Starting")
     # Define data
