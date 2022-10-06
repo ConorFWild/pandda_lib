@@ -16,8 +16,8 @@ def main(
 ):
     print("Starting")
     # Define data
-    data_dir = Path(data_dir)
-    output_dir = Path(output_dir)
+    data_dir = Path(data_dir).resolve()
+    output_dir = Path(output_dir).resolve()
 
     # Get Scheduler
     scheduler = QSubScheduler(output_dir)
