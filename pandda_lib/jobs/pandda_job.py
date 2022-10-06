@@ -31,7 +31,7 @@ pandda_command = (
     "--rank_method=autobuild "
     "--comparison_strategy=\"{comparison_strategy}\" "
     "--min_characterisation_datasets=25 "
-    "--debug=2 "
+    "--debug={debug} "
     "--event_score=\"{event_score}\" "
     "--memory_availability=\"{memory_availability}\" "
 
@@ -50,7 +50,8 @@ class PanDDAJob:
                  event_score="inbuilt",
                  autobuild="False",
                  memory_availability="low",
-                 local_processing="serial"
+                 local_processing="serial",
+                 debug="0",
                  ):
         self.name = name
         self.system_data_dir = system_data_dir
@@ -64,6 +65,7 @@ class PanDDAJob:
             comparison_strategy=comparison_strategy,
             event_score=event_score,
             autobuild=autobuild,
+            debug=debug,
             memory_availability=memory_availability,
             local_processing=local_processing
         )
