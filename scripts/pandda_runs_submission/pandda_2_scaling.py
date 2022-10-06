@@ -23,7 +23,7 @@ def main(
     scheduler = QSubScheduler(output_dir)
 
     # Submit jobs
-    for processor in ["ray", ""]:
+    for processor in ["ray", "multiprocessing_spawn"]:
         for memory_availability in ["high", "low"]:
             for cores in [1, 3, 6, 12, 18, 24, 30, 36,]:
                 print(f"\tcores: {cores}")
