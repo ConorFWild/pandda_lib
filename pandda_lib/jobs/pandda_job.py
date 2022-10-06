@@ -24,9 +24,9 @@ pandda_command = (
     "--ligand_smiles_regex=\"[0-9a-zA-Z-]+[.]smiles\" "
     "--ligand_cif_regex=\"[0-9a-zA-Z-]+[.]cif\" "
     "--ligand_pdb_regex=\"[0-9a-zA-Z-]+[.]pdb\" "
-    "--autobuild=True "
+    "--autobuild={autobuild} "
     "--global_processing=\"serial\" "
-    "--local_processing=\"serial\" "
+    "--local_processing=\"{local_processing}\" "
     "--local_cpus={cores} "
     "--rank_method=autobuild "
     "--comparison_strategy=\"{comparison_strategy}\" "
@@ -48,7 +48,9 @@ class PanDDAJob:
                  mtz_regex="dimple.mtz",
                  comparison_strategy="hybrid",
                  event_score="inbuilt",
-                 memory_availability="low"
+                 autobuild="False",
+                 memory_availability="low",
+                 local_processing="serial"
                  ):
         self.name = name
         self.system_data_dir = system_data_dir
@@ -61,5 +63,7 @@ class PanDDAJob:
             mtz_regex=mtz_regex,
             comparison_strategy=comparison_strategy,
             event_score=event_score,
+            autobuild=autobuild,
             memory_availability=memory_availability,
+            local_processing=local_processing
         )
