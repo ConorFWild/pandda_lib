@@ -51,6 +51,7 @@ def main(
                     cores=cores,
                     comparison_strategy="high_res_first",
                     event_score="size",
+                    rank_method="size",
                     memory_availability=memory_availability,
                     debug="0"
                 )

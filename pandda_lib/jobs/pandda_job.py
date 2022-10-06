@@ -28,7 +28,7 @@ pandda_command = (
     "--global_processing=\"serial\" "
     "--local_processing=\"{local_processing}\" "
     "--local_cpus={cores} "
-    "--rank_method=autobuild "
+    "--rank_method={rank_method} "
     "--comparison_strategy=\"{comparison_strategy}\" "
     "--min_characterisation_datasets=25 "
     "--debug={debug} "
@@ -49,6 +49,7 @@ class PanDDAJob:
                  comparison_strategy="hybrid",
                  event_score="inbuilt",
                  autobuild="False",
+                 rank_method="autobuild",
                  memory_availability="low",
                  local_processing="serial",
                  debug="0",
@@ -65,6 +66,7 @@ class PanDDAJob:
             comparison_strategy=comparison_strategy,
             event_score=event_score,
             autobuild=autobuild,
+            rank_method=rank_method,
             debug=debug,
             memory_availability=memory_availability,
             local_processing=local_processing
