@@ -53,7 +53,8 @@ def main(
                     event_score="size",
                     rank_method="size",
                     memory_availability=memory_availability,
-                    debug="0"
+                    debug="0",
+                    local_processing=processor,
                 )
                 scheduler.submit(job, cores=cores, mem_per_core=mem_per_core)
 
