@@ -8,10 +8,11 @@ from pandda_lib.schedulers.qsub_scheduler import QSubScheduler
 from pandda_lib.jobs.pandda_job import PanDDAJob
 
 
-def qsub_pandda(data_dirs, out_dir, total_mem=220, cores=12, processor="ray", memory_availability="low"):
+def qsub_pandda(data_dirs, out_dir, working_dir, total_mem=220, cores=12, processor="ray", memory_availability="low"):
     # Get the working dir
     data_dir = Path(data_dirs).resolve()
-    working_dir = Path(out_dir).resolve()
+    working_dir = Path(working_dir).resolve()
+    out_dir = Path(out_dir).resolve()
 
     # Get Scheduler
     scheduler = QSubScheduler(working_dir)
