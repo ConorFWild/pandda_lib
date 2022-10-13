@@ -38,4 +38,4 @@ def qsub_pandda(data_dirs, out_dir, total_mem=220, cores=12, processor="ray", me
 
 
 if __name__ == "__main__":
-    fire.Fire()
+    fire.Fire(qsub_pandda)
