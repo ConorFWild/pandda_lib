@@ -34,7 +34,6 @@ pandda_command = (
     "--debug={debug} "
     "--event_score=\"{event_score}\" "
     "--memory_availability=\"{memory_availability}\" "
-
 )
 
 
