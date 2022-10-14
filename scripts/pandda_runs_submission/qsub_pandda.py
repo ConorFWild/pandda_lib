@@ -34,6 +34,7 @@ def qsub_pandda(data_dirs, out_dir, working_dir, total_mem=220, cores=12, proces
         debug="1",
         local_processing=processor,
     )
+    print(job.script)
 
     # Submit the job
     mem_per_core = int(total_mem / cores)
