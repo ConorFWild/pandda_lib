@@ -8,7 +8,13 @@ from pandda_lib.schedulers.qsub_scheduler import QSubScheduler
 from pandda_lib.jobs.pandda_job import PanDDAJob
 
 
-def qsub_pandda(data_dirs, out_dir, working_dir, total_mem=220, cores=12, processor="multiprocessing_spawn", memory_availability="low",
+def qsub_pandda(data_dirs,
+                out_dir,
+                working_dir,
+                total_mem=220,
+                cores=12,
+                processor="serial",
+                memory_availability="high",
                 autobuild="True"):
     # Get the working dir
     data_dir = Path(data_dirs).resolve()
@@ -20,7 +26,7 @@ def qsub_pandda(data_dirs, out_dir, working_dir, total_mem=220, cores=12, proces
 
     # Define the job
     job = PanDDAJob(
-        name=f"pandda_{processor}_{memory_availability}_{cores}.sh",
+        name=f"pandda_{processor}_{memory_availability}_{cores}",
         system_data_dir=data_dir,
         output_dir=out_dir,
         pdb_regex="dimple.pdb",
