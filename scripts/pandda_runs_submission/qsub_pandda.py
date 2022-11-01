@@ -28,7 +28,7 @@ def qsub_pandda(data_dirs,
 
     # Define the job
     job = PanDDAJob(
-        name=f"pandda_{processor}_{memory_availability}_{cores}",
+        name=f"pandda_{processor_global}_{processor}_{memory_availability}_{cores}",
         system_data_dir=data_dir,
         output_dir=out_dir,
         pdb_regex="dimple.pdb",
