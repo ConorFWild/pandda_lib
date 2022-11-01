@@ -34,6 +34,8 @@ pandda_command = (
     "--debug={debug} "
     "--event_score=\"{event_score}\" "
     "--memory_availability=\"{memory_availability}\" "
+    "--global_processing=\"{global_processing}\" "
+    "--distributed_num_workers=\"{}\" "
 )
 
 
@@ -51,6 +53,8 @@ class PanDDAJob:
                  rank_method="autobuild",
                  memory_availability="low",
                  local_processing="serial",
+                 global_processing="serial",
+                 distributed_num_workers=12,
                  debug="0",
                  ):
         self.name = name
@@ -68,5 +72,8 @@ class PanDDAJob:
             rank_method=rank_method,
             debug=debug,
             memory_availability=memory_availability,
-            local_processing=local_processing
+            local_processing=local_processing,
+            global_processing=global_processing,
+            distributed_num_workers=distributed_num_workers
+
         )

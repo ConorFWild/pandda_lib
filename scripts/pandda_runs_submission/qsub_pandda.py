@@ -14,6 +14,7 @@ def qsub_pandda(data_dirs,
                 total_mem=220,
                 cores=12,
                 processor="threading",
+                processor_global="distributed",
                 memory_availability="high",
                 autobuild="True",
                 ):
@@ -40,6 +41,7 @@ def qsub_pandda(data_dirs,
         memory_availability=memory_availability,
         debug="1",
         local_processing=processor,
+        global_processing=processor_global,
     )
     print(job.script)
 
