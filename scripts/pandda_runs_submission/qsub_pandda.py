@@ -13,9 +13,10 @@ def qsub_pandda(data_dirs,
                 working_dir,
                 total_mem=220,
                 cores=12,
-                processor="serial",
+                processor="threading",
                 memory_availability="high",
-                autobuild="True"):
+                autobuild="True",
+                ):
     # Get the working dir
     data_dir = Path(data_dirs).resolve()
     working_dir = Path(working_dir).resolve()
