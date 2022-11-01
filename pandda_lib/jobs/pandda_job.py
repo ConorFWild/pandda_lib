@@ -35,7 +35,7 @@ pandda_command = (
     "--event_score=\"{event_score}\" "
     "--memory_availability=\"{memory_availability}\" "
     "--global_processing=\"{global_processing}\" "
-    "--distributed_num_workers=\"{}\" "
+    "--distributed_num_workers=\"{distributed_num_workers}\" "
 )
 
 
