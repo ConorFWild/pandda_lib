@@ -25,7 +25,7 @@ pandda_command = (
     "--ligand_cif_regex=\"[0-9a-zA-Z-]+[.]cif\" "
     "--ligand_pdb_regex=\"[0-9a-zA-Z-]+[.]pdb\" "
     "--autobuild={autobuild} "
-    "--global_processing=\"serial\" "
+    "--global_processing=\"{global_processing}\" "
     "--local_processing=\"{local_processing}\" "
     "--local_cpus={cores} "
     "--rank_method={rank_method} "
@@ -34,7 +34,6 @@ pandda_command = (
     "--debug={debug} "
     "--event_score=\"{event_score}\" "
     "--memory_availability=\"{memory_availability}\" "
-    "--global_processing=\"{global_processing}\" "
     "--distributed_num_workers=\"{distributed_num_workers}\" "
 )
 
