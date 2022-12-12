@@ -30,4 +30,6 @@ class HTCondorScheduler:
         })
 
         # Submit
-        schedd.submit(hostname_job)
+        submit_result = schedd.submit(hostname_job)
+        print(f"Job was submitted: scheduler assigned id {submit_result.cluster()} and "
+              f"{submit_result.classad().printJson()}")
