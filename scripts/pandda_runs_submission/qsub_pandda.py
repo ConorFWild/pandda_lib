@@ -5,6 +5,7 @@ import json
 import fire
 
 from pandda_lib.schedulers.qsub_scheduler import QSubScheduler
+from pandda_lib.schedulers.condor_scheduler import HTCondorScheduler
 from pandda_lib.jobs.pandda_job import PanDDAJob
 
 
@@ -26,7 +27,8 @@ def qsub_pandda(data_dirs,
     out_dir = Path(out_dir).resolve()
 
     # Get Scheduler
-    scheduler = QSubScheduler(working_dir)
+    # scheduler = QSubScheduler(working_dir)
+    scheduler = HTCondorScheduler(working_dir)
 
     # Define the job
     job = PanDDAJob(
