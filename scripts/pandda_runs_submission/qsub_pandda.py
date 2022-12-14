@@ -43,7 +43,7 @@ def qsub_pandda(data_dirs,
         rank_method="autobuild",
         autobuild=autobuild,
         memory_availability=memory_availability,
-        debug="2",
+        debug="0",
         local_processing=processor,
         global_processing=processor_global,
     )
