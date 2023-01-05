@@ -20,7 +20,8 @@ def qsub_pandda(data_dirs,
                 processor_global="serial",
                 memory_availability="high",
                 autobuild="True",
-                autobuild_strategy="rhofit"
+                autobuild_strategy="rhofit",
+                rescore_event_method="autobuild_rscc"
                 ):
     # Get the working dir
     data_dir = Path(data_dirs).resolve()
@@ -47,7 +48,8 @@ def qsub_pandda(data_dirs,
         debug="0",
         local_processing=processor,
         global_processing=processor_global,
-        autobuild_strategy=autobuild_strategy
+        autobuild_strategy=autobuild_strategy,
+        rescore_event_method=rescore_event_method
     )
     print(job.script)
 

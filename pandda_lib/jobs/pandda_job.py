@@ -35,7 +35,9 @@ pandda_command = (
     "--event_score=\"{event_score}\" "
     "--memory_availability=\"{memory_availability}\" "
     "--distributed_num_workers=\"{distributed_num_workers}\" "
-    "--autobuild_strategy=\"{autobuild_strategy}\""
+    "--autobuild_strategy=\"{autobuild_strategy}\" "
+    "--rescore_event_method=\"{rescore_event_method}\" "
+
 )
 
 
@@ -56,7 +58,8 @@ class PanDDAJob:
                  global_processing="serial",
                  distributed_num_workers=12,
                  debug="0",
-                 autobuild_strategy="rhofit"
+                 autobuild_strategy="rhofit",
+                 rescore_event_method="autobuild_rscc"
                  ):
         self.name = name
         self.system_data_dir = system_data_dir
@@ -76,6 +79,7 @@ class PanDDAJob:
             local_processing=local_processing,
             global_processing=global_processing,
             distributed_num_workers=distributed_num_workers,
-            autobuild_strategy=autobuild_strategy
+            autobuild_strategy=autobuild_strategy,
+            rescore_event_method=rescore_event_method
 
         )
