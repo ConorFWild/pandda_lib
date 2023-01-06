@@ -35,8 +35,8 @@ pandda_command = (
     "--event_score=\"{event_score}\" "
     "--memory_availability=\"{memory_availability}\" "
     "--distributed_num_workers=\"{distributed_num_workers}\" "
-    "--autobuild_strategy=\"{autobuild_strategy}\" "
     "--rescore_event_method=\"{rescore_event_method}\" "
+    "--autobuild_strategy=\"{autobuild_strategy}\" "
 
 )
 
