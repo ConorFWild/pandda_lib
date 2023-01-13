@@ -33,6 +33,8 @@ def qsub_pandda(data_dirs,
     # scheduler = HTCondorScheduler(working_dir)
 
     # Define the job
+    mem_per_core = int(total_mem / cores)
+
     job = PanDDAJob(
         name=f"pandda_{processor_global}_{processor}_{memory_availability}_{cores}",
         system_data_dir=data_dir,
@@ -49,12 +51,12 @@ def qsub_pandda(data_dirs,
         local_processing=processor,
         global_processing=processor_global,
         autobuild_strategy=autobuild_strategy,
-        rescore_event_method=rescore_event_method
+        rescore_event_method=rescore_event_method,
+        distributed_mem_per_core=mem_per_core
     )
     print(job.script)
 
     # Submit the job
-    mem_per_core = int(total_mem / cores)
     scheduler.submit(job, cores=cores, mem_per_core=mem_per_core)
 
 
