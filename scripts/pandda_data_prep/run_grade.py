@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import subprocess
+import shutil
 
 import fire
 import joblib
@@ -11,11 +12,19 @@ grade_command = "module load buster; module load buster; cd {data_dir}; grade -c
 def run_grade(compound_dir, smiles_path):
     print(f"Running job: {compound_dir} {smiles_path.name}")
     output_cif_path = compound_dir / f"{smiles_path.stem.strip()}.cif"
+
+    canon_name = smiles_path.stem.strip()
+    new_smiles_path = smiles_path.parent / f"{canon_name}.smiles"
+
+    if canon_name != smiles_path.stem:
+        shutil.move(smiles_path, new_smiles_path)
+        print(f"Moved ligand {smiles_path.name} to {new_smiles_path.name}")
+
     while not output_cif_path.exists():
         command = grade_command.format(
             data_dir=compound_dir,
-            in_smiles=smiles_path.name,
-            out_cif=f"{smiles_path.stem.strip()}.cif",
+            in_smiles=new_smiles_path.name,
+            out_cif=f"{canon_name}.cif",
         )
         print(command)
         p = subprocess.Popen(
@@ -29,15 +38,21 @@ def run_grade(compound_dir, smiles_path):
         print(str(stderr))
 
 
-def run_grade_on_model_building(path: str):
+def run_grade_on_model_building(path: str, remove=False):
     _path = Path(path).resolve()
     processes = []
     for model_dir in _path.glob("*"):
         compound_dir = model_dir / "compound"
-
+        skip = False
         for cif in compound_dir.glob("*.cif"):
-            os.remove(cif)
-            print(f"Removed cif: {cif}")
+            if remove:
+                os.remove(cif)
+                print(f"Removed cif: {cif}")
+            else:
+                skip = True
+        if skip:
+            print(f"Already has cif: {compound_dir}: skipping!")
+            continue
         try:
             smiles_path = next(compound_dir.glob("*.smiles"))
         except:
