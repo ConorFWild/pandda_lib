@@ -9,17 +9,19 @@ grade_command = "module load buster; cd {data_dir}; grade -in {in_smiles} -ocif 
 
 
 def run_grade(compound_dir, smiles_path):
+    print(f"Running job: {compound_dir} {smiles_path.name}")
     p = subprocess.Popen(
         grade_command.format(
             data_dir=compound_dir,
             in_smiles=smiles_path,
-            out_cif=f"{smiles_path.root}.cif",
+            out_cif=f"{smiles_path.root.strip()}.cif",
         ),
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
     p.communicate()
+
 
 def run_grade_on_model_building(path: str):
 
@@ -40,8 +42,9 @@ def run_grade_on_model_building(path: str):
         processes.append(
             joblib.delayed(run_grade)(compound_dir, smiles_path)
         )
+    print(f"Processing {len(processes)} jobs...")
+    joblib.Parallel(n_jobs=12, verbose=10)(x for x in processes)
 
-    joblib.Parallel(n_jobs=12)(x for x in processes)
 
 if __name__ == "__main__":
     fire.Fire(run_grade_on_model_building)
