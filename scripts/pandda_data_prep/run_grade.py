@@ -11,7 +11,7 @@ grade_command = "module load buster; module load buster; cd {data_dir}; grade -c
 def run_grade(compound_dir, smiles_path):
     print(f"Running job: {compound_dir} {smiles_path.name}")
     output_cif_path = compound_dir / f"{smiles_path.stem.strip()}.cif"
-    while not Path(output_cif_path).exists():
+    while not output_cif_path.exists():
         command = grade_command.format(
             data_dir=compound_dir,
             in_smiles=smiles_path.name,
