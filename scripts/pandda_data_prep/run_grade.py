@@ -7,9 +7,11 @@ import fire
 grade_command = "module load buster; cd {data_dir}; grade -in {in_smiles} -ocif {out_cif}"
 
 
-def run_grade_on_model_building(path: Path):
+def run_grade_on_model_building(path: str):
+
+    _path = Path(path)
     processes = []
-    for model_dir in path.glob("*"):
+    for model_dir in _path.glob("*"):
         compound_dir = model_dir / "compound"
 
         for cif in compound_dir.glob("*.cif"):
