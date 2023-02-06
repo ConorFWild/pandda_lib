@@ -2,6 +2,8 @@ import os
 from pathlib import Path
 import subprocess
 
+import fire
+
 grade_command = "module load buster; cd {data_dir}; grade -in {in_smiles} -ocif {out_cif}"
 
 
@@ -33,3 +35,6 @@ def run_grade_on_model_building(path: Path):
         )
 
     [p.communicate() for p in processes]
+
+if __name__ == "__main__":
+    fire.Fire(run_grade_on_model_building)
