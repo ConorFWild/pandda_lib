@@ -5,7 +5,7 @@ import subprocess
 import fire
 import joblib
 
-grade_command = "module load buster; module load buster; cd {data_dir}; grade -in {in_smiles} -ocif {out_cif}"
+grade_command = "module load buster; module load buster; cd {data_dir}; grade -checkdeps; grade -in {in_smiles} -ocif {out_cif}"
 
 
 def run_grade(compound_dir, smiles_path):
@@ -23,8 +23,8 @@ def run_grade(compound_dir, smiles_path):
         stderr=subprocess.PIPE
     )
     stdout, stderr = p.communicate()
-    print(stdout)
-    print(stderr)
+    print(str(stdout))
+    print(str(stderr))
 
 
 def run_grade_on_model_building(path: str):
