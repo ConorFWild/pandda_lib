@@ -5,7 +5,7 @@ import subprocess
 import fire
 import joblib
 
-grade_command = "module load buster; cd {data_dir}; grade -in {in_smiles} -ocif {out_cif}"
+grade_command = "module load buster; module load buster; cd {data_dir}; grade -in {in_smiles} -ocif {out_cif}"
 
 
 def run_grade(compound_dir, smiles_path):
