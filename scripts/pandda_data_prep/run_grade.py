@@ -12,6 +12,7 @@ def run_grade_on_model_building(path: Path):
 
         for cif in compound_dir.glob("*.cif"):
             os.remove(cif)
+            print(f"Removed cif: {cif}")
         try:
             smiles_path = next(compound_dir.glob("*.smiles"))
         except:
