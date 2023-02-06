@@ -13,7 +13,7 @@ def run_grade(compound_dir, smiles_path):
     command = grade_command.format(
         data_dir=compound_dir,
         in_smiles=smiles_path.name,
-        out_cif=f"{smiles_path.root.strip()}.cif",
+        out_cif=f"{smiles_path.stem.strip()}.cif",
     )
     print(command)
     p = subprocess.Popen(
