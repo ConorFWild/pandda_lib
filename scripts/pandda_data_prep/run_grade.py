@@ -20,7 +20,9 @@ def run_grade(compound_dir, smiles_path):
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
-    p.communicate()
+    stdout, stderr = p.communicate()
+    print(stdout)
+    print(stderr)
 
 
 def run_grade_on_model_building(path: str):
