@@ -10,12 +10,13 @@ grade_command = "module load buster; cd {data_dir}; grade -in {in_smiles} -ocif 
 
 def run_grade(compound_dir, smiles_path):
     print(f"Running job: {compound_dir} {smiles_path.name}")
+    command = grade_command.format(
+        data_dir=compound_dir,
+        in_smiles=smiles_path.name,
+        out_cif=f"{smiles_path.root.strip()}.cif",
+    )
     p = subprocess.Popen(
-        grade_command.format(
-            data_dir=compound_dir,
-            in_smiles=smiles_path,
-            out_cif=f"{smiles_path.root.strip()}.cif",
-        ),
+        command,
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
@@ -26,8 +27,7 @@ def run_grade(compound_dir, smiles_path):
 
 
 def run_grade_on_model_building(path: str):
-
-    _path = Path(path)
+    _path = Path(path).resolve()
     processes = []
     for model_dir in _path.glob("*"):
         compound_dir = model_dir / "compound"
