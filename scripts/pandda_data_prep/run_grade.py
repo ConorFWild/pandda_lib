@@ -10,21 +10,22 @@ grade_command = "module load buster; module load buster; cd {data_dir}; grade -c
 
 def run_grade(compound_dir, smiles_path):
     print(f"Running job: {compound_dir} {smiles_path.name}")
-    command = grade_command.format(
-        data_dir=compound_dir,
-        in_smiles=smiles_path.name,
-        out_cif=f"{smiles_path.stem.strip()}.cif",
-    )
-    print(command)
-    p = subprocess.Popen(
-        command,
-        shell=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
-    )
-    stdout, stderr = p.communicate()
-    print(str(stdout))
-    print(str(stderr))
+    while not Path(f"{smiles_path.stem.strip()}.cif").exists():
+        command = grade_command.format(
+            data_dir=compound_dir,
+            in_smiles=smiles_path.name,
+            out_cif=f"{smiles_path.stem.strip()}.cif",
+        )
+        print(command)
+        p = subprocess.Popen(
+            command,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        stdout, stderr = p.communicate()
+        print(str(stdout))
+        print(str(stderr))
 
 
 def run_grade_on_model_building(path: str):
