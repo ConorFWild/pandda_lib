@@ -15,6 +15,7 @@ def run_grade(compound_dir, smiles_path):
         in_smiles=smiles_path.name,
         out_cif=f"{smiles_path.root.strip()}.cif",
     )
+    print(command)
     p = subprocess.Popen(
         command,
         shell=True,
