@@ -54,9 +54,8 @@ distributed_mem_per_core=6
         global_processing=processor_global,
         autobuild_strategy=autobuild_strategy,
         rescore_event_method=rescore_event_method,
-        distributed_mem_per_core=mem_per_core,
+        distributed_mem_per_core=distributed_mem_per_core,
         distributed_num_workers=distributed_num_workers,
-        distributed_mem_per_core=distributed_mem_per_core
     )
     print(job.script)
 
