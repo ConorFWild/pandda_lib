@@ -105,7 +105,7 @@ class Grade:
         for model_dir in _path.glob("*"):
             compound_dir = model_dir / "compound"
             skip = False
-            num_cifs = len(list(compound_dir.glob("*.cif")))
+            num_cifs = len(list(compound_dir.glob("grade.cif")))
             if num_cifs == 0:
                 shutil.rmtree(model_dir)
 
