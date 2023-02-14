@@ -8,22 +8,26 @@ import joblib
 
 grade_command = "module load buster; module load buster; cd {data_dir}; grade -checkdeps; grade -f -in {in_smiles} -ocif {out_cif}"
 
-def run_grade_cif(compound_dir, cif_path):
+
+def run_grade_cif(compound_dir, cif_path, new_cif_path):
     command = grade_command.format(
         data_dir=compound_dir,
         in_smiles=cif_path,
-        out_cif=cif_path,
+        out_cif=new_cif_path,
     )
     print(command)
-    p = subprocess.Popen(
-        command,
-        shell=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
-    )
-    stdout, stderr = p.communicate()
-    print(str(stdout))
-    print(str(stderr))
+    while not new_cif_path.exists():
+        p = subprocess.Popen(
+            command,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        stdout, stderr = p.communicate()
+        print(str(stdout))
+        print(str(stderr))
+    os.remove(cif_path)
+
 
 def run_grade(compound_dir, smiles_path):
     print(f"Running job: {compound_dir} {smiles_path.name}")
@@ -55,7 +59,7 @@ def run_grade(compound_dir, smiles_path):
 
 
 class Grade:
-    def run_grade_on_model_building(self, path: str, remove=False,):
+    def run_grade_on_model_building(self, path: str, remove=False, ):
         _path = Path(path).resolve()
         processes = []
         for model_dir in _path.glob("*"):
@@ -89,9 +93,9 @@ class Grade:
             compound_dir = model_dir / "compound"
             skip = False
             for cif in compound_dir.glob("*.cif"):
-
+                new_cif_path = compound_dir / "grade.cif"
                 processes.append(
-                    joblib.delayed(run_grade_cif)(compound_dir, cif)
+                    joblib.delayed(run_grade_cif)(compound_dir, cif, new_cif_path)
                 )
         print(f"Processing {len(processes)} jobs...")
         joblib.Parallel(n_jobs=12, verbose=10)(x for x in processes)
