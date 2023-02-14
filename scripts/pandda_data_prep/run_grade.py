@@ -91,7 +91,7 @@ class Grade:
             for cif in compound_dir.glob("*.cif"):
 
                 processes.append(
-                    joblib.delayed(run_grade)(compound_dir, cif)
+                    joblib.delayed(run_grade_cif)(compound_dir, cif)
                 )
         print(f"Processing {len(processes)} jobs...")
         joblib.Parallel(n_jobs=12, verbose=10)(x for x in processes)
