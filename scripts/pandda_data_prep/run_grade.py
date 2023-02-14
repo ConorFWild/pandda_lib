@@ -93,6 +93,8 @@ class Grade:
         for model_dir in _path.glob("*"):
             compound_dir = model_dir / "compound"
             skip = False
+            for pdb in compound_dir.glob("*.pdb"):
+                os.remove(pdb)
             for cif in compound_dir.glob("*.cif"):
                 new_cif_path = compound_dir / "grade.cif"
                 new_pdb_path = compound_dir / "grade.pdb"
