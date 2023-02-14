@@ -6,14 +6,15 @@ import shutil
 import fire
 import joblib
 
-grade_command = "module load buster; module load buster; cd {data_dir}; grade -checkdeps; grade -f -in {in_smiles} -ocif {out_cif}"
+grade_command = "module load buster; module load buster; cd {data_dir}; grade -checkdeps; grade -f -in {in_smiles} -ocif {out_cif} -opdb {out_pdb}"
 
 
-def run_grade_cif(compound_dir, cif_path, new_cif_path):
+def run_grade_cif(compound_dir, cif_path, new_cif_path, new_pdb_path):
     command = grade_command.format(
         data_dir=compound_dir,
         in_smiles=cif_path,
         out_cif=new_cif_path,
+        out_pdb=new_pdb_path
     )
     print(command)
     while not new_cif_path.exists():
@@ -94,8 +95,9 @@ class Grade:
             skip = False
             for cif in compound_dir.glob("*.cif"):
                 new_cif_path = compound_dir / "grade.cif"
+                new_pdb_path = compound_dir / "grade.pdb"
                 processes.append(
-                    joblib.delayed(run_grade_cif)(compound_dir, cif, new_cif_path)
+                    joblib.delayed(run_grade_cif)(compound_dir, cif, new_cif_path, new_pdb_path)
                 )
         print(f"Processing {len(processes)} jobs...")
         joblib.Parallel(n_jobs=12, verbose=10)(x for x in processes)
@@ -108,6 +110,7 @@ class Grade:
             num_cifs = len(list(compound_dir.glob("grade.cif")))
             if num_cifs == 0:
                 shutil.rmtree(model_dir)
+
 
 if __name__ == "__main__":
     fire.Fire(Grade)
