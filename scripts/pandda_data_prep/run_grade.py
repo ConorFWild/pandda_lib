@@ -100,6 +100,14 @@ class Grade:
         print(f"Processing {len(processes)} jobs...")
         joblib.Parallel(n_jobs=12, verbose=10)(x for x in processes)
 
+    def delete_dirs_without_cifs(self, path: str):
+        _path = Path(path).resolve()
+        for model_dir in _path.glob("*"):
+            compound_dir = model_dir / "compound"
+            skip = False
+            num_cifs = len(compound_dir.glob("*.cif"))
+            if num_cifs == 0:
+                shutil.rmtree(model_dir)
 
 if __name__ == "__main__":
     fire.Fire(Grade)
