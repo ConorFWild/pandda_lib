@@ -1,4 +1,15 @@
 import fire
+from pydantic import BaseModel
+
+class Constants:
+    database_file:str = "database.sqlite"
+    inspect_dir: str = "inspect"
+    graph_dir: str = "graphs"
+    rmsd_graph_dir: str = "rmsd"
+
+
+class Options(BaseModel):
+    source_dir: str
 
 class CLI:
     def init(self, options_json: str):
@@ -41,9 +52,9 @@ class CLI:
         """
         options = load_options(options_json)
         database = load_database(options)
-        for new_pandda, comparator_panddas in database.new_panddas():
-            database.add_pandda_compar
-        ...
+        for new_pandda, comparator_events in database.new_panddas():
+            events = get_events(new_pandda, comparator_events)
+            database.add_events(events)
 
     def build_refining_table(self, options_json: str):
         """
@@ -51,7 +62,9 @@ class CLI:
         :param options_json:
         :return:
         """
-        ...
+        options = load_options(options_json)
+        database = load_database(options)
+
 
     def refine(self, options_json: str):
         """
@@ -59,15 +72,36 @@ class CLI:
         :param options_json:
         :return:
         """
-        ...
+        options = load_options(options_json)
+        database = load_database(options)
+        inspect_new_events(options)
 
-    def reanalyse(self, options_json: str):
+    def add_refined_event_annotations(self, options_json: str):
         """
-
+        Add event annotations from refinement to tables.
         :param options_json:
         :return:
         """
-        ...
+        options = load_options(options_json)
+        database = load_database(options)
+
+    def graph_rmsds(self, options_json: str):
+        """
+        Produce graphs of rmsds
+        :param options_json:
+        :return:
+        """
+        options = load_options(options_json)
+        database = load_database(options)
+
+
+    # def reanalyse(self, options_json: str):
+    #     """
+    #
+    #     :param options_json:
+    #     :return:
+    #     """
+    #     ...
 
 
 
