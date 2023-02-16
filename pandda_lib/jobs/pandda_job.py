@@ -54,7 +54,7 @@ class PanDDAJob:
                  comparison_strategy="hybrid",
                  event_score="inbuilt",
                  autobuild="False",
-                 rank_method="event_score",
+                 rank_method="autobuild_score",
                  memory_availability="low",
                  local_processing="serial",
                  global_processing="serial",
