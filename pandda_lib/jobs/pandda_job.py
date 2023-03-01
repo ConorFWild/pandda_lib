@@ -62,7 +62,7 @@ class PanDDAJob:
                  debug="0",
                  autobuild_strategy="rhofit",
                  rescore_event_method="autobuild_rscc",
-                 distributed_mem_per_core=15
+                 distributed_mem_per_core=15,
                  ):
         self.name = name
         self.system_data_dir = system_data_dir

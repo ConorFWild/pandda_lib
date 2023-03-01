@@ -23,7 +23,8 @@ def qsub_pandda(data_dirs,
                 autobuild_strategy="rhofit",
                 rescore_event_method="autobuild_rscc",
                 distributed_num_workers=150,
-distributed_mem_per_core=6
+distributed_mem_per_core=6,
+                event_score="inbuilt"
                 ):
     # Get the working dir
     data_dir = Path(data_dirs).resolve()
@@ -45,7 +46,7 @@ distributed_mem_per_core=6
         mtz_regex=mtz_regex,
         cores=cores,
         comparison_strategy="hybrid",
-        event_score="inbuilt",
+        event_score=event_score,
         rank_method="autobuild",
         autobuild=autobuild,
         memory_availability=memory_availability,
