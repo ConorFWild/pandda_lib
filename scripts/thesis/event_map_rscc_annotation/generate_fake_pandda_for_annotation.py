@@ -41,9 +41,9 @@ def plot_rscc_vs_rmsd():
     Base.metadata.create_all(engine)
 
     # Remove tables
-    Base.metadata.create_all(engine)
-    BoundStateModelSQL.__table__.drop(engine)
-    Base.metadata.create_all(engine)
+    # Base.metadata.create_all(engine)
+    # BoundStateModelSQL.__table__.drop(engine)
+    # Base.metadata.create_all(engine)
 
     # Get the datasets
     print("\tGetting SQL data")
