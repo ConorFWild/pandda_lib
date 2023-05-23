@@ -26,6 +26,33 @@ PANDDA_TOTAL_MASK_FILE = "total_mask.ccp4"
 PANDDA_MEAN_MAP_FILE = "mean_{number}_{res}.ccp4"
 PANDDA_SIGMA_S_M_FILE = "sigma_s_m_{number}_{res}.ccp4"
 
+
+PANDDA_ANALYSIS_DIR = "analyses"
+PANDDA_INSPECT_TABLE_FILE = "pandda_inspect_events.csv"
+# PANDDA_PROCESSED_DATASETS_DIR = "processed_datasets"
+PANDDA_INSPECT_MODEL_DIR = "modelled_structures"
+PANDDA_EVENT_MAP_TEMPLATE = "{dtag}-event_{event_idx}_1-BDC_{bdc}_map.native.ccp4"
+PANDDA_MODEL_FILE = "{dtag}-pandda-model.pdb"
+PANDDA_INITIAL_MODEL_TEMPLATE = "{dtag}-pandda-input.pdb"
+PANDDA_INITIAL_MTZ_TEMPLATE = "{dtag}-pandda-input.mtz"
+PANDDA_EVENT_TABLE_PATH = "pandda_analyse_events.csv"
+PANDDA_SITE_TABLE_PATH = "pandda_analyse_sites.csv"
+PANDDA_ZMAP_TEMPLATE = "{dtag}-z_map.native.ccp4"
+PANDDA_GROUND_STATE_MAP_TEMPLATE = "{dtag}-ground-state-average-map.native.ccp4"
+
+PANDDA_INSPECT_DTAG = "dtag"
+PANDDA_INSPECT_EVENT_IDX = "event_idx"
+PANDDA_INSPECT_BDC = "1-BDC"
+PANDDA_INSPECT_X = "x"
+PANDDA_INSPECT_Y = "y"
+PANDDA_INSPECT_Z = "z"
+PANDDA_INSPECT_HIT_CONDFIDENCE = "Ligand Confidence"
+PANDDA_INSPECT_TABLE_HIGH_CONFIDENCE = "High"
+PANDDA_INSPECT_TABLE_LOW_CONFIDENCE = "Low"
+PANDDA_INSPECT_VIEWED = "Viewed"
+PANDDA_INSPECT_LIGAND_PLACED = "Ligand Placed"
+
+
 ###################################################################
 # # Logging constants
 ###################################################################
