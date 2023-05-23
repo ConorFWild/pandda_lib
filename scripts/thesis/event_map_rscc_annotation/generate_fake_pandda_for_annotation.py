@@ -52,6 +52,7 @@ def generate_fake_pandda(sample, fake_pandda_dir):
     for record in sample:
         dataset = record["Dataset"]
         # Get the inspect table
+        print(f"\t\t{dataset.pandda_model_path}")
         dataset_dir = pathlib.Path(dataset.pandda_model_path).parent.parent
         pandda_dir = dataset_dir.parent.parent
         analyses_dir = pandda_dir / constants.PANDDA_ANALYSES_DIR
@@ -91,6 +92,7 @@ def generate_fake_pandda(sample, fake_pandda_dir):
             score,
             row
         ]
+        unattested_events.append(event_row)
 
 
     # Generate new table
