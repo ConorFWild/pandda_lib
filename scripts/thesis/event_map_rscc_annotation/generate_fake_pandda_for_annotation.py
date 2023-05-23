@@ -68,7 +68,8 @@ def plot_rscc_vs_rmsd():
 
         # Get the mtz
         mtz_path = dataset.mtz_path
-        assert pathlib.Path(mtz_path).exists()
+        if not pathlib.Path(mtz_path).exists():
+            continue
         mtz = gemmi.read_mtz_file(mtz_path)
 
         # Get the resolution
