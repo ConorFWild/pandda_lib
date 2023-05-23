@@ -38,7 +38,7 @@ def plot_rscc_vs_rmsd():
     # tmp_dir = pathlib.Path(tmp_dir).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
-    Base.metadata.create_all(engine)
+    # Base.metadata.create_all(engine)
 
     # Remove tables
     # Base.metadata.create_all(engine)
