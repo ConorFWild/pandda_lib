@@ -46,7 +46,7 @@ def plot_rscc_vs_rmsd():
     # Base.metadata.create_all(engine)
 
     # Get the datasets
-    print("\tGetting SQL data")
+    print("\tGetting SQL data...")
     initial_datasets = session.query(DatasetSQL).options(subqueryload(DatasetSQL.bound_state_model)).order_by(
         DatasetSQL.id).all()
     print(f"Got {len(initial_datasets)} datasets!")
@@ -55,6 +55,13 @@ def plot_rscc_vs_rmsd():
     print("\tGetting RSCCs and Resolutions...")
     records = []
     for dataset in initial_datasets:
+
+        # Skip if no RSCC
+        if not dataset.bound_state_model:
+            continue
+
+        if not dataset.bound_state_model.rscc:
+            continue
 
         # Get the RSCC
         rscc = dataset.bound_state_model.rscc
