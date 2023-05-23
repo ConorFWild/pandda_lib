@@ -71,7 +71,7 @@ def plot_rscc_vs_rmsd():
         mtz = gemmi.read_mtz_file(mtz_path)
 
         # Get the resolution
-        resolution = mtz.high_res()
+        resolution = mtz.resolution_high()
 
         records.append(
             {
