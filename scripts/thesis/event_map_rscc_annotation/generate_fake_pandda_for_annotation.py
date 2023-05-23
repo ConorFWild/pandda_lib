@@ -1,3 +1,4 @@
+import itertools
 import pathlib
 import os
 
@@ -93,7 +94,7 @@ def plot_rscc_vs_rmsd():
     res_samples = np.linspace(min_res, max_res, num=11)
     rscc_samples = np.linspace(0.0,1.0,num=11)
     sample_datasets = {}
-    for x, y in zip(range(11), range(11)):
+    for x, y in itertools.product(range(11), range(11)):
         sample_datasets[(x, y)] = []
 
     res_indexes = np.searchsorted(res_samples, resolutions)
