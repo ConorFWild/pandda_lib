@@ -46,13 +46,13 @@ def plot_rscc_vs_rmsd():
     # Base.metadata.create_all(engine)
 
     # Get the datasets
-    print("\tGetting SQL data...")
+    print("Getting SQL data...")
     initial_datasets = session.query(DatasetSQL).options(subqueryload(DatasetSQL.bound_state_model)).order_by(
         DatasetSQL.id).all()
-    print(f"Got {len(initial_datasets)} datasets!")
+    print(f"\tGot {len(initial_datasets)} datasets!")
 
     # Get the RSCCs and resolutions of each dataset
-    print("\tGetting RSCCs and Resolutions...")
+    print("Getting RSCCs and Resolutions...")
     records = []
     for dataset in initial_datasets:
 
@@ -82,7 +82,7 @@ def plot_rscc_vs_rmsd():
                 "RSCC": rscc,
             }
         )
-    print(f"Got {len(records)} datasets with RSCCs!")
+    print(f"\tGot {len(records)} datasets with RSCCs!")
 
     # Partition the datasets by resolution and RSCC
     print(f"Partitioning datasets on resolution and RSCC...")
@@ -110,7 +110,7 @@ def plot_rscc_vs_rmsd():
     for (res, rscc), subsample_records in sample_datasets.items():
         selected_records = rng.choice(subsample_records, 10)
         sample += selected_records
-    print(f"Got a sample of size: {len(sample)}")
+    print(f"\tGot a sample of size: {len(sample)}")
 
     # Generate a fake PanDDA inspect dataset from this balanced sample
 
