@@ -116,7 +116,7 @@ def plot_rscc_vs_rmsd():
             min(10, len(subsample_records)),
             replace=False,
         )
-        sample += selected_records
+        sample += [x for x in selected_records]
     print(f"\tGot a sample of size: {len(sample)}")
 
     # Generate a fake PanDDA inspect dataset from this balanced sample
