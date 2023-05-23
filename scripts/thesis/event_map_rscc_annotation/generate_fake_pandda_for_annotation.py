@@ -82,6 +82,7 @@ def plot_rscc_vs_rmsd():
                 "RSCC": rscc,
             }
         )
+    print(f"Got {len(records)} datasets with RSCCs!")
 
     # Partition the datasets by resolution and RSCC
     print(f"Partitioning datasets on resolution and RSCC...")
