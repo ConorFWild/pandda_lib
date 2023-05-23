@@ -49,7 +49,8 @@ def generate_fake_pandda(sample, fake_pandda_dir):
 
     unattested_events = []
 
-    for dataset in sample:
+    for record in sample:
+        dataset = sample["Dataset"]
         # Get the inspect table
         dataset_dir = pathlib.Path(dataset.pandda_model_path).parent.parent
         pandda_dir = dataset_dir.parent.parent
