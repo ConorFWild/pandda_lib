@@ -93,15 +93,15 @@ def plot_rscc_vs_rmsd():
     res_samples = np.linspace(min_res, max_res, num=11)
     rscc_samples = np.linspace(0.0,1.0,num=11)
     sample_datasets = {}
-    for res, rscc in zip(res_samples, rscc_samples):
-        sample_datasets[(res, rscc)] = []
+    for x, y in zip(range(11), range(11)):
+        sample_datasets[(x, y)] = []
 
     res_indexes = np.searchsorted(res_samples, resolutions)
     rscc_indexes = np.searchsorted(rscc_samples, rsccs)
 
     for record, res_index, rscc_index in zip(records, res_indexes, rscc_indexes):
-        res, rscc = res_samples[res_index], rscc_samples[rscc_index]
-        sample_datasets[(res, rscc)].append(record)
+        # res, rscc = res_samples[res_index], rscc_samples[rscc_index]
+        sample_datasets[(res_index, rscc_index)].append(record)
 
     # Generate a balanced sample of datasets
     print(f"Generating balanced sample of datasets...")
