@@ -111,7 +111,11 @@ def plot_rscc_vs_rmsd():
     for (res, rscc), subsample_records in sample_datasets.items():
         if len(subsample_records) == 0:
             continue
-        selected_records = rng.choice(subsample_records, min(10, len(subsample_records)), replace=False)
+        selected_records = rng.choice(
+            subsample_records,
+            min(10, len(subsample_records)),
+            replace=False,
+        )
         sample += selected_records
     print(f"\tGot a sample of size: {len(sample)}")
 
