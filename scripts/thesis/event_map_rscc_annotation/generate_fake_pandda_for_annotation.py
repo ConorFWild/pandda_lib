@@ -47,7 +47,7 @@ def plot_rscc_vs_rmsd():
 
     # Get the datasets
     print("\tGetting SQL data")
-    initial_datasets = session.query(DatasetSQL).options(subqueryload(DatasetSQL.BoundStateModelSQL)).order_by(
+    initial_datasets = session.query(DatasetSQL).options(subqueryload(DatasetSQL.bound_state_model)).order_by(
         DatasetSQL.id).all()
     print(f"Got {len(initial_datasets)} datasets!")
 
