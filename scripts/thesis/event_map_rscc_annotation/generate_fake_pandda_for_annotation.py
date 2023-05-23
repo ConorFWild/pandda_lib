@@ -67,7 +67,7 @@ def plot_rscc_vs_rmsd():
         rscc = dataset.bound_state_model.rscc
 
         # Get the mtz
-        mtz_path = dataset.mtz
+        mtz_path = dataset.mtz_path
         mtz = gemmi.read_mtz_file(mtz_path)
 
         # Get the resolution
