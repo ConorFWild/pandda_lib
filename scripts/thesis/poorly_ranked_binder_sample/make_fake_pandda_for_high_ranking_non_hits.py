@@ -184,6 +184,7 @@ def plot_rscc_vs_rmsd():
     used_panddas = {}
     for pandda in panddas:
         pandda_dir = pathlib.Path(pandda.path)
+        print(f"PanDDA: {pandda_dir}")
 
         if not pandda_dir.exists():
             print(f"\t\tNo such pandda dir {pandda_dir}: skipping!")
