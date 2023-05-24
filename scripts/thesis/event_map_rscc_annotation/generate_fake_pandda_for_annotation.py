@@ -318,6 +318,7 @@ def plot_rscc_vs_rmsd():
             min(10, len(subsample_records)),
             replace=False,
         )
+        print(f"\t{selected_records}")
         sample += [x for x in selected_records]
     print(f"\tGot a sample of size: {len(sample)}")
 
