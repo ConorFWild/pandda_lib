@@ -20,6 +20,7 @@ import gemmi
 
 import pandas as pd
 
+
 # import seaborn as sns
 #
 # sns.set(rc={'figure.figsize': (2 * 11.7, 2 * 8.27)})
@@ -235,14 +236,13 @@ def plot_rscc_vs_rmsd():
             replace=False,
         )
 
-        for row in event_sample:
+        print(event_sample)
 
+        for row in event_sample:
             dtag = row[constants.PANDDA_INSPECT_DTAG]
             event_idx = row[constants.PANDDA_INSPECT_EVENT_IDX]
             bdc = row[constants.PANDDA_INSPECT_BDC]
             x, y, z = row["x"], row["y"], row["z"]
-
-
 
             score = row["z_peak"]
 
@@ -265,7 +265,6 @@ def plot_rscc_vs_rmsd():
             ]
             unattested_events.append(event_row)
 
-
     print(f"\tManaged to get {len(unattested_events)} events from {len(panddas)} panddas!")
 
     # Generate a fake PanDDA inspect dataset from this balanced sample
@@ -276,5 +275,3 @@ def plot_rscc_vs_rmsd():
 
 if __name__ == "__main__":
     fire.Fire(plot_rscc_vs_rmsd)
-
-
