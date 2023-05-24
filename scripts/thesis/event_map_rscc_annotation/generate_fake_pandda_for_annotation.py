@@ -52,7 +52,7 @@ def generate_fake_pandda(sample, fake_pandda_dir):
     for record in sample:
         dataset = record["Dataset"]
         # Get the inspect table
-        print(f"\t\t{dataset.pandda_model_path}")
+        # print(f"\t\t{dataset.pandda_model_path}")
         dataset_dir = pathlib.Path(dataset.pandda_model_path).parent.parent
         experiment_dir = dataset_dir.parent.parent
 
