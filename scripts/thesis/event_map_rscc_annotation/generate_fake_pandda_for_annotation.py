@@ -52,6 +52,7 @@ def generate_fake_pandda(sample, fake_pandda_dir):
     for record in sample:
 
         dataset = record["Dataset"]
+        rscc = record["RSCC"]
         print(f"\t{dataset.dtag} : {dataset.pandda_model_path}")
 
         st = gemmi.read_structure(dataset.pandda_model_path)
@@ -127,7 +128,9 @@ def generate_fake_pandda(sample, fake_pandda_dir):
                 continue
 
 
-            score = row["z_peak"]
+            # score = row["z_peak"]
+            score = rscc
+
             dataset_dir = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / dtag
             event_row = [
                 dtag,
@@ -165,6 +168,8 @@ def generate_fake_pandda(sample, fake_pandda_dir):
         if j == 0:
             print(event_row)
         event_row["site_idx"] = int(j / 100) + 1
+        event_row["z_peak"] = unattested_event[-2]
+
         new_event_rows.append(event_row)
         j = j + 1
     new_event_table = pd.DataFrame(
