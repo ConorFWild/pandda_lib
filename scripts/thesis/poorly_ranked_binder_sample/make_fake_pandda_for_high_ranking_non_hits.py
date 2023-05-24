@@ -181,7 +181,7 @@ def plot_rscc_vs_rmsd():
     records = []
     unattested_events = []
     rng = np.random.default_rng()
-
+    used_panddas = {}
     for pandda in panddas:
         pandda_dir = pathlib.Path(pandda.path)
 
@@ -271,8 +271,9 @@ def plot_rscc_vs_rmsd():
                 row
             ]
             unattested_events.append(event_row)
+            used_panddas[pandda.path] = True
 
-    print(f"\tManaged to get {len(unattested_events)} events from {len(panddas)} panddas!")
+    print(f"\tManaged to get {len(unattested_events)} events from {len(used_panddas)} panddas!")
 
     # Generate a fake PanDDA inspect dataset from this balanced sample
     fake_pandda_dir = output_dir / "fake_pandda_high_scoring_non_hits"
