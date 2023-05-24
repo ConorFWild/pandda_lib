@@ -236,7 +236,7 @@ def plot_rscc_vs_rmsd():
             replace=False,
         )
 
-        print(event_sample)
+        # print(event_sample)
 
         for j in event_sample:
             row = low_conf_event_rows[j]
