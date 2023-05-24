@@ -144,6 +144,8 @@ def generate_fake_pandda(sample, fake_pandda_dir):
                 dataset_dir / "ligand_files",
                 dataset_dir / constants.PANDDA_INITIAL_MODEL_TEMPLATE.format(dtag=dtag),
                 dataset_dir / constants.PANDDA_INITIAL_MTZ_TEMPLATE.format(dtag=dtag),
+                pathlib.Path(dataset.pandda_model_path),
+
                 score,
                 row
             ]
@@ -222,21 +224,32 @@ def generate_fake_pandda(sample, fake_pandda_dir):
         # print([event_row[-1]["dtag"], event_row[-1]["event_idx"]])
         dataset_dir = fake_pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / dtag
         try_make(dataset_dir)
+        built_model_dir = dataset_dir / constants.PANDDA_MODELLED_STRUCTURES_DIR
+        try_make(built_model_dir)
+        # event map
         try_link(
             event_row[3],
             dataset_dir / event_row[3].name,
         )
+        # ligand files
         try_link(
             event_row[4],
             dataset_dir / event_row[4].name
         )
+        # Initial model
         try_link(
             event_row[5],
             dataset_dir / event_row[5].name
         )
+        # Initial mtz
         try_link(
             event_row[6],
             dataset_dir / event_row[6].name
+        )
+        # Built model
+        try_link(
+            event_row[7],
+            built_model_dir / event_row[7].name
         )
 
 
