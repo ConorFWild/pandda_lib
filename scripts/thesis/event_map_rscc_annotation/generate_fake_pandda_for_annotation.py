@@ -84,11 +84,12 @@ def generate_fake_pandda(sample, fake_pandda_dir):
             if got_event:
                 continue
             if not pandda_dir.is_dir():
+                # print(f"\t\t")
                 continue
 
             done_file = pandda_dir / "pandda.done"
             if not done_file.exists():
-                print("\t\tNo pandda done file: skipping!")
+                print(f"\t\tNo pandda done file for {pandda_dir}: skipping!")
                 continue
 
             # pandda_dir = dataset_dir.parent.parent
