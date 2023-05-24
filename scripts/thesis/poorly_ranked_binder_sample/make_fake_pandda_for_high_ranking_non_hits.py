@@ -231,14 +231,15 @@ def plot_rscc_vs_rmsd():
         low_conf_event_rows = [row for idx, row in low_conf_event_table.iterrows()]
 
         event_sample = rng.choice(
-            low_conf_event_rows,
+            range(len(low_conf_event_rows)),
             min(5, len(low_conf_event_rows)),
             replace=False,
         )
 
         print(event_sample)
 
-        for row in event_sample:
+        for j in event_sample:
+            row = low_conf_event_rows[j]
             dtag = row[constants.PANDDA_INSPECT_DTAG]
             event_idx = row[constants.PANDDA_INSPECT_EVENT_IDX]
             bdc = row[constants.PANDDA_INSPECT_BDC]
