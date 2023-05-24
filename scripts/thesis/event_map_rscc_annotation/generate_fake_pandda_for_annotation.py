@@ -165,6 +165,7 @@ def generate_fake_pandda(sample, fake_pandda_dir):
 
     # del new_event_table["Unnamed: 0"]
     # del new_event_table["index"]
+    print(new_event_table)
     new_event_table.drop(["index", "Unnamed: 0"], axis=1, inplace=True)
     print(new_event_table)
 
