@@ -247,8 +247,10 @@ def plot_rscc_vs_rmsd():
 
             score = row["z_peak"]
 
-            print(row)
-            print(dtag)
+            # print(row)
+            # print(dtag)
+            if not isinstance(dtag, str):
+                continue
             dataset_dir = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / dtag
             event_row = [
                 dtag,
