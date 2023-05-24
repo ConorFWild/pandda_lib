@@ -123,6 +123,7 @@ def generate_fake_pandda(sample, fake_pandda_dir):
             # for centroid in lig_centroids:
             distance = np.linalg.norm(lig_centroid.flatten() - np.array([x, y, z]))
             if distance > 4.0:
+                print(f"No nearby lig for dataset {dataset.dtag}")
                 continue
 
 
