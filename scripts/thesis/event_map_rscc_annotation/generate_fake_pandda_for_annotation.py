@@ -50,7 +50,9 @@ def generate_fake_pandda(sample, fake_pandda_dir):
     unattested_events = []
 
     for record in sample:
+
         dataset = record["Dataset"]
+        print(f"\t{dataset.dtag}")
 
         st = gemmi.read_structure(dataset.pandda_model_path)
         lig_centroids = []
