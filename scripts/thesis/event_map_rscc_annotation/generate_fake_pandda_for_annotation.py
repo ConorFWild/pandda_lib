@@ -108,7 +108,7 @@ def generate_fake_pandda(sample, fake_pandda_dir):
             ]
             event_rows = [row for idx, row in dataset_event_table.iterrows()]
             if len(event_rows) < 1:
-                print(f"\tDid not get exactly 1 ligand for dataset {dataset.dtag}! Skipping!")
+                print(f"\tDid not get any events for dataset {dataset.dtag} with a ligand place! Skipping!")
                 continue
 
             row = event_rows[0]
