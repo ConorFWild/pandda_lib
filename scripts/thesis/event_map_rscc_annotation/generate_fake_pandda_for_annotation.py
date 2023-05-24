@@ -52,7 +52,7 @@ def generate_fake_pandda(sample, fake_pandda_dir):
     for record in sample:
 
         dataset = record["Dataset"]
-        print(f"\t{dataset.dtag}")
+        print(f"\t{dataset.dtag} : {dataset.pandda_model_path}")
 
         st = gemmi.read_structure(dataset.pandda_model_path)
         lig_centroids = []
