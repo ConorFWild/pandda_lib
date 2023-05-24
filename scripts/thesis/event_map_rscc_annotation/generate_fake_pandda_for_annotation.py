@@ -145,7 +145,6 @@ def generate_fake_pandda(sample, fake_pandda_dir):
                 dataset_dir / constants.PANDDA_INITIAL_MODEL_TEMPLATE.format(dtag=dtag),
                 dataset_dir / constants.PANDDA_INITIAL_MTZ_TEMPLATE.format(dtag=dtag),
                 pathlib.Path(dataset.pandda_model_path),
-
                 score,
                 row
             ]
