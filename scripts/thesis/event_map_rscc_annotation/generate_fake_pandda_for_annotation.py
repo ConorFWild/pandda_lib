@@ -51,6 +51,25 @@ def generate_fake_pandda(sample, fake_pandda_dir):
 
     for record in sample:
         dataset = record["Dataset"]
+
+        st = gemmi.read_structure(dataset.pandda_model_path)
+        lig_centroids = []
+        for model in st:
+            for chain in model:
+                for res in chain:
+                    if res.name != "LIG":
+                        continue
+                    poss = []
+                    for atom in res:
+                        pos = atom.pos
+                        poss.append([pos.x, pos.y, pos.z])
+                    mean_pos = np.mean(np.array(poss), axis=0)
+                    lig_centroids.append(mean_pos)
+
+        if len(lig_centroids) == 0:
+            continue
+        lig_centroid = lig_centroids[0]
+
         # Get the inspect table
         # print(f"\t\t{dataset.pandda_model_path}")
         dataset_dir = pathlib.Path(dataset.pandda_model_path).parent.parent
@@ -82,7 +101,7 @@ def generate_fake_pandda(sample, fake_pandda_dir):
                 & (inspect_table[constants.PANDDA_INSPECT_LIGAND_PLACED] == True)
             ]
             event_rows = [row for idx, row in dataset_event_table.iterrows()]
-            if len(event_rows) != 1:
+            if len(event_rows) < 1:
                 print(f"\tDid not get exactly 1 ligand for dataset {dataset.dtag}! Skipping!")
                 continue
 
@@ -92,6 +111,14 @@ def generate_fake_pandda(sample, fake_pandda_dir):
             event_idx = row[constants.PANDDA_INSPECT_EVENT_IDX]
             bdc = row[constants.PANDDA_INSPECT_BDC]
             x, y, z = row["x"], row["y"], row["z"]
+
+
+            # for centroid in lig_centroids:
+            distance = np.linalg.norm(lig_centroid.flatten() - np.array([x, y, z]))
+            if distance > 4.0:
+                continue
+
+
             score = row["z_peak"]
             dataset_dir = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / dtag
             event_row = [
