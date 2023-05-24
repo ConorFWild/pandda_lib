@@ -239,9 +239,11 @@ def plot_rscc_vs_rmsd():
             replace=False,
         )
 
-        print(f"\t\t{event_sample}")
+        sample = [x for x in event_sample] + [0,]
 
-        for j in [x for x in event_sample] + [0,]:
+        print(f"\t\t{sample}")
+
+        for j in sample:
             row = low_conf_event_rows[j]
             dtag = row[constants.PANDDA_INSPECT_DTAG]
             event_idx = row[constants.PANDDA_INSPECT_EVENT_IDX]
