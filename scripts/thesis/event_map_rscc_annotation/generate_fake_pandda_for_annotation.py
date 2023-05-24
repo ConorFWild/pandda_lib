@@ -329,7 +329,7 @@ def plot_rscc_vs_rmsd():
             continue
         selected_records = rng.choice(
             subsample_records,
-            min(10, len(subsample_records)),
+            min(20, len(subsample_records)),
             replace=False,
         )
         print(f"\t{selected_records}")
