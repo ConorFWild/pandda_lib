@@ -54,46 +54,65 @@ def generate_fake_pandda(sample, fake_pandda_dir):
         # Get the inspect table
         print(f"\t\t{dataset.pandda_model_path}")
         dataset_dir = pathlib.Path(dataset.pandda_model_path).parent.parent
-        pandda_dir = dataset_dir.parent.parent
-        analyses_dir = pandda_dir / constants.PANDDA_ANALYSES_DIR
-        inspect_table_path = analyses_dir / constants.PANDDA_INSPECT_EVENTS_PATH
-        inspect_table = pd.read_csv(inspect_table_path)
+        experiment_dir = dataset_dir.parent.parent
 
-        # Get the dataset events
-        dataset_event_table = inspect_table[
-            (inspect_table[constants.PANDDA_INSPECT_DTAG] == dataset.dtag)
-            & (inspect_table[constants.PANDDA_INSPECT_LIGAND_PLACED] == True)
-        ]
-        event_rows = [row for idx, row in dataset_event_table.iterrows()]
-        if len(event_rows) != 1:
-            print(f"\tDid not get exactly 1 ligand for dataset {dataset.dtag}! Skipping!")
-            continue
+        # Check panddas for a matching
+        got_event = False
+        for pandda_dir in experiment_dir.glob("*"):
+            if got_event:
+                continue
+            if not pandda_dir.is_dir():
+                continue
 
-        row = event_rows[0]
+            done_file = pandda_dir / "pandda.done"
+            if not done_file.exists():
+                continue
 
-        dtag = row[constants.PANDDA_INSPECT_DTAG]
-        event_idx = row[constants.PANDDA_INSPECT_EVENT_IDX]
-        bdc = row[constants.PANDDA_INSPECT_BDC]
-        x, y, z = row["x"], row["y"], row["z"]
-        score = row["z_peak"]
-        dataset_dir = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / dtag
-        event_row = [
-            dtag,
-            event_idx,
-            pandda_dir,
-            dataset_dir / constants.PANDDA_EVENT_MAP_TEMPLATE.format(
-                dtag=dtag,
-                event_idx=event_idx,
-                bdc=bdc
-            ),
-            dataset_dir / "ligand_files",
-            dataset_dir / constants.PANDDA_INITIAL_MODEL_TEMPLATE.format(dtag=dtag),
-            dataset_dir / constants.PANDDA_INITIAL_MTZ_TEMPLATE.format(dtag=dtag),
-            score,
-            row
-        ]
-        unattested_events.append(event_row)
+            # pandda_dir = dataset_dir.parent.parent
+            analyses_dir = pandda_dir / constants.PANDDA_ANALYSES_DIR
+            inspect_table_path = analyses_dir / constants.PANDDA_INSPECT_EVENTS_PATH
+            if not inspect_table_path.exists():
+                continue
 
+            inspect_table = pd.read_csv(inspect_table_path)
+
+            # Get the dataset events
+            dataset_event_table = inspect_table[
+                (inspect_table[constants.PANDDA_INSPECT_DTAG] == dataset.dtag)
+                & (inspect_table[constants.PANDDA_INSPECT_LIGAND_PLACED] == True)
+            ]
+            event_rows = [row for idx, row in dataset_event_table.iterrows()]
+            if len(event_rows) != 1:
+                print(f"\tDid not get exactly 1 ligand for dataset {dataset.dtag}! Skipping!")
+                continue
+
+            row = event_rows[0]
+
+            dtag = row[constants.PANDDA_INSPECT_DTAG]
+            event_idx = row[constants.PANDDA_INSPECT_EVENT_IDX]
+            bdc = row[constants.PANDDA_INSPECT_BDC]
+            x, y, z = row["x"], row["y"], row["z"]
+            score = row["z_peak"]
+            dataset_dir = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / dtag
+            event_row = [
+                dtag,
+                event_idx,
+                pandda_dir,
+                dataset_dir / constants.PANDDA_EVENT_MAP_TEMPLATE.format(
+                    dtag=dtag,
+                    event_idx=event_idx,
+                    bdc=bdc
+                ),
+                dataset_dir / "ligand_files",
+                dataset_dir / constants.PANDDA_INITIAL_MODEL_TEMPLATE.format(dtag=dtag),
+                dataset_dir / constants.PANDDA_INITIAL_MTZ_TEMPLATE.format(dtag=dtag),
+                score,
+                row
+            ]
+            unattested_events.append(event_row)
+            got_event = True
+
+    print(f"\tManaged to assign {len(unattested_events)} events!")
 
     # Generate new table
     new_event_rows = []
