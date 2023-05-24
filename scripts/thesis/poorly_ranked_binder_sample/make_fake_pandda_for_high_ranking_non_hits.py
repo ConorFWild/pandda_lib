@@ -232,6 +232,8 @@ def plot_rscc_vs_rmsd():
             & (truncated_event_table[constants.PANDDA_INSPECT_VIEWED] == True)
             ]
         low_conf_event_rows = [row for idx, row in low_conf_event_table.iterrows()]
+        if len(low_conf_event_rows) < 2:
+            print(f"\t\tNot enough events! Skipping!")
 
         event_sample = rng.choice(
             range(1, len(low_conf_event_rows)),
