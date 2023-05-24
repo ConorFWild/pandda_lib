@@ -207,6 +207,7 @@ def plot_rscc_vs_rmsd():
             continue
 
         inspect_table = pd.read_csv(inspect_table_path)
+        inspect_table.sort(by="cluster_size", inplace=True, ignore_index=True)
 
         # Check if there are high confidence modelled hits
         high_conf_event_table = inspect_table[
