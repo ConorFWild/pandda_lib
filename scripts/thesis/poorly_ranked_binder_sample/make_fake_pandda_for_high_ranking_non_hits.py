@@ -220,6 +220,7 @@ def plot_rscc_vs_rmsd():
 
         # Lowest ranking high conf dataset
         lowest_ranked_high_conf_index = high_conf_event_table.index.values[-1]
+        print(f"Lowest ranked high confidence hit: {lowest_ranked_high_conf_index}")
         truncated_event_table = inspect_table.loc[:lowest_ranked_high_conf_index]
 
         # If so, get highest ranked non-hit, and up to 5 random non-hits up to lowest ranked high confidence, placed lig
