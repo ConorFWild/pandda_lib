@@ -69,6 +69,7 @@ def generate_fake_pandda(sample, fake_pandda_dir):
                     lig_centroids.append(mean_pos)
 
         if len(lig_centroids) == 0:
+            print("\tNot lig: skipping!")
             continue
         lig_centroid = lig_centroids[0]
 
@@ -87,12 +88,15 @@ def generate_fake_pandda(sample, fake_pandda_dir):
 
             done_file = pandda_dir / "pandda.done"
             if not done_file.exists():
+                print("\t\tNo pandda done file: skipping!")
                 continue
 
             # pandda_dir = dataset_dir.parent.parent
             analyses_dir = pandda_dir / constants.PANDDA_ANALYSES_DIR
             inspect_table_path = analyses_dir / constants.PANDDA_INSPECT_EVENTS_PATH
             if not inspect_table_path.exists():
+                print("\t\tNo inspect table: skipping!")
+
                 continue
 
             inspect_table = pd.read_csv(inspect_table_path)
