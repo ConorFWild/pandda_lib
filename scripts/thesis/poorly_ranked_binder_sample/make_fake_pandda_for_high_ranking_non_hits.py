@@ -220,7 +220,7 @@ def plot_rscc_vs_rmsd():
 
         # Lowest ranking high conf dataset
         lowest_ranked_high_conf_index = high_conf_event_table.index.values[-1]
-        print(f"Lowest ranked high confidence hit: {lowest_ranked_high_conf_index}")
+        print(f"\tLowest ranked high confidence hit: {lowest_ranked_high_conf_index}")
         truncated_event_table = inspect_table.loc[:lowest_ranked_high_conf_index]
 
         # If so, get highest ranked non-hit, and up to 5 random non-hits up to lowest ranked high confidence, placed lig
@@ -237,7 +237,7 @@ def plot_rscc_vs_rmsd():
             replace=False,
         )
 
-        # print(event_sample)
+        print(f"\t\t{event_sample}")
 
         for j in event_sample:
             row = low_conf_event_rows[j]
@@ -251,6 +251,7 @@ def plot_rscc_vs_rmsd():
             # print(row)
             # print(dtag)
             if not isinstance(dtag, str):
+                print(f"Error with dtag for some reason: {dtag}! Skipping!")
                 continue
             dataset_dir = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / dtag
             event_row = [
