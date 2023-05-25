@@ -150,6 +150,11 @@ def generate_fake_pandda(unattested_events, fake_pandda_dir):
             event_row[8],
             dataset_dir / event_row[8].name
         )
+        # mean map
+        try_link(
+            event_row[9],
+            dataset_dir / event_row[9].name
+        )
 
 
 
@@ -281,6 +286,7 @@ def plot_rscc_vs_rmsd():
                 dataset_dir / constants.PANDDA_INITIAL_MTZ_TEMPLATE.format(dtag=dtag),
                 dataset_dir / constants.PANDDA_MODELLED_STRUCTURES_DIR / constants.PANDDA_MODEL_FILE.format(dtag=dtag),
                 dataset_dir  / constants.PANDDA_Z_MAP_FILE.format(dtag=dtag),
+                dataset_dir / constants.PANDDA_MEAN_MAP_FILE.format(dtag=dtag),
                 score,
                 row
             ]
@@ -290,7 +296,7 @@ def plot_rscc_vs_rmsd():
     print(f"\tManaged to get {len(unattested_events)} events from {len(used_panddas)} panddas!")
 
     # Generate a fake PanDDA inspect dataset from this balanced sample
-    fake_pandda_dir = output_dir / "fake_pandda_high_scoring_non_hits"
+    fake_pandda_dir = output_dir / "fake_pandda_high_scoring_non_hits_with_mean"
     try_make(fake_pandda_dir)
     generate_fake_pandda(unattested_events, fake_pandda_dir)
 
