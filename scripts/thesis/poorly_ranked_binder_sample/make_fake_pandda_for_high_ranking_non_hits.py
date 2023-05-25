@@ -37,6 +37,8 @@ def try_make(path):
 
 
 def try_link(source_path, target_path):
+    if target_path.exists():
+        return
     try:
         os.symlink(source_path, target_path)
     except Exception as e:
