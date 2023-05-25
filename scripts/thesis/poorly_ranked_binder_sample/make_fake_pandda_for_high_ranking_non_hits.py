@@ -40,7 +40,7 @@ def try_link(source_path, target_path):
     try:
         os.symlink(source_path, target_path)
     except Exception as e:
-        # print(e)
+        print(e)
         return
 
 
