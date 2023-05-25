@@ -233,13 +233,12 @@ def plot_rscc_vs_rmsd():
 
         # Lowest ranking high conf dataset
         median_high_conf_hit_halfway = int(len(high_conf_event_table.index) / 2)
-
-        lowest_ranked_high_conf_index = high_conf_event_table.index.values[median_high_conf_hit_halfway]
+        median_ranked_high_conf_index = high_conf_event_table.index.values[median_high_conf_hit_halfway]
         if median_high_conf_hit_halfway < 3:
-            print(f"Median high conf hit at index: {median_high_conf_hit_halfway}")
+            print(f"Median high conf hit at index: {median_high_conf_hit_halfway} is too low! Skipping!")
             continue
-        print(f"\tLowest ranked high confidence hit: {lowest_ranked_high_conf_index}")
-        truncated_event_table = inspect_table.loc[:lowest_ranked_high_conf_index]
+        print(f"\tMedian ranked high confidence hit: {median_ranked_high_conf_index}")
+        truncated_event_table = inspect_table.loc[:median_ranked_high_conf_index]
 
         # If so, get highest ranked non-hit, and up to 5 random non-hits up to lowest ranked high confidence, placed lig
 
