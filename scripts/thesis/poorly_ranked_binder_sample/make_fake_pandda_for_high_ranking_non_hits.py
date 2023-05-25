@@ -296,6 +296,8 @@ def plot_rscc_vs_rmsd():
                 score,
                 row
             ]
+            if not (dataset_dir / constants.PANDDA_GROUND_STATE_MAP_TEMPLATE.format(dtag=dtag)).exists():
+                continue
             unattested_events.append(event_row)
             used_panddas[pandda.path] = True
 
