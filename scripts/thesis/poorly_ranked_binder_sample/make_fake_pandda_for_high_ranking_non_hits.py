@@ -145,6 +145,12 @@ def generate_fake_pandda(unattested_events, fake_pandda_dir):
             event_row[7],
             built_model_dir / event_row[7].name
         )
+        # z map
+        try_link(
+            event_row[8],
+            built_model_dir / event_row[8].name
+        )
+
 
 
 def plot_rscc_vs_rmsd():
@@ -274,6 +280,7 @@ def plot_rscc_vs_rmsd():
                 dataset_dir / constants.PANDDA_INITIAL_MODEL_TEMPLATE.format(dtag=dtag),
                 dataset_dir / constants.PANDDA_INITIAL_MTZ_TEMPLATE.format(dtag=dtag),
                 dataset_dir / constants.PANDDA_MODELLED_STRUCTURES_DIR / constants.PANDDA_MODEL_FILE.format(dtag=dtag),
+                dataset_dir  / constants.PANDDA_Z_MAP_FILE.format(dtag=dtag),
                 score,
                 row
             ]
