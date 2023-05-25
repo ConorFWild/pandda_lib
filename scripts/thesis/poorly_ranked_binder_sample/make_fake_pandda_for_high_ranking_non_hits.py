@@ -148,7 +148,7 @@ def generate_fake_pandda(unattested_events, fake_pandda_dir):
         # z map
         try_link(
             event_row[8],
-            built_model_dir / event_row[8].name
+            dataset_dir / event_row[8].name
         )
 
 
