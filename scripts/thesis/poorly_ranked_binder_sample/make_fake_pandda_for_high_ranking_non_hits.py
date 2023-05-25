@@ -232,7 +232,7 @@ def plot_rscc_vs_rmsd():
             continue
 
         # Lowest ranking high conf dataset
-        median_high_conf_hit_halfway = int(len(high_conf_event_table.index) / 2)
+        median_high_conf_hit_halfway = int(len(high_conf_event_table.index) *0.6)
         median_ranked_high_conf_index = high_conf_event_table.index.values[median_high_conf_hit_halfway]
         if median_high_conf_hit_halfway < 3:
             print(f"Median high conf hit at index: {median_high_conf_hit_halfway} is too low! Skipping!")
