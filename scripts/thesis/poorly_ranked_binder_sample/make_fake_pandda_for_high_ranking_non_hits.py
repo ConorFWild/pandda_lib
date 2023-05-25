@@ -286,7 +286,7 @@ def plot_rscc_vs_rmsd():
                 dataset_dir / constants.PANDDA_INITIAL_MTZ_TEMPLATE.format(dtag=dtag),
                 dataset_dir / constants.PANDDA_MODELLED_STRUCTURES_DIR / constants.PANDDA_MODEL_FILE.format(dtag=dtag),
                 dataset_dir  / constants.PANDDA_Z_MAP_FILE.format(dtag=dtag),
-                dataset_dir / constants.PANDDA_MEAN_MAP_FILE.format(dtag=dtag),
+                dataset_dir / constants.PANDDA_GROUND_STATE_MAP_TEMPLATE.format(dtag=dtag),
                 score,
                 row
             ]
