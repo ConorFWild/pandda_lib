@@ -142,7 +142,7 @@ def plot_high_ranking_non_hits():
         y="Num. Occurrences",
         ax=ax
     )
-    plt.xticks(rotation=45)
+    plt.xticks(rotation=45, ha='right')
 
 
     # Save the plot
