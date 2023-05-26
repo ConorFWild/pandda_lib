@@ -24,7 +24,7 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 
 sns.set(rc={'figure.figsize': (2 * 11.7, 2 * 8.27)})
-sns.set(font_scale=3)
+sns.set(font_scale=5)
 # sns.color_palette("hls", 8)
 sns.set_palette("hls")
 sns.set_palette("crest")
