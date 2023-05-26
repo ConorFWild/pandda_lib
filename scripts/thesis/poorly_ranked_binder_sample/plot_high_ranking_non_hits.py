@@ -129,6 +129,7 @@ def plot_high_ranking_non_hits():
         {"Category": key, "Num. Occurrences": value}
         for key, value
         in category_sums.items()
+        if value > 0
     ]
     category_table = pd.DataFrame(records)
 
