@@ -116,9 +116,9 @@ def plot_rscc_vs_res():
         x.append(res)
         y.append(rscc)
         if confidence == "High":
-            c.append(1)
+            c.append('#1f77b4')
         else:
-            c.append(0)
+            c.append('#8c564b')
 
     fig, ax = plt.subplots(
         ncols=1,
