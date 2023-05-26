@@ -320,6 +320,7 @@ def plot_rscc_vs_rmsd():
     max_res = max(resolutions)
     res_samples = np.linspace(min_res, max_res, num=11)
     print(f"Res samples are: {res_samples}")
+    exit()
     rscc_samples = np.linspace(0.0,1.0,num=11)
     sample_datasets = {}
     for x, y in itertools.product(range(11), range(11)):

@@ -133,7 +133,6 @@ def plot_high_ranking_non_hits():
     ]
     category_table = pd.DataFrame(records)
 
-
     # Plot bars for each category
     fig, ax = plt.subplots(
         ncols=1,
@@ -147,7 +146,6 @@ def plot_high_ranking_non_hits():
         ax=ax
     )
     plt.xticks(rotation=45, ha='right')
-
 
     # Save the plot
     fig.savefig(
