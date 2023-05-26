@@ -46,7 +46,6 @@ def plot_rscc_vs_res():
     inspect_table = pd.read_csv(inspect_path)
 
     # Make the table of categorizations
-    # category_sums = {value: 0 for value in comment_key.values()}
     im = np.zeros((10,10))
     im_tot = np.zeros((10,10))
     ress = np.array([0.90000201, 1.2040883,  1.5081746,  1.81226089, 2.11634719, 2.42043349, 2.72451978, 3.02860608, 3.33269237, 3.63677867, 3.94086497])
@@ -75,7 +74,7 @@ def plot_rscc_vs_res():
         if im_tot[x,y] != 0:
             im_dis[x,y] = im[x,y] / im_tot[x,y]
         else:
-            im_dis[x,y] = 0
+            im_dis[x,y] = -1
 
 
     # Plot bars for each category
@@ -105,6 +104,12 @@ def plot_rscc_vs_res():
     plt.clf()
     plt.close("all")
     plt.close()
+
+
+    for idx, row in inspect_table.iterrows():
+        rscc = row["z_peak"]
+        res = row["high_resolution"]
+        confidence = row["Ligand Confidence"]
 
 
 if __name__ == "__main__":
