@@ -52,6 +52,8 @@ def plot_rscc_vs_res():
     rsccs = np.linspace(0.0,1.0,num=11)
     for idx, row in inspect_table.iterrows():
         rscc = row["z_peak"]
+        if rscc < 0:
+            continue
         res = row["high_resolution"]
         confidence = row["Ligand Confidence"]
 
