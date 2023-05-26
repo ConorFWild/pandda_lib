@@ -48,24 +48,34 @@ def plot_rscc_vs_res():
     # Make the table of categorizations
     # category_sums = {value: 0 for value in comment_key.values()}
     im = np.zeros((10,10))
+    im_tot = np.zeros((10,10))
     ress = np.array([0.90000201, 1.2040883,  1.5081746,  1.81226089, 2.11634719, 2.42043349, 2.72451978, 3.02860608, 3.33269237, 3.63677867, 3.94086497])
     rsccs = np.linspace(0.0,1.0,num=11)
     for idx, row in inspect_table.iterrows():
         rscc = row["z_peak"]
         res = row["high_resolution"]
         confidence = row["Ligand Confidence"]
+
+        x = np.searchsorted(ress, res)
+        if x > 0:
+            x = x - 1
+        y = np.searchsorted(rsccs, rscc)
+        if y > 0:
+            y = y - 1
+
+        im_tot[x,y] += 1
+
         # Get the
         if confidence == "High":
-            x = np.searchsorted(ress, res)
-            if x > 0:
-                x = x-1
-            y = np.searchsorted(rsccs, rscc)
-            if y > 0:
-                y = y-1
 
             im[x, y] += 1
 
-
+    im_dis = np.zeros((10,10))
+    for x,y in itertools.product(range(10), range(10)):
+        if im_tot[x,y] != 0:
+            im_dis[x,y] = im[x,y] / im_tot[x,y]
+        else:
+            im_dis[x,y] = 0
 
 
     # Plot bars for each category
@@ -75,7 +85,7 @@ def plot_rscc_vs_res():
     )  # sharey=True)
 
     plt.imshow(
-        im,
+        im_dis,
         extent=(
             min(ress),
             max(ress),
