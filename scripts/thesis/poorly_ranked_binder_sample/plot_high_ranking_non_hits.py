@@ -23,7 +23,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
 
-sns.set(rc={'figure.figsize': (2 * 11.7, 2 * 8.27)})
+sns.set(rc={'figure.figsize': (4 * 11.7, 4 * 8.27)})
 sns.set(font_scale=5)
 # sns.color_palette("hls", 8)
 sns.set_palette("hls")
