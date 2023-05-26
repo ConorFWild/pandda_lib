@@ -105,11 +105,43 @@ def plot_rscc_vs_res():
     plt.close("all")
     plt.close()
 
-
+    x = []
+    y = []
+    c = []
     for idx, row in inspect_table.iterrows():
         rscc = row["z_peak"]
         res = row["high_resolution"]
         confidence = row["Ligand Confidence"]
+
+        x.append(res)
+        y.append(rscc)
+        if confidence == "High":
+            c.append(1)
+        else:
+            c.append(0)
+
+    fig, ax = plt.subplots(
+        ncols=1,
+        # figsize=(30, 30),
+    )  # sharey=True)
+
+    plt.scatter(
+        x=x,
+        y=y,
+        c=c
+    )
+    plt.xticks(rotation=45, ha='right')
+    plt.colorbar()
+
+    # Save the plot
+    fig.savefig(
+        output_dir / "rscc_res_confidence_scatter.png",
+        bbox_inches='tight',
+    )
+    plt.cla()
+    plt.clf()
+    plt.close("all")
+    plt.close()
 
 
 if __name__ == "__main__":
