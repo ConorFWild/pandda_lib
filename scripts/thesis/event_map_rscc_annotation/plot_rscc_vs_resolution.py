@@ -84,6 +84,7 @@ def plot_rscc_vs_res():
         )
     )
     plt.xticks(rotation=45, ha='right')
+    plt.colorbar()
 
     # Save the plot
     fig.savefig(
