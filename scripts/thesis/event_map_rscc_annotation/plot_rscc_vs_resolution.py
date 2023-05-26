@@ -19,6 +19,7 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import *
 import gemmi
 
 import pandas as pd
+from matplotlib import pyplot as plt
 
 import seaborn as sns
 
@@ -47,13 +48,22 @@ def plot_rscc_vs_res():
     # Make the table of categorizations
     # category_sums = {value: 0 for value in comment_key.values()}
     im = np.zeros((10,10))
+    ress = np.array([0.90000201, 1.2040883,  1.5081746,  1.81226089, 2.11634719, 2.42043349, 2.72451978, 3.02860608, 3.33269237, 3.63677867, 3.94086497])
+    rsccs = np.linspace(0.0,1.0,num=11)
     for idx, row in inspect_table.iterrows():
         rscc = row["z_peak"]
         res = row["high_resolution"]
         confidence = row["Ligand Confidence"]
         # Get the
-        x =
-        y =
+        if confidence == "High":
+            x = np.argsort(ress, res)
+            if x > 0:
+                x = x-1
+            y = np.argsort(rsccs, rscc)
+            if y > 0:
+                y = y-1
+
+            im[x, y] += 1
 
 
 
@@ -64,17 +74,20 @@ def plot_rscc_vs_res():
         # figsize=(30, 30),
     )  # sharey=True)
 
-    sns.barplot(
-        data=category_table,
-        x="Category",
-        y="Num. Occurrences",
-        ax=ax
+    plt.imshow(
+        im,
+        extent=(
+            min(ress),
+            max(ress),
+            min(rsccs),
+            max(rsccs)
+        )
     )
     plt.xticks(rotation=45, ha='right')
 
     # Save the plot
     fig.savefig(
-        output_dir / "high_ranking_not_hit_categories.png",
+        output_dir / "rscc_res_confidence_map.png",
         bbox_inches='tight',
     )
     plt.cla()
