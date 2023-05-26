@@ -118,7 +118,8 @@ def plot_high_ranking_non_hits():
     # Make the table of categorizations
     category_sums = {value: 0 for value in comment_key.values()}
     for idx, row in inspect_table.iterrows():
-        catagory = comment_key[str(row["Comment"])]
+        comment = int(row["Comment"])
+        catagory = comment_key[comment]
         category_sums[catagory] += 1
 
     records = [
