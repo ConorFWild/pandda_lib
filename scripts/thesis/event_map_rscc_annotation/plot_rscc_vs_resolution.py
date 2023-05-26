@@ -56,10 +56,10 @@ def plot_rscc_vs_res():
         confidence = row["Ligand Confidence"]
         # Get the
         if confidence == "High":
-            x = np.argsort(ress, res)
+            x = np.searchsorted(ress, res)
             if x > 0:
                 x = x-1
-            y = np.argsort(rsccs, rscc)
+            y = np.searchsorted(rsccs, rscc)
             if y > 0:
                 y = y-1
 
