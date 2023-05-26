@@ -135,7 +135,10 @@ def plot_high_ranking_non_hits():
 
 
     # Plot bars for each category
-    fig, ax = plt.subplots(ncols=1, figsize=(30, 30))  # sharey=True)
+    fig, ax = plt.subplots(
+        ncols=1,
+        # figsize=(30, 30),
+    )  # sharey=True)
 
     sns.barplot(
         data=category_table,
