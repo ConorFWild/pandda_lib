@@ -433,7 +433,7 @@ def get_system_from_dtag(dtag):
         system_name = dtag[:last_hypen_pos]
         return system_name
 def make_system_tables():
-    for key in system_info:
+    for key in sorted(system_info):
         print(key)
     exit()
 
