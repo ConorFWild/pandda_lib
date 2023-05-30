@@ -74,6 +74,7 @@ def plot_xchem_dataset_summaries():
 
     # For each system, get the relevant information and output a latex formated table
     for system, system_datasets in datasets_by_system.items():
+        print(f"### {system}")
         # Get number of datasets
         num_datasets = len(system_datasets)
 
