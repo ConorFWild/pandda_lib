@@ -83,6 +83,9 @@ def plot_xchem_dataset_summaries():
         for ds in system_datasets.values():
             if pathlib.Path(ds.mtz_path).exists():
                 system_dataset_resolutions.append(gemmi.read_mtz_file(ds.mtz_path).resolution_high())
+
+        if len(system_dataset_resolutions) == 0:
+            continue
         min_res = min(system_dataset_resolutions)
 
         # Get mean resolution
