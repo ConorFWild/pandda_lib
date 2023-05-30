@@ -77,6 +77,7 @@ def plot_xchem_dataset_summaries():
         print(f"### {system}")
         # Get number of datasets
         num_datasets = len(system_datasets)
+        print(f"\tNumber of datasets: {num_datasets}")
 
         # Get minimum resolution
         system_dataset_resolutions = [ ]
