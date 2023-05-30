@@ -78,7 +78,7 @@ def plot_xchem_dataset_summaries():
         num_datasets = len(system_datasets)
 
         # Get minimum resolution
-        system_dataset_resolutions = [gemmi.read_mtz_file(ds.mtz_path).resolution_high() for ds in system_datasets]
+        system_dataset_resolutions = [gemmi.read_mtz_file(ds.mtz_path).resolution_high() for ds in system_datasets.values()]
         min_res = min(system_dataset_resolutions)
 
         # Get mean resolution
@@ -88,7 +88,7 @@ def plot_xchem_dataset_summaries():
         max_res = max(system_dataset_resolutions)
 
         # Get % with bound state model
-        project_hit_rate = len([x for x in system_datasets if x.bound_state_model is not None]) / len(system_datasets)
+        project_hit_rate = len([x for x in system_datasets.values() if x.bound_state_model is not None]) / len(system_datasets)
 
         # Get the organism
 
