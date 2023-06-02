@@ -79,7 +79,7 @@ def plot_rscc_vs_rmsd():
                     print(f"\tMissing reflections: {dataset.mtz_path}")
 
         if dataset.pandda_model_path:
-            if dataset.pandda_model_path != None:
+            if dataset.pandda_model_path != "None":
                 if not pathlib.Path(dataset.pandda_model_path).exists():
                     print(f"\tMissing bound state structure: {dataset.pandda_model_path}")
 
