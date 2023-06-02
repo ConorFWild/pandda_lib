@@ -42,7 +42,14 @@ def try_link(source_path, target_path):
         # print(e)
         return
 
-
+def get_system_from_dtag(dtag):
+    hyphens = [pos for pos, char in enumerate(dtag) if char == "-"]
+    if len(hyphens) == 0:
+        return None
+    else:
+        last_hypen_pos = hyphens[-1]
+        system_name = dtag[:last_hypen_pos]
+        return system_name
 
 def plot_rscc_vs_rmsd():
     sqlite_filepath = "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond_2.db"
@@ -66,6 +73,8 @@ def plot_rscc_vs_rmsd():
         DatasetSQL.id).all()
     print(f"\tGot {len(initial_datasets)} datasets!")
 
+    missing_systems = {}
+
     # Iterate, printing out paths to data that are not found
     for dataset in initial_datasets:
         if dataset.model_path:
@@ -82,7 +91,13 @@ def plot_rscc_vs_rmsd():
             if dataset.pandda_model_path != "None":
                 if not pathlib.Path(dataset.pandda_model_path).exists():
                     print(f"\tMissing bound state structure: {dataset.pandda_model_path}")
+                    path = pathlib.Path(dataset.pandda_model_path)
+                    dtag = dataset.path
+                    system = get_system_from_dtag(dtag)
+                    missing_systems[system] = path
 
+    for system, path in missing_systems.items():
+        print(f"{system}: {path}")
 
 
 if __name__ == "__main__":
