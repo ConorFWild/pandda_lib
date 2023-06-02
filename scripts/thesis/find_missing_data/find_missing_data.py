@@ -92,7 +92,7 @@ def plot_rscc_vs_rmsd():
                 if not pathlib.Path(dataset.pandda_model_path).exists():
                     print(f"\tMissing bound state structure: {dataset.pandda_model_path}")
                     path = pathlib.Path(dataset.pandda_model_path)
-                    dtag = dataset.path
+                    dtag = dataset.dtag
                     system = get_system_from_dtag(dtag)
                     missing_systems[system] = path
 
