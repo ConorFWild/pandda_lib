@@ -69,17 +69,17 @@ def plot_rscc_vs_rmsd():
     # Iterate, printing out paths to data that are not found
     for dataset in initial_datasets:
         if dataset.model_path:
-            if dataset.model_path is not "None":
+            if dataset.model_path != "None":
                 if not pathlib.Path(dataset.model_path).exists():
                     print(f"\tMissing structure: {dataset.model_path}")
 
         if dataset.mtz_path:
-            if dataset.mtz_path is not "None":
+            if dataset.mtz_path != "None":
                 if not pathlib.Path(dataset.mtz_path).exists():
                     print(f"\tMissing reflections: {dataset.mtz_path}")
 
         if dataset.pandda_model_path:
-            if dataset.pandda_model_path is not None:
+            if dataset.pandda_model_path != None:
                 if not pathlib.Path(dataset.pandda_model_path).exists():
                     print(f"\tMissing bound state structure: {dataset.pandda_model_path}")
 
