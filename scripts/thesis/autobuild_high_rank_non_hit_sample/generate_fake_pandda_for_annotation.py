@@ -529,7 +529,7 @@ def plot_rscc_vs_rmsd():
         mask_list = []
         lowest_ranked_hit_index = 0
         for record_idx, record in build_score_rank_table.iterrows():
-            dtag, event_idx = record["dtag"], record["event_idx"]
+            dtag, event_idx = record["Dtag"], record["Event_IDX"]
             if (dtag, event_idx) in matched_events:
                 mask_list.append(True)
                 lowest_ranked_hit_index = record_idx
