@@ -492,12 +492,14 @@ def plot_rscc_vs_rmsd():
             for inspect_table_key, inspect_table in system_inspect_tables.items():
 
                 print(inspect_table)
-                same_dtag_events = inspect_table[inspect_table["dtag"] == event_row["dtag"]]
+                print(inspect_table.columns)
+                dtag_mask = inspect_table["dtag"] == dtag
+                same_dtag_events = inspect_table[dtag_mask]
                 if len(same_dtag_events) == 0:
                     continue
 
                 for inspect_event_row_idx, inspect_event_row in same_dtag_events.iterrows():
-                    inspect_event_class = inspect_event_row["confidence"]
+                    inspect_event_class = inspect_event_row["Confidence"]
                     if inspect_event_class not in ["High", "high"]:
                         continue
 
