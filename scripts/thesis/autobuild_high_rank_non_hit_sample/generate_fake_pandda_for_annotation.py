@@ -551,7 +551,7 @@ def plot_rscc_vs_rmsd():
 
         # Get events that were not matched to high confidence but scored well
         # Specifically low confidence events above the median hit rank
-        median_hit_rank = np.median(build_score_rank_table[high_confidence_mask]["Rank"])
+        median_hit_rank = int(np.median(build_score_rank_table[high_confidence_mask]["Rank"]))
         high_scoring_table = build_score_rank_table.iloc[:median_hit_rank]
         high_scoring_high_confidence_mask = high_confidence_mask.iloc[:median_hit_rank]
         high_scoring_low_confidence_table = high_scoring_table[~high_scoring_high_confidence_mask]
