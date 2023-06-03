@@ -482,6 +482,8 @@ def plot_rscc_vs_rmsd():
 
         # Relevant inspect tables
         system_inspect_tables = {key: value for key, value in inspect_tables.items() if key[0] == pandda.system.system_name}
+        if len(system_inspect_tables) == 0:
+            continue
         print(f"Got {len(system_inspect_tables)} relevant inspect tables")
 
         # Match events to known high confidence hits from historical inspect tables
@@ -489,26 +491,27 @@ def plot_rscc_vs_rmsd():
         for event_row_idx, event_row in pandda_event_table.iterrows():
             dtag, event_idx = event_row["dtag"], event_row["event_idx"]
             event_x, event_y, event_z = event_row["x"], event_row["y"], event_row["z"]
-            for inspect_table_key, inspect_table in system_inspect_tables.items():
+            for system_experiment_key, system_experiment_inspect_tables in system_inspect_tables.items():
+                for inspect_table_path, inspect_table in system_experiment_inspect_tables.items():
 
-                print(inspect_table)
-                print(inspect_table.columns)
-                dtag_mask = inspect_table["dtag"] == dtag
-                same_dtag_events = inspect_table[dtag_mask]
-                if len(same_dtag_events) == 0:
-                    continue
-
-                for inspect_event_row_idx, inspect_event_row in same_dtag_events.iterrows():
-                    inspect_event_class = inspect_event_row["Confidence"]
-                    if inspect_event_class not in ["High", "high"]:
+                    print(inspect_table)
+                    print(inspect_table.columns)
+                    dtag_mask = inspect_table["dtag"] == dtag
+                    same_dtag_events = inspect_table[dtag_mask]
+                    if len(same_dtag_events) == 0:
                         continue
 
-                    inspect_x, inspect_y, inspect_z = inspect_event_row["x"], inspect_event_row["y"], inspect_event_row["z"]
+                    for inspect_event_row_idx, inspect_event_row in same_dtag_events.iterrows():
+                        inspect_event_class = inspect_event_row["Confidence"]
+                        if inspect_event_class not in ["High", "high"]:
+                            continue
 
-                    distance = np.linalg.norm(np.array([inspect_x-event_x, inspect_y-event_y, inspect_z-event_z]))
+                        inspect_x, inspect_y, inspect_z = inspect_event_row["x"], inspect_event_row["y"], inspect_event_row["z"]
 
-                    if distance < 5.0:
-                        matched_events[(dtag, event_idx)] = inspect_event_row
+                        distance = np.linalg.norm(np.array([inspect_x-event_x, inspect_y-event_y, inspect_z-event_z]))
+
+                        if distance < 5.0:
+                            matched_events[(dtag, event_idx)] = inspect_event_row
         print(f"Num matched events: {len(matched_events)}")
         if len(matched_events) == 0:
             continue
