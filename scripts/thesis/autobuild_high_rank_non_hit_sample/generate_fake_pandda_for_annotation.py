@@ -560,7 +560,7 @@ def plot_rscc_vs_rmsd():
         high_scoring_table = build_score_rank_table.iloc[:median_hit_rank]
         high_scoring_high_confidence_mask = high_confidence_mask.iloc[:median_hit_rank]
         high_scoring_low_confidence_table = high_scoring_table[~high_scoring_high_confidence_mask]
-        print(f"Number of low scoring, high confidence events: {len(low_scoring_high_confidence_table)}")
+        print(f"Number of high scoring, low confidence events: {len(low_scoring_high_confidence_table)}")
         print(high_scoring_low_confidence_table)
         sample = low_scoring_high_confidence_table.sample(n=min(len(low_scoring_high_confidence_table), 10))
         for _idx, _row in sample.iterrows():
