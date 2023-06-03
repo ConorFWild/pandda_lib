@@ -472,6 +472,8 @@ def plot_rscc_vs_rmsd():
     print(f"Got {len(panddas)} PanDDAs!")
 
     print("Outputting tables and figures...")
+    low_scoring_high_confidence_samples = []
+    high_scoring_low_confidence_samples = []
     for pandda in panddas:
         print(f"########## PanDDA: {pandda.system.system_name}: {pandda.project.project_name} ##########")
         test_pandda = pandda
@@ -548,6 +550,9 @@ def plot_rscc_vs_rmsd():
         low_scoring_high_confidence_table = low_scoring_table[low_scoring_high_confidence_mask]
         print(f"Number of low scoring, high confidence events: {len(low_scoring_high_confidence_table)}")
         print(low_scoring_high_confidence_table)
+        sample = low_scoring_high_confidence_table.sample(n=min(len(low_scoring_high_confidence_table), 10))
+        for _idx, _row in sample.iterrows():
+            low_scoring_high_confidence_samples.append(_row)
 
         # Get events that were not matched to high confidence but scored well
         # Specifically low confidence events above the median hit rank
@@ -557,7 +562,12 @@ def plot_rscc_vs_rmsd():
         high_scoring_low_confidence_table = high_scoring_table[~high_scoring_high_confidence_mask]
         print(f"Number of low scoring, high confidence events: {len(low_scoring_high_confidence_table)}")
         print(high_scoring_low_confidence_table)
+        sample = low_scoring_high_confidence_table.sample(n=min(len(low_scoring_high_confidence_table), 10))
+        for _idx, _row in sample.iterrows():
+            high_scoring_low_confidence_samples.append(_row)
 
+    print(len(low_scoring_high_confidence_samples))
+    print(len(high_scoring_low_confidence_samples))
 
     # Generate a fake PanDDA inspect dataset from this balanced sample
     fake_pandda_dir = output_dir / "fake_pandda_rsccs"
