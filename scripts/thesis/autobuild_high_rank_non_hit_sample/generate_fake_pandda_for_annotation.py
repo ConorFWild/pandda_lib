@@ -494,7 +494,7 @@ def plot_rscc_vs_rmsd():
             for system_experiment_key, system_experiment_inspect_tables in system_inspect_tables.items():
                 for inspect_table_path, inspect_table in system_experiment_inspect_tables.items():
 
-                    print(inspect_table)
+                    # print(inspect_table)
                     # print(inspect_table.columns)
                     dtag_mask = inspect_table["dtag"] == dtag
                     same_dtag_events = inspect_table[dtag_mask]
