@@ -541,7 +541,10 @@ def plot_rscc_vs_rmsd():
         print(build_score_rank_table[high_confidence_mask])
 
         # Get events that were matched to high confidence but scored poorly
-
+        low_scoring_table = build_score_rank_table.iloc[lowest_ranked_hit_index:]
+        low_scoring_high_confidence_mask = high_confidence_mask.loc[lowest_ranked_hit_index:]
+        low_scoring_high_confidence_table = low_scoring_table[low_scoring_high_confidence_mask]
+        print(f"Number of low scoring, high confidence events: {len(low_scoring_high_confidence_table)}")
 
         # Get events that were not matched to high confidence but scored well
 
