@@ -502,7 +502,7 @@ def plot_rscc_vs_rmsd():
                         continue
 
                     for inspect_event_row_idx, inspect_event_row in same_dtag_events.iterrows():
-                        inspect_event_class = inspect_event_row["Confidence"]
+                        inspect_event_class = inspect_event_row["Ligand Confidence"]
                         if inspect_event_class not in ["High", "high"]:
                             continue
 
