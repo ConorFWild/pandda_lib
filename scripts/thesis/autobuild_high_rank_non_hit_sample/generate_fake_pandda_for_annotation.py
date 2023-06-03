@@ -473,7 +473,7 @@ def plot_rscc_vs_rmsd():
 
     print("Outputting tables and figures...")
     for pandda in panddas:
-        print(f"PanDDA: {pandda.system.system_name}: {pandda.project.project_name}")
+        print(f"########## PanDDA: {pandda.system.system_name}: {pandda.project.project_name} ##########")
         test_pandda = pandda
 
         # Inspect table
@@ -512,6 +512,7 @@ def plot_rscc_vs_rmsd():
 
                         if distance < 5.0:
                             matched_events[(dtag, event_idx)] = inspect_event_row
+
         print(f"Num matched events: {len(matched_events)}")
         if len(matched_events) == 0:
             continue
@@ -519,12 +520,28 @@ def plot_rscc_vs_rmsd():
         #
 
         # Get the size ranking table
-        default_rank_table = rank_table_from_pandda_sizes_first_dtag(test_pandda)
+        # default_rank_table = rank_table_from_pandda_sizes_first_dtag(test_pandda)
 
         # Get the build rscc ranking table
         build_score_rank_table = rank_table_from_pandda_rsccs_first_dtag(test_pandda)
 
+        # Get the high confidence mask of the build score rank table
+        mask_list = []
+        lowest_ranked_hit_index = 0
+        for record_idx, record in build_score_rank_table.iterrows():
+            dtag, event_idx = record["dtag"], record["event_idx"]
+            if (dtag, event_idx) in matched_events:
+                mask_list.append(True)
+                lowest_ranked_hit_index = record_idx
+            else:
+                mask_list.append(False)
+        high_confidence_mask = pd.Series(np.array(mask_list))
+
+        print(lowest_ranked_hit_index)
+        print(build_score_rank_table[high_confidence_mask])
+
         # Get events that were matched to high confidence but scored poorly
+
 
         # Get events that were not matched to high confidence but scored well
 
