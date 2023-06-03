@@ -486,11 +486,12 @@ def plot_rscc_vs_rmsd():
 
         # Match events to known high confidence hits from historical inspect tables
         matched_events = {}
-        for inspect_table_key, inspect_table in system_inspect_tables.items():
-            for event_row_idx, event_row in pandda_event_table.iterrows():
-                dtag, event_idx = event_row["dtag"], event_row["event_idx"]
-                event_x, event_y, event_z = event_row["x"], event_row["y"], event_row["z"]
+        for event_row_idx, event_row in pandda_event_table.iterrows():
+            dtag, event_idx = event_row["dtag"], event_row["event_idx"]
+            event_x, event_y, event_z = event_row["x"], event_row["y"], event_row["z"]
+            for inspect_table_key, inspect_table in system_inspect_tables.items():
 
+                print(inspect_table)
                 same_dtag_events = inspect_table[inspect_table["dtag"] == event_row["dtag"]]
                 if len(same_dtag_events) == 0:
                     continue
