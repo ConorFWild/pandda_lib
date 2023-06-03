@@ -550,7 +550,7 @@ def plot_rscc_vs_rmsd():
         low_scoring_high_confidence_table = low_scoring_table[low_scoring_high_confidence_mask]
         print(f"Number of low scoring, high confidence events: {len(low_scoring_high_confidence_table)}")
         print(low_scoring_high_confidence_table)
-        sample = low_scoring_high_confidence_table.sample(n=min(len(low_scoring_high_confidence_table), 10))
+        sample = low_scoring_high_confidence_table.sample(n=min(len(low_scoring_high_confidence_table), 15))
         for _idx, _row in sample.iterrows():
             low_scoring_high_confidence_samples.append(_row)
 
@@ -562,7 +562,7 @@ def plot_rscc_vs_rmsd():
         high_scoring_low_confidence_table = high_scoring_table[~high_scoring_high_confidence_mask]
         print(f"Number of high scoring, low confidence events: {len(high_scoring_low_confidence_table)}")
         print(high_scoring_low_confidence_table)
-        sample = high_scoring_low_confidence_table.sample(n=min(len(high_scoring_low_confidence_table), 10))
+        sample = high_scoring_low_confidence_table.sample(n=min(len(high_scoring_low_confidence_table), 15))
         for _idx, _row in sample.iterrows():
             high_scoring_low_confidence_samples.append(_row)
 
