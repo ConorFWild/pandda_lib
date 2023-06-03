@@ -536,17 +536,28 @@ def plot_rscc_vs_rmsd():
             else:
                 mask_list.append(False)
         high_confidence_mask = pd.Series(np.array(mask_list))
+        num_high_confidence = high_confidence_mask.sum()
 
         print(lowest_ranked_hit_index)
-        print(build_score_rank_table[high_confidence_mask])
+        # print(build_score_rank_table[high_confidence_mask])
 
         # Get events that were matched to high confidence but scored poorly
-        low_scoring_table = build_score_rank_table.iloc[lowest_ranked_hit_index:]
-        low_scoring_high_confidence_mask = high_confidence_mask.loc[lowest_ranked_hit_index:]
+        # In specific those builds with ranks lower than the number of hits in total
+        low_scoring_table = build_score_rank_table.iloc[num_high_confidence:]
+        low_scoring_high_confidence_mask = high_confidence_mask.loc[num_high_confidence:]
         low_scoring_high_confidence_table = low_scoring_table[low_scoring_high_confidence_mask]
         print(f"Number of low scoring, high confidence events: {len(low_scoring_high_confidence_table)}")
+        print(low_scoring_high_confidence_table)
 
         # Get events that were not matched to high confidence but scored well
+        # Specifically low confidence events above the median hit rank
+        median_hit_rank = np.median(build_score_rank_table[high_confidence_mask]["Rank"])
+        high_scoring_table = build_score_rank_table.iloc[:median_hit_rank]
+        high_scoring_high_confidence_mask = high_confidence_mask.iloc[:median_hit_rank]
+        high_scoring_low_confidence_table = high_scoring_table[~high_scoring_high_confidence_mask]
+        print(f"Number of low scoring, high confidence events: {len(low_scoring_high_confidence_table)}")
+        print(high_scoring_low_confidence_table)
+
 
     # Generate a fake PanDDA inspect dataset from this balanced sample
     fake_pandda_dir = output_dir / "fake_pandda_rsccs"
