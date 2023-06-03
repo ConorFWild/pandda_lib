@@ -384,7 +384,6 @@ def rank_table_from_pandda_rsccs_first_dtag_hit_shared(pandda_2_sql, inspect_tab
     return pd.DataFrame(rank_records)
 
 
-
 def rank_table_from_pandda_rsccs_first_dtag(pandda_2_sql):
     records = []
     for pandda_dataset in pandda_2_sql.pandda_dataset_results:
