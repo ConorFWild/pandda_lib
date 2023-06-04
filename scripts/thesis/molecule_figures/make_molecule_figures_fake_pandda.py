@@ -219,16 +219,13 @@ def get_files_from_database(molecules_list, output_dir):
 
     for dataset in initial_datasets:
         dtag = dataset.dtag
-
-
+        print(dtag)
         if dtag not in molecule_dtags:
             continue
-
 
         print(f"\t\t\tDtag: {dtag}")
 
         event_idx = molecule_dtags[dtag]
-
 
         pandda_model_path = dataset.input_pdb_path
         if pandda_model_path is not None:
