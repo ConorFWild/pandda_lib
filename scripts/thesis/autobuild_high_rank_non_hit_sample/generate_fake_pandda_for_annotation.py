@@ -405,6 +405,9 @@ def plot_rscc_vs_rmsd():
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
     Base.metadata.create_all(engine)
+    thesis_dir = pathlib.Path("/dls/science/groups/i04-1/conor_dev/pandda_lib/thesis/")
+    output_dir = thesis_dir / "autobuild_samples"
+    try_make(output_dir)
 
     # get the inspect tables
     projects = session.query(ProjectDirSQL).order_by(ProjectDirSQL.id).all()
