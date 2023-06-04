@@ -304,6 +304,7 @@ def plot_rscc_vs_rmsd():
             if datasource == "database":
                 get_files_from_database(molecules_list, experiment_output_dir)
 
+            print(f"Linked files!")
             exit()
 
 
