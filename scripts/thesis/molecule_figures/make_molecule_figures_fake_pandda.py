@@ -169,6 +169,57 @@ def get_files_from_database(molecules_list, output_dir):
         if dtag not in molecule_dtags:
             continue
 
+        pandda_model_path = dataset.pandda_model_path
+        if pandda_model_path is not None:
+            if pandda_model_path != "None":
+                try_link(
+                    pandda_model_path,
+                    output_dir / f"{dtag}.pdb"
+                )
+
+        mtz_path = dataset.mtz_path
+        if mtz_path is not None:
+            if mtz_path != "None":
+                try_link(
+                    mtz_path,
+                    output_dir / f"{dtag}.mtz"
+                )
+
+        event_maps = dataset.event_maps
+        event_idx = molecule_dtags[dtag]
+        if event_idx:
+            for event_map in event_maps:
+                event_map_idx = get_event_map_idx(pathlib.Path(event_map.path).name)
+                if event_map_idx == event_idx:
+                    try_link(
+                        event_map.path,
+                        output_dir / f"{dtag}_{event_map_idx}.ccp4"
+                    )
+
+
+def get_files_from_database(molecules_list, output_dir):
+    sqlite_filepath = "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond_2.db"
+    sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
+    engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
+    session = sessionmaker(bind=engine)()
+    Base.metadata.create_all(engine)
+
+    initial_datasets = session.query(PanDDADatasetSQL).options(
+        subqueryload(PanDDADatasetSQL.events).options(
+            subqueryload(PanDDAEventSQL.builds).options(
+                subqueryload(PanDDABuildSQL.rscc)
+            )
+        )
+    ).order_by(
+        DatasetSQL.id).all()
+    print(f"Got {len(initial_datasets)} inital datasets")
+
+    molecule_dtags = {molecule[0]: molecule[1] for molecule in molecules_list}
+
+    for dataset in initial_datasets:
+        dtag = dataset.dtag
+        if dtag not in molecule_dtags:
+            continue
 
         pandda_model_path = dataset.pandda_model_path
         if pandda_model_path is not None:
