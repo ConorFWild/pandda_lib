@@ -22,8 +22,6 @@ import gemmi
 
 import pandas as pd
 
-
-
 molecules = {
     "Merging": [("70X-x0165", 1), ("STAG1A-x0333", 2), ("STAG1A-x0153", 4), ("AAVNAR-x1233", 2),
                 ("AAVNAR-x1501", 1), ("NSP16-x0155", 4)],
@@ -35,15 +33,19 @@ molecules = {
     "NSP16_PARTIAL_LIG": [("NSP16-x0422", None), ("NSP16-x0489", None)],
     "NSP16_CONFORTMATIONS": [("NSP16_x0415", 1)],
     "RSCC23": [
-        ("LchARH3-x0073", None, 840,), ("AAVNAR-x1099", None, 783), ("XX02KALRNA-x1630", None, 491), ("Mpro-x0395", None, 494),
+        ("LchARH3-x0073", None, 840,), ("AAVNAR-x1099", None, 783), ("XX02KALRNA-x1630", None, 491),
+        ("Mpro-x0395", None, 494),
         ("PHIPA-x2089", None, 510,), ("Mpro-x3015", None, 268)],
     "RSCC45": [
-        ("Mac1-AP0176", None, 623), ("Mpro-x3086", None, 707), ("SOCS2A-x0082", None, 137), ("SHH-x484", None, 490), ("Mpro-x10163", None, 277),
+        ("Mac1-AP0176", None, 623), ("Mpro-x3086", None, 707), ("SOCS2A-x0082", None, 137), ("SHH-x484", None, 490),
+        ("Mpro-x10163", None, 277),
         ("TbMDO-x200", None, 42)
     ],
-    "RSCC67": [("NUDT22A-x0649", None, 550), ("NUDT22A-x0637", None, 223), ("PHIPA-x20028", None, 997), ("PHIPA-x11138", None, 655),
+    "RSCC67": [("NUDT22A-x0649", None, 550), ("NUDT22A-x0637", None, 223), ("PHIPA-x20028", None, 997),
+               ("PHIPA-x11138", None, 655),
                ("SHH-x185", None, 20), ("XX02KALRNA-x5056", None, 513)],
-    "RSCC89": [("DCP2B-x1364", None, 143), ("LchARH3-x0756", None, 78), ("NUDT22A-x0917", None, 407), ("PHIPA-x20551", None, 14),
+    "RSCC89": [("DCP2B-x1364", None, 143), ("LchARH3-x0756", None, 78), ("NUDT22A-x0917", None, 407),
+               ("PHIPA-x20551", None, 14),
                ("XX02KALRNA-x5035", None, 741), ("PHIPA-x20594", None, 10)],
     "AutobuildFailureExamplesPanDDA": [("HSP90-x0363", None), ("XX02KALRNA-x1667", None)],
     "AutobuildFailureExamplesAmbiguity": [("KPNF-x0075", None), ("NUDT7A-x0399", None)],
@@ -114,20 +116,27 @@ data_sources_inverse = {
 }
 
 data_sources = {
-    "database": ["PanDDA 1 High Ranked Non-Hits", "Custom PanDDA 1s For Missing Hits", "Autobuild Human Build Reproduction Failure", "Autobuild High Rank Non Hit", ],
+    "database": ["PanDDA 1 High Ranked Non-Hits", "Custom PanDDA 1s For Missing Hits",
+                 "Autobuild Human Build Reproduction Failure", "Autobuild High Rank Non Hit", ],
     "/dls/science/groups/i04-1/conor_dev/experiments/pandda_autobuilding": ["PanDDA 1 Build RSCCs"],
-    "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_analysis/output_BAZ2BA": ["Known Missing Hits Custom PanDDAs BAZ2BA"],
-    "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_analysis/output_JMJD2D": ["Known Missing Hits Custom PanDDAs JMJD2DA"],
+    "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_analysis/output_BAZ2BA": [
+        "Known Missing Hits Custom PanDDAs BAZ2BA"],
+    "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_analysis/output_JMJD2D": [
+        "Known Missing Hits Custom PanDDAs JMJD2DA"],
     "/dls/labxchem/data/2020/lb25586-3": "BVKP126",
     "/dls/science/groups/i04-1/conor_dev/experiments/panddas/PHIPA": ["PHIPAMultiConf"],
     "/dls/science/groups/i04-1/conor_dev/experiments/panddas/FALZA": ["FALZA_2824"],
-    "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/pandda_2/output_BAZ2BA/": ["BAZ2BANewHits"],
-    "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/pandda_2/output_JMJD2DA/": ["JMJD2DNewHits"],
+    "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/pandda_2/output_BAZ2BA/": [
+        "BAZ2BANewHits"],
+    "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/pandda_2_reproduce_cluster4x/pandda_2/output_JMJD2DA/": [
+        "JMJD2DNewHits"],
     "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/autobuilding/KPNF_lb24383-4": ["KPNFNewHits"],
     "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/autobuilding/FALZA_lb13385-61": ["FALZANewHits"],
     "/dls/labxchem/data/2017/lb18145-17/processing/analysis/pandda_2/autobuilding/TDP2_lb17436-1": ["TDP2NewHits"],
     "/dls/science/groups/i04-1/conor_dev/experiments/panddas/NUDT7A": ["MeanMapsDiff"],
 }
+
+
 def try_make(path):
     try:
         os.mkdir(path)
@@ -144,8 +153,17 @@ def try_link(source_path, target_path):
         print(e)
         return
 
+
 def get_event_map_idx(event_map_name):
     pattern = "_([0-9]+)_1-BDC_"
+    matches = re.findall(pattern, event_map_name)
+    event_idx = int(matches[0])
+
+    return event_idx
+
+
+def get_dtag_from_event_map_path(event_map_name):
+    pattern = "(.*)-event_"
     matches = re.findall(pattern, event_map_name)
     event_idx = int(matches[0])
 
@@ -212,15 +230,22 @@ def get_files_from_database(molecules_list, output_dir):
     #     )
     # ).order_by(
     #     PanDDADatasetSQL.id).all()
-    initial_datasets = session.query(PanDDADatasetSQL).options(subqueryload("*")).order_by(PanDDADatasetSQL.id).all()
-    print(f"Got {len(initial_datasets)} inital datasets")
+    # initial_datasets = session.query(PanDDADatasetSQL).options(subqueryload("*")).order_by(PanDDADatasetSQL.id).all()
+    initial_events = session.query(PanDDAEventSQL).options(subqueryload("*")).order_by(PanDDAEventSQL.id).all()
+
+    # print(f"Got {len(initial_datasets)} inital datasets")
+    print(f"Got {len(initial_events)} inital events")
+
 
     molecule_dtags = {molecule[0]: molecule[1] for molecule in molecules_list}
 
-    print([dataset.dtag for dataset in initial_datasets])
-    for dataset in initial_datasets:
-        dtag = dataset.dtag
+    # print([dataset.dtag for dataset in initial_datasets])
+    # for dataset in initial_datasets:
+    for event in initial_events:
 
+        # dtag = dataset.dtag
+        dtag = get_dtag_from_event_map_path(pathlib.Path(event.event_map_path).name)
+        print(dtag)
         if dtag not in molecule_dtags:
             continue
 
@@ -266,7 +291,6 @@ def get_files_from_database(molecules_list, output_dir):
         if event_idx:
             for event in dataset.events:
                 if event.idx == event_idx:
-
                     # event_map_idx = get_event_map_idx(pathlib.Path(event_map.path).name)
                     # if event_map_idx == event_idx:
                     print(f"\t\t\t\tLinking event map!")
@@ -308,7 +332,6 @@ def plot_rscc_vs_rmsd():
 
             print(f"Linked files!")
             exit()
-
 
 
 if __name__ == "__main__":
