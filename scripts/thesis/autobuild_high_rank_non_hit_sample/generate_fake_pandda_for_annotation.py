@@ -229,27 +229,28 @@ def _make_combined_model(
 ):
     initial_model_structure = gemmi.read_structure(str(initial_model_path))
 
-    build_path =  pathlib.Path(sample["Build Path"])
-    if build_path.exists():
-        # Get the initial model and build
-        build_path_structure = gemmi.read_structure(str(build_path))
+    if sample["Build Path"]:
+        build_path =  pathlib.Path(sample["Build Path"])
+        if build_path.exists():
+            # Get the initial model and build
+            build_path_structure = gemmi.read_structure(str(build_path))
 
-        # Get the first alphabetically free chain name
-        # chain_ids = []
-        # for model in initial_model_structure:
-        #     for chain in model:
-        #         chain_ids.append(chain.name)
-        # new_chain_name = None
-        # for char in string.ascii_uppercase:
-        #     if char not in chain_ids:
-        #         new_chain_name = char
-        #         break
+            # Get the first alphabetically free chain name
+            # chain_ids = []
+            # for model in initial_model_structure:
+            #     for chain in model:
+            #         chain_ids.append(chain.name)
+            # new_chain_name = None
+            # for char in string.ascii_uppercase:
+            #     if char not in chain_ids:
+            #         new_chain_name = char
+            #         break
 
-        # Merge the autobuild ligand in
-        for initial_model in initial_model_structure:
-            for build_model in build_path_structure:
-                for chain in build_model:
-                    initial_model.add_chain(chain, unique_name=True)
+            # Merge the autobuild ligand in
+            for initial_model in initial_model_structure:
+                for build_model in build_path_structure:
+                    for chain in build_model:
+                        initial_model.add_chain(chain, unique_name=True)
 
     # Save the new model
     initial_model_structure.write_minimal_pdb(str(output_path))
