@@ -531,7 +531,7 @@ def plot_rscc_vs_rmsd():
         print(low_scoring_high_confidence_table)
         sample = low_scoring_high_confidence_table.sample(n=min(len(low_scoring_high_confidence_table), 15))
         for _idx, _row in sample.iterrows():
-            _dtag, _event_idx = _row["dtag"], _row["event_idx"]
+            _dtag, _event_idx = _row["Dtag"], _row["Event IDX"]
             low_scoring_high_confidence_samples[(_dtag, _event_idx)] = _row
 
         # Get the event table rows corresponding to the sample
@@ -550,7 +550,7 @@ def plot_rscc_vs_rmsd():
         print(high_scoring_low_confidence_table)
         sample = high_scoring_low_confidence_table.sample(n=min(len(high_scoring_low_confidence_table), 15))
         for _idx, _row in sample.iterrows():
-            _dtag, _event_idx = _row["dtag"], _row["event_idx"]
+            _dtag, _event_idx = _row["Dtag"], _row["Event IDX"]
 
             high_scoring_low_confidence_samples[(_dtag, _event_idx)] = _row
 
