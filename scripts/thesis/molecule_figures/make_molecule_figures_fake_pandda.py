@@ -217,9 +217,10 @@ def get_files_from_database(molecules_list, output_dir):
 
     molecule_dtags = {molecule[0]: molecule[1] for molecule in molecules_list}
 
+    print([dataset.dtag for dataset in initial_datasets])
     for dataset in initial_datasets:
         dtag = dataset.dtag
-        print(dtag)
+
         if dtag not in molecule_dtags:
             continue
 
