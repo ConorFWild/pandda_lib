@@ -211,11 +211,8 @@ def get_files_from_database(molecules_list, output_dir):
     #         )
     #     )
     # ).order_by(
-    #     DatasetSQL.id).all()
-    initial_datasets = session.query(PanDDADatasetSQL).options(
-        subqueryload("*")
-    ).order_by(
-        DatasetSQL.id).all()
+    #     PanDDADatasetSQL.id).all()
+    initial_datasets = session.query(PanDDADatasetSQL).options(subqueryload("*")).order_by(PanDDADatasetSQL.id).all()
     print(f"Got {len(initial_datasets)} inital datasets")
 
     molecule_dtags = {molecule[0]: molecule[1] for molecule in molecules_list}
