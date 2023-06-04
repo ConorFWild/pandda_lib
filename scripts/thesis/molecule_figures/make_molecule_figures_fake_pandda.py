@@ -267,6 +267,8 @@ def get_files_from_database(molecules_list, output_dir):
 
                     # event_map_idx = get_event_map_idx(pathlib.Path(event_map.path).name)
                     # if event_map_idx == event_idx:
+                    print(f"\t\t\t\tLinking event map!")
+
                     try_link(
                         event.event_map_path,
                         output_dir / f"{dtag}_{event_idx}.ccp4"
