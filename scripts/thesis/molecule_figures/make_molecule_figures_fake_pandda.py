@@ -219,10 +219,14 @@ def get_files_from_database(molecules_list, output_dir):
 
     for dataset in initial_datasets:
         dtag = dataset.dtag
+        event_idx = molecule_dtags[dtag]
+
+
         if dtag not in molecule_dtags:
             continue
+        print(f"\t\t\tDtag: {dtag}")
 
-        pandda_model_path = dataset.pandda_model_path
+        pandda_model_path = dataset.input_pdb_path
         if pandda_model_path is not None:
             if pandda_model_path != "None":
                 try_link(
@@ -230,23 +234,42 @@ def get_files_from_database(molecules_list, output_dir):
                     output_dir / f"{dtag}.pdb"
                 )
 
-        mtz_path = dataset.mtz_path
+        mtz_path = dataset.input_mtz_path
         if mtz_path is not None:
             if mtz_path != "None":
+                print(f"\t\t\t\tLinking mtz!")
                 try_link(
                     mtz_path,
                     output_dir / f"{dtag}.mtz"
                 )
 
-        event_maps = dataset.event_maps
+        if event_idx:
+            for event in dataset.events:
+                if event.idx == event_idx:
+                    build_rsccs = {}
+                    for build in event.builds:
+                        build_rsccs[build.path] = build.rscc.score
+
+                    if len(build_rsccs) != 0:
+                        best_build_path = max(build_rsccs, key=lambda _path: build_rsccs[_path])
+                        print(f"\t\t\t\tLinking build!")
+
+                        try_link(
+                            best_build_path,
+                            output_dir / f"{dtag}_{event_idx}_fragment.pdb"
+                        )
+
+        # event_maps = dataset.event_maps
         event_idx = molecule_dtags[dtag]
         if event_idx:
-            for event_map in event_maps:
-                event_map_idx = get_event_map_idx(pathlib.Path(event_map.path).name)
-                if event_map_idx == event_idx:
+            for event in dataset.events:
+                if event.idx == event_idx:
+
+                    # event_map_idx = get_event_map_idx(pathlib.Path(event_map.path).name)
+                    # if event_map_idx == event_idx:
                     try_link(
-                        event_map.path,
-                        output_dir / f"{dtag}_{event_map_idx}.ccp4"
+                        event.event_map_path,
+                        output_dir / f"{dtag}_{event_idx}.ccp4"
                     )
 
 
