@@ -160,6 +160,7 @@ def get_files_from_database(molecules_list, output_dir):
 
     initial_datasets = session.query(DatasetSQL).options(subqueryload(DatasetSQL.bound_state_model)).order_by(
         DatasetSQL.id).all()
+    print(f"Got {len(initial_datasets)} inital datasets")
 
     molecule_dtags = {molecule[0]: molecule[1] for molecule in molecules_list}
 
@@ -189,7 +190,7 @@ def get_files_from_database(molecules_list, output_dir):
         event_idx = molecule_dtags[dtag]
         if event_idx:
             for event_map in event_maps:
-                event_map_idx = get_event_map_idx(pathlib.Path(event_map).name)
+                event_map_idx = get_event_map_idx(pathlib.Path(event_map.path).name)
                 if event_map_idx == event_idx:
                     try_link(
                         event_map.path,
@@ -206,7 +207,9 @@ def plot_rscc_vs_rmsd():
 
     # Iterate through the datasources, making PanDDAs to get figures for each experiment group
     for datasource, datasource_experiments in data_sources.items():
+        print(f"Datasource: {datasource}")
         for experiment_key in datasource_experiments:
+            print(f"\tExperiment: {experiment_key}")
             experiment_output_dir = output_dir / experiment_key
             try_make(experiment_output_dir)
             # Get the molecules
@@ -218,6 +221,8 @@ def plot_rscc_vs_rmsd():
 
             else:
                 molecules_list = molecules[experiment_key]
+
+            print(f"\t\tMolecules list: {molecules_list}")
 
             if datasource == "database":
                 get_files_from_database(molecules_list, experiment_output_dir)
