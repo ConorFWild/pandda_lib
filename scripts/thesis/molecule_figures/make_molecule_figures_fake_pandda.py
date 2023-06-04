@@ -204,12 +204,16 @@ def get_files_from_database(molecules_list, output_dir):
     session = sessionmaker(bind=engine)()
     Base.metadata.create_all(engine)
 
+    # initial_datasets = session.query(PanDDADatasetSQL).options(
+    #     subqueryload(PanDDADatasetSQL.events).options(
+    #         subqueryload(PanDDAEventSQL.builds).options(
+    #             subqueryload(PanDDABuildSQL.rscc)
+    #         )
+    #     )
+    # ).order_by(
+    #     DatasetSQL.id).all()
     initial_datasets = session.query(PanDDADatasetSQL).options(
-        subqueryload(PanDDADatasetSQL.events).options(
-            subqueryload(PanDDAEventSQL.builds).options(
-                subqueryload(PanDDABuildSQL.rscc)
-            )
-        )
+        subqueryload("*")
     ).order_by(
         DatasetSQL.id).all()
     print(f"Got {len(initial_datasets)} inital datasets")
