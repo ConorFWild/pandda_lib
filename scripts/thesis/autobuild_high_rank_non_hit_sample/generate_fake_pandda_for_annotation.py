@@ -2,6 +2,7 @@ import itertools
 import pathlib
 import os
 import pdb
+import string
 
 import numpy as np
 # import pandas as pd
@@ -19,6 +20,7 @@ from pandda_lib.diamond_sqlite.diamond_sqlite import *
 import gemmi
 
 import pandas as pd
+
 
 # import seaborn as sns
 #
@@ -134,123 +136,15 @@ def rank_table_from_pandda_sizes_first_dtag(pandda_2_sql):
 
     return pd.DataFrame(rank_records)
 
-def generate_fake_pandda(sample, fake_pandda_dir):
-    # For each sample, find the event corresponding inspect table, get the built event
-    # and from that get the event map and link everything into a fake pandda dir
 
-    unattested_events = []
-
-    for record in sample:
-
-        dataset = record["Dataset"]
-        rscc = record["RSCC"]
-        print(f"\t{dataset.dtag} : {dataset.pandda_model_path}")
-
-        st = gemmi.read_structure(dataset.pandda_model_path)
-        lig_centroids = []
-        for model in st:
-            for chain in model:
-                for res in chain:
-                    if res.name != "LIG":
-                        continue
-                    poss = []
-                    for atom in res:
-                        pos = atom.pos
-                        poss.append([pos.x, pos.y, pos.z])
-                    mean_pos = np.mean(np.array(poss), axis=0)
-                    lig_centroids.append(mean_pos)
-
-        if len(lig_centroids) == 0:
-            print("\tNot lig: skipping!")
-            continue
-        lig_centroid = lig_centroids[0]
-
-        # Get the inspect table
-        # print(f"\t\t{dataset.pandda_model_path}")
-        dataset_dir = pathlib.Path(dataset.pandda_model_path).parent.parent
-        experiment_dir = dataset_dir.parent
-
-        # Check panddas for a matching
-        got_event = False
-        for pandda_dir in experiment_dir.glob("*"):
-            if got_event:
-                continue
-            if not pandda_dir.is_dir():
-                # print(f"\t\t")
-                continue
-
-            done_file = pandda_dir / "pandda.done"
-            if not done_file.exists():
-                print(f"\t\tNo pandda done file for {pandda_dir}: skipping!")
-                continue
-
-            # pandda_dir = dataset_dir.parent.parent
-            analyses_dir = pandda_dir / constants.PANDDA_ANALYSES_DIR
-            inspect_table_path = analyses_dir / constants.PANDDA_INSPECT_EVENTS_PATH
-            if not inspect_table_path.exists():
-                print("\t\tNo inspect table: skipping!")
-
-                continue
-
-            inspect_table = pd.read_csv(inspect_table_path)
-
-            # Get the dataset events
-            dataset_event_table = inspect_table[
-                (inspect_table[constants.PANDDA_INSPECT_DTAG] == dataset.dtag)
-                & (inspect_table[constants.PANDDA_INSPECT_LIGAND_PLACED] == True)
-            ]
-            event_rows = [row for idx, row in dataset_event_table.iterrows()]
-            if len(event_rows) < 1:
-                print(f"\tDid not get any events for dataset {dataset.dtag} with a ligand place! Skipping!")
-                continue
-
-            row = event_rows[0]
-
-            dtag = row[constants.PANDDA_INSPECT_DTAG]
-            event_idx = row[constants.PANDDA_INSPECT_EVENT_IDX]
-            bdc = row[constants.PANDDA_INSPECT_BDC]
-            x, y, z = row["x"], row["y"], row["z"]
-
-
-            # for centroid in lig_centroids:
-            distance = np.linalg.norm(lig_centroid.flatten() - np.array([x, y, z]))
-            if distance > 4.0:
-                print(f"No nearby lig for dataset {dataset.dtag}")
-                continue
-
-
-            # score = row["z_peak"]
-            score = rscc
-
-            dataset_dir = pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / dtag
-            event_row = [
-                dtag,
-                event_idx,
-                pandda_dir,
-                dataset_dir / constants.PANDDA_EVENT_MAP_TEMPLATE.format(
-                    dtag=dtag,
-                    event_idx=event_idx,
-                    bdc=bdc
-                ),
-                dataset_dir / "ligand_files",
-                dataset_dir / constants.PANDDA_INITIAL_MODEL_TEMPLATE.format(dtag=dtag),
-                dataset_dir / constants.PANDDA_INITIAL_MTZ_TEMPLATE.format(dtag=dtag),
-                pathlib.Path(dataset.pandda_model_path),
-                score,
-                row
-            ]
-            unattested_events.append(event_row)
-            got_event = True
-
-    print(f"\tManaged to assign {len(unattested_events)} events!")
-
-    # Generate new table
+def get_fake_event_table(samples, event_table_samples):
     new_event_rows = []
     j = 0
     event_ids = {}
-    for unattested_event in unattested_events:
+    for event_key, event_row in event_table_samples.items():
 
-        event_row = unattested_event[-1]
+        sample = samples[event_key]
+
         event_key = (event_row["dtag"], event_row["event_idx"])
         if event_key in event_ids:
             continue
@@ -260,7 +154,7 @@ def generate_fake_pandda(sample, fake_pandda_dir):
         if j == 0:
             print(event_row)
         event_row["site_idx"] = int(j / 100) + 1
-        event_row["z_peak"] = unattested_event[-2]
+        event_row["z_peak"] = sample["RSCC"]
 
         new_event_rows.append(event_row)
         j = j + 1
@@ -281,9 +175,12 @@ def generate_fake_pandda(sample, fake_pandda_dir):
         print(e)
     print(new_event_table)
 
-    # site_ids = np.unique(new_event_table["site_idx"])
+    return new_event_table
+
+
+def get_fake_site_table(samples, event_table_samples):
     site_records = []
-    num_sites = int(len(unattested_events) / 100)
+    num_sites = int(len(samples) / 100)
     print(f"Num sites is: {num_sites}")
     for site_id in np.arange(0, num_sites + 1):
         site_records.append(
@@ -299,8 +196,71 @@ def generate_fake_pandda(sample, fake_pandda_dir):
     print(site_table)
     print(len(site_table))
 
-    # print(f"New event table: {new_event_table}")
-    # print(new_event_table["z_peak"])
+    return site_table
+
+
+def _get_event_map_path(sample, event_row):
+    return pathlib.Path(sample["Event Map Path"])
+
+
+def _get_ligand_files_path(sample, event_row):
+    dataset_dir = pathlib.Path(sample["Event Map Path"]).parent
+    ligand_files = dataset_dir / "ligand_files"
+    return ligand_files
+
+
+def _get_initial_model_path(sample, event_row):
+    dtag = sample["Dtag"]
+    dataset_dir = pathlib.Path(sample["Event Map Path"]).parent
+    return dataset_dir / constants.PANDDA_INITIAL_MODEL_TEMPLATE.format(dtag=dtag)
+
+
+def _get_initial_mtz_path(sample, event_row):
+    dtag = sample["Dtag"]
+    dataset_dir = pathlib.Path(sample["Event Map Path"]).parent
+    return dataset_dir / constants.PANDDA_INITIAL_MTZ_TEMPLATE.format(dtag=dtag)
+
+
+def _make_combined_model(
+        initial_model_path,
+        sample,
+        event_row,
+        output_path
+):
+    initial_model_structure = gemmi.read_structure(str(initial_model_path))
+
+    build_path =  pathlib.Path(sample["Build Path"])
+    if build_path.exists():
+        # Get the initial model and build
+        build_path_structure = gemmi.read_structure(str(build_path))
+
+        # Get the first alphabetically free chain name
+        # chain_ids = []
+        # for model in initial_model_structure:
+        #     for chain in model:
+        #         chain_ids.append(chain.name)
+        # new_chain_name = None
+        # for char in string.ascii_uppercase:
+        #     if char not in chain_ids:
+        #         new_chain_name = char
+        #         break
+
+        # Merge the autobuild ligand in
+        for initial_model in initial_model_structure:
+            for build_model in build_path_structure:
+                for chain in build_model:
+                    initial_model.add_chain(chain, unique_name=True)
+
+    # Save the new model
+    initial_model_structure.write_minimal_pdb(str(output_path))
+
+def generate_fake_pandda(samples, event_table_samples, fake_pandda_dir):
+
+    # Generate new table
+    new_event_table = get_fake_event_table(samples, event_table_samples)
+
+    # Generate new site table
+    site_table = get_fake_site_table(samples, event_table_samples)
 
     try_make(fake_pandda_dir)
     try_make(fake_pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR)
@@ -309,38 +269,47 @@ def generate_fake_pandda(sample, fake_pandda_dir):
     new_event_table.to_csv(fake_pandda_dir / "analyses" / "pandda_analyse_events.csv", index=False)
     site_table.to_csv(fake_pandda_dir / "analyses" / "pandda_analyse_sites.csv", index=False)
 
-    for event_row in unattested_events:
-        dtag = event_row[-1]["dtag"]
-        # print([event_row[-1]["dtag"], event_row[-1]["event_idx"]])
+    for sample_key, sample in samples.items():
+        event_row = event_table_samples[sample_key]
+        dtag = sample_key[0]
+
         dataset_dir = fake_pandda_dir / constants.PANDDA_PROCESSED_DATASETS_DIR / dtag
         try_make(dataset_dir)
         built_model_dir = dataset_dir / constants.PANDDA_MODELLED_STRUCTURES_DIR
         try_make(built_model_dir)
         # event map
+        event_map_path = _get_event_map_path(sample, event_row)
         try_link(
-            event_row[3],
-            dataset_dir / event_row[3].name,
+            event_map_path,
+            dataset_dir / event_map_path.name,
         )
         # ligand files
+        ligand_files_path = _get_ligand_files_path(sample, event_row)
         try_link(
-            event_row[4],
-            dataset_dir / event_row[4].name
+            ligand_files_path,
+            dataset_dir / ligand_files_path.name
         )
         # Initial model
+        initial_model_path = _get_initial_model_path(sample, event_row)
         try_link(
-            event_row[5],
-            dataset_dir / event_row[5].name
+            initial_model_path,
+            dataset_dir / initial_model_path.name
         )
         # Initial mtz
+        initial_mtz_path = _get_initial_mtz_path(sample, event_row)
         try_link(
-            event_row[6],
-            dataset_dir / event_row[6].name
+            initial_mtz_path,
+            dataset_dir / initial_mtz_path.name
         )
         # Built model
-        try_link(
-            event_row[7],
-            built_model_dir / event_row[7].name
+        _make_combined_model(
+            initial_model_path,
+            sample,
+            event_row,
+            built_model_dir / constants.PANDDA_MODEL_FILE.format(dtag=dtag)
         )
+
+
 
 def rank_table_from_pandda_rsccs_first_dtag(pandda_2_sql):
     records = []
@@ -472,18 +441,23 @@ def plot_rscc_vs_rmsd():
     print(f"Got {len(panddas)} PanDDAs!")
 
     print("Outputting tables and figures...")
-    low_scoring_high_confidence_samples = []
-    high_scoring_low_confidence_samples = []
+    low_scoring_high_confidence_samples = {}
+    high_scoring_low_confidence_samples = {}
+    low_scoring_high_confidence_event_table_samples = {}
+    high_scoring_low_confidence_event_table_samples = {}
+
     for pandda in panddas:
         print(f"########## PanDDA: {pandda.system.system_name}: {pandda.project.project_name} ##########")
         test_pandda = pandda
 
         # Inspect table
-        pandda_event_table_path = pathlib.Path(test_pandda.path) / constants.PANDDA_ANALYSES_DIR / constants.PANDDA_ANALYSE_EVENTS_FILE
+        pandda_event_table_path = pathlib.Path(
+            test_pandda.path) / constants.PANDDA_ANALYSES_DIR / constants.PANDDA_ANALYSE_EVENTS_FILE
         pandda_event_table = pd.read_csv(pandda_event_table_path)
 
         # Relevant inspect tables
-        system_inspect_tables = {key: value for key, value in inspect_tables.items() if key[0] == pandda.system.system_name}
+        system_inspect_tables = {key: value for key, value in inspect_tables.items() if
+                                 key[0] == pandda.system.system_name}
         if len(system_inspect_tables) == 0:
             continue
         print(f"Got {len(system_inspect_tables)} relevant inspect tables")
@@ -508,9 +482,11 @@ def plot_rscc_vs_rmsd():
                         if inspect_event_class not in ["High", "high"]:
                             continue
 
-                        inspect_x, inspect_y, inspect_z = inspect_event_row["x"], inspect_event_row["y"], inspect_event_row["z"]
+                        inspect_x, inspect_y, inspect_z = inspect_event_row["x"], inspect_event_row["y"], \
+                            inspect_event_row["z"]
 
-                        distance = np.linalg.norm(np.array([inspect_x-event_x, inspect_y-event_y, inspect_z-event_z]))
+                        distance = np.linalg.norm(
+                            np.array([inspect_x - event_x, inspect_y - event_y, inspect_z - event_z]))
 
                         if distance < 5.0:
                             matched_events[(dtag, event_idx)] = inspect_event_row
@@ -552,7 +528,14 @@ def plot_rscc_vs_rmsd():
         print(low_scoring_high_confidence_table)
         sample = low_scoring_high_confidence_table.sample(n=min(len(low_scoring_high_confidence_table), 15))
         for _idx, _row in sample.iterrows():
-            low_scoring_high_confidence_samples.append(_row)
+            _dtag, _event_idx = _row["dtag"], _row["event_idx"]
+            low_scoring_high_confidence_samples[(_dtag, _event_idx)] = _row
+
+        # Get the event table rows corresponding to the sample
+        for _idx, _row in pandda_event_table.iterrows():
+            _dtag, _event_idx = _row["dtag"], _row["event_idx"]
+            if (_dtag, _event_idx) in low_scoring_high_confidence_samples:
+                low_scoring_high_confidence_event_table_samples[(_dtag, _event_idx)] = _row
 
         # Get events that were not matched to high confidence but scored well
         # Specifically low confidence events above the median hit rank
@@ -564,7 +547,15 @@ def plot_rscc_vs_rmsd():
         print(high_scoring_low_confidence_table)
         sample = high_scoring_low_confidence_table.sample(n=min(len(high_scoring_low_confidence_table), 15))
         for _idx, _row in sample.iterrows():
-            high_scoring_low_confidence_samples.append(_row)
+            _dtag, _event_idx = _row["dtag"], _row["event_idx"]
+
+            high_scoring_low_confidence_samples[(_dtag, _event_idx)] = _row
+
+        # Get the event table rows corresponding to the sample
+        for _idx, _row in pandda_event_table.iterrows():
+            _dtag, _event_idx = _row["dtag"], _row["event_idx"]
+            if (_dtag, _event_idx) in high_scoring_low_confidence_samples:
+                high_scoring_low_confidence_event_table_samples[(_dtag, _event_idx)] = _row
 
     print(len(low_scoring_high_confidence_samples))
     print(len(high_scoring_low_confidence_samples))
@@ -572,15 +563,21 @@ def plot_rscc_vs_rmsd():
     # Generate a fake PanDDA inspect dataset from this balanced sample
     fake_pandda_dir = output_dir / "autobuild_ranking_low_scoring_high_confidence"
     try_make(fake_pandda_dir)
-    generate_fake_pandda(sample, fake_pandda_dir)
+    generate_fake_pandda(
+        low_scoring_high_confidence_samples,
+        low_scoring_high_confidence_event_table_samples,
+        fake_pandda_dir,
+    )
 
     # Generate a fake PanDDA inspect dataset from this balanced sample
     fake_pandda_dir = output_dir / "autobuild_ranking_high_scoring_low_confidence"
     try_make(fake_pandda_dir)
-    generate_fake_pandda(sample, fake_pandda_dir)
+    generate_fake_pandda(
+        high_scoring_low_confidence_samples,
+        high_scoring_low_confidence_event_table_samples,
+        fake_pandda_dir,
+    )
 
 
 if __name__ == "__main__":
     fire.Fire(plot_rscc_vs_rmsd)
-
-
