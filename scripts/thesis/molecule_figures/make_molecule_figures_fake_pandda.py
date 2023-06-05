@@ -236,7 +236,6 @@ def get_files_from_database(molecules_list, output_dir):
     # print(f"Got {len(initial_datasets)} inital datasets")
     print(f"Got {len(initial_events)} inital events")
 
-
     molecule_dtags = {molecule[0]: molecule[1] for molecule in molecules_list}
 
     # print([dataset.dtag for dataset in initial_datasets])
