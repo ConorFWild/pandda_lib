@@ -227,7 +227,10 @@ def _make_combined_model(
         event_row,
         output_path
 ):
-    initial_model_structure = gemmi.read_structure(str(initial_model_path))
+    if output_path.exists():
+        initial_model_structure = gemmi.read_structure(str(output_path))
+    else:
+        initial_model_structure = gemmi.read_structure(str(initial_model_path))
 
     if sample["Build Path"]:
         build_path =  pathlib.Path(sample["Build Path"])

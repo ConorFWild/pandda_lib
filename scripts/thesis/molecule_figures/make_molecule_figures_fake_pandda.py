@@ -169,6 +169,15 @@ def get_dtag_from_event_map_path(event_map_name):
 
     return dtag
 
+def get_system_from_dtag(dtag):
+    hyphens = [pos for pos, char in enumerate(dtag) if char == "-"]
+    if len(hyphens) == 0:
+        return None
+    else:
+        last_hypen_pos = hyphens[-1]
+        system_name = dtag[:last_hypen_pos]
+        return system_name
+
 # def get_files_from_database(molecules_list, output_dir):
 #     sqlite_filepath = "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond_2.db"
 #     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
@@ -214,7 +223,11 @@ def get_dtag_from_event_map_path(event_map_name):
 #                         output_dir / f"{dtag}_{event_map_idx}.ccp4"
 #                     )
 
+def get_inspect_tables_from_dls():
+    ...
 
+def get_inspect_tables_from_e():
+    ...
 def get_files_from_database(molecules_list, output_dir):
     sqlite_filepath = "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond_2.db"
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
