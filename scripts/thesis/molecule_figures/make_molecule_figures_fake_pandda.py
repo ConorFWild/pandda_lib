@@ -165,9 +165,9 @@ def get_event_map_idx(event_map_name):
 def get_dtag_from_event_map_path(event_map_name):
     pattern = "(.*)-event_"
     matches = re.findall(pattern, event_map_name)
-    event_idx = int(matches[0])
+    dtag = matches[0]
 
-    return event_idx
+    return dtag
 
 # def get_files_from_database(molecules_list, output_dir):
 #     sqlite_filepath = "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond_2.db"
