@@ -172,7 +172,7 @@ def plot_xchem_dataset_summaries():
 
         # Output table of records
         table = pd.DataFrame(records)
-        table.write_csv(output_table)
+        table.to_csv(output_table)
 
     #     if not system_name:
     #         continue
