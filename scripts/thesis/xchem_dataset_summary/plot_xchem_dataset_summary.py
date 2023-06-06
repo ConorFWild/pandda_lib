@@ -218,11 +218,13 @@ def plot_xchem_dataset_summaries():
         system_table = table[table["System"] == system]
         num_hits = len(system_table[system_table["RSCC"] > 0.0])
         num_datasets = len(system_table["Dtag"].unique())
+        if num_datasets != 0:
+            system_hit_rate_records.append({"System": system, "Hit Rate": num_hits / num_datasets})
 
     system_hit_rate_table = pd.DataFrame(system_hit_rate_records)
 
     graph = sns.ecdfplot(
-        data=table[(table['Accessible'] == True) & (table['RSCC'] > 0.0)].groupby("System").median(),
+        data=system_hit_rate_table,
         x="RSCC",
     )
     graph.get_figure().savefig(output_dir / "XChemHitRSCCDistribution.png")
@@ -231,7 +233,7 @@ def plot_xchem_dataset_summaries():
     plt.close("all")
 
     # Plot the resolution distribution
-    graph = sns.ecdfplot(
+    graph = sns.boxplot(
         data=table[table['Accessible'] == True],
         x="Resolution",
         y="System"
