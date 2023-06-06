@@ -110,7 +110,7 @@ def plot_xchem_dataset_summaries():
                 sg = st.spacegroup_hm
 
                 # Get the resolution
-                res = st.resolution
+                resolution = st.resolution
 
                 # Get the unit cell volume
                 vol = st.cell.volume
@@ -144,7 +144,7 @@ def plot_xchem_dataset_summaries():
                     rscc = None
                     num_frag_atoms = None
             else:
-                res = None
+                resolution = None
                 sg = None
                 vol = None
                 num_residues = None
@@ -156,7 +156,7 @@ def plot_xchem_dataset_summaries():
             record = {
                 "System": system_name,
                 "Dtag": dataset.dtag,
-                "Resolution": res,
+                "Resolution": resolution,
                 "Spacegroup": sg,
                 "Volume": vol,
                 "Number of Residues": num_residues,
