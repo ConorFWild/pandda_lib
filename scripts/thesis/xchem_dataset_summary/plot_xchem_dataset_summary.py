@@ -225,7 +225,7 @@ def plot_xchem_dataset_summaries():
 
     graph = sns.ecdfplot(
         data=system_hit_rate_table,
-        x="RSCC",
+        x="Hit Rate",
     )
     graph.get_figure().savefig(output_dir / "XChemHitRSCCDistribution.png")
     plt.cla()
