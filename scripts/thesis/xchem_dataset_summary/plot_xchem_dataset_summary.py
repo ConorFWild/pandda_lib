@@ -236,6 +236,7 @@ def plot_xchem_dataset_summaries():
 
     # Plot the resolution distribution
     sns.set(rc={'figure.figsize': (2 * 11.7, 5 * 8.27)})
+    sns.set(font_scale=3)
 
     graph = sns.boxplot(
         data=table[table['Accessible'] == True],
@@ -250,6 +251,7 @@ def plot_xchem_dataset_summaries():
 
     # Plot the RSCC distribution
     sns.set(rc={'figure.figsize': (2 * 11.7, 2 * 8.27)})
+    sns.set(font_scale=3)
 
     graph = sns.ecdfplot(
         data=table[(table['Accessible'] == True) & (table['RSCC'] > 0.0)],
