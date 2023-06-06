@@ -216,7 +216,7 @@ def plot_xchem_dataset_summaries():
 
     # Plot the hit rate distribution
     system_hit_rate_records = []
-    for system in table["System"].unique():
+    for system in table[table["Accessible" == True]]["System"].unique():
         system_table = table[table["System"] == system]
         num_hits = len(system_table[system_table["RSCC"] > 0.0])
         num_datasets = len(system_table["Dtag"].unique())
@@ -235,6 +235,8 @@ def plot_xchem_dataset_summaries():
     plt.close("all")
 
     # Plot the resolution distribution
+    sns.set(rc={'figure.figsize': (5 * 11.7, 2 * 8.27)})
+
     graph = sns.boxplot(
         data=table[table['Accessible'] == True],
         x="Resolution",
@@ -247,8 +249,36 @@ def plot_xchem_dataset_summaries():
 
 
     # Plot the RSCC distribution
+    sns.set(rc={'figure.figsize': (2 * 11.7, 2 * 8.27)})
+
+    graph = sns.ecdfplot(
+        data=table[(table['Accessible'] == True) & (table['RSCC'] > 0.0)],
+        x="Number of Fragment Heavy Atoms",
+    )
+    graph.get_figure().savefig(output_dir / "XChemHitFragmentSizeDistribution.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
 
     #
+    graph = sns.ecdfplot(
+        data=table[table['Accessible'] == True],
+        x="Number of Chains",
+    )
+    graph.get_figure().savefig(output_dir / "XChemHitNumChainsDistribution.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
+
+    #
+    graph = sns.ecdfplot(
+        data=table[table['Accessible'] == True],
+        x="Number of Residues",
+    )
+    graph.get_figure().savefig(output_dir / "XChemHitNumResiduesDistribution.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
 
 
     #     if not system_name:
