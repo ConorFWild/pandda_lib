@@ -75,9 +75,19 @@ def plot_xchem_dataset_summaries():
     # For each system, get the relevant information and output a latex formated table
     for system, system_datasets in datasets_by_system.items():
         print(f"### {system}")
+
+
         # Get number of datasets
         num_datasets = len(system_datasets)
         print(f"\tNumber of datasets: {num_datasets}")
+
+        # Determine whethere the system is accessible
+        accessible_system_datasets = {}
+        for dtag, ds in system_datasets.items():
+            if pathlib.Path(ds.mtz_path).exists():
+                accessible_system_datasets[dtag] = ds
+
+        print(f"\tNumber of accessible datasets: {len(accessible_system_datasets)}")
 
         # Get minimum resolution
         system_dataset_resolutions = [ ]
