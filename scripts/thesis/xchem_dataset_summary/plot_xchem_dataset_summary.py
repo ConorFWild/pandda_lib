@@ -235,7 +235,7 @@ def plot_xchem_dataset_summaries():
     plt.close("all")
 
     # Plot the resolution distribution
-    sns.set(rc={'figure.figsize': (5 * 11.7, 2 * 8.27)})
+    sns.set(rc={'figure.figsize': (2 * 11.7, 5 * 8.27)})
 
     graph = sns.boxplot(
         data=table[table['Accessible'] == True],
