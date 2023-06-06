@@ -77,18 +77,18 @@ def plot_xchem_dataset_summaries():
             bound_state_path = dataset.pandda_model_path
 
             # Censor if partial
-            accessible = False
+            accessible = True
             if (not pdb_path) or (pdb_path == "None"):
                 if not pathlib.Path(pdb_path).exists():
-                    accessible = True
+                    accessible = False
             if (not mtz_path) or (mtz_path == "None"):
                 if not pathlib.Path(mtz_path).exists():
-                    accessible = True
+                    accessible = False
             if bound_state_path and (bound_state_path != "None"):
                 if not pathlib.Path(bound_state_path).exists():
-                    accessible = True
+                    accessible = False
 
-            if not accessible:
+            if accessible:
 
                 # Load the structure to get the properties
                 st = gemmi.read_structure(pdb_path)
