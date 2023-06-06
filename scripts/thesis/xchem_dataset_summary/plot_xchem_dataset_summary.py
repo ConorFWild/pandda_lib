@@ -35,6 +35,7 @@ def try_make(path):
     except Exception as e:
         return
 
+
 def get_system_from_dtag(dtag):
     hyphens = [pos for pos, char in enumerate(dtag) if char == "-"]
     if len(hyphens) == 0:
@@ -43,9 +44,9 @@ def get_system_from_dtag(dtag):
         last_hypen_pos = hyphens[-1]
         system_name = dtag[:last_hypen_pos]
         return system_name
+
+
 def plot_xchem_dataset_summaries():
-
-
     sqlite_filepath = "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond_2.db"
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     output_dir = pathlib.Path("/dls/science/groups/i04-1/conor_dev/pandda_lib/thesis/xchem_dataset_summary")
@@ -60,7 +61,8 @@ def plot_xchem_dataset_summaries():
 
     # Get the information on each system
 
-    initial_datasets: List[DatasetSQL] = session.query(DatasetSQL).options(subqueryload(DatasetSQL.bound_state_model)).order_by(
+    initial_datasets: List[DatasetSQL] = session.query(DatasetSQL).options(
+        subqueryload(DatasetSQL.bound_state_model)).order_by(
         DatasetSQL.id).all()
 
     # Make a table and save it
@@ -79,11 +81,13 @@ def plot_xchem_dataset_summaries():
             # Censor if partial
             accessible = True
             if (not pdb_path) or (pdb_path == "None"):
-                if not pathlib.Path(pdb_path).exists():
-                    accessible = False
+                accessible = False
+            elif not pathlib.Path(pdb_path).exists():
+                accessible = False
             if (not mtz_path) or (mtz_path == "None"):
-                if not pathlib.Path(mtz_path).exists():
-                    accessible = False
+                accessible = False
+            elif not pathlib.Path(mtz_path).exists():
+                accessible = False
             if bound_state_path and (bound_state_path != "None"):
                 if not pathlib.Path(bound_state_path).exists():
                     accessible = False
@@ -168,7 +172,6 @@ def plot_xchem_dataset_summaries():
         # Output table of records
         table = pd.DataFrame(records)
         table.write_csv(output_table)
-
 
     #     if not system_name:
     #         continue
