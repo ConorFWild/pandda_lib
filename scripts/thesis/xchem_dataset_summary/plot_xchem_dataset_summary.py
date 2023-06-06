@@ -216,7 +216,7 @@ def plot_xchem_dataset_summaries():
 
     # Plot the hit rate distribution
     system_hit_rate_records = []
-    for system in table[table["Accessible" == True]]["System"].unique():
+    for system in table[table["Accessible"] == True]["System"].unique():
         system_table = table[table["System"] == system]
         num_hits = len(system_table[system_table["RSCC"] > 0.0])
         num_datasets = len(system_table["Dtag"].unique())
