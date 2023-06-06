@@ -239,7 +239,7 @@ def plot_xchem_dataset_summaries():
     sns.set(font_scale=3)
 
     graph = sns.boxplot(
-        data=table[table['Accessible'] == True],
+        data=table[(table['Accessible'] == True) & (table["Resolution"] < 4.5)],
         x="Resolution",
         y="System"
     )
