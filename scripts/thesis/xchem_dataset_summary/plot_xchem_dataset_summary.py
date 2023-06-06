@@ -183,9 +183,8 @@ def plot_xchem_dataset_summaries():
     # Get the numbe of datasets
     print(f"Num unique datasets: {len(table['Dtag'].unique())}")
 
-
     # Get the number of accessible datasets
-    print(f"Num unique accessible datasets: {len(table[table['Accessible'] == True]['System'].unique())}")
+    print(f"Num unique accessible datasets: {len(table[table['Accessible'] == True]['Dtag'].unique())}")
 
 
 
