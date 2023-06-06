@@ -5,7 +5,7 @@ import pdb
 from typing import List
 import numpy as np
 # import pandas as pd
-# from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt
 
 import fire
 from sqlalchemy.orm import sessionmaker, subqueryload
@@ -173,6 +173,79 @@ def plot_xchem_dataset_summaries():
         # Output table of records
         table = pd.DataFrame(records)
         table.to_csv(output_table)
+
+    else:
+        table = pd.read_csv(output_table)
+
+    # Get the number of systems
+    print(f"Num unique systems: {len(table['System'].unique())}")
+
+    # Get the numbe of datasets
+    print(f"Num unique datasets: {len(table['Dtag'].unique())}")
+
+
+    # Get the number of accessible datasets
+    print(f"Num unique accessible datasets: {len(table[table['Accessible'] == True]['System'].unique())}")
+
+
+
+    # Make the plot of spacegroups
+    print(table.value_counts("Spacegroup"))
+
+    # Plot the Volume distribution
+    graph = sns.ecdfplot(
+        data=table[table['Accessible'] == True],
+        x="Volume",
+    )
+    graph.get_figure().savefig(output_dir / "XChemVolumeDistribution.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
+
+    # Plot the hit RSCC distribution
+    graph = sns.ecdfplot(
+        data=table[(table['Accessible'] == True) & (table['RSCC'] > 0.0)],
+        x="RSCC",
+    )
+    graph.get_figure().savefig(output_dir / "XChemHitRSCCDistribution.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
+
+    # Plot the hit rate distribution
+    system_hit_rate_records = []
+    for system in table["System"].unique():
+        system_table = table[table["System"] == system]
+        num_hits = len(system_table[system_table["RSCC"] > 0.0])
+        num_datasets = len(system_table["Dtag"].unique())
+
+    system_hit_rate_table = pd.DataFrame(system_hit_rate_records)
+
+    graph = sns.ecdfplot(
+        data=table[(table['Accessible'] == True) & (table['RSCC'] > 0.0)].groupby("System").median(),
+        x="RSCC",
+    )
+    graph.get_figure().savefig(output_dir / "XChemHitRSCCDistribution.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
+
+    # Plot the resolution distribution
+    graph = sns.ecdfplot(
+        data=table[table['Accessible'] == True],
+        x="Resolution",
+        y="System"
+    )
+    graph.get_figure().savefig(output_dir / "XChemResolutionDistribution.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
+
+
+    # Plot the RSCC distribution
+
+    #
+
 
     #     if not system_name:
     #         continue
