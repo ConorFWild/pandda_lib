@@ -168,6 +168,7 @@ def plot_xchem_dataset_summaries():
 
             }
             records.append(record)
+            print(record)
 
         # Output table of records
         table = pd.DataFrame(records)
