@@ -133,5 +133,30 @@ def plot_xchem_dataset_summaries():
     # The coefficient of determination: 1 is perfect prediction
     print(f"R Squared: {r2_score(y_test, y_pred)}")
 
+    all_systems_res_sigma_table_no_xx = all_systems_res_sigma_table[all_systems_res_sigma_table["System"] != "XX02KALRNA"]
+    graph = sns.regplot(data=all_systems_res_sigma_table_no_xx, x="Resolution", y="Map Uncertainty", line_kws={"color": "r"})
+    plt.tight_layout()
+    graph.get_figure().savefig(output_dir / "XChemDatasetResolutionVsMapUncertaintyNoXX02KALRNA.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
+
+    X_test = X_train = all_systems_res_sigma_table_no_xx["Resolution"].to_numpy().reshape(-1,1)
+    y_test = y_train = all_systems_res_sigma_table_no_xx["Map Uncertainty"].to_numpy().reshape(-1,1)
+
+    # Create linear regression object
+    regr = linear_model.LinearRegression()
+
+    # Train the model using the training sets
+    regr.fit(X_train, y_train)
+
+    # Make predictions using the testing set
+    y_pred = regr.predict(X_test)
+
+    # The coefficients
+    print(f"Coefficients: {regr.intercept_float} {regr.coef_}\n" )
+    # The coefficient of determination: 1 is perfect prediction
+    print(f"R Squared: {r2_score(y_test, y_pred)}")
+
 if __name__ == "__main__":
     fire.Fire(plot_xchem_dataset_summaries)
