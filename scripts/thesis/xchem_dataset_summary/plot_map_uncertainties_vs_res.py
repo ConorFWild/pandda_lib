@@ -77,7 +77,7 @@ def get_all_systems_res_sigma_table(inspect_tables):
                      "Map Uncertainty Delta": map_uncertainty - median_sigma, "System": inspect_table_key[0],
                      "PanDDA": inspect_table_key[1]})
         except Exception as e:
-            print(e)
+            print(f"{inspect_table_key}: {e}")
 
     return pd.DataFrame(rank_records)
 
@@ -116,8 +116,8 @@ def plot_xchem_dataset_summaries():
     plt.clf()
     plt.close("all")
 
-    X_test = X_train = all_systems_res_sigma_table["Resolution"]
-    y_test = y_train = all_systems_res_sigma_table["Map Uncertainty"]
+    X_test = X_train = all_systems_res_sigma_table["Resolution"].to_numpy().reshape(-1,1)
+    y_test = y_train = all_systems_res_sigma_table["Map Uncertainty"].to_numpy().reshape(-1,1)
 
     # Create linear regression object
     regr = linear_model.LinearRegression()
