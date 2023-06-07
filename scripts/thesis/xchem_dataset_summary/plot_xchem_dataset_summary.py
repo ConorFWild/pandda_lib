@@ -243,6 +243,7 @@ def plot_xchem_dataset_summaries():
         x="Resolution",
         y="System"
     )
+    plt.tight_layout()
     graph.get_figure().savefig(output_dir / "XChemResolutionDistribution.png")
     plt.cla()
     plt.clf()
