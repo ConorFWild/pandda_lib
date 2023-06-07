@@ -227,12 +227,25 @@ def plot_xchem_dataset_summaries():
 
     system_hit_rate_table = pd.DataFrame(system_hit_rate_records)
 
+    # Get the number of systems with hit rate > 0
+    print(f"Hit rate > 0: {len(system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0])}")
+
     graph = sns.ecdfplot(
         data=system_hit_rate_table,
         x="Hit Rate",
     )
     plt.tight_layout()
-    graph.get_figure().savefig(output_dir / "XChemHitRSCCDistribution.png")
+    graph.get_figure().savefig(output_dir / "XChemHitRateDistribution.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
+
+    graph = sns.ecdfplot(
+        data=system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0],
+        x="Hit Rate",
+    )
+    plt.tight_layout()
+    graph.get_figure().savefig(output_dir / "XChemNonZeroHitRateDistribution.png")
     plt.cla()
     plt.clf()
     plt.close("all")
@@ -258,7 +271,7 @@ def plot_xchem_dataset_summaries():
     sns.set(font_scale=3)
 
     graph = sns.ecdfplot(
-        data=table[(table['Accessible'] == True) & (table['RSCC'] > 0.0)],
+        data=table[(table['Accessible'] == True) & (table['RSCC'] > 0.0) & (table["Number of Fragment Heavy Atoms"] >= 5)],
         x="Number of Fragment Heavy Atoms",
     )
     plt.tight_layout()
