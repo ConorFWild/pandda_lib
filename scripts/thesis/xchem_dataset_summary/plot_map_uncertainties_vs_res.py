@@ -129,7 +129,7 @@ def plot_xchem_dataset_summaries():
     y_pred = regr.predict(X_test)
 
     # The coefficients
-    print("Coefficients: \n", regr.coef_)
+    print(f"Coefficients: {regr.intercept_float} {regr.coef_}\n" )
     # The coefficient of determination: 1 is perfect prediction
     print(f"R Squared: {r2_score(y_test, y_pred)}")
 
