@@ -223,12 +223,15 @@ def plot_xchem_dataset_summaries():
         num_hits = len(system_table[system_table["RSCC"] > 0.0])
         num_datasets = len(system_table["Dtag"].unique())
         if num_datasets != 0:
-            system_hit_rate_records.append({"System": system, "Hit Rate": num_hits / num_datasets})
+            system_hit_rate_records.append({"System": system, "Hit Rate": num_hits / num_datasets, "Num Hits": num_hits, "Num Datasets": num_datasets})
 
     system_hit_rate_table = pd.DataFrame(system_hit_rate_records)
 
     # Get the number of systems with hit rate > 0
     print(f"Hit rate > 0: {len(system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0])}")
+    print(f"Num datasets in systems with Hit rate > 0: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Num Datasets'].sum()}")
+    print(f"Num Hits: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Num Hits'].sum()}")
+
 
     graph = sns.ecdfplot(
         data=system_hit_rate_table,
