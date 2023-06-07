@@ -220,7 +220,7 @@ def plot_xchem_dataset_summaries():
     system_hit_rate_records = []
     for system in table[table["Accessible"] == True]["System"].unique():
         system_table = table[table["System"] == system]
-        num_hits = len(system_table[system_table["RSCC"] > 0.0])
+        num_hits = len(system_table[system_table["RSCC"] > 0.0]["Dtag"].unique())
         num_datasets = len(system_table["Dtag"].unique())
         num_accessible_datasets = len(system_table[system_table["Accessible"] == True]["Dtag"].unique())
         if num_datasets != 0:
@@ -240,6 +240,7 @@ def plot_xchem_dataset_summaries():
     print(f"Num datasets in systems with Hit rate > 0: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Num Datasets'].sum()}")
     print(f"Num accessible datasets in systems with Hit rate > 0: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Num Accessible Datasets'].sum()}")
     print(f"Num Hits: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Num Hits'].sum()}")
+    print(f"")
 
 
     graph = sns.ecdfplot(
