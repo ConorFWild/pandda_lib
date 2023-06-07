@@ -315,6 +315,10 @@ def plot_xchem_dataset_summaries():
     plt.clf()
     plt.close("all")
 
+    # Regplot the map uncertainty vs
+    initial_datasets: List[DatasetSQL] = session.query(DatasetSQL).options(
+        subqueryload(DatasetSQL.bound_state_model)).order_by(
+        DatasetSQL.id).all()
 
     #     if not system_name:
     #         continue
