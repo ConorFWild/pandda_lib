@@ -53,28 +53,31 @@ def get_system_from_dtag(dtag):
 def get_all_systems_res_sigma_table(inspect_tables):
     rank_records = []
     for inspect_table_key, inspect_table in inspect_tables.items():
-        median_resolution = inspect_table["high_resolution"].median()
-        median_sigma = inspect_table["map_uncertainty"].median()
-        rank = 0
-        cumulative_hits = 0
-        for index, row in inspect_table.iterrows():
-            if row["Ligand Confidence"] != "Low":
-                cumulative_hits += 1
-                is_hit = True
-            else:
-                is_hit = False
-            dtag = row["dtag"]
-            event_idx = row["event_idx"]
-            rank += 1
-            resolution = row["high_resolution"]
-            map_uncertainty = row["map_uncertainty"]
+        try:
+            median_resolution = inspect_table["high_resolution"].median()
+            median_sigma = inspect_table["map_uncertainty"].median()
+            rank = 0
+            cumulative_hits = 0
+            for index, row in inspect_table.iterrows():
+                if row["Ligand Confidence"] != "Low":
+                    cumulative_hits += 1
+                    is_hit = True
+                else:
+                    is_hit = False
+                dtag = row["dtag"]
+                event_idx = row["event_idx"]
+                rank += 1
+                resolution = row["high_resolution"]
+                map_uncertainty = row["map_uncertainty"]
 
-            rank_records.append(
-                {"Rank": rank, "Cumulative Hits": cumulative_hits, "Dtag": dtag, "Event IDX": event_idx,
-                 "Resolution": resolution, "Map Uncertainty": map_uncertainty, "Is Hit?": is_hit,
-                 "Resolution Delta": resolution - median_resolution,
-                 "Map Uncertainty Delta": map_uncertainty - median_sigma, "System": inspect_table_key[0],
-                 "PanDDA": inspect_table_key[1]})
+                rank_records.append(
+                    {"Rank": rank, "Cumulative Hits": cumulative_hits, "Dtag": dtag, "Event IDX": event_idx,
+                     "Resolution": resolution, "Map Uncertainty": map_uncertainty, "Is Hit?": is_hit,
+                     "Resolution Delta": resolution - median_resolution,
+                     "Map Uncertainty Delta": map_uncertainty - median_sigma, "System": inspect_table_key[0],
+                     "PanDDA": inspect_table_key[1]})
+        except Exception as e:
+            print(e)
 
     return pd.DataFrame(rank_records)
 
