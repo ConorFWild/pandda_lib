@@ -199,6 +199,7 @@ def plot_xchem_dataset_summaries():
         data=table[table['Accessible'] == True],
         x="Volume",
     )
+    plt.tight_layout()
     graph.get_figure().savefig(output_dir / "XChemVolumeDistribution.png")
     plt.cla()
     plt.clf()
@@ -209,6 +210,7 @@ def plot_xchem_dataset_summaries():
         data=table[(table['Accessible'] == True) & (table['RSCC'] > 0.0)],
         x="RSCC",
     )
+    plt.tight_layout()
     graph.get_figure().savefig(output_dir / "XChemHitRSCCDistribution.png")
     plt.cla()
     plt.clf()
@@ -229,6 +231,7 @@ def plot_xchem_dataset_summaries():
         data=system_hit_rate_table,
         x="Hit Rate",
     )
+    plt.tight_layout()
     graph.get_figure().savefig(output_dir / "XChemHitRSCCDistribution.png")
     plt.cla()
     plt.clf()
@@ -258,6 +261,7 @@ def plot_xchem_dataset_summaries():
         data=table[(table['Accessible'] == True) & (table['RSCC'] > 0.0)],
         x="Number of Fragment Heavy Atoms",
     )
+    plt.tight_layout()
     graph.get_figure().savefig(output_dir / "XChemHitFragmentSizeDistribution.png")
     plt.cla()
     plt.clf()
@@ -268,6 +272,7 @@ def plot_xchem_dataset_summaries():
         data=table[table['Accessible'] == True],
         x="Number of Chains",
     )
+    plt.tight_layout()
     graph.get_figure().savefig(output_dir / "XChemHitNumChainsDistribution.png")
     plt.cla()
     plt.clf()
@@ -278,6 +283,7 @@ def plot_xchem_dataset_summaries():
         data=table[table['Accessible'] == True],
         x="Number of Residues",
     )
+    plt.tight_layout()
     graph.get_figure().savefig(output_dir / "XChemHitNumResiduesDistribution.png")
     plt.cla()
     plt.clf()
