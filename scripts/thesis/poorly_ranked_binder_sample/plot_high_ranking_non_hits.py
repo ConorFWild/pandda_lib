@@ -136,6 +136,8 @@ def plot_high_ranking_non_hits():
     for record in sorted(records, key = lambda _record: _record["Num. Occurrences"], reverse=True):
         print(f"{record['Category']} {record['Num. Occurrences']}")
 
+    print(len(category_table))
+
     # Plot bars for each category
     fig, ax = plt.subplots(
         ncols=1,
