@@ -133,7 +133,7 @@ def plot_high_ranking_non_hits():
     ]
     category_table = pd.DataFrame(records)
 
-    for record in sorted(records, key = lambda _record: _record["Num. Occurrences"]):
+    for record in sorted(records, key = lambda _record: _record["Num. Occurrences"], reverse=True):
         print(f"{record['Category']} {record['Num. Occurrences']}")
 
     # Plot bars for each category
