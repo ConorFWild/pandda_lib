@@ -98,7 +98,7 @@ def plot_xchem_dataset_summaries():
             DatasetSQL.event_maps).subqueryload(SystemEventMapSQL.event_map_quantiles)).order_by(
         SystemSQL.id).all()
 
-    print(systems)
+    # print(systems)
 
     # Get the inspect tables
     event_map_quantiles = {}
@@ -141,16 +141,17 @@ def plot_xchem_dataset_summaries():
                     )
 
     table = pd.DataFrame(records)
-    print(table)
-    print(table[table["Event Map > 1 Quantile 0.9"] < 1.0])
+    # print(table)
+    # print(table[table["Event Map > 1 Quantile 0.9"] < 1.0])
 
-    table_without_outliers = table[~table["System"].isin(["XX02KALRNA", "SHMT2A", "B2m", "PHIPA", "CD44MMA"])]
+    # table_without_outliers = table[~table["System"].isin(["XX02KALRNA", "SHMT2A", "B2m", "PHIPA", "CD44MMA"])]
 
-
-
+    low_bdc_projects = table[(table["1-BDC"] > 0.95)]["Project"].unique()
+    low_difference_projects = table[(table["Difference at Quantile 0.9"] < -0.5)]["Project"].unique()
+    table_without_outliers = table[(~table["Project"].isin(low_bdc_projects)) & (~table["Project"].isin(low_difference_projects))]
 
     graph = sns.regplot(
-        data=table_without_outliers[table_without_outliers["Event Map > 1 Quantile 0.9"] > 0.7],
+        # data=table_without_outliers[table_without_outliers["Event Map > 1 Quantile 0.9"] > 0.7],
         x="1-BDC",
         y="Difference at Quantile 0.9",
         line_kws={"color": "r"})
