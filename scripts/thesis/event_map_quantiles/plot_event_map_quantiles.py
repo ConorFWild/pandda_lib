@@ -154,7 +154,7 @@ def plot_xchem_dataset_summaries():
         # data=table_without_outliers[table_without_outliers["Event Map > 1 Quantile 0.9"] > 0.7],
         data=table_without_outliers,
         x="1-BDC",
-        y="Difference at Quantile 0.9",
+        y="Difference at Quantile 0.75",
         line_kws={"color": "r"})
     plt.tight_layout()
     graph.get_figure().savefig(output_dir / "EventMapsQuantileComparison.png")
