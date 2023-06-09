@@ -229,15 +229,15 @@ def plot_xchem_dataset_summaries():
                     "System": system,
                     "Hit Rate": num_hits / num_datasets,
                     "Num Hits": num_hits,
-                    "Num Datasets": num_datasets,
-                    "Num Accessible Datasets": num_accessible_datasets
+                    "Number of Datasets": num_datasets,
+                    "Number of Accessible Datasets": num_accessible_datasets
                 })
 
     system_hit_rate_table = pd.DataFrame(system_hit_rate_records)
 
     # Get the number of systems with hit rate > 0
     print(f"Hit rate > 0: {len(system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0])}")
-    print(f"Num datasets in systems with Hit rate > 0: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Num Datasets'].sum()}")
+    print(f"Num datasets in systems with Hit rate > 0: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Number of Datasets'].sum()}")
     print(f"Num accessible datasets in systems with Hit rate > 0: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Num Accessible Datasets'].sum()}")
     print(f"Num Hits: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Num Hits'].sum()}")
     print(f"")
@@ -270,10 +270,36 @@ def plot_xchem_dataset_summaries():
     graph = sns.boxplot(
         data=table[(table['Accessible'] == True) & (table["Resolution"] < 4.5)],
         x="Resolution",
-        y="System"
+        y="System",
+        order=table[(table['Accessible'] == True) & (table["Resolution"] < 4.5)].groupby(by="System").median().sort_values(by="Resolution")
     )
     plt.tight_layout()
     graph.get_figure().savefig(output_dir / "XChemResolutionDistribution.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
+
+    # Plot the resolution distribution
+    sns.set(rc={'figure.figsize': (2 * 11.7, 5 * 8.27)})
+    sns.set(font_scale=3)
+    fig, ax = plt.subplots()
+
+    # graph = sns.boxplot(
+    #     data=system_hit_rate_table,
+    #     x="Resolution",
+    #     y="System"
+    # )
+    ax.barh(
+        system_hit_rate_table["System"],
+        system_hit_rate_table["Number of Hits"]
+            )
+    ax.barh(
+        system_hit_rate_table["System"],
+        system_hit_rate_table["Number of Datasets"],
+        left=system_hit_rate_table["Number of Hits"]
+    )
+    plt.tight_layout()
+    graph.get_figure().savefig(output_dir / "HitVsDataset.png")
     plt.cla()
     plt.clf()
     plt.close("all")
