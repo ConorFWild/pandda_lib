@@ -267,11 +267,14 @@ def plot_xchem_dataset_summaries():
     sns.set(rc={'figure.figsize': (2 * 11.7, 5 * 8.27)})
     sns.set(font_scale=3)
 
+    print(table[(table['Accessible'] == True) & (table["Resolution"] < 4.5)].groupby(by="System").median().sort_values(
+        by="Resolution"))
+
     graph = sns.boxplot(
         data=table[(table['Accessible'] == True) & (table["Resolution"] < 4.5)],
         x="Resolution",
         y="System",
-        order=table[(table['Accessible'] == True) & (table["Resolution"] < 4.5)].groupby(by="System").median().sort_values(by="Resolution")
+        order=table[(table['Accessible'] == True) & (table["Resolution"] < 4.5)].groupby(by="System").median().sort_values(by="Resolution")["System"]
     )
     plt.tight_layout()
     graph.get_figure().savefig(output_dir / "XChemResolutionDistribution.png")
