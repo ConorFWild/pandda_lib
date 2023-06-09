@@ -136,6 +136,7 @@ def plot_xchem_dataset_summaries():
                     )
 
     table = pd.DataFrame(records)
+    print(table)
 
     table_without_outliers = table[~table["System"].isin(["XX02KALRNA", "SHMT2A", "B2m", "PHIPA", "CD44MMA"])]
 
