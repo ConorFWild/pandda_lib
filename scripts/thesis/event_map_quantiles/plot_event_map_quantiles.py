@@ -83,7 +83,7 @@ def get_all_systems_res_sigma_table(inspect_tables):
 
 
 def plot_xchem_dataset_summaries():
-    sqlite_filepath = "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond_2.db"
+    sqlite_filepath = "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond.db"
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     output_dir = pathlib.Path("/dls/science/groups/i04-1/conor_dev/pandda_lib/thesis/event_map_stats")
     try_make(output_dir)
