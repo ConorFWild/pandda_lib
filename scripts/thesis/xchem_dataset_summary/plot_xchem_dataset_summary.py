@@ -299,7 +299,7 @@ def plot_xchem_dataset_summaries():
         left=system_hit_rate_table["Number of Hits"]
     )
     plt.tight_layout()
-    graph.get_figure().savefig(output_dir / "HitVsDataset.png")
+    fig.savefig(output_dir / "HitVsDataset.png")
     plt.cla()
     plt.clf()
     plt.close("all")
