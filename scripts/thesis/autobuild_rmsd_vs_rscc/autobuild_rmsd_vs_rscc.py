@@ -203,7 +203,7 @@ def plot_xchem_dataset_summaries():
     else:
         build_scores = pd.read_csv(table_path)
 
-    idx = build_scores.groupby(["Dataset", "Event"]).max()["RSCC"] == build_scores["RSCC"]
+    idx = build_scores.groupby(["Dataset", "Event"])["RSCC"].transform(max) == build_scores["RSCC"]
 
     graph = sns.scatterplot(
         data=build_scores[idx],
