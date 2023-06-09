@@ -103,7 +103,7 @@ def plot_xchem_dataset_summaries():
     # Get the inspect tables
     event_map_quantiles = {}
     records = []
-    for system in :
+    for system in systems:
         # print(system.system_name)
         for project in system.projects:
             for dataset in project.datasets:
