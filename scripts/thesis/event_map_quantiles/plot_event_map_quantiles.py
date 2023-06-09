@@ -109,7 +109,7 @@ def plot_xchem_dataset_summaries():
             for dataset in project.datasets:
                 for event_map in dataset.event_maps:
                     quantiles = event_map.event_map_quantiles
-                    print(quantiles)
+                    # print(quantiles)
                     if not quantiles:
                         continue
                     event_map_quantiles[(system.system_name, project.project_name, dataset.dtag,
@@ -142,6 +142,7 @@ def plot_xchem_dataset_summaries():
 
     table = pd.DataFrame(records)
     print(table)
+    print(table[table["Event Map > 1 Quantile 0.9"] < 1.0])
 
     table_without_outliers = table[~table["System"].isin(["XX02KALRNA", "SHMT2A", "B2m", "PHIPA", "CD44MMA"])]
 
