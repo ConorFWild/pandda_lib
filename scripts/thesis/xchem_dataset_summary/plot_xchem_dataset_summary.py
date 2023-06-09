@@ -228,7 +228,7 @@ def plot_xchem_dataset_summaries():
                 {
                     "System": system,
                     "Hit Rate": num_hits / num_datasets,
-                    "Num Hits": num_hits,
+                    "Number of Hits": num_hits,
                     "Number of Datasets": num_datasets,
                     "Number of Accessible Datasets": num_accessible_datasets
                 })
@@ -238,8 +238,8 @@ def plot_xchem_dataset_summaries():
     # Get the number of systems with hit rate > 0
     print(f"Hit rate > 0: {len(system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0])}")
     print(f"Num datasets in systems with Hit rate > 0: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Number of Datasets'].sum()}")
-    print(f"Num accessible datasets in systems with Hit rate > 0: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Num Accessible Datasets'].sum()}")
-    print(f"Num Hits: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Num Hits'].sum()}")
+    print(f"Num accessible datasets in systems with Hit rate > 0: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Number of Accessible Datasets'].sum()}")
+    print(f"Num Hits: {system_hit_rate_table[system_hit_rate_table['Hit Rate'] > 0]['Number of Hits'].sum()}")
     print(f"")
 
 
