@@ -147,7 +147,7 @@ def plot_xchem_dataset_summaries():
     # table_without_outliers = table[~table["System"].isin(["XX02KALRNA", "SHMT2A", "B2m", "PHIPA", "CD44MMA"])]
 
     low_bdc_projects = table[(table["1-BDC"] > 0.95)]["Project"].unique()
-    low_difference_projects = table[(table["Difference at Quantile 0.9"] < -0.5)]["Project"].unique()
+    low_difference_projects = table[(table["Difference at Quantile 0.75"] < -0.5)]["Project"].unique()
     table_without_outliers = table[(~table["Project"].isin(low_bdc_projects)) & (~table["Project"].isin(low_difference_projects))]
 
     graph = sns.regplot(
@@ -162,8 +162,8 @@ def plot_xchem_dataset_summaries():
     plt.clf()
     plt.close("all")
 
-    X_test = X_train = table_without_outliers["Base Map > 1 Quantile 0.9"].to_numpy().reshape(-1,1)
-    y_test = y_train = table_without_outliers["Event Map > 1 Quantile 0.9"].to_numpy().reshape(-1,1)
+    X_test = X_train = table_without_outliers["Base Map > 1 Quantile 0.75"].to_numpy().reshape(-1,1)
+    y_test = y_train = table_without_outliers["Event Map > 1 Quantile 0.75"].to_numpy().reshape(-1,1)
 
     # Create linear regression object
     regr = linear_model.LinearRegression()
