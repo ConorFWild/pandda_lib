@@ -99,6 +99,9 @@ def plot_xchem_dataset_summaries():
     for pandda in panddas:
         for dataset in pandda.pandda_dataset_results:
 
+            if not dataset.dataset:
+                continue
+
             try:
                 bound_state_st = gemmi.read_structure(dataset.dataset.pandda_model_path)
             except Exception as e:
