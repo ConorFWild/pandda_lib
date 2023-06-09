@@ -295,7 +295,7 @@ def plot_xchem_dataset_summaries():
             )
     ax.barh(
         system_hit_rate_table["System"],
-        system_hit_rate_table["Number of Datasets"],
+        system_hit_rate_table["Number of Accessible Datasets"],
         left=system_hit_rate_table["Number of Hits"]
     )
     plt.tight_layout()
