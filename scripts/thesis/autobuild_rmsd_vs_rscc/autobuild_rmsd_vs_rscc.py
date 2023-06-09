@@ -87,114 +87,121 @@ def plot_xchem_dataset_summaries():
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     output_dir = pathlib.Path("/dls/science/groups/i04-1/conor_dev/pandda_lib/thesis/rmsd_vs_rscc")
     try_make(output_dir)
+    table_path = output_dir / "table.csv"
 
     # Get the database
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
 
-    panddas = session.query(PanDDADirSQL).options(subqueryload("*")).order_by(PanDDADirSQL.id).all()
+    if not table_path.exists():
 
-    records = []
-    for pandda in panddas:
-        for dataset in pandda.pandda_dataset_results:
+        panddas = session.query(PanDDADirSQL).options(subqueryload("*")).order_by(PanDDADirSQL.id).all()
 
-            if not dataset.dataset:
-                continue
+        records = []
+        for pandda in panddas:
+            for dataset in pandda.pandda_dataset_results:
 
-            try:
-                bound_state_st = gemmi.read_structure(dataset.dataset.pandda_model_path)
-            except Exception as e:
-                print(f"Couldn't access model, skipping: {dataset.dataset.pandda_model_path}")
-                continue
-
-            # Get centroids of modelled ligands
-            centroids = []
-            for model in bound_state_st:
-                for chain in model:
-                    for resisdue in chain:
-                        if resisdue.name != "LIG":
-                            continue
-                        poss = []
-                        for atom in resisdue:
-                            pos = atom.pos
-                            poss.append([pos.x, pos.y, pos.z])
-                        centroid = np.mean(poss, axis=0)
-                        centroids.append(centroid)
-            if len(centroids) == 0:
-                print(f"\t\tNo ligands, skipping!")
-
-                continue
-
-            for event in dataset.events:
-
-                # Skip if event isn't close to the centroid of a modelled ligand
-                closest_centroid_distance = min(
-                    [
-                        np.linalg.norm(centroid-np.array([event.x, event.y, event.z]))
-                        for centroid
-                        in centroids
-                    ]
-                )
-                if closest_centroid_distance > 5.0:
-                    print(f"\t\t\tNo nearby centroid, skipping!")
+                if not dataset.dataset:
                     continue
 
-                for build in event.builds:
-                    # print(build.score)
-                    # if build.score!= -0.01:
-                    # print(f"{dataset.dtag} {build.rmsd}")
+                try:
+                    bound_state_st = gemmi.read_structure(dataset.dataset.pandda_model_path)
+                except Exception as e:
+                    print(f"Couldn't access model, skipping: {dataset.dataset.pandda_model_path}")
+                    continue
 
-                    has_build = False
-                    if build.score != -0.01:
-                        has_build = True
+                # Get centroids of modelled ligands
+                centroids = []
+                for model in bound_state_st:
+                    for chain in model:
+                        for resisdue in chain:
+                            if resisdue.name != "LIG":
+                                continue
+                            poss = []
+                            for atom in resisdue:
+                                pos = atom.pos
+                                poss.append([pos.x, pos.y, pos.z])
+                            centroid = np.mean(poss, axis=0)
+                            centroids.append(centroid)
+                if len(centroids) == 0:
+                    print(f"\t\tNo ligands, skipping!")
 
-                    is_hit_dataset = False
-                    if dataset.dataset:
-                        if dataset.dataset.pandda_model_path != "None":
-                            is_hit_dataset = True
+                    continue
 
-                    if build.rmsd:
-                        closest_rmsd = build.rmsd.closest_rmsd
-                        high_confidence = build.rmsd.high_confidence
-                        broken_ligand = build.rmsd.broken_ligand
-                        alignment_error = build.rmsd.alignment_error
-                    else:
-                        closest_rmsd = None
-                        high_confidence = False
-                        broken_ligand = False
-                        alignment_error = False
+                for event in dataset.events:
 
-                    rscc = None
-                    if build.rscc:
-                        rscc = build.rscc.score
-
-                    if dataset.dataset:
-                        pandda_model_path = dataset.dataset.pandda_model_path
-                    else:
-                        pandda_model_path = None
-                    records.append(
-                        {
-                            "System": pandda.system.system_name,
-                            "Project": pandda.project.project_name,
-                            "Dataset": dataset.dtag,
-                            "Event": event.idx,
-                            "Build ID": build.id,
-                            "Has Build?": has_build,
-                            "Is Hit Dataset?": is_hit_dataset,
-                            "Score": build.score,
-                            "MAD": closest_rmsd,
-                            "RSCC": rscc,
-                            "High Confidence?": high_confidence,
-                            "Alignment Error?": alignment_error,
-                            "Broken Ligand?": broken_ligand,
-                            "Build Path": build.build_path,
-                            "Event Map Path": event.event_map_path,
-                            "PanDDA Model": pandda_model_path
-                        }
+                    # Skip if event isn't close to the centroid of a modelled ligand
+                    closest_centroid_distance = min(
+                        [
+                            np.linalg.norm(centroid-np.array([event.x, event.y, event.z]))
+                            for centroid
+                            in centroids
+                        ]
                     )
+                    if closest_centroid_distance > 5.0:
+                        print(f"\t\t\tNo nearby centroid, skipping!")
+                        continue
 
-    build_scores = pd.DataFrame(records)
+                    for build in event.builds:
+                        # print(build.score)
+                        # if build.score!= -0.01:
+                        # print(f"{dataset.dtag} {build.rmsd}")
+
+                        has_build = False
+                        if build.score != -0.01:
+                            has_build = True
+
+                        is_hit_dataset = False
+                        if dataset.dataset:
+                            if dataset.dataset.pandda_model_path != "None":
+                                is_hit_dataset = True
+
+                        if build.rmsd:
+                            closest_rmsd = build.rmsd.closest_rmsd
+                            high_confidence = build.rmsd.high_confidence
+                            broken_ligand = build.rmsd.broken_ligand
+                            alignment_error = build.rmsd.alignment_error
+                        else:
+                            closest_rmsd = None
+                            high_confidence = False
+                            broken_ligand = False
+                            alignment_error = False
+
+                        rscc = None
+                        if build.rscc:
+                            rscc = build.rscc.score
+
+                        if dataset.dataset:
+                            pandda_model_path = dataset.dataset.pandda_model_path
+                        else:
+                            pandda_model_path = None
+                        records.append(
+                            {
+                                "System": pandda.system.system_name,
+                                "Project": pandda.project.project_name,
+                                "Dataset": dataset.dtag,
+                                "Event": event.idx,
+                                "Build ID": build.id,
+                                "Has Build?": has_build,
+                                "Is Hit Dataset?": is_hit_dataset,
+                                "Score": build.score,
+                                "MAD": closest_rmsd,
+                                "RSCC": rscc,
+                                "High Confidence?": high_confidence,
+                                "Alignment Error?": alignment_error,
+                                "Broken Ligand?": broken_ligand,
+                                "Build Path": build.build_path,
+                                "Event Map Path": event.event_map_path,
+                                "PanDDA Model": pandda_model_path
+                            }
+                        )
+        build_scores = pd.DataFrame(records)
+
+        build_scores.to_csv(table_path
+                    )
+    else:
+        build_scores = pd.read_csv(table_path)
 
     idx = build_scores.groupby(["Dataset", "Event"]).max()["RSCC"] == build_scores["RSCC"]
 
