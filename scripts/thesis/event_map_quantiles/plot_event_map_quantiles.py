@@ -156,6 +156,9 @@ def plot_xchem_dataset_summaries():
 
     print(table_without_outliers[table_without_outliers["Difference at Quantile 0.75"] < -0.2])
 
+    for idx, row in table_without_outliers[table_without_outliers["Difference at Quantile 0.75"] < -0.2].iterrows():
+        print(row)
+
     graph = sns.regplot(
         # data=table_without_outliers[table_without_outliers["Event Map > 1 Quantile 0.9"] > 0.7],
         data=table_without_outliers,
