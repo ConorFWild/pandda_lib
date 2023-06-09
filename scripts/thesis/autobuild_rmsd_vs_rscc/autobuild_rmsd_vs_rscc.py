@@ -100,9 +100,9 @@ def plot_xchem_dataset_summaries():
         for dataset in pandda.pandda_dataset_results:
 
             try:
-                bound_state_st = gemmi.read_structure(dataset.pandda_model_path)
+                bound_state_st = gemmi.read_structure(dataset.dataset.pandda_model_path)
             except Exception as e:
-                print(f"Couldn't access model, skipping: {dataset.pandda_model_path}")
+                print(f"Couldn't access model, skipping: {dataset.dataset.pandda_model_path}")
                 continue
 
             # Get centroids of modelled ligands
