@@ -290,13 +290,13 @@ def plot_xchem_dataset_summaries():
     #     y="System"
     # )
     ax.barh(
-        system_hit_rate_table["System"],
-        system_hit_rate_table["Number of Hits"]
+        system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["System"],
+        system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["Number of Hits"]
             )
     ax.barh(
-        system_hit_rate_table["System"],
-        system_hit_rate_table["Number of Accessible Datasets"],
-        left=system_hit_rate_table["Number of Hits"]
+        system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["System"],
+        system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["Number of Accessible Datasets"],
+        left=system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["Number of Hits"]
     )
     ax.set_xscale('log')
     plt.tight_layout()
