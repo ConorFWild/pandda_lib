@@ -93,13 +93,17 @@ def plot_xchem_dataset_summaries():
     engine = create_engine(f"sqlite:///{str(sqlite_filepath)}")
     session = sessionmaker(bind=engine)()
 
+    systems = session.query(SystemSQL).options(
+        subqueryload(SystemSQL.projects).subqueryload(ProjectDirSQL.datasets).subqueryload(
+            DatasetSQL.event_maps).subqueryload(SystemEventMapSQL.event_map_quantiles)).order_by(
+        SystemSQL.id).all()
+
+    print(systems)
+
     # Get the inspect tables
     event_map_quantiles = {}
     records = []
-    for system in session.query(SystemSQL).options(
-            subqueryload(SystemSQL.projects).subqueryload(ProjectDirSQL.datasets).subqueryload(
-                    DatasetSQL.event_maps).subqueryload(SystemEventMapSQL.event_map_quantiles)).order_by(
-            SystemSQL.id).all():
+    for system in :
         # print(system.system_name)
         for project in system.projects:
             for dataset in project.datasets:
