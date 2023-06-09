@@ -170,6 +170,7 @@ class PanDDAEventSQL(Base):
     bdc = Column(Float)
 
     builds = relationship("PanDDABuildSQL")
+    dataset = relationship("DatasetSQL")
 
 
 class PanDDADatasetSQL(Base):
