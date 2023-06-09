@@ -150,7 +150,7 @@ def plot_xchem_dataset_summaries():
     low_difference_projects = table[(table["Difference at Quantile 0.75"] < -0.5)]["Project"].unique()
     table_without_outliers = table[(~table["Project"].isin(low_bdc_projects)) & (~table["Project"].isin(low_difference_projects))]
 
-    print(table_without_outliers[table_without_outliers["Difference at Quantile 0.75"] < -0.2]
+    print(table_without_outliers[table_without_outliers["Difference at Quantile 0.75"] < -0.2])
 
     graph = sns.regplot(
         # data=table_without_outliers[table_without_outliers["Event Map > 1 Quantile 0.9"] > 0.7],
