@@ -150,7 +150,7 @@ def plot_xchem_dataset_summaries():
 
 
     graph = sns.regplot(
-        data=table_without_outliers,
+        data=table_without_outliers[table_without_outliers["Event Map > 1 Quantile 0.9"] > 0.7],
         x="Base Map > 1 Quantile 0.9",
         y="Event Map > 1 Quantile 0.9",
         line_kws={"color": "r"})
