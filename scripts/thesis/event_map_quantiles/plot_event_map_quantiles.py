@@ -151,7 +151,7 @@ def plot_xchem_dataset_summaries():
     table_without_outliers = table[
         (~table["Project"].isin(low_bdc_projects))
         & (~table["Project"].isin(low_difference_projects))
-        # & (~table["System"].isin(["refmac-from-coot-refmac-for", "TcHRS"]))
+        & (~table["Project"].isin(["lb16813-1", "lb13385-80", "lb13385-62", "lb13385-35", "lb13320-1"]))
     ]
 
     print(table_without_outliers[table_without_outliers["Difference at Quantile 0.75"] < -0.2])
