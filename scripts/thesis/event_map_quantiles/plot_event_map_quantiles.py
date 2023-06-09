@@ -85,7 +85,7 @@ def get_all_systems_res_sigma_table(inspect_tables):
 def plot_xchem_dataset_summaries():
     sqlite_filepath = "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond_2.db"
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
-    output_dir = pathlib.Path("/dls/science/groups/i04-1/conor_dev/pandda_lib/thesis/xchem_dataset_summary")
+    output_dir = pathlib.Path("/dls/science/groups/i04-1/conor_dev/pandda_lib/thesis/event_map_stats")
     try_make(output_dir)
 
     # Get the database
@@ -148,7 +148,7 @@ def plot_xchem_dataset_summaries():
         y="Event Map > 1 Quantile 0.9",
         line_kws={"color": "r"})
     plt.tight_layout()
-    graph.get_figure().savefig(output_dir / "XChemDatasetResolutionVsMapUncertainty.png")
+    graph.get_figure().savefig(output_dir / "EventMapsQuantileComparison.png")
     plt.cla()
     plt.clf()
     plt.close("all")
