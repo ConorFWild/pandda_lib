@@ -109,6 +109,7 @@ def plot_xchem_dataset_summaries():
             for dataset in project.datasets:
                 for event_map in dataset.event_maps:
                     quantiles = event_map.event_map_quantiles
+                    print(quantiles)
                     if not quantiles:
                         continue
                     event_map_quantiles[(system.system_name, project.project_name, dataset.dtag,
