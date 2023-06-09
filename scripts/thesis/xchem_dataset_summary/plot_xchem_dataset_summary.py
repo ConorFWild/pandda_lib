@@ -274,7 +274,7 @@ def plot_xchem_dataset_summaries():
         data=table[(table['Accessible'] == True) & (table["Resolution"] < 4.5)],
         x="Resolution",
         y="System",
-        order=table[(table['Accessible'] == True) & (table["Resolution"] < 4.5)].groupby(by="System").median().sort_values(by="Resolution")["System"]
+        order=table[(table['Accessible'] == True) & (table["Resolution"] < 4.5)].groupby(by="System").median().sort_values(by="Resolution").index.to_numpy()
     )
     plt.tight_layout()
     graph.get_figure().savefig(output_dir / "XChemResolutionDistribution.png")
