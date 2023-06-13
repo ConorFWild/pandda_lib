@@ -682,7 +682,6 @@ def make_system_tables():
 
         # Spacegroups
         sgs = system_table["Spacegroup"]
-        print(sgs)
         unique_sgs, counts = np.unique(sgs, return_counts=True)
 
         # Num chains
