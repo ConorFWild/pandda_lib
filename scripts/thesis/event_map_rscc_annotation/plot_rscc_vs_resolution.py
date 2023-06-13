@@ -78,6 +78,7 @@ def plot_rscc_vs_res():
         else:
             im_dis[x,y] = -1
 
+    print(im_dis)
 
     # Plot bars for each category
     fig, ax = plt.subplots(
