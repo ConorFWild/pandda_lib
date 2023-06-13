@@ -90,13 +90,14 @@ def plot_rscc_vs_res():
     )  # sharey=True)
 
     plt.imshow(
-        im_dis,
+        im_dis.T,
         extent=(
             min(ress),
             max(ress),
             min(rsccs),
             max(rsccs)
-        )
+        ),
+        origin="lower"
     )
     plt.xticks(rotation=45, ha='right')
     plt.colorbar()
