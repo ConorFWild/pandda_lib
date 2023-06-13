@@ -602,9 +602,6 @@ def get_system_from_dtag(dtag):
 
 
 def make_system_tables():
-    for key in sorted(system_info):
-        print(key)
-    exit()
 
     sqlite_filepath = "/dls/science/groups/i04-1/conor_dev/pandda_lib/diamond_2.db"
     sqlite_filepath = pathlib.Path(sqlite_filepath).resolve()
