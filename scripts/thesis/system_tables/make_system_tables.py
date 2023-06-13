@@ -660,9 +660,7 @@ def make_system_tables():
 
     system_hit_rate_records = []
     for system in table[table["Accessible"] == True]["System"].unique():
-        if system not in system_info:
-            print(f"Skipping: {system}")
-            continue
+
         system_table = table[table["System"] == system]
         num_hits = len(system_table[system_table["RSCC"] > 0.0]["Dtag"].unique())
         num_datasets = len(system_table["Dtag"].unique())
@@ -681,6 +679,9 @@ def make_system_tables():
 
     # For each system, get the relevant information and output a latex formated table
     for system in table[table["Accessible"] == True]["System"].unique():
+        if system not in system_info:
+            print(f"Skipping: {system}")
+            continue
 
         system_table = table[(table["System"] == system) & (table["Accessible"] == True)]
 
