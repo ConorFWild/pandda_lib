@@ -609,14 +609,37 @@ num_datasets,
         median_res,
         max_res,
         unique_sgs,
-        counts,
+        unique_sgs_counts,
         num_chains,
+num_chains_counts,
         num_residues,
+        num_residues_counts,
         volume,
 ):
     string = ""
-    string += f"System & {system} \\\\ \n"
-    string += f"Number of Datasets & {num_datasets} \\\\ \n"
+    string += f"System & & {system} \\\\ \n"
+    string += f"Number of Datasets & & {num_datasets} \\\\ \n"
+    string += f"Number of Fragment Hits & & {num_hits} \\\\ \n"
+    string += f"Resolution & Minimum & {min_res} \\\\ \n"
+    string += f" & Median & {median_res} \\\\ \n"
+    string += f" & Maximum & {max_res} \\\\ \n"
+
+    string += f"Spacegroups & {unique_sgs[0]} & {unique_sgs_counts[0]} \\\\ \n"
+    if len(unique_sgs) > 1:
+        for sg, count in zip(unique_sgs[1:], unique_sgs_counts[1:]):
+            string += f" & {sg} & {count} \\\\ \n"
+
+    string += f"Number of Chains & {num_chains[0]} & {num_chains_counts[0]} \\\\ \n"
+    if len(num_chains) > 1:
+        for num_chain, count in zip(num_chains[1:], num_chains_counts[1:]):
+            string += f" & {num_chain} & {count} \\\\ \n"
+
+    string += f"Number of Residues & {num_residues[0]} & {num_residues_counts[0]} \\\\ \n"
+    if len(num_chains) > 1:
+        for num_residue, count in zip(num_residues[1:], num_residues_counts[1:]):
+            string += f" & {num_residue} & {count} \\\\ \n"
+
+    string += f"Median Unit Cell Volume &  & {volume} \\\\ \n"
 
     print(string)
 
