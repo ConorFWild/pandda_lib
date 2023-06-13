@@ -601,6 +601,7 @@ def get_system_from_dtag(dtag):
         return system_name
 
 def make_published_table(
+        system_info: SystemInfo,
         system,
 num_datasets,
         num_accessible_datasets,
@@ -618,6 +619,13 @@ num_chains_counts,
 ):
     string = ""
     string += f"System & & {system} \\\\ \n"
+    string += f"Protein & & {system_info.protein_name} \\\\ \n"
+    string += f"Gene & & {system_info.gene} \\\\ \n"
+    string += f"Organism & & {system_info.organism} \\\\ \n"
+    string += f"Literature DOI & & {system_info.literature} \\\\ \n"
+    string += f"Data Deposition & & {system_info.pandda_data_deposition} \\\\ \n"
+
+
     string += f"Number of Datasets & & {num_datasets} \\\\ \n"
     string += f"Number of Fragment Hits & & {num_hits} \\\\ \n"
     string += f"Resolution & Minimum & {min_res} \\\\ \n"
@@ -629,17 +637,17 @@ num_chains_counts,
         for sg, count in zip(unique_sgs[1:], unique_sgs_counts[1:]):
             string += f" & {sg} & {count} \\\\ \n"
 
-    string += f"Number of Chains & {num_chains[0]} & {num_chains_counts[0]} \\\\ \n"
+    string += f"Number of Chains & {int(num_chains[0])} & {int(num_chains_counts[0])} \\\\ \n"
     if len(num_chains) > 1:
         for num_chain, count in zip(num_chains[1:], num_chains_counts[1:]):
-            string += f" & {num_chain} & {count} \\\\ \n"
+            string += f" & {int(num_chain)} & {int(count)} \\\\ \n"
 
-    string += f"Number of Residues & {num_residues[0]} & {num_residues_counts[0]} \\\\ \n"
+    string += f"Number of Residues & {int(num_residues[0])} & {int(num_residues_counts[0])} \\\\ \n"
     if len(num_chains) > 1:
         for num_residue, count in zip(num_residues[1:], num_residues_counts[1:]):
-            string += f" & {num_residue} & {count} \\\\ \n"
+            string += f" & {int(num_residue)} & {int(count)} \\\\ \n"
 
-    string += f"Median Unit Cell Volume &  & {volume} \\\\ \n"
+    string += f"Median Unit Cell Volume &  & {round(volume, 1)} \\\\ \n"
 
     print(string)
 
@@ -778,7 +786,7 @@ def make_system_tables():
                 num_chains_counts,
                 num_residues,
                 num_residues_counts,
-                rount(volume, 1),
+                volume,
             )
 
         ...
