@@ -600,9 +600,9 @@ def get_system_from_dtag(dtag):
         system_name = dtag[:last_hypen_pos]
         return system_name
 
-def make_unacessible_table(system_info: SystemInfo):
+def make_unacessible_table(system_name, system_info: SystemInfo):
     string = ""
-    string += f"System & & {system_info.system_name} \\\\ \n"
+    string += f"System & & {system_name} \\\\ \n"
     if system_info.published:
         string += f"Protein & & {system_info.protein_name} \\\\ \n"
         string += f"Gene & & {system_info.gene} \\\\ \n"
@@ -744,7 +744,7 @@ def make_system_tables():
         num_accessible_datasets = len(system_table[system_table["Accessible"] == True]["Dtag"].unique())
 
         if num_accessible_datasets == 0:
-            make_unacessible_table(system_info_obj)
+            make_unacessible_table(system_name, system_info_obj)
             continue
 
         # Get the number of hits
