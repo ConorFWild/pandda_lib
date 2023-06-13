@@ -79,7 +79,7 @@ def plot_rscc_vs_res():
         if im_tot[x,y] != 0:
             im_dis[x,y] = im[x,y] / im_tot[x,y]
         else:
-            im_dis[x,y] = -1
+            im_dis[x,y] = float('nan')
 
     print(im_dis)
 
