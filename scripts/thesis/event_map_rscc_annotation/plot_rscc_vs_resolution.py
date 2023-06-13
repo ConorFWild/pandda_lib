@@ -99,8 +99,13 @@ def plot_rscc_vs_res():
         ),
         origin="lower"
     )
-    plt.xticks(rotation=45, ha='right')
+    # plt.xticks(rotation=45, ha='right')
     plt.colorbar()
+    plt.xlabel("Resolution")
+    plt.ylabel("RSCC")
+    plt.tight_layout()
+
+
 
     # Save the plot
     fig.savefig(
