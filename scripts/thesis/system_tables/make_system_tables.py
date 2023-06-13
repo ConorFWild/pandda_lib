@@ -773,6 +773,7 @@ def make_system_tables():
 
         if system_info_obj.published:
             make_published_table(
+                system_info_obj,
                 system,
                 num_datasets,
                 num_accessible_datasets,
