@@ -618,6 +618,8 @@ num_datasets,
     string += f"System & {system} \\\\ \n"
     string += f"Number of Datasets & {num_datasets} \\\\ \n"
 
+    print(string)
+
     ...
 
 def make_unpublished_table():
@@ -739,7 +741,18 @@ def make_system_tables():
 
         if system_info_obj.published:
             make_published_table(
-
+                system,
+                num_datasets,
+                num_accessible_datasets,
+                num_hits,
+                min_res,
+                median_res,
+                max_res,
+                unique_sgs,
+                counts,
+                num_chains,
+                num_residues,
+                volume,
             )
 
         ...
