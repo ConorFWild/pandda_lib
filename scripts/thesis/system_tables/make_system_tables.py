@@ -730,7 +730,7 @@ def make_system_tables():
     for system in system_info:
         print(f"##### {system} #####")
         system_info_obj = system_info[system]
-        print(f"Published: {system_info_obj.published}")
+        # print(f"Published: {system_info_obj.published}")
 
 
         # if system not in system_info:
