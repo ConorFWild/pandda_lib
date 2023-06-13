@@ -294,12 +294,15 @@ def plot_xchem_dataset_summaries():
     # )
     ax.barh(
         system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["System"],
-        system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["Number of Hits"]
-            )
+        system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["Number of Hits"],
+        label="Number of Fragment Hits"
+
+    )
     ax.barh(
         system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["System"],
         system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["Number of Accessible Datasets"],
-        left=system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["Number of Hits"]
+        left=system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["Number of Hits"],
+        label="Number of Datasets"
     )
     ax.set_xscale('log')
     plt.xlabel("Count")
