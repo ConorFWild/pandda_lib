@@ -722,6 +722,9 @@ def make_system_tables():
         num_datasets = len(system_table["Dtag"].unique())
         num_accessible_datasets = len(system_table[system_table["Accessible"] == True]["Dtag"].unique())
 
+        if num_accessible_datasets == 0:
+            continue
+
         # Get the number of hits
         num_hits = len(system_table[system_table["RSCC"] > 0.0]["Dtag"].unique())
 
