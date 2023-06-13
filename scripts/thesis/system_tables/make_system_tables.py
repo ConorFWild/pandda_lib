@@ -751,6 +751,7 @@ def make_system_tables():
         num_accessible_datasets = len(system_table[system_table["Accessible"] == True]["Dtag"].unique())
 
         if num_accessible_datasets == 0:
+            print(f"Not accessible! No data!")
             make_unacessible_table(system, system_info_obj)
             continue
 
