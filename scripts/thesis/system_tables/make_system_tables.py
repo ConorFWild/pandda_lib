@@ -805,8 +805,8 @@ def make_system_tables():
         # print(volume)
 
 
-        if system_info_obj.published:
-            make_accessible_table(
+        # if system_info_obj.published:
+        make_accessible_table(
                 system_info_obj,
                 system,
                 num_datasets,
