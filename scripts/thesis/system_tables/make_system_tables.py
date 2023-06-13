@@ -711,6 +711,7 @@ def make_system_tables():
     # For each system, get the relevant information and output a latex formated table
     # for system in table[table["Accessible"] == True]["System"].unique():
     for system in system_info:
+        print(f"##### {system} #####")
         # if system not in system_info:
         #     print(f"Skipping: {system}")
         #     continue
