@@ -302,6 +302,9 @@ def plot_xchem_dataset_summaries():
         left=system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["Number of Hits"]
     )
     ax.set_xscale('log')
+    plt.xlabel("Number")
+    plt.yaxis("System")
+    plt.legend()
     plt.tight_layout()
     fig.savefig(output_dir / "HitVsDataset.png")
     plt.cla()
