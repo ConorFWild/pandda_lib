@@ -647,7 +647,7 @@ num_chains_counts,
     string += f"\\textbf{{Number of Datasets}} & {num_datasets} \\\\ \n"
     string += f"\\textbf{{Number of Fragment Hits}} & {num_hits} \\\\ \n"
 
-    string += f"\\textbf{{Resolution}} & Minimum & {min_res} \\\\ \n"
+    string += f"\\textbf{{Resolution}} &  \\\\ \n"
     string += f" - Minimum & {min_res} \\\\ \n"
     string += f" - Median & {median_res} \\\\ \n"
     string += f" - Maximum & {max_res} \\\\ \n"
@@ -663,7 +663,7 @@ num_chains_counts,
 
     if len(num_chains) > 1:
         for num_chain, count in zip(num_chains[1:], num_chains_counts[1:]):
-            string += f" & {int(num_chain)} & {int(count)} \\\\ \n"
+            string += f" - {int(num_chain)} & {int(count)} \\\\ \n"
 
     string += f"\\textbf{{Number of Residues}} & \\\\ \n"
     string += f" - {int(num_residues[0])} & {int(num_residues_counts[0])} \\\\ \n"
