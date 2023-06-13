@@ -600,6 +600,29 @@ def get_system_from_dtag(dtag):
         system_name = dtag[:last_hypen_pos]
         return system_name
 
+def make_published_table(
+        system,
+num_datasets,
+        num_accessible_datasets,
+        num_hits,
+        min_res,
+        median_res,
+        max_res,
+        unique_sgs,
+        counts,
+        num_chains,
+        num_residues,
+        volume,
+):
+    string = ""
+    string += f"System & {system} \\\\ \n"
+    string += f"Number of Datasets & {num_datasets} \\\\ \n"
+
+    ...
+
+def make_unpublished_table():
+    ...
+
 
 def make_system_tables():
 
@@ -635,6 +658,9 @@ def make_system_tables():
 
     system_hit_rate_records = []
     for system in table[table["Accessible"] == True]["System"].unique():
+        if system not in system_info:
+            print(f"Skipping: {system}")
+            continue
         system_table = table[table["System"] == system]
         num_hits = len(system_table[system_table["RSCC"] > 0.0]["Dtag"].unique())
         num_datasets = len(system_table["Dtag"].unique())
@@ -685,8 +711,8 @@ def make_system_tables():
         unique_sgs, counts = np.unique(sgs, return_counts=True)
 
         # Num chains
-        num_chains = system_table["Number of Chains"].unique()
-        num_residues = system_table["Number of Residues"].unique()
+        num_chains, num_chains_counts = np.unique(system_table["Number of Chains"], return_counts=True)
+        num_residues, num_residues_counts = np.unique(system_table["Number of Residues"], return_counts=True)
 
         volume = system_table["Volume"].median()
         # Get % with bound state model
@@ -708,6 +734,13 @@ def make_system_tables():
         print(num_chains)
         print(num_residues)
         print(volume)
+
+        system_info_obj = system_info[system]
+
+        if system_info_obj.published:
+            make_published_table(
+
+            )
 
         ...
 
