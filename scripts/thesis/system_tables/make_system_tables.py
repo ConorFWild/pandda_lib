@@ -778,7 +778,7 @@ def make_system_tables():
                 num_chains_counts,
                 num_residues,
                 num_residues_counts,
-                volume,
+                rount(volume, 1),
             )
 
         ...
