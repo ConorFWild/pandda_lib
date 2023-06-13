@@ -709,10 +709,11 @@ def make_system_tables():
     system_hit_rate_table = pd.DataFrame(system_hit_rate_records)
 
     # For each system, get the relevant information and output a latex formated table
-    for system in table[table["Accessible"] == True]["System"].unique():
-        if system not in system_info:
-            print(f"Skipping: {system}")
-            continue
+    # for system in table[table["Accessible"] == True]["System"].unique():
+    for system in system_info:
+        # if system not in system_info:
+        #     print(f"Skipping: {system}")
+        #     continue
 
         system_table = table[(table["System"] == system) & (table["Accessible"] == True)]
 
