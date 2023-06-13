@@ -610,8 +610,8 @@ def make_unacessible_table(system_name, system_info: SystemInfo):
         string += "\\textbf{{Literature DOI}} & {} \\\\ \n".format(system_info.literature)
         string += "\\textbf{{Data Deposition}} & {} \\\\ \n".format(system_info.pandda_data_deposition)
     else:
-        string += f"Published & & False \\\\ \n"
-    string += f"Accessible & & False \\\\ \n"
+        string += f"\\textbf{{Published}} & False \\\\ \n"
+    string += f"\\textbf{{Accessible}} & False \\\\ \n"
 
     print(string)
 
@@ -633,39 +633,45 @@ num_chains_counts,
         volume,
 ):
     string = ""
-    string += f"System & & {system} \\\\ \n"
+    string += f"\\textbf{{System}} & {system} \\\\ \n"
     if system_info.published:
-        string += f"Protein & & {system_info.protein_name} \\\\ \n"
-        string += f"Gene & & {system_info.gene} \\\\ \n"
-        string += f"Organism & & {system_info.organism} \\\\ \n"
-        string += f"Literature DOI & & {system_info.literature} \\\\ \n"
-        string += f"Data Deposition & & {system_info.pandda_data_deposition} \\\\ \n"
+        string += f"\\textbf{{Protein}} & {system_info.protein_name} \\\\ \n"
+        string += f"\\textbf{{Gene}} & {system_info.gene} \\\\ \n"
+        string += f"\\textbf{{Organism}} & {system_info.organism} \\\\ \n"
+        string += f"\\textbf{{Literature DOI}} & {system_info.literature} \\\\ \n"
+        string += f"\\textbf{{Data Deposition}} & {system_info.pandda_data_deposition} \\\\ \n"
     else:
-        string += f"Published & & False \\\\ \n"
+        string += f"\\textbf{{Published}} & False \\\\ \n"
 
 
-    string += f"Number of Datasets & & {num_datasets} \\\\ \n"
-    string += f"Number of Fragment Hits & & {num_hits} \\\\ \n"
-    string += f"Resolution & Minimum & {min_res} \\\\ \n"
-    string += f" & Median & {median_res} \\\\ \n"
-    string += f" & Maximum & {max_res} \\\\ \n"
+    string += f"\\textbf{{Number of Datasets}} & {num_datasets} \\\\ \n"
+    string += f"\\textbf{{Number of Fragment Hits}} & {num_hits} \\\\ \n"
 
-    string += f"Spacegroups & {unique_sgs[0]} & {unique_sgs_counts[0]} \\\\ \n"
+    string += f"\\textbf{{Resolution}} & Minimum & {min_res} \\\\ \n"
+    string += f" - Minimum & {min_res} \\\\ \n"
+    string += f" - Median & {median_res} \\\\ \n"
+    string += f" - Maximum & {max_res} \\\\ \n"
+
+    string += f"\\textbf{{Spacegroups}} & \\\\ \n"
+    string += f" - {unique_sgs[0]} & {unique_sgs_counts[0]} \\\\ \n"
     if len(unique_sgs) > 1:
         for sg, count in zip(unique_sgs[1:], unique_sgs_counts[1:]):
-            string += f" & {sg} & {count} \\\\ \n"
+            string += f" - {sg} & {count} \\\\ \n"
 
-    string += f"Number of Chains & {int(num_chains[0])} & {int(num_chains_counts[0])} \\\\ \n"
+    string += f"\\textbf{{Number of Chains}} & \\\\ \n"
+    string += f" - {int(num_chains[0])} & {int(num_chains_counts[0])} \\\\ \n"
+
     if len(num_chains) > 1:
         for num_chain, count in zip(num_chains[1:], num_chains_counts[1:]):
             string += f" & {int(num_chain)} & {int(count)} \\\\ \n"
 
-    string += f"Number of Residues & {int(num_residues[0])} & {int(num_residues_counts[0])} \\\\ \n"
+    string += f"\\textbf{{Number of Residues}} & \\\\ \n"
+    string += f" - {int(num_residues[0])} & {int(num_residues_counts[0])} \\\\ \n"
     if len(num_chains) > 1:
         for num_residue, count in zip(num_residues[1:], num_residues_counts[1:]):
-            string += f" & {int(num_residue)} & {int(count)} \\\\ \n"
+            string += f" - {int(num_residue)} & {int(count)} \\\\ \n"
 
-    string += f"Median Unit Cell Volume &  & {round(volume, 1)} \\\\ \n"
+    string += f"\\textbf{{Median Unit Cell Volume}}  & {round(volume, 1)} \\\\ \n"
 
     print(string)
 
