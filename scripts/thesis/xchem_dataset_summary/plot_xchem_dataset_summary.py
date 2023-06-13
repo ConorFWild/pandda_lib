@@ -303,7 +303,7 @@ def plot_xchem_dataset_summaries():
     )
     ax.set_xscale('log')
     plt.xlabel("Count")
-    plt.yaxis("System")
+    plt.ylabel("System")
     plt.legend()
     plt.tight_layout()
     fig.savefig(output_dir / "HitVsDataset.png")
