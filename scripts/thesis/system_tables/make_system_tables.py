@@ -688,7 +688,7 @@ def make_system_tables():
         num_chains = system_table["Number of Chains"].unique()
         num_residues = system_table["Number of Residues"].unique()
 
-        volume = system_table["Volume"].unique()
+        volume = system_table["Volume"].median()
         # Get % with bound state model
 
         # Get the organism
