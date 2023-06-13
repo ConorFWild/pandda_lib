@@ -783,18 +783,18 @@ def make_system_tables():
         # Get the protein id
 
         #
-        print(f"##### {system} #####")
-        print(num_datasets)
-        print(num_accessible_datasets)
-        print(num_hits)
-        print(min_res)
-        print(median_res)
-        print(max_res)
-        print(unique_sgs)
-        print(counts)
-        print(num_chains)
-        print(num_residues)
-        print(volume)
+        # print(f"##### {system} #####")
+        # print(num_datasets)
+        # print(num_accessible_datasets)
+        # print(num_hits)
+        # print(min_res)
+        # print(median_res)
+        # print(max_res)
+        # print(unique_sgs)
+        # print(counts)
+        # print(num_chains)
+        # print(num_residues)
+        # print(volume)
 
 
         if system_info_obj.published:
