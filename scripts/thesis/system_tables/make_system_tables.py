@@ -611,6 +611,7 @@ def make_unacessible_table(system_name, system_info: SystemInfo):
         string += f"Data Deposition & & {system_info.pandda_data_deposition} \\\\ \n"
     else:
         string += f"Published & & False \\\\ \n"
+    string += f"Accessible & & False \\\\ \n"
 
     print(string)
 
