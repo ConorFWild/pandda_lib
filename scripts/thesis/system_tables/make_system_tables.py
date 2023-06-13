@@ -654,7 +654,7 @@ def make_system_tables():
     # For each system, get the relevant information and output a latex formated table
     for system in table[table["Accessible"] == True]["System"].unique():
 
-        system_table = table[table["System"] == system]
+        system_table = table[(table["System"] == system) & (table["Accessible"] == True)]
 
         # Get number of datasets
         num_datasets = len(system_table["Dtag"].unique())
