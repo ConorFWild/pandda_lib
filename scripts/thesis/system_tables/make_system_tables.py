@@ -602,13 +602,13 @@ def get_system_from_dtag(dtag):
 
 def make_unacessible_table(system_name, system_info: SystemInfo):
     string = ""
-    string += "\\textbf\{System\} & {} \\\\ \n".format(system_name)
+    string += "\\textbf{{System}} & {} \\\\ \n".format(system_name)
     if system_info.published:
-        string += "\\textbf\{Protein\} & {} \\\\ \n".format(system_info.protein_name)
-        string += "\\textbf\{Gene\} & {} \\\\ \n".format(system_info.gene)
-        string += "\\textbf\{Organism\} & {} \\\\ \n".format(system_info.organism)
-        string += "\\textbf\{Literature DOI\} & {} \\\\ \n".format(system_info.literature)
-        string += "\\textbf\{Data Deposition\} & {} \\\\ \n".format(system_info.pandda_data_deposition)
+        string += "\\textbf{{Protein}} & {} \\\\ \n".format(system_info.protein_name)
+        string += "\\textbf{{Gene}} & {} \\\\ \n".format(system_info.gene)
+        string += "\\textbf{{Organism}} & {} \\\\ \n".format(system_info.organism)
+        string += "\\textbf{{Literature DOI}} & {} \\\\ \n".format(system_info.literature)
+        string += "\\textbf{{Data Deposition}} & {} \\\\ \n".format(system_info.pandda_data_deposition)
     else:
         string += f"Published & & False \\\\ \n"
     string += f"Accessible & & False \\\\ \n"
