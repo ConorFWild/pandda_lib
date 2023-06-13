@@ -600,7 +600,21 @@ def get_system_from_dtag(dtag):
         system_name = dtag[:last_hypen_pos]
         return system_name
 
-def make_published_table(
+def make_unacessible_table(system_info: SystemInfo):
+    string = ""
+    string += f"System & & {system_info.system_name} \\\\ \n"
+    if system_info.published:
+        string += f"Protein & & {system_info.protein_name} \\\\ \n"
+        string += f"Gene & & {system_info.gene} \\\\ \n"
+        string += f"Organism & & {system_info.organism} \\\\ \n"
+        string += f"Literature DOI & & {system_info.literature} \\\\ \n"
+        string += f"Data Deposition & & {system_info.pandda_data_deposition} \\\\ \n"
+    else:
+        string += f"Published & & False \\\\ \n"
+
+    print(string)
+
+def make_accessible_table(
         system_info: SystemInfo,
         system,
 num_datasets,
@@ -619,11 +633,14 @@ num_chains_counts,
 ):
     string = ""
     string += f"System & & {system} \\\\ \n"
-    string += f"Protein & & {system_info.protein_name} \\\\ \n"
-    string += f"Gene & & {system_info.gene} \\\\ \n"
-    string += f"Organism & & {system_info.organism} \\\\ \n"
-    string += f"Literature DOI & & {system_info.literature} \\\\ \n"
-    string += f"Data Deposition & & {system_info.pandda_data_deposition} \\\\ \n"
+    if system_info.published:
+        string += f"Protein & & {system_info.protein_name} \\\\ \n"
+        string += f"Gene & & {system_info.gene} \\\\ \n"
+        string += f"Organism & & {system_info.organism} \\\\ \n"
+        string += f"Literature DOI & & {system_info.literature} \\\\ \n"
+        string += f"Data Deposition & & {system_info.pandda_data_deposition} \\\\ \n"
+    else:
+        string += f"Published & & False \\\\ \n"
 
 
     string += f"Number of Datasets & & {num_datasets} \\\\ \n"
@@ -714,6 +731,8 @@ def make_system_tables():
         print(f"##### {system} #####")
         system_info_obj = system_info[system]
         print(f"Published: {system_info_obj.published}")
+
+
         # if system not in system_info:
         #     print(f"Skipping: {system}")
         #     continue
@@ -725,6 +744,7 @@ def make_system_tables():
         num_accessible_datasets = len(system_table[system_table["Accessible"] == True]["Dtag"].unique())
 
         if num_accessible_datasets == 0:
+            make_unacessible_table(system_info_obj)
             continue
 
         # Get the number of hits
@@ -778,7 +798,7 @@ def make_system_tables():
 
 
         if system_info_obj.published:
-            make_published_table(
+            make_accessible_table(
                 system_info_obj,
                 system,
                 num_datasets,
