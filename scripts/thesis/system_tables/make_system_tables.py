@@ -681,7 +681,8 @@ def make_system_tables():
         max_res = system_table["Resolution"].max()
 
         # Spacegroups
-        sgs =         system_table["Spacegroup"]
+        sgs = system_table["Spacegroup"]
+        print(sgs)
         unique_sgs, counts = np.unique(sgs, return_counts=True)
 
         # Num chains
