@@ -775,7 +775,9 @@ def make_system_tables():
                 unique_sgs,
                 counts,
                 num_chains,
+                num_chains_counts,
                 num_residues,
+                num_residues_counts,
                 volume,
             )
 
