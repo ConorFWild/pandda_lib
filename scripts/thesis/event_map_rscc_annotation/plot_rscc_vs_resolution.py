@@ -97,7 +97,8 @@ def plot_rscc_vs_res():
             min(rsccs),
             max(rsccs)
         ),
-        origin="lower"
+        origin="lower",
+        cmap="viridis"
     )
     # plt.xticks(rotation=45, ha='right')
     plt.colorbar()
