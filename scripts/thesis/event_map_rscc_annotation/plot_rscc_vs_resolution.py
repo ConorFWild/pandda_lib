@@ -70,6 +70,9 @@ def plot_rscc_vs_res():
         if confidence == "High":
 
             im[x, y] += 1
+    print(im_tot)
+    print(im)
+
 
     im_dis = np.zeros((10,10))
     for x,y in itertools.product(range(10), range(10)):
