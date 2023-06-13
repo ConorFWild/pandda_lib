@@ -712,6 +712,8 @@ def make_system_tables():
     # for system in table[table["Accessible"] == True]["System"].unique():
     for system in system_info:
         print(f"##### {system} #####")
+        system_info_obj = system_info[system]
+        print(f"Published: {system_info_obj.published}")
         # if system not in system_info:
         #     print(f"Skipping: {system}")
         #     continue
@@ -774,7 +776,6 @@ def make_system_tables():
         print(num_residues)
         print(volume)
 
-        system_info_obj = system_info[system]
 
         if system_info_obj.published:
             make_published_table(
