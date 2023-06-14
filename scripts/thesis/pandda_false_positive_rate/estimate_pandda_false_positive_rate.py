@@ -132,6 +132,8 @@ def plot_xchem_dataset_summaries():
         else:
             print(f"Viewed: {len(inspect_table[inspect_table['Viewed'] == True])} / {len(inspect_table)}")
 
+    records = [x for x in records.values()]
+
     system_hit_rate_table = pd.DataFrame(records)
 
     # Plot the hit rates
