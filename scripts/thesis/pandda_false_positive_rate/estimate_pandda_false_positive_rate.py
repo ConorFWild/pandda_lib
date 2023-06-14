@@ -109,6 +109,7 @@ def plot_xchem_dataset_summaries():
 
     # Concatenate viewed ones
     records = []
+    used_systems = {}
     for inspect_table_key, inspect_table in inspect_tables.items():
         print(inspect_table_key)
         if len(inspect_table)*0.3 < len(inspect_table[inspect_table["Viewed"] == True]):
@@ -117,6 +118,9 @@ def plot_xchem_dataset_summaries():
             num_events = len(inspect_table[inspect_table["Viewed"] == True])
             print(num_events)
             if num_hits > 0:
+                if inspect_table_key[0] in used_systems:
+                    if used_systems[inspect_table_key[0]] > num_events:
+                        continue
                 records.append(
                     {
                         "System": inspect_table_key[0],
@@ -125,6 +129,7 @@ def plot_xchem_dataset_summaries():
                         "Number of Events": num_events
                     }
                 )
+                used_systems[inspect_table_key[0]] = num_events
         else:
             print(f"Viewed: {len(inspect_table[inspect_table['Viewed'] == True])} / {len(inspect_table)}")
 
