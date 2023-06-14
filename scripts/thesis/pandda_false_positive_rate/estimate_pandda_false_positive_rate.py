@@ -120,7 +120,7 @@ def plot_xchem_dataset_summaries():
                 records.append(
                     {
                         "System": inspect_table_key[0],
-                        "Experiment": inspect_table_key[1]
+                        # "Experiment": inspect_table_key[1],
                         "Number of Hits": num_hits,
                         "Number of Events": num_events
                     }
