@@ -125,6 +125,8 @@ def plot_xchem_dataset_summaries():
                         "Number of Events": num_events - num_hits
                     }
                 )
+        else:
+            print(f"Viewed: {len(inspect_table[inspect_table['Viewed'] == True])} / {len(inspect_table)}")
 
     system_hit_rate_table = pd.DataFrame(records)
 
