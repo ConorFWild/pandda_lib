@@ -146,8 +146,8 @@ def plot_xchem_dataset_summaries():
     )
     ax.barh(
         system_hit_rate_table.sort_values(by="Number of Events")["System"],
-        system_hit_rate_table.sort_values(by="Number of Events")["Number of Accessible Datasets"],
-        left=system_hit_rate_table.sort_values(by="Number of Events")["Number of Events"],
+        system_hit_rate_table.sort_values(by="Number of Events")["Number of Events"],
+        left=system_hit_rate_table.sort_values(by="Number of Events")["Number of Hits"],
         label="Number of Events"
     )
     ax.set_xscale('log')
