@@ -111,10 +111,10 @@ def plot_xchem_dataset_summaries():
     records = []
     for inspect_table_key, inspect_table in inspect_tables.items():
         print(inspect_table_key)
-        if len(inspect_table) == len(inspect_table[inspect_table["Viewed"] == True]):
+        if len(inspect_table)*0.3 < len(inspect_table[inspect_table["Viewed"] == True]):
             num_hits = len(inspect_table[inspect_table["Ligand Confidence"] == "High"])
             print(num_hits)
-            num_events = len(inspect_table)
+            num_events = len(inspect_table[inspect_table["Viewed"] == True])
             print(num_events)
             if num_hits > 0:
                 records.append(
