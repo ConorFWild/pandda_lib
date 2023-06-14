@@ -162,6 +162,9 @@ def plot_xchem_dataset_summaries():
     plt.clf()
     plt.close("all")
 
+    for record in records:
+        print(f"{record['Number of Hits']} & {record['Number of Events']} & {record['Number of Hits'] / record['Number of Events']} ")
+
 
 if __name__ == "__main__":
     fire.Fire(plot_xchem_dataset_summaries)
