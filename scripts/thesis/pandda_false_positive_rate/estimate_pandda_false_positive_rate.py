@@ -108,7 +108,7 @@ def plot_xchem_dataset_summaries():
         inspect_tables[(instance.system.system_name, inspect_table_path)] = inspect_table
 
     # Concatenate viewed ones
-    tables_to_concatenate = []
+    records = []
     for inspect_table_key, inspect_table in inspect_tables.items():
         print(inspect_table_key)
         if len(inspect_table) == len(inspect_table[inspect_table["Viewed"] == True]):
@@ -116,8 +116,49 @@ def plot_xchem_dataset_summaries():
             print(num_hits)
             num_events = len(inspect_table)
             print(num_events)
-            tables_to_concatenate.append(inspect_table)
+            if num_hits > 0:
+                records.append(
+                    {
+                        "System": inspect_table_key[0],
+                        "Experiment": inspect_table_key[1]
+                        "Number of Hits": num_hits,
+                        "Number of Events": num_events
+                    }
+                )
 
+    system_hit_rate_table = pd.DataFrame(records)
+
+    # Plot the hit rates
+    sns.set(rc={'figure.figsize': (2 * 11.7, 5 * 8.27)})
+    sns.set(font_scale=3)
+    fig, ax = plt.subplots()
+
+    # graph = sns.boxplot(
+    #     data=system_hit_rate_table,
+    #     x="Resolution",
+    #     y="System"
+    # )
+    ax.barh(
+        system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["System"],
+        system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["Number of Hits"],
+        label="Number of Fragment Hits"
+
+    )
+    ax.barh(
+        system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["System"],
+        system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["Number of Accessible Datasets"],
+        left=system_hit_rate_table.sort_values(by="Number of Accessible Datasets")["Number of Hits"],
+        label="Number of Datasets"
+    )
+    ax.set_xscale('log')
+    plt.xlabel("Count")
+    plt.ylabel("System")
+    plt.legend()
+    plt.tight_layout()
+    fig.savefig(output_dir / "HitVsDataset.png")
+    plt.cla()
+    plt.clf()
+    plt.close("all")
 
 
 if __name__ == "__main__":
