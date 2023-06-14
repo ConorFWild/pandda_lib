@@ -162,7 +162,7 @@ def plot_xchem_dataset_summaries():
     plt.clf()
     plt.close("all")
 
-    for record in records:
+    for record in sorted(records, lambda _record: _record['Number of Events'])
         print(f"{record['Number of Hits']} & {record['Number of Events']} & {record['Number of Hits'] / record['Number of Events']} ")
 
 
