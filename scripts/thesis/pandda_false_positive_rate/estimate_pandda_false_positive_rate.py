@@ -155,7 +155,7 @@ def plot_xchem_dataset_summaries():
     plt.ylabel("System")
     plt.legend()
     plt.tight_layout()
-    fig.savefig(output_dir / "HitVsDataset.png")
+    fig.savefig(output_dir / "HitVsEvents.png")
     plt.cla()
     plt.clf()
     plt.close("all")
