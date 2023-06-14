@@ -165,6 +165,7 @@ def plot_xchem_dataset_summaries():
     for record in sorted(records, key=lambda _record: _record['Number of Events']):
         print(f"{record['Number of Hits']} & {record['Number of Events']} & {round(record['Number of Hits'] / record['Number of Events'], 2)} ")
 
+    print(system_hit_rate_table['Number of Hits'].sum() / system_hit_rate_table['Number of Events'].sum())
 
 if __name__ == "__main__":
     fire.Fire(plot_xchem_dataset_summaries)
