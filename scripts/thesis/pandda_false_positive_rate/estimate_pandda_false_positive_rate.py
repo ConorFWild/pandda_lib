@@ -163,7 +163,7 @@ def plot_xchem_dataset_summaries():
     plt.close("all")
 
     for record in sorted(records, lambda _record: _record['Number of Events']):
-        print(f"{record['Number of Hits']} & {record['Number of Events']} & {record['Number of Hits'] / record['Number of Events']} ")
+        print(f"{record['Number of Hits']} & {record['Number of Events']} & {round(record['Number of Hits'] / record['Number of Events'], 2)} ")
 
 
 if __name__ == "__main__":
