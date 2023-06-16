@@ -82,6 +82,8 @@ def plot_rscc_vs_res():
             im_dis[x,y] = float('nan')
 
     print(im_dis)
+    print(np.sum(im_tot))
+    print(np.sum(im))
 
     # Plot bars for each category
     fig, ax = plt.subplots(
