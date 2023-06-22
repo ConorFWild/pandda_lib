@@ -73,7 +73,8 @@ def main():
                     system_name = system_name_2
                     if not system_name_2:
                         continue
-                system_name = system_name_1
+                else:
+                    system_name = system_name_1
 
                 # print(f"{system.system_name}: {num_datasets}")
 
