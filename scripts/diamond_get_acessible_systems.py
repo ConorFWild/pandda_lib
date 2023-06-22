@@ -24,6 +24,17 @@ def test_accessible(dataset_dir):
     else:
         return False
 
+def get_system_name_from_dtag(dtag):
+    hyphens = [pos for pos, char in enumerate(dtag) if char == "-"]
+    if len(hyphens) == 0:
+        return None
+    else:
+        last_hypen_pos = hyphens[-1]
+        system_name = dtag[:last_hypen_pos + 1]
+
+        return system_name
+
+
 def main():
     xchem_data_path = pathlib.Path('/dls/labxchem/data')
 
@@ -53,8 +64,16 @@ def main():
             if test_accessible(datasets_list[0]) or test_accessible(datasets_list[-1]):
 
                 num_datasets = len(datasets_list)
-                dtag = Dtag.from_name(datasets_list[0].name)
-                system = SystemName.from_dtag(dtag)
+                # dtag = Dtag.from_name(datasets_list[0].name)
+                # system = SystemName.from_dtag(dtag)
+                system_name_1 = get_system_name_from_dtag(datasets_list[0].name)
+                system_name_2 = get_system_name_from_dtag(datasets_list[-1].name)
+
+                if not system_name_1:
+                    system_name = system_name_2
+                    if not system_name_2:
+                        continue
+                system_name = system_name_1
 
                 # print(f"{system.system_name}: {num_datasets}")
 
