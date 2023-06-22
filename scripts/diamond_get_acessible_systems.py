@@ -41,7 +41,7 @@ def main():
     systems = []
 
     for year_dir in xchem_data_path.glob('*'):
-        if year_dir.name in ['s', 'i']:
+        if year_dir.name[0] in ['s', 'i']:
             continue
         for project_dir in year_dir.glob('*'):
             model_building_dir = project_dir / 'processing' / 'analysis' / 'model_building'
