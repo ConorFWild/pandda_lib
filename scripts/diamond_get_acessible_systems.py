@@ -77,7 +77,7 @@ def main():
 
                 # print(f"{system.system_name}: {num_datasets}")
 
-                systems.append(f"{system.system_name}: {num_datasets}: {project_dir}")
+                systems.append(f"{system_name}: {num_datasets}: {project_dir}")
             # except Exception as e:
             #     # print(e)
             #     continue
