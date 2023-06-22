@@ -44,6 +44,8 @@ def main():
         if (year_dir.name[0] == 's') or (year_dir.name[0] == 'i'):
             continue
         for project_dir in year_dir.glob('*'):
+            if (project_dir.name[0] == 's') or (project_dir.name[0] == 'i'):
+                continue
             model_building_dir = project_dir / 'processing' / 'analysis' / 'model_building'
 
             initial_model_dir = project_dir / 'processing' / 'analysis' / 'initial_model'
