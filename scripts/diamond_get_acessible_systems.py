@@ -47,6 +47,8 @@ def main():
 
             else:
                 continue
+            if len(datasets_list) == 0:
+                continue
 
             if test_accessible(datasets_list[0]) or test_accessible(datasets_list[-1]):
 
@@ -64,6 +66,8 @@ def main():
 
     for x in sorted(systems):
         print(x)
+
+    print(len(systems))
 
 if __name__ == "__main__":
     fire.Fire(main)
