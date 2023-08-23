@@ -17,7 +17,7 @@ def __main__(pandda_dir):
         event_idx = row['event_idx']
         x, y, z = row['x'], row['y'], row['z']
         processed_dataset_dir = processed_datasets_dir / dtag
-        pdb_file = processed_dataset_dir / "dimple.pdb"
+        pdb_file = processed_dataset_dir / f"{dtag}-pandda-input.pdb"
         st = gemmi.read_structure(str(pdb_file))
 
         for model in st:
