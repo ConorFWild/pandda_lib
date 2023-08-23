@@ -35,7 +35,9 @@ def __main__(pandda_dir):
                     dist = pos.dist(gemmi.Position(x, y, z))
                     if dist < 10.0:
                         new_rows.append(row)
-                        print(f"x0147 in!")
+                        if dtag == "D68EV3CPROA-x0147":
+
+                            print(f"x0147 in!")
     new_dataframe = pd.DataFrame(new_rows)
     print(new_dataframe)
     new_dataframe.to_csv(Path(pandda_dir) / "active_site_events_2.csv", index=False)
