@@ -13,6 +13,8 @@ def __main__(pandda_dir):
 
     new_rows = []
     for idx, row in pandda_inspect_table.iterrows():
+        if dtag == "D68EV3CPROA-x0147":
+            print(f"147!")
         dtag = row['dtag']
         event_idx = row['event_idx']
         x, y, z = row['x'], row['y'], row['z']
@@ -32,6 +34,7 @@ def __main__(pandda_dir):
                     dist = pos.dist(gemmi.Position(x, y, z))
                     if dist < 10.0:
                         new_rows.append(row)
+                        print(f"x0147 in!")
     new_dataframe = pd.DataFrame(new_rows)
     print(new_dataframe)
     new_dataframe.to_csv(Path(pandda_dir) / "active_site_events_2.csv", index=False)
