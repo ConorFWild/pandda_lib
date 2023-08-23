@@ -34,7 +34,7 @@ def __main__(pandda_dir):
                         new_rows.append(row)
     new_dataframe = pd.DataFrame(new_rows)
     print(new_dataframe)
-    new_dataframe.to_csv(Path(pandda_dir) / "active_site_events.csv")
+    new_dataframe.to_csv(Path(pandda_dir) / "active_site_events.csv", index=False)
 
 
 if __name__ == "__main__":
