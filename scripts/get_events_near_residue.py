@@ -30,11 +30,11 @@ def __main__(pandda_dir):
                     ca = residue['CA'][0]
                     pos = ca.pos
                     dist = pos.dist(gemmi.Position(x, y, z))
-                    if dist < 8.0:
+                    if dist < 10.0:
                         new_rows.append(row)
     new_dataframe = pd.DataFrame(new_rows)
     print(new_dataframe)
-    new_dataframe.to_csv(Path(pandda_dir) / "active_site_events.csv", index=False)
+    new_dataframe.to_csv(Path(pandda_dir) / "active_site_events_2.csv", index=False)
 
 
 if __name__ == "__main__":
