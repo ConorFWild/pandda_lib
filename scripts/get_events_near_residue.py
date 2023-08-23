@@ -13,9 +13,10 @@ def __main__(pandda_dir):
 
     new_rows = []
     for idx, row in pandda_inspect_table.iterrows():
+
+        dtag = row['dtag']
         if dtag == "D68EV3CPROA-x0147":
             print(f"147!")
-        dtag = row['dtag']
         event_idx = row['event_idx']
         x, y, z = row['x'], row['y'], row['z']
         processed_dataset_dir = processed_datasets_dir / dtag
