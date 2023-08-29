@@ -1,3 +1,4 @@
+import os
 import pathlib
 
 import fire
@@ -46,11 +47,16 @@ def main():
         for project_dir in year_dir.glob('*'):
             if (project_dir.name[0] == 's') or (project_dir.name[0] == 'i'):
                 continue
+            analysis_dir = project_dir / 'processing' / 'analysis'
+            if not os.access(analysis_dir, os.R_OK):
+                continue
+
             model_building_dir = project_dir / 'processing' / 'analysis' / 'model_building'
 
             initial_model_dir = project_dir / 'processing' / 'analysis' / 'initial_model'
 
             # try:
+
 
             if model_building_dir.exists():
                 datasets_list = list(model_building_dir.glob('*'))
