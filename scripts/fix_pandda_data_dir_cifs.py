@@ -37,7 +37,7 @@ def fix_dataset_cif(dataset_dir):
     for path in compound_dep_dir.glob("elbow*.cif"):
         shutil.move(
             path,
-            compound_dir / compound.name
+            compound_dir / cif_path.name
         )
 
 def main(path):
