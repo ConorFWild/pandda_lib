@@ -10,10 +10,15 @@ def fix_dataset_cif(dataset_dir):
     compound_dir = dataset_dir / "compound"
 
     compound_dep_dir = compound_dir / "dep"
-    os.mkdir(compound_dep_dir)
-    cif_paths = [x for x in compound_dir.glob('*.cif')]
-    if len(cif_paths) == 0:
-        return
+    if not compound_dep_dir.exists():
+        os.mkdir(compound_dep_dir)
+        cif_paths = [x for x in compound_dir.glob('*.cif')]
+        if len(cif_paths) == 0:
+            return
+    else:
+        cif_paths = [x for x in compound_dep_dir.glob('*.cif')]
+        if len(cif_paths) == 0:
+            return
     cif_path = cif_paths[0]
     shutil.move(cif_path, compound_dep_dir / cif_path.name)
 
