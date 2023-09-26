@@ -25,7 +25,7 @@ def fix_dataset_cif(dataset_dir):
     # script = f"cd {compound_dir}; module load buster; -in {compound_dep_dir / cif_path.name} -itype cif -ocif {cif_path.name} -opdb {f'{cif_path.stem}.pdb'} -fixupcif"
     script = f"cd {compound_dep_dir}; module load phenix; phenix.elbow {cif_path.name}"
     print(script)
-    return
+    # return
     p = subprocess.Popen(script, shell=True)
     p.communicate()
     for path in compound_dep_dir.glob("elbow*.pdb"):
