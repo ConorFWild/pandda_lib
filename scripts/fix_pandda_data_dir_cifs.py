@@ -22,11 +22,23 @@ def fix_dataset_cif(dataset_dir):
     cif_path = cif_paths[0]
     shutil.move(cif_path, compound_dep_dir / cif_path.name)
 
-    script = f"cd {compound_dir}; module load buster; -in {compound_dep_dir / cif_path.name} -itype cif -ocif {cif_path.name} -opdb {f'{cif_path.stem}.pdb'} -fixupcif"
+    # script = f"cd {compound_dir}; module load buster; -in {compound_dep_dir / cif_path.name} -itype cif -ocif {cif_path.name} -opdb {f'{cif_path.stem}.pdb'} -fixupcif"
+    script = f"cd {compound_dep_dir}; module load phenix; phenix.elbow {cif_path.name}"
     print(script)
     return
     p = subprocess.Popen(script, shell=True)
     p.communicate()
+    for path in compound_dep_dir.glob("elbow*.pdb"):
+
+        shutil.move(
+            path,
+            compound_dir / f'{cif_path.stem}.pdb'
+        )
+    for path in compound_dep_dir.glob("elbow*.cif"):
+        shutil.move(
+            path,
+            compound_dir / compound.name
+        )
 
 def main(path):
     path = pathlib.Path(path)
