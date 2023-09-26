@@ -1,0 +1,34 @@
+import os
+import pathlib
+import shutil
+
+import fire
+import subprocess
+import joblib
+
+def fix_dataset_cif(dataset_dir):
+    compound_dir = dataset_dir / "compound"
+
+    compound_dep_dir = compound_dir / "dep"
+    os.mkdir(compound_dep_dir)
+    cif_paths = [x for x in compound_dir.glob('*.cif')]
+    if len(cif_paths) == 0:
+        return
+    cif_path = cif_paths[0]
+    shutil.move(cif_path, compound_dep_dir / cif_path.name)
+
+    script = f"cd {compound_dir}; module load buster; -in {compound_dep_dir / cif_path.name} -itype cif -ocif {cif_path.name} -opdb {f'{cif_path.stem}.pdb'} -fixupcif"
+    print(script)
+    return
+    p = subprocess.Popen(script, shell=True)
+    p.communicate()
+
+def main(path):
+    path = pathlib.Path(path)
+    joblib.Parallel(n_jobs=20, verbose=50)(
+        joblib.delayed(fix_dataset_cif)(dataset_dir) for dataset_dir in path.glob('*')
+    )
+
+
+if __name__ == "__main__":
+    fire.Fire(main)
